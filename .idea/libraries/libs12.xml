@@ -1,0 +1,31 @@
+<component name="libraryTable">
+  <library name="libs1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/google-http-client-android-1.17.0-rc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/google-oauth-client-1.17.0-rc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/android-support-v7-appcompat.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/google-play-services.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/rfc2445-no-joda.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/google-api-services-drive-v2-rev100-1.17.0-rc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/google-http-client-jackson2-1.17.0-rc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/CWAC-WakefulIntentService.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/libGoogleAnalyticsV2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/gson-2.2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/httpcore-4.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/dropbox-android-sdk-1.5.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/trove-3.0.2-long.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/google-http-client-1.17.0-rc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/httpclient-4.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/json_simple-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/google-http-client-gson-1.17.0-rc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/google-api-client-android-1.17.0-rc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/achartengine-1.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/google-api-client-1.17.0-rc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-logging-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/android-support-v4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/httpmime-4.0.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,74 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Denis Solonenko.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * 
+ * Contributors:
+ *     Denis Solonenko - initial API and implementation
+ ******************************************************************************/
+package com.flowzr.adapter;
+
+import com.flowzr.R;
+import com.flowzr.model.EntityType;
+import com.flowzr.backup.BackupType;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class EntityTypeListAdapter extends BaseAdapter {
+
+	private final EntityType[] entities;
+	private final LayoutInflater inflater;
+	
+	public EntityTypeListAdapter(Context context, EntityType[] pEntities) {
+		this.entities = pEntities;
+		this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	}
+
+	@Override
+	public int getCount() {
+		return entities.length;
+	}
+
+	@Override
+	public Object getItem(int position) {
+		return entities[position];
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return position;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		Holder h;
+		if (convertView == null) {
+			convertView = inflater.inflate(R.layout.entity_list_item, parent, false);
+			h = new Holder();
+			h.icon = (ImageView)convertView.findViewById(R.id.icon);
+			h.title = (TextView)convertView.findViewById(R.id.line1);
+			h.label = (TextView)convertView.findViewById(R.id.label);
+			convertView.setTag(h);
+		} else {
+			h = (Holder)convertView.getTag();
+		}
+		EntityType r = entities[position];
+		h.title.setText(r.titleId);
+		h.icon.setImageResource(r.iconId);
+		return convertView;
+	}
+	
+	private static final class Holder {
+		public ImageView icon;
+		public TextView title;
+		public TextView label;
+	}
+
+}

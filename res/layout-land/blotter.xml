@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2010 Denis Solonenko.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  
+  Contributors:
+      Denis Solonenko - initial API and implementation
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="horizontal" >
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingRight="@dimen/space_large"
+    android:orientation="vertical" android:layout_weight="1">
+    
+  	<ListView
+        android:id="@android:id/list"
+        style="@style/ListView"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/separator_V"/>
+
+	<TextView 	
+		android:id="@id/android:empty"
+		android:text="@string/no_transactions"
+        style="@style/TextView"
+        android:layout_width="0dp"
+        
+        android:layout_weight="1"
+        android:textSize="@dimen/text_large"/>
+
+
+    <TextView android:id="@+id/integrity_error"
+		      android:text="@string/integrity_error"
+        	  style="@style/TextView"
+              android:textColor="#f26522" 
+              android:visibility="gone"/>
+
+
+</LinearLayout>
+
+    <FrameLayout  android:layout_weight="1.314"
+        android:id="@+id/fragment_land_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:paddingRight="@dimen/space_large"
+        /> 
+
+</LinearLayout>
+    

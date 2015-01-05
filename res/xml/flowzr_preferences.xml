@@ -1,0 +1,39 @@
+<!--
+  Copyright (c) 2010 Denis Solonenko.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  
+  Contributors:
+      Abdsandryk Souza - initial API and implementation
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <PreferenceCategory android:title="@string/flowzr_sync">
+        <Preference android:key="flowzr_account"
+                    android:title="@string/flowzr_account"
+                    android:summary="@string/flowzr_account_summary"/>
+
+        <CheckBoxPreference android:key="auto_sync_enabled"
+                            android:title="@string/auto_sync_enabled"
+                            android:summary="@string/auto_sync_enabled_summary"
+                            android:defaultValue="true"/>
+
+        <CheckBoxPreference android:key="googledrive_upload"
+                            android:title="@string/googledrive_upload"
+                            android:summary="@string/googledrive_upload_summary"
+                            android:defaultValue="true"/>
+
+        <EditTextPreference android:key="googledrive_folder"
+                            android:title="@string/googledrive_folder"
+                            android:summary="@string/googledrive_folder_summary"
+                            android:defaultValue="financial_docs"
+                />
+        <EditTextPreference android:key="sync_api_url"
+                            android:title="@string/sync_server"
+                            android:summary="@string/sync_server_url"
+                            android:defaultValue="flowzr-hrd.appspot.com"
+                />
+
+    </PreferenceCategory>
+</PreferenceScreen>

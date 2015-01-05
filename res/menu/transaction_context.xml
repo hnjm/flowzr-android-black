@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+    
+    <item android:id="@+id/context_transaction_info"
+          android:icon="@drawable/gd_action_bar_info"
+			android:title="@string/info"           
+          app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/context_account_edit"
+          android:icon="@drawable/gd_action_bar_edit"
+			android:title="@string/edit"           
+          app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/context_transaction_delete"
+          android:icon="@drawable/gd_action_bar_trashcan"
+			android:title="@string/delete_account_confirm"           
+          app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/context_account_add_transaction"
+          android:icon="@drawable/notification_icon_transaction"
+			android:title="@string/duplicate"           
+          app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/context_account_add_transfer"
+          android:icon="@drawable/ic_action_bar_mark"
+			android:title="@string/clear"           
+          app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/context_account_update_balance"
+          android:icon="@drawable/ic_action_bar_mark"
+			android:title="@string/update_balance"           
+          app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/context_account_delete_old"
+          android:icon="@drawable/ic_action_bar_double_mark"
+			android:title="@string/reconcile"           
+          app:showAsAction="ifRoom"  />
+
+</menu>
