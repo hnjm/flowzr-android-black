@@ -13,6 +13,7 @@ import com.flowzr.activity.FlowzrSyncActivity;
 import com.flowzr.export.flowzr.FlowzrSyncEngine;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 /**
@@ -21,7 +22,7 @@ import java.util.prefs.Preferences;
 
 	public class GCMIntentService extends IntentService {
 
-		static String TAG="flowzr";
+		static String TAG="flowzr.GCMIntentService";
 		
 		public static final int NOTIFICATION_ID = 1;
 	    NotificationCompat.Builder builder;
@@ -37,25 +38,30 @@ import java.util.prefs.Preferences;
                 if (editor!=null) {
                     editor.putLong("PROPERTY_LAST_SYNC_TIMESTAMP", 0);
                     editor.commit();
+					Log.i(TAG,"reseting last sync timestamp");
                 }
             }
         }
 
 	    @Override
-	    protected void onHandleIntent(Intent intent) {
+			protected void onHandleIntent(Intent intent) {
+			Log.i(TAG,"GCM Intent handling ...");
 	        Bundle extras = intent.getExtras();
 	        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
 	        String messageType = gcm.getMessageType(intent);
+			Log.i(TAG,extras.getString("force"));
 	        if (!extras.isEmpty()) {
-                String action=intent.getAction();
+
+				String action=intent.getAction();
                 if (action.equals("com.google.android.c2dm.intent.RECEIVE")) {
                     handleMessage(intent);
                 }
 
 
+
 	        	if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {	    		
 	        		if (FlowzrSyncEngine.isRunning) {
-		        		Log.i(TAG,"sync already in progess");
+		        		Log.i(TAG,"sync already in progress");
 	        			return;
 	        		}
 	        		Log.i(TAG,"starting sync from GCM");

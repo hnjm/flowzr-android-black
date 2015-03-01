@@ -108,15 +108,13 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
 
         recreateAdapter();	
         if (isGreenDroidSupported()) {	
-            prepareActionGrid();    	
-        	getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
-	            @Override
-	            public boolean onItemLongClick(AdapterView<?> parent, View view,final int pos,
-	                    final long id) {
-	                showContextMenu(parent, view, pos, id);
-	                return true;
-	            }
-	        });
+            prepareActionGrid();
+			getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	                showContextMenu(parent, view, position, id);
+				}
+			});
         } else {
         	registerForContextMenu(getListView());
         }
@@ -125,7 +123,7 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
 
 	//protected abstract boolean showContextMenu(AdapterView<?> parent, View view,final int pos, final long id);
 	
-	protected boolean showContextMenu(AdapterView<?> parent, View view,final int pos, final long id) {
+	public boolean showContextMenu(AdapterView<?> parent, View view,final int pos, final long id) {
         selectedId = id;
         actionGrid.show(view);
 		return true;

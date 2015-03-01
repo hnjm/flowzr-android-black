@@ -12,7 +12,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flowzr" android:versionName="1.6.8u33" android:versionCode="184"
+    package="com.flowzr" android:versionName="1.6.8u35" android:versionCode="186"
     android:installLocation="internalOnly">
 
     <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="19"/>

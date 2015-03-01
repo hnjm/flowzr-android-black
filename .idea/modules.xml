@@ -3,10 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$USER_HOME$/workspace/android-support-v7-appcompat/android-support-v7-appcompat.iml" filepath="$USER_HOME$/workspace/android-support-v7-appcompat/android-support-v7-appcompat.iml" />
-      <module fileurl="file://$PROJECT_DIR$/com.flowzr.activity.MainActivity.iml" filepath="$PROJECT_DIR$/com.flowzr.activity.MainActivity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../adt-bundle/sdk/extras/android/support/v7/appcompat/appcompat.iml" filepath="$PROJECT_DIR$/../adt-bundle/sdk/extras/android/support/v7/appcompat/appcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flowzr-android-black.iml" filepath="$PROJECT_DIR$/flowzr-android-black.iml" />
       <module fileurl="file://$PROJECT_DIR$/../google-play-services_lib/google-play-services_lib.iml" filepath="$PROJECT_DIR$/../google-play-services_lib/google-play-services_lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tests/tests.iml" filepath="$PROJECT_DIR$/tests/tests.iml" />
     </modules>
   </component>
 </project>
-

@@ -102,7 +102,9 @@ public class PictureDriveTask extends AsyncTask<String, String, Object> {
         } catch (ImportExportException e) {
             throw e;
         } catch (GoogleAuthException e) {
-            throw new ImportExportException(R.string.gdocs_connection_failed);
+            e.printStackTrace();
+			throw new ImportExportException(R.string.gdocs_connection_failed);
+
         } catch (IOException e) {
             e.printStackTrace();
             throw new ImportExportException(R.string.gdocs_io_error);

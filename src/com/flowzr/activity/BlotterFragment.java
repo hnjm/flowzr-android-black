@@ -407,11 +407,13 @@ public class BlotterFragment extends AbstractTotalListFragment {
 
 	@Override
 	public void editItem(View v, int position, long id) {
-		editTransaction(id);
+
+		//editTransaction(id);
 	}
 
     private void editTransaction(long id) {
-        new BlotterOperations(this, db, id).editTransaction();
+
+		new BlotterOperations(this, db, id).editTransaction();
     }
 
     @Override

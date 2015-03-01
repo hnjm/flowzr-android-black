@@ -209,13 +209,14 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 	protected void prepareActionGrid() {
         actionGrid = new QuickActionGrid(this.getActivity());
         actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_discard , R.string.delete)); 	//0
-        actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_about, R.string.info));			//1
+        actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_view_as_list, R.string.blotter));			//1
         actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_edit, R.string.edit));			//2	
         actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_new, R.string.transaction));		//3
         actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_import_export, R.string.transfer));		//4     
         actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.amount_input, R.string.update_balance));		//5
         actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_cancel, R.string.delete_old_transactions)); //6
         actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_secure, R.string.close_account));			//7        
+        actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_about, R.string.info));			//8
         actionGrid.setOnQuickActionClickListener(accountActionListener);
 	}	
     
@@ -226,7 +227,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
             		deleteItem(selectedId);
             		break;            
             	case 1:
-                    showAccountInfo(selectedId);
+                    showAccountTransactions(selectedId);
                     break;
                 case 2:
                     editAccount(selectedId);
@@ -245,6 +246,9 @@ public class AccountListFragment extends AbstractTotalListFragment  {
                     break;
                 case 7:
                     closeAccount(selectedId);
+                    break;
+                case 8:
+                    showAccountInfo(selectedId);
                     break;
             }
         }

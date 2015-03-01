@@ -185,7 +185,7 @@ public class AccountWidget extends AppWidgetProvider {
         updateViews.setOnClickPendingIntent(R.id.add_transaction, pendingIntent);
 
         //add transfer
-        intent = new Intent(context, TransactionActivity.class);
+        intent = new Intent(context, TransferActivity.class);
         intent.putExtra(TransactionActivity.ACCOUNT_ID_EXTRA, a.id);
         pendingIntent = PendingIntent.getActivity(context, request++, intent, 0);
         updateViews.setOnClickPendingIntent(R.id.add_transfer, pendingIntent);

@@ -2,7 +2,7 @@
 
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: /home/eflorent/project/com.flowzr.activity.MainActivity/src/com/android/vending/billing/IInAppBillingService.aidl
+ * Original file: /home/eflorent/project/flowzr-android-black/src/com/android/vending/billing/IInAppBillingService.aidl
  */
 package com.android.vending.billing;
 /**

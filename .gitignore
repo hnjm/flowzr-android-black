@@ -2,3 +2,8 @@
 *.jar
 *.apk
 *~
+.idea
+*.iml
+out
+tests
+

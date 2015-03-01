@@ -261,6 +261,7 @@ public class DatabaseAdapter {
 			transaction.isTemplate = isTemplate;
 			transaction.dateTime = now;
 			transaction.remoteKey=null;
+            transaction.updatedOn=System.currentTimeMillis();
 			if (isTemplate == 0) {
 				transaction.recurrence = null;
 				transaction.notificationOptions = null;

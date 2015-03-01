@@ -167,9 +167,9 @@ public class CategorySelectorFragment extends AbstractListFragment {
         } 
         else {
         	recreateAdapter();
-            if (MyPreferences.isAutoSelectChildCategory(getActivity())) {
-                confirmSelection();
-            }
+//            if (MyPreferences.isAutoSelectChildCategory(getActivity())) {
+//                confirmSelection();
+//            }
         }
     }
 
