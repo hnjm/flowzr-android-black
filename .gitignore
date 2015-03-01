@@ -1,8 +1,9 @@
 *.class
 *.jar
 *.apk
-*~
 
+#joe
+*~
 ## Directory-based project format:
 .idea/
 # if you remove the above rule, at least ignore the following:
@@ -27,4 +28,8 @@
 ## Plugin-specific files:
 # IntelliJ
 out/
-
+tests/
+gen/
+bin/
+#Eclipse
+.settings/
