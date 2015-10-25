@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     Denis Solonenko - initial API and implementation
  *     Emmanuel Florent - port to Android API 11+
@@ -42,13 +42,13 @@ public class FlowzrPreferencesActivity extends PreferenceActivity {
 
     private static final int CHOOSE_ACCOUNT = 101;
     private static final int CHOOSE_SERVER = 102;
-    
+
     GoogleAccountManager googleAccountManager;
 
     @Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);   
-		addPreferencesFromResource(R.xml.flowzr_preferences);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.flowzr_preferences);
 
         googleAccountManager = new GoogleAccountManager(this);
 
@@ -64,7 +64,7 @@ public class FlowzrPreferencesActivity extends PreferenceActivity {
         });
         selectAccount();
         selectApiUrl();
-	}
+    }
 
     private void chooseFlowzrAccount() {
         try {
@@ -76,7 +76,7 @@ public class FlowzrPreferencesActivity extends PreferenceActivity {
             Toast.makeText(this, R.string.google_drive_account_select_error, Toast.LENGTH_LONG).show();
         }
     }
-    
+
     private Account getFlowzrSelectedAccount() {
         Account selectedAccount = null;
         String account = MyPreferences.getFlowzrAccount(this);
@@ -85,11 +85,11 @@ public class FlowzrPreferencesActivity extends PreferenceActivity {
         }
         return selectedAccount;
     }
-    
-    private String getSyncApiUrl() {       
+
+    private String getSyncApiUrl() {
         return MyPreferences.getSyncApiUrl(this);
     }
-    
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -122,8 +122,8 @@ public class FlowzrPreferencesActivity extends PreferenceActivity {
 
     private void selectApiUrl() {
         Preference pDriveAccount = getPreferenceScreen().findPreference("sync_api_url");
-        pDriveAccount.setSummary(getSyncApiUrl());        
+        pDriveAccount.setSummary(getSyncApiUrl());
     }
-    
-    
+
+
 }

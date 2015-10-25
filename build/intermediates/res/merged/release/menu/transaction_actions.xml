@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item android:id="@+id/action_location_found"
+          android:icon="@drawable/ic_action_location_found"
+			android:title="@string/force_gps_location"           
+          app:showAsAction="ifRoom"  />
+
+
+    <item android:id="@+id/action_cancel"
+          android:icon="@drawable/ic_action_cancel" 
+			app:title="@string/cancel"           
+          app:showAsAction="always"  />
+
+    <item android:id="@+id/action_done_new"
+          android:icon="@drawable/ic_action_new"
+			android:title="@string/save_and_new"           
+          app:showAsAction="always"  />
+
+    <item android:id="@+id/action_done"
+          android:icon="@drawable/ic_action_done"
+			android:title="@string/ok"           
+          app:showAsAction="always"  />
+
+
+</menu>
+
+<!-- From: file:/home/eflorent/project/flowzr-android-black/res/menu/transaction_actions.xml -->

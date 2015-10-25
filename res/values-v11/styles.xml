@@ -32,10 +32,11 @@
     <!-- ======================================================================================================== -->
     <style name="ActionBar.Solid.Financisto" parent="@style/Widget.AppCompat.ActionBar.Solid">
         <item name="android:background">@drawable/ab_solid_financisto</item>
-        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_financisto</item>
         <!--
+        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_financisto</item>
+
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_financisto</item>
-        -->
+    -->
         <item name="android:progressBarStyle">@style/ProgressBar.Financisto</item>
 
         <item name="background">@drawable/ab_solid_financisto</item>
@@ -157,7 +158,6 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_normal</item>
         <item name="android:textColor">@color/text_primary</item>
-        <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <!-- Button -->

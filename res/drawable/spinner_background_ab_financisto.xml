@@ -23,6 +23,6 @@
     <item android:state_pressed="true"
         android:drawable="@drawable/spinner_ab_pressed_financisto" />
     <item android:state_pressed="false" android:state_focused="true"
-        android:drawable="@drawable/spinner_ab_focused_financisto" />
+        android:drawable="@drawable/spinner_ab_pressed_financisto" />
     <item android:drawable="@drawable/spinner_ab_default_financisto" />
 </selector>

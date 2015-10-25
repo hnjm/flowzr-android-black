@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+		
+
+    <item android:id="@+id/action_filter"
+          android:icon="@drawable/ic_menu_filter_off"
+		android:title="@string/filter"  
+		app:showAsAction="ifRoom"
+		/>
+
+<!-- usefull actions to be added
+	<item android:id="@+id/action_add_template"
+		android:icon="@drawable/ic_action_copy"
+		android:title="@string/template" 
+		/>		
+	<item android:id="@+id/opt_menu_month"
+		android:icon="@drawable/ic_menu_calendar_off"
+		android:title="@string/monthly_view" 
+		/>
+	<item android:id="@+id/opt_menu_bill"
+		android:icon="@drawable/ic_menu_bill_on"	
+		android:title="@string/ccard_statement_title" 
+		/>
+
+	<item android:id="@+id/bTransfer"
+		android:icon="@drawable/ic_input_transfer"
+		android:title="@string/add_transfer" 
+		app:showAsAction="always"
+		/>
+    <item android:id="@+id/bAdd"
+          android:icon="@drawable/ic_action_new"
+		android:title="@string/add_transaction"           
+        app:showAsAction="always"  />
+    -->    
+</menu>
+<!-- From: file:/home/eflorent/project/flowzr-android-black/res/menu/planner_actions.xml -->

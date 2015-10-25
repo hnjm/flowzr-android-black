@@ -11,14 +11,14 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:background="@android:drawable/list_selector_background"
+	android:background="@drawable/activated_background"
 	android:minHeight="@dimen/title_entry_height" android:gravity="bottom"
 	android:paddingBottom="@dimen/space_small" 
 	android:orientation="vertical" android:clickable="false" android:focusable="false">
 
 	<TextView android:id="@+id/label" android:singleLine="true"
 		android:paddingTop="@dimen/space_normal" android:paddingLeft="@dimen/space_normal"
-		style="@style/TextView" android:textSize="@dimen/text_large" 
+		style="@style/TextView" android:textSize="@dimen/text_small"
 		android:ellipsize="marquee" android:fadingEdge="horizontal"
 		android:duplicateParentState="true" android:gravity="center_vertical"
 		android:text="Title" android:layout_height="fill_parent"

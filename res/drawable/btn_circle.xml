@@ -15,9 +15,9 @@
     <item android:state_window_focused="false" android:state_enabled="false"
         android:drawable="@drawable/btn_circle_disable" />
     <item android:state_pressed="true" 
-        android:drawable="@drawable/btn_circle_pressed" />
+        android:drawable="@color/pressed_card" />
     <item android:state_focused="true" android:state_enabled="true"
-        android:drawable="@drawable/btn_circle_selected" />
+        android:drawable="@color/pressed_card" />
     <item android:state_enabled="true"
         android:drawable="@drawable/btn_circle_normal" />
     <item android:state_focused="true"

@@ -18,9 +18,9 @@ import com.flowzr.R;
 import com.flowzr.model.Currency;
 import com.flowzr.utils.CurrencyCache;
 import com.flowzr.utils.MyPreferences;
-import com.flowzr.utils.PinProtection;
-import android.app.AlertDialog;
+
 import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -52,7 +52,11 @@ public class ReportPreferencesActivity extends PreferenceActivity {
 				new Preference.OnPreferenceClickListener() {
 					@Override
 					public boolean onPreferenceClick(Preference arg0) {
-						return showChoiceList(pReportReferenceCurrency);
+						if (pReportReferenceCurrency!=null) {
+							return showChoiceList(pReportReferenceCurrency);
+						} else {
+							return true;
+						}
 					}
 				}				
 		);		
@@ -86,8 +90,12 @@ public class ReportPreferencesActivity extends PreferenceActivity {
 	 * @return
 	 */
 	private boolean showChoiceList(final EditTextPreference pReportReferenceCurrency) {
+		//AlertDialog.Builder builder = new AlertDialog.Builder(ReportPreferencesActivity.this);
+		//builder.setTitle(R.string.report_preferences_not_set);
+		//builder.show();
+
 		new AlertDialog.Builder(ReportPreferencesActivity.this)
-		.setTitle(R.string.report_reference_currency)
+		.setTitle(R.string.report_preferences_not_set)
 		.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener(){
 			// get user preferred currency 
 			@Override
@@ -95,7 +103,7 @@ public class ReportPreferencesActivity extends PreferenceActivity {
 				pReportReferenceCurrency.setText(currency);
 			}
 		})
-		.setSingleChoiceItems(currencies, selectedCurrenceIndex, new DialogInterface.OnClickListener(){
+		.setSingleChoiceItems(currencies, selectedCurrenceIndex, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				selectedCurrenceIndex = which;
@@ -103,7 +111,7 @@ public class ReportPreferencesActivity extends PreferenceActivity {
 			}
 		})
 		.show();
-		
+
 		Dialog dialog = pReportReferenceCurrency.getDialog();
 		if(dialog!=null)
 			dialog.cancel();

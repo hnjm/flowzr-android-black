@@ -8,15 +8,11 @@
 package com.flowzr.activity;
 
 
-import static com.flowzr.service.DailyAutoBackupScheduler.scheduleNextAutoBackup;
 import static com.flowzr.service.FlowzrAutoSyncScheduler.scheduleNextAutoSync;
 import static com.flowzr.utils.NetworkUtils.isOnline;
-
 import java.io.IOException;
 import java.util.Date;
-
 import org.apache.http.impl.client.DefaultHttpClient;
-
 import com.flowzr.R;
 import com.flowzr.export.flowzr.FlowzrBillTask;
 import com.flowzr.export.flowzr.FlowzrSyncEngine;
@@ -25,19 +21,17 @@ import com.flowzr.export.flowzr.FlowzrSyncTask;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.PinProtection;
 import android.accounts.Account;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -48,41 +42,26 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 
-public class FlowzrSyncActivity extends  ActionBarActivity  {
+public class FlowzrSyncActivity extends AppCompatActivity {
 	
-	public static final String PROPERTY_REG_ID = "registration_id";	
-    public static final int CLASS_ACCOUNT = 1;
-    public static final int CLASS_CATEGORY = 2;
-    public static final int CLASS_TRANSACTION = 3;
-    public static final int CLASS_PAYEE= 4;
-    public static final int CLASS_PROJECT = 5;
-    public static final int FLOWZR_SYNC_get_app_user = 6;    
- 
-    //private long lastSyncLocalTimestamp=0;
+	public static final String PROPERTY_REG_ID = "registration_id";
     public Account useCredential;
 	DefaultHttpClient http_client ;
- 
-	
 	public String TAG="flowzr";
-
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 	private static final int FLOWZR_PREFERENCES = 9001;
-	
-	public static boolean isRunning=false;
-	
 	public String regid="";
 	GoogleCloudMessaging gcm; 
 	  
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	super.onActivityResult(requestCode, resultCode, data);
+		Log.e("flowzr","onActivity result: " + String.valueOf(requestCode) + " " + String.valueOf(resultCode));
     	if (requestCode == MainActivity.CHANGE_PREFERENCES) {
             scheduleNextAutoSync(this);
         }
@@ -104,11 +83,8 @@ public class FlowzrSyncActivity extends  ActionBarActivity  {
         runOnUiThread(new Runnable() {
             public void run() {
                 TextView tv = (TextView) findViewById(R.id.sync_was);
-
                 long lastSyncLocalTimestamp = MyPreferences.getFlowzrLastSync(FlowzrSyncActivity.this);
-
                 tv.setText(getString(R.string.flowzr_sync_was) + " " + new Date(lastSyncLocalTimestamp).toLocaleString());
-
                 CheckBox chk=(CheckBox)findViewById(R.id.chk_sync_from_zero);
                 chk.setChecked(false);
                 setProgressBarIndeterminateVisibility(false);
@@ -132,7 +108,7 @@ public class FlowzrSyncActivity extends  ActionBarActivity  {
     
     public void startSync () {
     	if (FlowzrSyncEngine.isRunning) {
-    		Toast.makeText(this, R.string.flowzr_sync_inprogress, Toast.LENGTH_SHORT).show();   
+    		Toast.makeText(this, R.string.flowzr_sync_inprogress, Toast.LENGTH_LONG).show();
     		return;
     	}
 	    String accountName=MyPreferences.getFlowzrAccount(getApplicationContext());
@@ -207,45 +183,33 @@ public class FlowzrSyncActivity extends  ActionBarActivity  {
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
-    
-	
 
-	
     @Override
     public void onDestroy(){
         super.onDestroy();
 
     }
-    
 
-    
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     	setContentView(R.layout.flowzr_sync);
-
-        //@see: http://stackoverflow.com/questions/16539251/get-rid-of-blue-line, 
-        //only way found to remove on various devices 2.3x, 3.0, ...
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#121212"))); 
-    	
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
     	renderLastTime();
-
-
     	CheckBox chkForce= (CheckBox) findViewById(R.id.chk_sync_from_zero);
         chkForce.setOnClickListener(new View.OnClickListener() {        		
         	public void onClick(View v) {
         			resetLastTime();
         			renderLastTime();
         		}
-		});
+			});
         Button syncButton = (Button) findViewById(R.id.sync);
         syncButton.setOnClickListener(new View.OnClickListener() {        		
         	public void onClick(View v) {
         			startSync();     			
         		}
 		});
-    	
-    	
         Button textViewAbout = (Button) findViewById(R.id.buySubscription);
         textViewAbout.setOnClickListener(new View.OnClickListener() {        		
         	public void onClick(View v) {
@@ -253,10 +217,9 @@ public class FlowzrSyncActivity extends  ActionBarActivity  {
 	                if (accountName == null) {
 	                    Toast.makeText(FlowzrSyncActivity.this, R.string.flowzr_choose_account, Toast.LENGTH_SHORT).show(); 	         
 	                	return;
-
 	                }
 	        		if (isOnline(FlowzrSyncActivity.this)) {
-	        	        //checkPlayServices();    
+	        	        checkPlayServices();
 	        		} else {         			
 	        			showErrorPopup(FlowzrSyncActivity.this, R.string.flowzr_sync_error_no_network);            			           			
 	        			return;
@@ -266,18 +229,18 @@ public class FlowzrSyncActivity extends  ActionBarActivity  {
 	        		 FlowzrBillTask ft= new FlowzrBillTask(FlowzrSyncActivity.this);
 	        		 ft.execute();	        		
 	        		 //visitFlowzr(accountName);
-        		}
+  		      		}
 		});
 
         Button textViewAboutAnon = (Button) findViewById(R.id.visitFlowzr);
         textViewAboutAnon.setOnClickListener(new View.OnClickListener() {
         	public void onClick(View v) {
 	        		if (isOnline(FlowzrSyncActivity.this)) {
-                        visitFlowzr(null);
+                        visitFlowzr(MyPreferences.getFlowzrAccount(getApplicationContext()));
 	        		} else {
 	    				showErrorPopup(FlowzrSyncActivity.this, R.string.flowzr_sync_error_no_network);
 	        		}
-        	}
+  	      	}
 		});
 
         TextView textViewNotes = (TextView) findViewById(R.id.flowzrPleaseNote);
@@ -369,7 +332,7 @@ public class FlowzrSyncActivity extends  ActionBarActivity  {
 		            } catch (IOException ex) {
 		                msg = "Error :" + ex.getMessage();
 		                // If there is an error, don't just keep trying to register.
-		                // Require the user to click a button again, or perform
+						// Require the user to click a button again, or perform
 		                // exponential back-off.
 				        Log.i(TAG, msg);		                
 		            }
@@ -453,7 +416,4 @@ public class FlowzrSyncActivity extends  ActionBarActivity  {
 		super.onResume();
         PinProtection.unlock(this);;    
 	}
-
-    
-	
 }

@@ -17,8 +17,8 @@
         android:background="@drawable/btn_toggle_income_expense_bg"
         android:minWidth="40dp"
         android:layout_height="fill_parent" />
-    <EditText android:layout_height="fill_parent" style="@style/EditText"
-              android:textStyle="bold" android:singleLine="true"
+    <EditText android:layout_height="fill_parent" style="@style/EditTextUserInput"
+              android:singleLine="true"
               android:layout_width="wrap_content" android:layout_weight="1"
               android:textSize="20sp" android:gravity="right|center_vertical"
               android:id="@+id/primary" android:numeric="integer"
@@ -26,8 +26,8 @@
     <TextView android:layout_width="wrap_content" android:text="."  style="@style/EditText"
               android:layout_height="fill_parent" android:gravity="bottom"
               android:textStyle="bold" android:textSize="30sp"/>
-    <EditText android:layout_height="fill_parent"  style="@style/EditText"
-              android:textStyle="bold" android:singleLine="true"
+    <EditText android:layout_height="fill_parent"  style="@style/EditTextUserInput"
+               android:singleLine="true"
               android:layout_width="50dp"
               android:textSize="20sp" android:gravity="left|center_vertical"
               android:id="@+id/secondary"  android:numeric="integer"

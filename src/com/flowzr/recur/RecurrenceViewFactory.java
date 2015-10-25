@@ -499,6 +499,7 @@ public class RecurrenceViewFactory {
 			for (int i=0; i<num; i++) {
 				postfix[i] = SpecificDayPostfix.DAY;
 			}
+
 			everyNthDayEditText = new EditText[num];
 			for (int i=0; i<num; i++) {
 				everyNthDayEditText[i] = numericEditText(activity);
@@ -762,7 +763,8 @@ public class RecurrenceViewFactory {
 	}
 
 	private static EditText numericEditText(Context context) {
-		EditText et = new EditText(context);
+		LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		EditText et = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 		et.setInputType(InputType.TYPE_CLASS_NUMBER);
 		return et;
 		

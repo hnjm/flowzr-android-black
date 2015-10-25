@@ -26,10 +26,10 @@
 
 	<item
 		android:state_pressed="true"
-		android:drawable="@drawable/gd_quick_action_grid_selector_pressed" />
+		android:drawable="@color/pressed_card" />
 
 	<item
 		android:state_focused="true"
-		android:drawable="@drawable/gd_quick_action_grid_selector_focused" />
+		android:drawable="@color/pressed_card" />
 
 </selector>

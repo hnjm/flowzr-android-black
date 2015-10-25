@@ -9,9 +9,11 @@
 package com.flowzr.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.model.Transaction;
@@ -58,7 +60,7 @@ public class BlotterOperations {
         }
     }
 
-    private void startEditTransactionActivity(Class<? extends Activity> activityClass, int requestCode) {
+    private void startEditTransactionActivity(Class<? extends AppCompatActivity> activityClass, int requestCode) {
         Intent intent = new Intent(activity.getActivity(), activityClass);
         intent.putExtra(AbstractTransactionActivity.TRAN_ID_EXTRA, targetTransaction.id);
         intent.putExtra(AbstractTransactionActivity.DUPLICATE_EXTRA, false);

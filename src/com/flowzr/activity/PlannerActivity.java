@@ -200,10 +200,14 @@ public class PlannerActivity extends BlotterFragment {
 
         @Override
         protected void onPostExecute(TransactionList data) {
-            ScheduledListAdapter adapter = new ScheduledListAdapter(thiscontext, data.transactions);
-            setListAdapter(adapter);
-            setTotals(data.totals);
-            updateFilterText(filter);
+            try {
+                ScheduledListAdapter adapter = new ScheduledListAdapter(thiscontext, data.transactions);
+                setListAdapter(adapter);
+                setTotals(data.totals);
+                updateFilterText(filter);
+            } catch (Exception e) {
+
+            }
         }
 
     }

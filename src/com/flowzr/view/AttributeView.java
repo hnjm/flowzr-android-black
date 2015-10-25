@@ -15,7 +15,7 @@ import com.flowzr.model.Attribute;
 import com.flowzr.model.TransactionAttribute;
 import com.flowzr.view.NodeInflater.Builder;
 import com.flowzr.view.NodeInflater.CheckBoxBuilder;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.InputType;
@@ -69,8 +69,12 @@ class TextAttributeView extends AttributeView {
 
 	@Override
 	public View inflateView(LinearLayout layout, String value) {
-		editText = new EditText(context);
+		LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		editText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
+				//new EditText(context);
+
 		editText.setSingleLine();
+
 		if (value != null) {
 			editText.setText(value);
 		}
@@ -94,7 +98,8 @@ class NumberAttributeView extends AttributeView {
 
 	@Override
 	public View inflateView(LinearLayout layout, String value) {
-		editText = new EditText(context);
+		LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		editText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 		editText.setSingleLine();
 		editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		if (value != null) {

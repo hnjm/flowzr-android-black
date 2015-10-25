@@ -13,18 +13,7 @@
 	<string name="app_name">Flowzr</string>
 	<string name="app_description">Budget Expense Tracker</string>
 	<string name="about_copyright1">Released under GNU GPL v2</string>
-	<color name="scheduled">#7cc623</color>
-	<color name="positive_amount">#39b54a</color>
-	<color name="negative_amount">#f26522</color>
-	<color name="transfer_color">#f7941d</color>
-	<color name="future_color">#fff200</color>		
-	<color name="restored_transaction_color">#df0024</color>	
-	<color name="pending_transaction_color">#303030</color>	
-	<color name="unreconciled_transaction_color">#737373</color>	
-	<color name="reconciled_transaction_color">#006a25</color>	
-	<color name="cleared_transaction_color">#79c471</color>	
-	<color name="category_type_income">#39b54a</color>
-	<color name="category_type_expense">#f26522</color>
+
 	<dimen name="picker_width">62dp</dimen>
 	<dimen name="calculator_button_width">70dp</dimen>
 	<dimen name="calculator_button_height">70dp</dimen>
@@ -143,9 +132,7 @@
 		<item>3</item>
 		<item>6</item>
 	</string-array>
-	<string name="widget_2x1">Financisto 2x1</string>
-    <string name="widget_3x1">Financisto 3x1</string>
-    <string name="widget_4x1">Financisto 4x1</string>
+
 	<string name="currency_symbol_hint">$ £ ¥ π</string>
    	<string name="card_issuer_visa">Visa</string>
 	<string name="card_issuer_electron">Visa Electron</string>

@@ -11,6 +11,7 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -66,8 +67,8 @@ public class CategoryActivity extends AbstractEditorActivity {
 		types = getResources().getStringArray(R.array.attribute_types);
 
 		scrollView = (ScrollView)findViewById(R.id.scroll);
-		
-		categoryTitle = new EditText(this);
+		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		categoryTitle = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 		categoryTitle.setSingleLine();
 		
 		Intent intent = getIntent();
@@ -94,7 +95,6 @@ public class CategoryActivity extends AbstractEditorActivity {
 		parentCategoryText = x.addListNode(layout, R.id.category, R.string.parent, R.string.select_category);
 
         LinearLayout titleLayout = new LinearLayout(this);
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
         layoutInflater.inflate(R.layout.category_title, titleLayout, true);
         incomeExpenseButton = (ToggleButton) titleLayout.findViewById(R.id.toggle);
         categoryTitle = (EditText) titleLayout.findViewById(R.id.primary);

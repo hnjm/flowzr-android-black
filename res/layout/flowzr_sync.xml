@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/sync"
             android:drawableLeft="@drawable/ic_action_cloud"
+            android:background="@color/f_blue"
             android:drawablePadding="5dp"
             android:layout_gravity="center"
             android:text="@string/flowzr_sync"
@@ -73,14 +74,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/visitFlowzr"
             android:drawableLeft="@drawable/ic_action_web_site"
+            android:background="@color/f_blue"
             android:drawablePadding="5dp"
             android:layout_gravity="center"
             android:text="@string/visit_flowzr"
             android:gravity="center_vertical"
             android:layout_weight="1"/>
-
-
-
 
     <TextView
             style="@style/TextView"
@@ -105,6 +104,7 @@
             android:drawableLeft="@drawable/ic_action_favorite"
             android:drawablePadding="5dp"
             android:layout_gravity="center"
+            android:background="@color/f_blue"
             android:text="@string/buy_subscription"
             android:gravity="center_vertical"
             android:layout_weight="1"/>

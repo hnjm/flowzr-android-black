@@ -10,6 +10,8 @@ package com.flowzr.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 
 /**
@@ -17,14 +19,15 @@ import android.webkit.WebView;
  * User: Denis Solonenko
  * Date: 3/24/11 10:22 PM
  */
-public class WebViewActivity extends Activity {
+public class WebViewActivity extends AppCompatActivity {
 
     public static final String FILENAME = "filename";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         String fileName = getIntent().getStringExtra(FILENAME);
         WebView webView = new WebView(this);
         setContentView(webView);

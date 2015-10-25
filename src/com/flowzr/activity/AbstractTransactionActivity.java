@@ -27,7 +27,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -245,8 +247,9 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		internalOnCreate();
 		
 		LinearLayout layout = (LinearLayout)findViewById(R.id.list);
-		
-		this.templateName = new EditText(this);
+		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.templateName = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
+
 		if (transaction.isTemplate()) {
 			x.addEditNode(layout, R.string.template_name, templateName);
 		}
@@ -303,10 +306,14 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 	
     protected void createPayeeNode(LinearLayout layout) {
         payeeAdapter = TransactionUtils.createPayeeAdapter(this, db);
-        payeeText = new AutoCompleteTextView(this);
+
+        LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        payeeText = (AutoCompleteTextView) layoutInflater.inflate(R.layout.autocomplete, null);
+
+        //payeeText = new AutoCompleteTextView(this);
         payeeText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS |
-                InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS |
-                InputType.TYPE_TEXT_VARIATION_FILTER);
+				InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS |
+				InputType.TYPE_TEXT_VARIATION_FILTER);
         payeeText.setThreshold(1);
         payeeText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -492,7 +499,8 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			if (i == noteOrder) {
 				if (isShowNote) {
 					//note
-					noteText = new EditText(this);
+					LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					noteText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 					x.addEditNode(layout, R.string.note, noteText);
 				}
 			}

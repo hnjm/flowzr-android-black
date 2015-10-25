@@ -12,10 +12,22 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flowzr" android:versionName="1.6.8u35" android:versionCode="186"
+    package="com.flowzr" android:versionName="1.7" android:versionCode="190"
     android:installLocation="internalOnly">
 
-    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="19"/>
+
+    <!-- Maps API needs OpenGL ES 2.0. -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+
+    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="21"/>
 
     <supports-screens
             android:smallScreens="true"
@@ -39,8 +51,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-	<uses-permission android:name="android.permission.USE_CREDENTIALS"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="com.android.vending.BILLING" />
 
@@ -48,7 +58,7 @@
 	<permission android:name="com.flowzr.permission.C2D_MESSAGE" android:protectionLevel="signature" />
     <uses-permission android:name="com.flowzr.permission.C2D_MESSAGE"/>
 	<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-
+    <uses-permission android:name="com.flowzr.permission.MAPS_RECEIVE"/>
 
     <application android:theme="@style/Theme.Financisto"
             android:icon="@drawable/icon" android:label="@string/app_name"
@@ -57,26 +67,9 @@
 		<uses-library android:name="com.google.android.maps" />
 
 		 <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-
-
-	 <!-- Maps API needs OpenGL ES 2.0. -->
-	  <uses-feature
-    android:glEsVersion="0x00020000"
-    android:required="true"/>
-    
-	  <!-- End of copy. -->
-	<permission
-        android:name="com.flowzr.permission.MAPS_RECEIVE"
-        android:protectionLevel="signature"/>
-	<uses-permission android:name="com.flowzr.permission.MAPS_RECEIVE"/>
-
-                <!-- debug key 
-                 <meta-data android:name="com.google.android.maps.v2.API_KEY"
-                android:value="AIzaSyBPLy-r6DHS23XJ2spttuFpkpMPJBlYzg0"/>      
-                 -->
-                <!-- release key -->
+        
         <meta-data android:name="com.google.android.maps.v2.API_KEY"
-                    android:value="AIzaSyBD06B06eal5OrFtJwi58Zqsg_wsRq8jpo"/>
+                    android:value="PUT_YOU_MAP_KEY"/>
 					        		
 
 		<receiver android:name=".activity.AccountWidget" android:label="@string/widget_2x1" >
@@ -142,7 +135,8 @@
 		</service>
 
 		<activity android:name=".activity.MainActivity" android:label="@string/app_name"
-			android:taskAffinity=".MainActivity" uiOptions="splitActionBarWhenNarrow">
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:taskAffinity=".MainActivity" uiOptions="splitActionBarWhenNarrow">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
@@ -283,7 +277,7 @@
                    android:value="splitActionBarWhenNarrow" />  			
 		</activity>		
 		
-		<activity android:name=".activity.PreferencesActivity" android:label="@string/preferences" />
+
 						
 		<activity android:name=".activity.ProjectActivity" android:label="@string/project" android:value="splitActionBarWhenNarrow"
 			android:theme="@style/FinancistoDialog" android:configChanges="orientation|keyboardHidden|screenSize">
@@ -313,7 +307,9 @@
                    android:value="splitActionBarWhenNarrow" />    		
 		</activity>
 		
-		<activity android:name=".activity.ReportPreferencesActivity" android:label="@string/report_preferences"/>
+		<activity android:name=".activity.ReportPreferencesActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:label="@string/report_preferences"/>
         <activity android:name=".activity.AboutActivity" android:label="@string/about"/>
         <activity android:name=".activity.WebViewActivity" android:label="@string/about"/>
 
@@ -369,8 +365,17 @@
         	       <meta-data android:name="android.support.UI_OPTIONS"
                    android:value="splitActionBarWhenNarrow" />
         </activity>
-        <activity android:name=".activity.FlowzrPreferencesActivity" android:label="@string/preferences"/>
-        <activity android:name=".activity.BackupPreferencesActivity" android:label="@string/preferences"/>
+
+        <activity android:name=".activity.PreferencesActivity" android:label="@string/preferences"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            ></activity>
+
+        <activity android:name=".activity.FlowzrPreferencesActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:label="@string/preferences"/>
+        <activity android:name=".activity.BackupPreferencesActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:label="@string/preferences"/>
 
         <activity android:name="org.achartengine.GraphicalActivity"/>
 
@@ -379,7 +384,7 @@
                   android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <!-- Change this to be db- followed by your app key -->
-                <data android:scheme="db-n4li1bbi9l4rn49" />
+                <data android:scheme="PUT_YOUR_DROPBOX_KEY" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -395,6 +400,14 @@
             android:value=".MainActivity" />				
 	       <meta-data android:name="android.support.UI_OPTIONS"
                    android:value="splitActionBarWhenNarrow" />
+            <meta-data android:name="com.google.android.apps.drive.APP_ID" android:value="id=1047129956322" />
+            <intent-filter>
+                <action android:name="com.google.android.apps.drive.DRIVE_OPEN" />
+                <data android:mimeType="application/vnd.google-apps.drive-sdk.1047129956322" />
+            </intent-filter>
+
+
+
 		</activity>
 
 		<activity android:name=".activity.EntityListActivity" android:configChanges="keyboardHidden|screenSize"

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+    
+    <item android:id="@+id/context_entity_info"
+          android:icon="@drawable/gd_action_bar_info"
+			android:title="@string/info"           
+          app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/context_entity_delete"
+          android:icon="@drawable/gd_action_bar_trashcan"
+			android:title="@string/delete"           
+          app:showAsAction="ifRoom"  />
+
+
+    <item android:id="@+id/context_entity_edit"
+          android:icon="@drawable/gd_action_bar_edit"
+			android:title="@string/edit"           
+          app:showAsAction="ifRoom"  />
+
+</menu>
+<!-- From: file:/home/eflorent/project/flowzr-android-black/res/menu/entity_context.xml -->

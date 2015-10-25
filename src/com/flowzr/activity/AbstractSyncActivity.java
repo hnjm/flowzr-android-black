@@ -12,6 +12,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -21,7 +22,7 @@ import com.flowzr.utils.PinProtection;
 
 import java.io.File;
 
-public abstract class AbstractSyncActivity extends Activity {
+public abstract class AbstractSyncActivity extends AppCompatActivity {
 
     public static final int IMPORT_FILENAME_REQUESTCODE = 0xff;
 

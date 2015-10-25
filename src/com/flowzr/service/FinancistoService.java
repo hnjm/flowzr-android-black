@@ -19,11 +19,14 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import com.commonsware.cwac.wakeful.WakefulIntentService;
 
 
+import com.flowzr.activity.BackupListActivity;
 import com.flowzr.activity.EntityListActivity;
+import com.flowzr.export.docs.DriveBackupTask;
 import com.flowzr.export.flowzr.FlowzrSyncEngine;
 import com.flowzr.export.flowzr.FlowzrSyncOptions;
 import com.flowzr.export.flowzr.FlowzrSyncTask;
@@ -167,6 +170,10 @@ public class FinancistoService extends WakefulIntentService {
                 if (MyPreferences.isDropboxUploadAutoBackups(this)) {
                     Export.uploadBackupFileToDropbox(this, fileName);
                 }
+                if (MyPreferences.isDriveUploadAutoBackups(this)) {
+                    Log.e("flowzr","drive upload enabled");
+                    new DriveBackupTask(this,null).execute();
+                }
                 Log.e(TAG, "Auto-backup completed in " +(System.currentTimeMillis()-t0)+"ms");
             } catch (Exception e) {
                 Log.e(TAG, "Auto-backup unsuccessful", e);
@@ -189,31 +196,55 @@ public class FinancistoService extends WakefulIntentService {
 	private Notification createRestoredNotification(int count) {
 		long when = System.currentTimeMillis();
 		String text = getString(R.string.scheduled_transactions_have_been_restored, count);
-		Notification notification = new Notification(R.drawable.notification_icon_transaction, text, when);
+		Notification notification = new NotificationCompat.Builder(this)
+        .setSmallIcon(R.drawable.notification_icon_transaction)
+        .setContentText(text).build();
+        //.set, when);
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
 		notification.defaults = Notification.DEFAULT_ALL;
 		Intent notificationIntent = new Intent(this, EntityListActivity.class);
-        notificationIntent.putExtra(EntityListActivity.REQUEST_MASS_OP,true);
+        notificationIntent.putExtra(EntityListActivity.REQUEST_MASS_OP, true);
 		WhereFilter filter = new WhereFilter("");
 		filter.eq(BlotterFilter.STATUS, TransactionStatus.RS.name());
 		filter.toIntent(notificationIntent);
 
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-		notification.setLatestEventInfo(this, getString(R.string.scheduled_transactions_restored), text, contentIntent);
-		return notification;
+
+
+
+        notification  = new NotificationCompat.Builder(this)
+                .setContentTitle(getString(R.string.scheduled_transactions_restored))
+                .setContentText(getString(R.string.scheduled_transactions_restored))
+                .setSmallIcon(R.drawable.flowzr)
+                .build(); // available from API level 11 and onwards
+
+
+        return notification;
 	}
 
 	private Notification createNotification(TransactionInfo t) {
 		long when = System.currentTimeMillis();
-		Notification notification = new Notification(t.getNotificationIcon(), t.getNotificationTickerText(this), when);
+        Context context = getApplicationContext();
+		Notification notification = new NotificationCompat.Builder(context)
+        .setSmallIcon(t.getNotificationIcon())
+        .setContentText(t.getNotificationTickerText(this))
+        .build();
+        //.setW, when);
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
 		applyNotificationOptions(notification, t.notificationOptions);
-		Context context = getApplicationContext();
+
 		Intent notificationIntent = new Intent(this, t.getActivity());
 		notificationIntent.putExtra(AbstractTransactionActivity.TRAN_ID_EXTRA, t.id);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-		notification.setLatestEventInfo(context, t.getNotificationContentTitle(this), t.getNotificationContentText(this), contentIntent);	
-		return notification;
+
+
+        notification = new NotificationCompat.Builder(context)
+                .setContentTitle(t.getNotificationContentTitle(this))
+                .setContentText(t.getNotificationContentText(this))
+                .setSmallIcon(R.drawable.flowzr)
+                .build();
+
+        return notification;
 	}
 
 	private void applyNotificationOptions(Notification notification, String notificationOptions) {

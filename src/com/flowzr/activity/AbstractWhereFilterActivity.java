@@ -100,7 +100,7 @@ public abstract class AbstractWhereFilterActivity extends AbstractEditorActivity
 			}
 		});
 		
-		ImageButton bNoFilter = (ImageButton)findViewById(R.id.bNoFilter);
+		Button bNoFilter = (Button)findViewById(R.id.bNoFilter);
 		bNoFilter.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {

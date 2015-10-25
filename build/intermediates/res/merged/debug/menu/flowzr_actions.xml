@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item android:id="@+id/action_cancel"
+          android:icon="@drawable/ic_action_warning"
+			android:title="@string/cancel"           
+          app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/action_settings"
+          android:icon="@drawable/ic_action_settings"
+			android:title="@string/preferences"           
+          app:showAsAction="always"  />
+    
+    <item android:id="@+id/action_sync"
+          android:icon="@drawable/ic_action_cloud"
+			android:title="@string/flowzr_sync"           
+          app:showAsAction="always"  />
+
+
+
+
+</menu>
+
+<!-- From: file:/home/eflorent/project/flowzr-android-black/res/menu/flowzr_actions.xml -->

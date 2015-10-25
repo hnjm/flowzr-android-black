@@ -12,11 +12,13 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,28 +69,29 @@ public class AccountActivity extends AbstractEditorActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.account);
-		
-		accountTitle = new EditText(this);
+
+		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		accountTitle = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 		accountTitle.setSingleLine();
-		
-		issuerName = new EditText(this);
+
+		issuerName = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 		issuerName.setSingleLine();
 
-		numberText = new EditText(this);
+		numberText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 		numberText.setHint(R.string.card_number_hint);
 		numberText.setSingleLine();
 
-		sortOrderText = new EditText(this);
+		this.sortOrderText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 		sortOrderText.setInputType(InputType.TYPE_CLASS_NUMBER);
         sortOrderText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
 		sortOrderText.setSingleLine();
-		
-		closingDayText = new EditText(this);
+
+		closingDayText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 		closingDayText.setInputType(InputType.TYPE_CLASS_NUMBER);
 		closingDayText.setHint(R.string.closing_day_hint);
 		closingDayText.setSingleLine();
-		
-		paymentDayText = new EditText(this);
+
+		paymentDayText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 		paymentDayText.setInputType(InputType.TYPE_CLASS_NUMBER);
 		paymentDayText.setHint(R.string.payment_day_hint);
 		paymentDayText.setSingleLine();
@@ -150,7 +153,8 @@ public class AccountActivity extends AbstractEditorActivity {
             amountInput.setIncome();
 		}
 
-        noteText = new EditText(this);
+		noteText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
+
         noteText.setLines(2);
         x.addEditNode(layout, R.string.note, noteText);
 

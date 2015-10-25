@@ -58,7 +58,7 @@ public class CalculatorInput extends ActionBarActivity implements OnClickListene
 
         setContentView(R.layout.calculator);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#121212"))); 
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#121212")));
         
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 

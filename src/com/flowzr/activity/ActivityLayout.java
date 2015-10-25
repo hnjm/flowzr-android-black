@@ -10,7 +10,7 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -33,7 +33,7 @@ public class ActivityLayout {
 		this.inflater = inflater;
 		this.listener = listener;
 	}
-	
+	/**
 	public View addTitleNode(LinearLayout layout, int labelId) {
 		Builder b = inflater.new Builder(layout, R.layout.select_entry_title);
 		return b.withLabel(labelId).create();
@@ -43,7 +43,7 @@ public class ActivityLayout {
         Builder b = inflater.new Builder(layout, R.layout.select_entry_title);
         return b.withLabel(label).create();
     }
-
+	**/
 	public View addTitleNodeNoDivider(LinearLayout layout, int labelId) {
 		Builder b = inflater.new Builder(layout, R.layout.select_entry_title);
 		return b.withLabel(labelId).withNoDivider().create();
@@ -85,7 +85,7 @@ public class ActivityLayout {
 		View v = b.withId(id, listener).withLabel(labelId).withData(defaultValue).create();
 		return (TextView)v.findViewById(R.id.data);
 	}
-
+	/**
     public TextView addInfoNode(LinearLayout layout, int id, String label, String defaultValue) {
         Builder b = inflater.new Builder(layout, R.layout.select_entry_simple);
         View v = b.withId(id, listener).withLabel(label).withData(defaultValue).create();
@@ -93,7 +93,7 @@ public class ActivityLayout {
         data.setTag(v);
         return data;
     }
-
+	*/
 	public View addListNodeIcon(LinearLayout layout, int id, int labelId, int defaultValueResId) {
 		Builder b = inflater.new Builder(layout, R.layout.select_entry_icon);
 		return b.withId(id, listener).withLabel(labelId).withData(defaultValueResId).create();		

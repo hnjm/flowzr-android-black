@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-845943d5a4d45640a927f50a53330ca8959d3571.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2491ae1b2a848af1f4f0c795f3117c1bd6a1989f">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-de152f50828839810640d57c8852738f79961b4b.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/libs/rfc2445-no-joda.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="992800aa2efaa3fd966f68a7d308486525bc98cf">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/rfc2445-no-joda-daa6b13caa75b4a1397be4ae61bdaa0fc8563ab0.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.2.0/jars/libs/internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="0632f06970823b7e3436f649bfa65b47035c91d0">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/internal_impl-22.2.0-3751bae3c2f17caa3a3be615eabe0eae9eae0a24.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="dcf8c83c3dead00a6c4fe313e95f7aaca20dc641">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-a274f4bc31185277af6e6ddcfdc2dfd2a76605ba.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="edea92852b40eee716e910af8dad9eeaa58fb0e1">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-dedbbc5d5b1ca1cafacb3533a4d367eaadc0240f.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/libs/gson-2.2.4.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/gson-2.2.4-34c4cf9cfb9c9a42d536dea01f36a9a0c16329bf.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="166e458ee3b5fb5fcff0f936df3f3a788e6c54f3">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-ada7d5033076f84ac8091f72b1299b5c8dd0e15f.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="0124ce31248c0e8acfa2b28283c6d1a4d76e73d2">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-49e4f50630db09e2646d916bbc2c671680c290fa.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4a135d56554069e5d0ff80e3220e887e57146ee5">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-feeacc7a16b6b59759a5fd7c4200ace8614bd8c8.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/libs/achartengine-1.0.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="b2bb0af9f390c0edd4d7d95f613f38da3abe0144">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/achartengine-1.0.0-7c5a545f38bcc299ebee68e8a72c3d9b2099d7d8.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1ff30fa49c07a08c3035d7218a3efebf5680d522">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-06f3b0fbf361eac127b8b801a29866397801c5cc.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-e7e7968c3c51ebbbbcde5063e05262d737013aec.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="adebe28e0c0c05d34a3bfd76f3275bf4d8ff87b6">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-05e9c0656296cc8f7a11833a81f674423aaa7f82.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/libs/google-http-client-1.20.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="93d82db2bca534960253f43424b2ba9d7638b4d2">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/google-http-client-1.20.0-89b461166c7341790b8ad583c80da9115c700e14.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c756d14e99d39471e99013a1e8fd2f3813ed42bf">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-23cff3f41c1bfb380a11a61562775567d94ea342.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6e85edfc9b5346d216e50ccef1f8e825504144a3">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-ae7724a404d31ad18021ea40ac17987c354470c8.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/libs/google-api-client-android-1.20.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="05673179575c32b69a474334255c3044adf18d40">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/google-api-client-android-1.20.0-9f08c2b25b10a40e01e444e0a77f72feb1242058.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c5cafb324568d954780abb858c25db7ce675ab3c">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-75bd1ccd51aa9761852907ee3688d13cf9e582a9.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="130b32ed466fa0f63efd4c7d6250ccd2ed506790">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-52a62e27c822c407a4869e662c746a34fdbad404.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c2ac04c5b232f6f0658ee4f1c13be09cd76406e2">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-ac5f1a26291fa40541636f4be95bd2cfef89dec6.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2e24e5f1b11170163028277de63f709e42525db4">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-865c40d63fc43a649c3d9238b002134de7c396fa.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/libs/json_simple-1.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5e303a03d04e6788dddfa3655272580ae0fc13bb">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/json_simple-1.1-3cb7e191229d5b85fcec08d5aa00f634211b0d80.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="cb6fab7a71fa9ec1f483d44c5fca65ab469d8aca">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-aef644e50e6a194a89248e64f2447a48111bae36.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/libs/internal_impl-23.1.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/internal_impl-23.1.0-514a1a873cb8b891821281a5fcab59fa5b6fc0d6.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/libs/CWAC-WakefulIntentService.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ab33a13ba33a49a0085ee8b70faa76b34fe84425">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/CWAC-WakefulIntentService-79bd8c917b91464d0c06374d84e2ccc9abc28ffe.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e23ea11124bb700eeddd4ab7aa848c615f493850">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-036ba100c3355b97fe1a782e6956667ac333b9b8.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="98137c4d12c50923f5809852b1ef4d1c4e162081">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-8470dc0bffcc727efaf5bf2e39aaa4d4b1287a01.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c0c912d58c9468b1f9d9769c8975afdf2c85d681">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-1ceeacbcac3e3d8ebb7d1d63073e73d7a52fe3be.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/libs/trove-3.0.2-long.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2e8ef66b5215cc7e9cf8b7897cf50193ff0e4cfb">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/trove-3.0.2-long-81236a11d2ed2cdc167d04c35a5a84485d077499.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="77a9dcb5f8b1dba36aacaa9c150eb0942dbea158">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-2213e4677a3838ae16fd7e79bd96f635a7bb66cd.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="42a1ee578b62fd1bd28b3307a679dc9ba0791587">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-d9b9623a4eca1231cc12880f75185b4149d41c17.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.0/support-annotations-23.1.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/support-annotations-23.1.0-af412335a68031bcb31e4ed471c85642c1d5031d.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="b99f0b78bbcb76b915bc6529a83b65d4d46990dd">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-46110044719b9b37c876da914033256361e4bcdd.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/libs/dropbox-android-sdk-1.5.4.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2e7a56b4f6e226c233195ba0c9417a9b28183ce5">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/dropbox-android-sdk-1.5.4-92524e9f80856f05ac8e4254de9a339167798430.jar" />
+    </item>
+    <item
+        jar="/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.8.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d11330ea68c0d964d30d5caed1f27e6b1488b189">
+        <dex dex="/home/eflorent/project/flowzr-android-black/build/intermediates/pre-dexed/release/classes-7fa2e13aee012c853a586ae8977157fe05707145.jar" />
+    </item>
+
+</items>

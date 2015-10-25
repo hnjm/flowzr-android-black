@@ -11,24 +11,17 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.ActionBarDrawerToggle;
-
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TypefaceSpan;
 import android.os.Bundle;
-
-
-
-
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -43,7 +36,7 @@ import com.flowzr.model.NavDrawerItem;
 import com.flowzr.utils.*;
 import java.util.ArrayList;
 
-public class AbstractActionBarActivity  extends ActionBarActivity  {
+public class AbstractActionBarActivity  extends AppCompatActivity {
 
 
     private static final int CHANGE_PREFERENCES = 6;
@@ -127,26 +120,15 @@ public class AbstractActionBarActivity  extends ActionBarActivity  {
 		mDrawerList.setAdapter(adapter);
 
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-		
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,  
-                mDrawerLayout,  
-                R.drawable.ic_drawer,
-                R.string.app_name,
-                R.string.app_name 
-                ) {
-            /** Called when a drawer has settled in a completely closed state. */
-//          public void onDrawerClosed(View view) {
-//              super.onDrawerClosed(view);
-//          }
 
-          /** Called when a drawer has settled in a completely open state. */
-//          public void onDrawerOpened(View drawerView) {
-//              super.onDrawerOpened(drawerView);         
-//          }        	
+
+        mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.menu,R.string.close) {
+
         };
+
         if (mDrawerLayout!=null) {
-        	mDrawerLayout.setDrawerListener(mDrawerToggle); 
+        	mDrawerLayout.setDrawerListener(mDrawerToggle);
+            mDrawerToggle.syncState();
         }
 	}
     
@@ -158,13 +140,7 @@ public class AbstractActionBarActivity  extends ActionBarActivity  {
         }
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (mDrawerLayout!=null) {        
-        	mDrawerToggle.onConfigurationChanged(newConfig);
-        }
-    }
+
     
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
 		@Override
@@ -206,12 +182,24 @@ public class AbstractActionBarActivity  extends ActionBarActivity  {
             	mDrawerLayout.closeDrawer(mDrawerList);            
             }
 		}
-    }    
-       
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        PinProtection.unlock(this);
+        if (mDrawerLayout!=null) {
+            mDrawerToggle.onConfigurationChanged(newConfig);
+        }
+
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
-        PinProtection.lock(this.getApplicationContext());
+        if (!PinProtection.isUnlocked()) {
+            PinProtection.lock(this.getApplicationContext());
+        }
     }
     
     @Override
@@ -226,6 +214,7 @@ public class AbstractActionBarActivity  extends ActionBarActivity  {
         super.onDestroy();
         PinProtection.immediateLock(this);
     }
+
 
      	
   	public void setMyTitle(String t) {

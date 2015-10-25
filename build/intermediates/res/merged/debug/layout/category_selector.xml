@@ -1,0 +1,17 @@
+<!--
+  ~ Copyright (c) 2012 Denis Solonenko.
+  ~ All rights reserved. This program and the accompanying materials
+  ~ are made available under the terms of the GNU Public License v2.0
+  ~ which accompanies this distribution, and is available at
+  ~ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent" android:layout_width="fill_parent"
+	android:orientation="vertical">
+	<ListView android:id="@android:id/list" android:layout_width="fill_parent"
+		android:layout_weight="1" android:layout_height="wrap_content"
+        android:choiceMode="singleChoice">
+	</ListView>
+
+</LinearLayout>
+<!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout/category_selector.xml -->

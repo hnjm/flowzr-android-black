@@ -4,23 +4,24 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
- *     Denis Solonenko - initial API and implementation
+ *     Denis Solonenko  - initial API and implementation
+ *     Emmanuel Florent - port to Android API 11+
+ *                      - port to Google API V3
  ******************************************************************************/
 package com.flowzr.backup;
 
 import android.content.ContentValues;
 import android.content.Context;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpResponse;
-import com.google.api.services.drive.Drive;
+import com.google.android.gms.drive.DriveFile;
 import com.flowzr.db.Database;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.DatabaseSchemaEvolution;
 import com.flowzr.export.Export;
 import com.flowzr.export.dropbox.Dropbox;
-
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.DriveApi.DriveContentsResult;
 import java.io.*;
 import java.util.zip.GZIPInputStream;
 
@@ -38,10 +39,10 @@ public class DatabaseImport extends FullDatabaseImport {
         return new DatabaseImport(context, dbAdapter, inputStream);
     }
 
-    public static DatabaseImport createFromGoogleDriveBackup(Context context, DatabaseAdapter dbAdapter, Drive drive, com.google.api.services.drive.model.File file)
+    public static DatabaseImport createFromGoogleDriveBackup(Context context, DatabaseAdapter dbAdapter, GoogleApiClient mGoogleApiClient, DriveFile file)
             throws IOException {
-        HttpResponse response = drive.getRequestFactory().buildGetRequest(new GenericUrl(file.getDownloadUrl())).execute();
-        InputStream inputStream = response.getContent();
+        DriveContentsResult h= file.open(mGoogleApiClient, DriveFile.MODE_READ_ONLY, null).await();
+        InputStream inputStream = h.getDriveContents().getInputStream();
         InputStream in = new GZIPInputStream(inputStream);
         return new DatabaseImport(context, dbAdapter, in);
     }

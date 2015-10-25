@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item android:id="@+id/action_add"
+          android:icon="@drawable/ic_action_new"          
+          app:showAsAction="always"  />
+
+    <item android:id="@+id/action_attributes"
+          android:icon="@drawable/ic_action_labels"          
+          app:showAsAction="always"  />
+
+    <item android:id="@+id/action_expand"
+          android:icon="@drawable/ic_action_expand"          
+          app:showAsAction="always"  />
+
+    <item android:id="@+id/action_collapse"
+    	  android:title="@string/collapse_blotter_buttons"    
+          android:icon="@drawable/ic_action_collapse"          
+          app:showAsAction="ifRoom"  />          
+
+    <item android:id="@+id/action_sort_by_title"
+          android:title="@string/sort_by_title"        
+          app:showAsAction="never"  />
+
+    <item android:id="@+id/action_re_index"
+          android:title="@string/re_index_categories"        
+          app:showAsAction="never"  />
+
+   
+</menu>
+
+<!-- From: file:/home/eflorent/project/flowzr-android-black/res/menu/categories_actions.xml -->

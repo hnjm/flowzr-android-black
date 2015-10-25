@@ -30,7 +30,9 @@
 	<TextView android:id="@+id/line1" 
 	       	style="@style/TextView"
 	        android:layout_width="fill_parent"
-    	    android:textSize="@dimen/text_xlarge" 
+			android:layout_marginTop="6dp"
+			android:layout_marginLeft="9dp"
+    	    android:textSize="@dimen/text_xlarge"
 			android:ellipsize="marquee" android:text="line1"/>
 	</LinearLayout>
 </RelativeLayout>

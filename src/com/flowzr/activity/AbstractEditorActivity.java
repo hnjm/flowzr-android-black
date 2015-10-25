@@ -53,7 +53,7 @@ public abstract class AbstractEditorActivity extends ActionBarActivity implement
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //@see: http://stackoverflow.com/questions/16539251/get-rid-of-blue-line, 
         //only way found to remove on various devices 2.3x, 3.0, ...
-		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000"))); 
+		//getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
 		
 		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		NodeInflater nodeInflater = new NodeInflater(layoutInflater);

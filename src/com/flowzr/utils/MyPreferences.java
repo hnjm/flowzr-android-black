@@ -246,7 +246,7 @@ public class MyPreferences {
 	 * */
 	public static String getBackupFolder(Context context) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-		return sharedPreferences.getString("backup_folder", null);
+		return sharedPreferences.getString("backup_folder", "financial_docs");
 	}
 	
 	/**
@@ -609,8 +609,19 @@ public class MyPreferences {
     }    
 
     public static boolean doGoogleDriveUpload(Context context) {
-        return getBoolean(context, "googledrive_upload", false);
-    }    
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getBoolean("googledrive_upload", false);
+    }
+
+	public static boolean doGooglePictureUpload(Context context) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+		return sharedPreferences.getBoolean("googledrive_upload", false);
+	}
+
+	public static boolean isDriveUploadAutoBackups(Context context) {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+		return sharedPreferences.getBoolean("googledrive_upload", false);
+	}
 
     public static void setFlowzrAccount(Context context, String accountName) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -659,10 +670,4 @@ public class MyPreferences {
         sharedPreferences.edit().putString("google_drive_backup_account", accountName).commit();
     }
 
-    public static boolean isGoogleDriveFullReadonly(Context context) {
-        return getBoolean(context, "google_drive_backup_full_readonly", false);
-    }
-
-
-    
 }

@@ -13,6 +13,8 @@ package com.flowzr.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -24,7 +26,7 @@ import com.flowzr.view.NodeInflater;
 
 import java.util.List;
 
-public abstract class AbstractActivity extends Activity implements ActivityLayoutListener {
+public abstract class AbstractActivity extends AppCompatActivity implements ActivityLayoutListener {
 
 	protected DatabaseAdapter db;
 	protected MyEntityManager em;
@@ -34,7 +36,8 @@ public abstract class AbstractActivity extends Activity implements ActivityLayou
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		NodeInflater nodeInflater = new NodeInflater(layoutInflater);
 		x = new ActivityLayout(nodeInflater, this);

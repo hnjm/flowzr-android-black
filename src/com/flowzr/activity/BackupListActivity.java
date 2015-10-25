@@ -6,17 +6,15 @@
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * 
  * Contributors:
- *     Denis Solonenko - initial API and implementation
+ *     Denis Solonenko  - initial API and implementation
  *     Abdsandryk Souza - implementing 2D chart reports
  *     Emmanuel Florent - port to Android API 11+
+ *                      - port to Google API V3
  ******************************************************************************/
 package com.flowzr.activity;	
 
 import static com.flowzr.service.DailyAutoBackupScheduler.scheduleNextAutoBackup;
-import static com.flowzr.service.FlowzrAutoSyncScheduler.scheduleNextAutoSync;
-
 import java.io.File;
-
 import com.flowzr.R;
 import com.flowzr.adapter.BackupListAdapter;
 import com.flowzr.backup.Backup;
@@ -39,23 +37,31 @@ import com.flowzr.export.qif.QifExportOptions;
 import com.flowzr.export.qif.QifExportTask;
 import com.flowzr.export.qif.QifImportOptions;
 import com.flowzr.export.qif.QifImportTask;
+import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.PinProtection;
-
-import android.app.AlertDialog;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveApi;
+import com.google.android.gms.drive.DriveId;
+import com.google.android.gms.drive.MetadataBuffer;
+import com.google.android.gms.plus.Plus;
+import android.support.v7.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.content.IntentSender;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -63,14 +69,23 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class BackupListActivity extends ActionBarActivity {
+public class BackupListActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener {
 
-	private static final int ACTIVITY_CSV_EXPORT = 2;
-    private static final int ACTIVITY_QIF_EXPORT = 3;
-    private static final int ACTIVITY_CSV_IMPORT = 4;
-    private static final int ACTIVITY_QIF_IMPORT = 5;
-	
+	private static final int ACTIVITY_CSV_EXPORT = 102;
+    private static final int ACTIVITY_QIF_EXPORT = 103;
+    private static final int ACTIVITY_CSV_IMPORT = 104;
+    private static final int ACTIVITY_QIF_IMPORT = 105;
+    private static final int REQUEST_CODE_RESOLUTION = 106;
+
+    private GoogleApiClient mClient;
+    private static int drive_action = 0;
+    private static final int DRIVE_ACTION_RESTORE = 1;
+    private static final int DRIVE_ACTION_BACKUP = 2;
+
+    private String selectedFile;
+
 	public final BackupType[] backups = new BackupType[]{
 			BackupType.BACKUP_FILE,
 			BackupType.RESTORE_FILE,
@@ -85,74 +100,97 @@ public class BackupListActivity extends ActionBarActivity {
 	};
 
 
-	
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.prefs, menu);
         return true;
     }
-	
+
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);     
-		setContentView(R.layout.main_entities);  
-
-    	//@see: http://stackoverflow.com/questions/16539251/get-rid-of-blue-line, 
-        //only way found to remove on various devices 2.3x, 3.0, ...
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#121212")));   
-
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main_entities);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-		
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-	
+
 		ListView listview= (ListView)findViewById(R.id.listview);
 		listview.setAdapter(new BackupListAdapter(this, backups));  
 		listview.setOnItemClickListener(new OnItemClickListener() {
-			  @Override
-			  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					  switch (position) {
-					  	case 0:
-					  		doBackup();			  		
-					  		break;
-					  	case 1:
-					  		doImport();			  		
-					  		break;
-					  	case 2:
-					  		doBackupOnGoogleDrive();			  		
-					  		break;
-					  	case 3:
-					  		doRestoreFromGoogleDrive();			  		
-					  		break;
-					  	case 4:
-					  		doBackupOnDropbox();			  		
-					  		break;
-					  	case 5:
-					  		doRestoreFromDropbox();			  		
-					  		break;
-					  	case 6:
-					  		doQifExport();			  		
-					  		break;
-					  	case 7:
-					  		doQifImport();		  		
-					  		break;
-					  	case 8:
-					  		doCsvExport();						  				  		
-					  		break;
-					  	case 9:
-					  		doCsvImport();						  				  		
-					  		break;
-					  }
-			  }
-			}); 
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        doBackup();
+                        break;
+                    case 1:
+                        doImport();
+                        break;
+                    case 2:
+                        if (!isConnectionAvailable()) {
+                            showErrorPopup(BackupListActivity.this, R.string.flowzr_sync_error_no_network);
+                            return;
+                        }
+                        Log.e("flowzr", "call connect from button");
+                        drive_action = DRIVE_ACTION_BACKUP;
+                        Toast.makeText(BackupListActivity.this, R.string.gdocs_backup, Toast.LENGTH_SHORT).show();
+                        mClient.connect();
+                        break;
+                    case 3:
+                        if (!isConnectionAvailable()) {
+                            showErrorPopup(BackupListActivity.this, R.string.flowzr_sync_error_no_network);
+                            return;
+                        }
+                        drive_action = DRIVE_ACTION_RESTORE;
+                        mClient.connect();
+                        break;
+                    case 4:
+                        if (!isConnectionAvailable()) {
+                            showErrorPopup(BackupListActivity.this, R.string.flowzr_sync_error_no_network);
+                            return;
+                        }
+                        doBackupOnDropbox();
+                        break;
+                    case 5:
+                        if (!isConnectionAvailable()) {
+                            showErrorPopup(BackupListActivity.this, R.string.flowzr_sync_error_no_network);
+                            return;
+                        }
+                        doRestoreFromDropbox();
+                        break;
+                    case 6:
+                        doQifExport();
+                        break;
+                    case 7:
+                        doQifImport();
+                        break;
+                    case 8:
+                        doCsvExport();
+                        break;
+                    case 9:
+                        doCsvImport();
+                        break;
+                }
+            }
+        });
+
 	}
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_RESOLUTION) {
+            if (mClient.isConnected()) {
+                String accountName = Plus.AccountApi.getAccountName(mClient);
+                if (accountName != null) {
+                    MyPreferences.setGoogleDriveAccount(this, accountName);
+                }
+            } else {
+                drive_action=0;
+                mClient.connect();
+            }
+        }
         if (requestCode == ACTIVITY_CSV_EXPORT) {
             if (resultCode == RESULT_OK) {
                 CsvExportOptions options = CsvExportOptions.fromIntent(data);
@@ -177,7 +215,6 @@ public class BackupListActivity extends ActionBarActivity {
             scheduleNextAutoBackup(this);
         }        
     }
-	
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -287,7 +324,7 @@ public class BackupListActivity extends ActionBarActivity {
     }
 
     private String selectedBackupFile;
-    private com.google.api.services.drive.model.File selectedDriveFile;
+
 
     private void doImport() {
         final String[] backupFiles = Backup.listBackups(this);
@@ -313,40 +350,58 @@ public class BackupListActivity extends ActionBarActivity {
                 .show();
     }
 
-    private void doBackupOnGoogleDrive() {
-        ProgressDialog d = ProgressDialog.show(this, null, getString(R.string.backup_database_gdocs_inprogress), true);
-        new DriveBackupTask(this, d).execute();
+    public void doBackupOnGoogleDrive() {
+        String folder = MyPreferences.getBackupFolder(this);
+        String accountName=Plus.AccountApi.getAccountName(mClient);
+        ProgressDialog d = ProgressDialog.show(this, null, getString(R.string.gdocs_backup) + accountName + " " + folder, true);
+        new DriveBackupTask(this,d).execute();
+        mClient.disconnect();
     }
 
-    private void doRestoreFromGoogleDrive() {
+    public void doRestoreFromGoogleDrive() {
         ProgressDialog d = ProgressDialog.show(this, null, getString(R.string.google_drive_loading_files), true);
         new DriveListFilesTask(this, d).execute();
     }
 
-    public void doImportFromGoogleDrive(final com.google.api.services.drive.model.File[] backupFiles) {
-        if (backupFiles != null) {
-            String[] backupFilesNames = getBackupFilesTitles(backupFiles);
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.restore_database)
-                    .setPositiveButton(R.string.restore, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (selectedDriveFile != null) {
-                                ProgressDialog d = ProgressDialog.show(BackupListActivity.this, null, getString(R.string.restore_database_inprogress_gdocs), true);
-                                new DriveRestoreTask(BackupListActivity.this, d, selectedDriveFile).execute();
-                            }
-                        }
-                    })
-                    .setSingleChoiceItems(backupFilesNames, -1, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (which >= 0 && which < backupFiles.length) {
-                                selectedDriveFile = backupFiles[which];
-                            }
-                        }
-                    })
-                    .show();
+    public void doImportFromGoogleDrive(final MetadataBuffer bufferResult) {
+        //convert to string[] for dialog
+        final String[] backupFiles=new String[bufferResult.getCount()];
+        for (int i=0;i<backupFiles.length;i++) {
+            backupFiles[i]=bufferResult.get(i).getTitle();
         }
+        new AlertDialog.Builder(BackupListActivity.this)
+                .setTitle(R.string.restore_database)
+                .setPositiveButton(R.string.restore, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (selectedFile != null) {
+
+                            ProgressDialog d = ProgressDialog.show(BackupListActivity.this, null, getString(R.string.restore_database_inprogress_dropbox), true);
+                            new DriveRestoreTask(BackupListActivity.this, d, selectedFile).execute();
+                            bufferResult.release();
+                        }
+                    }
+                })
+                .setSingleChoiceItems(backupFiles, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which >= 0 && which < backupFiles.length) {
+                            selectedFile = bufferResult.get(which).getDriveId().encodeToString();
+                        }
+                    }
+                })
+                .show();
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     /**
@@ -373,11 +428,11 @@ public class BackupListActivity extends ActionBarActivity {
     }
 
 
-    private String[] getBackupFilesTitles(com.google.api.services.drive.model.File[] backupFiles) {
+    private String[] getBackupFilesTitles(com.google.android.gms.drive.DriveFile[] backupFiles) {
         int count = backupFiles.length;
         String[] titles = new String[count];
         for (int i = 0; i < count; i++) {
-            titles[i] = backupFiles[i].getTitle();
+            titles[i] = backupFiles[i].toString();
         }
         return titles;
     }
@@ -392,7 +447,6 @@ public class BackupListActivity extends ActionBarActivity {
         new DropboxListFilesTask(this, d).execute();
     }
 
-    private String selectedDropboxFile;
 
     public void doImportFromDropbox(final String[] backupFiles) {
         if (backupFiles != null) {
@@ -401,9 +455,9 @@ public class BackupListActivity extends ActionBarActivity {
                     .setPositiveButton(R.string.restore, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (selectedDropboxFile != null) {
+                            if (selectedFile != null) {
                                 ProgressDialog d = ProgressDialog.show(BackupListActivity.this, null, getString(R.string.restore_database_inprogress_dropbox), true);
-                                new DropboxRestoreTask(BackupListActivity.this, d, selectedDropboxFile).execute();
+                                new DropboxRestoreTask(BackupListActivity.this, d, selectedFile).execute();
                             }
                         }
                     })
@@ -411,7 +465,7 @@ public class BackupListActivity extends ActionBarActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (which >= 0 && which < backupFiles.length) {
-                                selectedDropboxFile = backupFiles[which];
+                                selectedFile = backupFiles[which];
                             }
                         }
                     })
@@ -422,6 +476,9 @@ public class BackupListActivity extends ActionBarActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        if (mClient!=null) {
+            mClient.disconnect();
+        }
         PinProtection.lock(this.getApplicationContext());
     }
     
@@ -429,8 +486,83 @@ public class BackupListActivity extends ActionBarActivity {
     protected void onResume()
     {
         super.onResume();
+        if (mClient == null) {
+            if (MyPreferences.getGoogleDriveAccount(this)==null) {
+                mClient = new GoogleApiClient.Builder(this)
+                        .addApi(Drive.API)
+                        .addApi(Plus.API)
+                        .addScope(Drive.SCOPE_FILE)
+                        .addConnectionCallbacks(this)
+                        .addOnConnectionFailedListener(this)
+                        .build();
+            } else { //
+                Log.e("flowzr","default account: " + MyPreferences.getGoogleDriveAccount(this));
+                mClient = new GoogleApiClient.Builder(this)
+                        .addApi(Drive.API)
+                        .addApi(Plus.API)
+                        .addScope(Drive.SCOPE_FILE)
+                        .setAccountName(MyPreferences.getGoogleDriveAccount(this))
+                        .addConnectionCallbacks(this)
+                        .addOnConnectionFailedListener(this)
+                        .build(); //
+            }
+
+        }
         PinProtection.unlock(this);
     }
-    
-    
+
+    public boolean isConnectionAvailable() {
+        ConnectivityManager cm= (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info=cm.getActiveNetworkInfo();
+        if (info==null) return false;
+        NetworkInfo.State network= info.getState();
+        return network==NetworkInfo.State.CONNECTED;
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        try {
+            String accountName = Plus.AccountApi.getAccountName(mClient);
+            if (accountName != null) {
+                MyPreferences.setGoogleDriveAccount(this, accountName);
+            }
+            if (drive_action == DRIVE_ACTION_RESTORE) {
+                doRestoreFromGoogleDrive();
+            }
+            if (drive_action == DRIVE_ACTION_BACKUP) {
+                Toast.makeText(BackupListActivity.this, getString(R.string.gdocs_backup) + " " + accountName, Toast.LENGTH_SHORT).show();
+                doBackupOnGoogleDrive();
+            }
+            mClient.disconnect();
+        } catch (Exception e) {
+            showErrorPopup(this,R.string.gdocs_credentials_not_configured);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Toast.makeText(this, R.string.gdocs_connection_failed, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        // Called whenever the API client fails to connect
+        if (!result.hasResolution()) {
+            Log.e("flowzr","no resolution");
+            // show the localized error dialog.
+            GoogleApiAvailability.getInstance().getErrorDialog(this, result.getErrorCode(), 0).show();
+            return;
+        }
+        try {
+            result.startResolutionForResult(this, REQUEST_CODE_RESOLUTION);
+        } catch (IntentSender.SendIntentException e) {
+            Log.e("flowzr", "Exception while starting resolution activity", e);
+            e.printStackTrace();
+        }
+        showErrorPopup(this, R.string.gdocs_connection_failed);
+        //Toast.makeText(this,R.string.gdocs_connection_failed,Toast.LENGTH_LONG).show();
+    }
+
+
 }

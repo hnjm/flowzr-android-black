@@ -24,11 +24,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import com.flowzr.R;
 import com.flowzr.utils.Utils;
 
-public class AboutActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener, ActionBar.TabListener {
+public class AboutActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, ActionBar.TabListener {
 
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	private Tab aboutTab;
@@ -65,8 +66,6 @@ public class AboutActivity extends ActionBarActivity implements ViewPager.OnPage
         Intent intent= getIntent();
 		
 		mAdapter = new MyAdapter(getSupportFragmentManager(),intent);
-
-		viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
 		viewPager.setAdapter(mAdapter);
 		viewPager.setOnPageChangeListener(this);
     }

@@ -11,19 +11,11 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.content.ActivityNotFoundException;
+
 import android.preference.PreferenceScreen;
-import android.util.Log;
-import android.widget.Toast;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.common.AccountPicker;
-import com.google.api.client.googleapis.extensions.android.accounts.GoogleAccountManager;
+
 import com.flowzr.R;
-import com.flowzr.dialog.FolderBrowser;
-import com.flowzr.export.Export;
-import com.flowzr.export.dropbox.Dropbox;
+
 import com.flowzr.rates.ExchangeRateProviderFactory;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.PinProtection;
@@ -42,10 +34,12 @@ public class PreferencesActivity extends PreferenceActivity {
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);   
+        this.setTheme(R.style.CheckBox);
+        super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 
-  
+        //ActionBar actionBar = getActionBar();
+        //actionBar.setDisplayHomeAsUpEnabled(true);
 
         PreferenceScreen preferenceScreen = getPreferenceScreen();
         Preference pLocale = preferenceScreen.findPreference("ui_language");

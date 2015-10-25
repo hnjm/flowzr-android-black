@@ -26,7 +26,7 @@ import com.flowzr.recur.RecurrenceViewFactory;
 import com.flowzr.datetime.DateUtils;
 import com.flowzr.db.DatabaseHelper;
 import com.flowzr.utils.EnumUtils;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;

@@ -22,7 +22,7 @@ import android.os.Build;
 import android.provider.Settings;
 import com.flowzr.db.Database;
 import com.flowzr.orb.EntityManager;
-import com.google.api.client.json.JsonParser;
+//import com.google.api.client.json.JsonParser;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -217,6 +217,8 @@ public class FlowzrSyncEngine  {
             } catch (Exception e) {
                 sendBackTrace(e);
                 recordSyncTime=false;
+                isCanceled=true;
+                isRunning=false;
             }
         }
         /**
@@ -323,11 +325,11 @@ public class FlowzrSyncEngine  {
         });
 
 
-        if (!isCanceled && MyPreferences.doGoogleDriveUpload(context)) {
+        if (!isCanceled && MyPreferences.doGooglePictureUpload(context)) {
             notifyUser(context.getString(R.string.flowzr_sync_sending) + " Google Drive",95);
             pushAllBlobs();
         }  else {
-            Log.i("flowzr","picture upload desactivated in prefs");
+            Log.e("flowzr","picture upload desactivated in prefs");
         }
         notifyUser(context.getString(R.string.flowzr_sync_success),100);
         if (isCanceled==false) {
@@ -467,7 +469,7 @@ public class FlowzrSyncEngine  {
         } else 	if (tableName.equals(DatabaseHelper.BUDGET_TABLE)) {
             sql+= " order by  parent_budget_id asc";
         } else 	if (!tableName.equals("currency_exchange_rate")) {
-            sql+= " order by  _id asc";
+            sql+= " order by  _id asc limit 50";
         }
 
         cursorCursor=db2.rawQuery(sql, null);
@@ -629,6 +631,8 @@ public class FlowzrSyncEngine  {
                                 transaction_attribute+= dba.getAttribute(attributeId).remoteKey + "=" + attributesMap.get(attributeId) +";";
                             }
                             rowObject.put( "transaction_attribute" ,  transaction_attribute );
+                        } else if (tableName.equals(DatabaseHelper.EXCHANGE_RATES_TABLE)) {
+                            rowObject.put("tz" , String.valueOf(TimeZone.getDefault().getRawOffset()));
                         }
                         /****/
                     } else {
@@ -986,6 +990,8 @@ public class FlowzrSyncEngine  {
                 exRate.fromCurrencyId=fromCurrency.id;
                 exRate.rate=rate;
                 exRate.date=effective_date;
+                Log.i("PLOP","Save Rate");
+                Log.i("PLOP",jsonObjectEntity.toString());
                 dba.saveRate(exRate);
             }
         } catch (Exception e) {
@@ -1851,6 +1857,8 @@ public class FlowzrSyncEngine  {
         } else if (clazz==MyLocation.class) {
             saveOrUpdateLocationFromJSON(getLocalKey(tableName,remoteKey),o);
         } else if (tableName.equals("currency_exchange_rate"))  {
+            Log.i("PLOP","pulll rate");
+            Log.i("PLOP",o.toString());
             saveOrUpdateCurrencyRateFromJSON(o);
         } else if (clazz==Category.class)  {
             saveOrUpdateCategoryFromJSON(getLocalKey(tableName,remoteKey),o);
@@ -1922,7 +1930,7 @@ public class FlowzrSyncEngine  {
         String sql="select attached_picture,datetime,remote_key,blob_key " +
                 "from transactions " +
                 "where attached_picture is not null " +
-                "and blob_key is null";
+                "and (blob_key is null or blob_key='null')";
 
         Cursor cursorCursor=db.rawQuery(sql, null);
         int i=0;

@@ -1,11 +1,12 @@
 *.class
 *.jar
 *.apk
-
+local.properties
 #joe
 *~
 ## Directory-based project format:
 .idea/
+local.properties
 # if you remove the above rule, at least ignore the following:
 # User-specific stuff:
 # .idea/workspace.xml

@@ -206,7 +206,7 @@ public class CategorySelectorActivity extends AbstractListActivity {
             }
             v.topView.setVisibility(View.INVISIBLE);
             if (navigator.isSelected(c.id)) {
-                v.layout.setBackgroundResource(R.drawable.list_selector_background_focus);
+                v.layout.setBackgroundResource(R.drawable.activated_background);
             } else {
                 v.layout.setBackgroundResource(0);
             }

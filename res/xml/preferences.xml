@@ -9,6 +9,9 @@
       Denis Solonenko - initial API and implementation
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
     <PreferenceCategory android:title="@string/user_interface">
         <ListPreference android:key="ui_language"
                         android:title="@string/ui_language" android:summary="@string/ui_language_summary"
@@ -234,30 +237,30 @@
                             android:defaultValue="true"/>
     </PreferenceCategory>
 
+    <Preference android:title="@string/reports">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.flowzr"
+            android:targetClass="com.flowzr.activity.ReportPreferencesActivity"
+            />
+    </Preference>
 
-<Preference android:title="@string/database_backup">
-    <intent 
-        android:action="android.intent.action.VIEW"
-        android:targetPackage="com.flowzr"
-        android:targetClass="com.flowzr.activity.BackupPreferencesActivity"
-    />
-</Preference>
+    <Preference android:title="@string/database_backup">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.flowzr"
+            android:targetClass="com.flowzr.activity.BackupPreferencesActivity"
+            />
+    </Preference>
 
-<Preference android:title="@string/reports">
-    <intent 
-        android:action="android.intent.action.VIEW"
-        android:targetPackage="com.flowzr"
-        android:targetClass="com.flowzr.activity.ReportPreferencesActivity"
-    />
-</Preference>
+    <Preference android:title="@string/flowzr_sync">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.flowzr"
+            android:targetClass="com.flowzr.activity.FlowzrPreferencesActivity"
+            />
+    </Preference>
 
-<Preference android:title="@string/flowzr_sync">
-    <intent 
-        android:action="android.intent.action.VIEW"
-        android:targetPackage="com.flowzr"
-        android:targetClass="com.flowzr.activity.FlowzrPreferencesActivity"
-    />
-</Preference>
 
 
 </PreferenceScreen>

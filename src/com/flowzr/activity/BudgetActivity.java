@@ -10,8 +10,10 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -68,8 +70,9 @@ public class BudgetActivity extends AbstractEditorActivity {
 		projects = em.getActiveProjectsList(true);
 		
 		LinearLayout layout = (LinearLayout) findViewById(R.id.list);
+		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		titleText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 
-		titleText = new EditText(this);
 		x.addEditNode(layout, R.string.title, titleText);
 
 		accountText = x.addListNode(layout, R.id.account,

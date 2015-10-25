@@ -33,7 +33,7 @@
 
    
     <ListView android:id="@+id/navigationDrawer_L"
-        android:layout_width="240dp"
+        android:layout_width="260dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"

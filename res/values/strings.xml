@@ -33,7 +33,7 @@
     <string name="widget_4x1">Flowzr</string>
 	<string name="backup">Backup</string>
 	<string name="accounts">Accounts</string>
-	<string name="blotter">Blotter</string>
+	<string name="blotter">Transactions</string>
 	<string name="currencies">Currencies</string>
 	<string name="categories">Categories</string>
 	<string name="budgets">Budgets</string>
@@ -765,7 +765,7 @@
     <string name="dropbox">Dropbox</string>
     <string name="dropbox_authorize">Authorize</string>
     <string name="dropbox_authorize_summary">Allow Financisto to upload files to your Dropbox</string>
-    <string name="dropbox_unlink">Unlink</string>
+    <string name="unlink">Unlink</string>
     <string name="dropbox_unlink_summary">Prevent Financisto from uploading files to your Dropbox</string>
     <string name="dropbox_upload_backup">Upload Backups</string>
     <string name="dropbox_upload_backup_summary">Upload database backups to Dropbox</string>
@@ -901,9 +901,17 @@
     <string name="show_payee_in_transfer_summary">Show payee field in New Transfer screen</string>
     <string name="google_drive_backup_account">Backup account</string>
     <string name="google_drive_backup_account_summary">Choose your Google Drive account</string>
+	<string name="google_drive_unlink_summary">Prevent from uploading files to Google Drive</string>
+	<string name="google_drive_upload_backup">Upload Backups</string>
+	<string name="google_drive_upload_backup_summary">Upload database backups to Google Drive</string>
+	<string name="google_drive_upload_autobackup">Upload Auto-backups</string>
+	<string name="google_drive_upload_autobackup_summary">Upload database auto-backups to Google Drive</string>
+
+
+
     <string name="google_drive_permission_requested">Permission requested</string>
     <string name="google_drive_permission_requested_for_account">for account %s</string>
-    <string name="google_drive_permission_required">Please authorize Financisto to access your Google Drive then try again...</string>
+    <string name="google_drive_permission_required">Please authorize access to your Google Drive then try again...</string>
     <string name="google_drive_loading_files">Loading files from Google Drive...</string>
     <string name="google_drive_account_required">Please specify your Google Drive account in the Preferences then try again...</string>
     <string name="google_drive_account_select_error">Unable to select a Google account to use. Looks like your device does not support Google Play Services.</string>

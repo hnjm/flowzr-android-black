@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+       
+    <item android:id="@+id/settings"
+          android:icon="@drawable/ic_action_settings" 
+		  app:showAsAction="always"
+		/>
+
+    <item android:id="@+id/bt_filter_previous"
+          android:icon="@drawable/ic_action_back" 
+		  app:showAsAction="always"
+		/>
+
+    <item android:id="@+id/bt_filter_next"
+          android:icon="@drawable/ic_action_forward" 
+		  app:showAsAction="always"
+		/>		
+		
+		
+</menu>
+<!-- From: file:/home/eflorent/project/flowzr-android-black/res/menu/report2d_actions.xml -->

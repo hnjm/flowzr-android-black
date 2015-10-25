@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+       
+
+    <item android:id="@+id/action_exchange_rates"
+          android:icon="@drawable/ic_action_rates"
+		android:title="@string/exchange_rates"  
+		app:showAsAction="always"
+		/>
+		
+    <item android:id="@+id/action_add_currency"
+          android:icon="@drawable/ic_action_new"
+			android:title="@string/add_account"           
+          app:showAsAction="always"  />   
+		
+
+</menu>
+<!-- From: file:/home/eflorent/project/flowzr-android-black/res/menu/currencies_actions.xml -->

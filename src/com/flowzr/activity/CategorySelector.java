@@ -9,8 +9,10 @@
 package com.flowzr.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -91,6 +93,8 @@ public class CategorySelector {
     }
 
     public void createDummyNode() {
+        //LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //categoryText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
         categoryText = new EditText(activity);
     }
 

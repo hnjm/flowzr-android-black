@@ -19,7 +19,7 @@
                             android:summary="@string/auto_sync_enabled_summary"
                             android:defaultValue="true"/>
 
-        <CheckBoxPreference android:key="googledrive_upload"
+        <CheckBoxPreference android:key="picture_upload"
                             android:title="@string/googledrive_upload"
                             android:summary="@string/googledrive_upload_summary"
                             android:defaultValue="true"/>

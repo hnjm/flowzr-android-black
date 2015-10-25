@@ -22,13 +22,33 @@
         <com.flowzr.dialog.TimePreference android:key="auto_backup_time"
                                                             android:title="@string/auto_backup_time"
                                                             android:summary="@string/auto_backup_time_summary"
-                                                            android:dependency="auto_backup_enabled"/>
+                                                            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/gdocs_backup">
+        <Preference android:key="google_drive_backup_account"
+            android:title="@string/google_drive_backup_account"
+            android:summary="@string/google_drive_backup_account_summary"/>
+
+        <Preference android:title="@string/unlink"
+            android:key="google_unlink" android:summary="@string/google_drive_unlink_summary"/>
+
+        <EditTextPreference android:key="backup_folder"
+            android:title="@string/backup_folder"
+            android:summary="@string/backup_folder_summary"/>
+
+        <CheckBoxPreference android:key="google_drive_upload_backup"
+            android:title="@string/google_drive_upload_backup" android:summary="@string/google_drive_upload_backup_summary"
+            android:defaultValue="false"/>
+        <CheckBoxPreference android:key="google_drive_upload_autobackup"
+            android:title="@string/dropbox_upload_autobackup" android:summary="@string/google_drive_upload_autobackup_summary"
+            android:defaultValue="false"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/dropbox">
         <Preference android:title="@string/dropbox_authorize"
                     android:key="dropbox_authorize" android:summary="@string/dropbox_authorize_summary"/>
-        <Preference android:title="@string/dropbox_unlink"
+        <Preference android:title="@string/unlink"
                     android:key="dropbox_unlink" android:summary="@string/dropbox_unlink_summary"/>
         <CheckBoxPreference android:key="dropbox_upload_backup"
                             android:title="@string/dropbox_upload_backup" android:summary="@string/dropbox_upload_backup_summary"
@@ -36,19 +56,9 @@
         <CheckBoxPreference android:key="dropbox_upload_autobackup"
                             android:title="@string/dropbox_upload_autobackup" android:summary="@string/dropbox_upload_autobackup_summary"
                             android:defaultValue="false"/>
+
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/gdocs_backup">
-        <Preference android:key="google_drive_backup_account"
-                    android:title="@string/google_drive_backup_account"
-                    android:summary="@string/google_drive_backup_account_summary"/>
-        <CheckBoxPreference android:key="google_drive_backup_full_readonly"
-                            android:title="@string/google_drive_backup_full_readonly"
-                            android:summary="@string/google_drive_backup_full_readonly_summary"
-                            android:defaultValue="false"/>
-        <EditTextPreference android:key="backup_folder"
-                            android:title="@string/backup_folder"
-                            android:summary="@string/backup_folder_summary"/>
-    </PreferenceCategory>
+
 
 </PreferenceScreen>

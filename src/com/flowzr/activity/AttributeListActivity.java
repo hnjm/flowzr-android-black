@@ -20,7 +20,7 @@ import com.flowzr.R;
 import com.flowzr.adapter.AttributeListAdapter;
 import com.flowzr.db.DatabaseHelper.AttributeColumns;
 import com.flowzr.utils.MenuItemInfo;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;

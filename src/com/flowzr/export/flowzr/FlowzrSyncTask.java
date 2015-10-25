@@ -66,7 +66,7 @@ public class FlowzrSyncTask extends AsyncTask<String, String, Object> {
 	public static final String TAG = "flowzr";
 	public static  DefaultHttpClient  http_client;
 	private static DatabaseAdapter dba;
-	
+    private static final int GAUTH_RESULT=9004;
     public FlowzrSyncTask(Context context) {
     	this.context=context;
     	
@@ -175,7 +175,8 @@ public class GetAuthTokenCallback implements AccountManagerCallback<Bundle> {
 				Intent intent = (Intent)bundle.get(AccountManager.KEY_INTENT);
 				if(intent != null) {
 					// User input required
-					context.startActivity(intent);
+                    ((Activity) context).startActivityForResult(intent,GAUTH_RESULT);
+                    Log.e("flowzr","action requ");
 				} else {
 	            	AccountManager.get(context).invalidateAuthToken(bundle.getString(AccountManager.KEY_ACCOUNT_TYPE), bundle.getString(AccountManager.KEY_AUTHTOKEN));
 	            	AccountManager.get(context).invalidateAuthToken("ah", bundle.getString(AccountManager.KEY_AUTHTOKEN));

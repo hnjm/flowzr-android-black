@@ -1,8 +1,10 @@
 package com.flowzr.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -71,8 +73,9 @@ public abstract class AbstractSplitActivity extends AbstractEditorActivity {
 
     private void createCommonUI(LinearLayout layout) {
         unsplitAmountText = x.addInfoNode(layout, R.id.add_split, R.string.unsplit_amount, "0");
+        LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        noteText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 
-        noteText = new EditText(this);
         x.addEditNode(layout, R.string.note, noteText);
 
         projectSelector.createNode(layout);

@@ -239,7 +239,7 @@ public class CategorySelectorFragment extends AbstractListFragment {
             }
             v.topView.setVisibility(View.INVISIBLE);
             if (navigator.isSelected(c.id)) {
-                v.layout.setBackgroundResource(R.drawable.list_selector_background_focus);
+                v.layout.setBackgroundResource(R.color.f_blue_lighter1);
             } else {
                 v.layout.setBackgroundResource(0);
             }

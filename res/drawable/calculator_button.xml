@@ -10,6 +10,6 @@
       Denis Solonenko - initial API and implementation
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" android:drawable="@drawable/calculator_button_pressed" />
+    <item android:state_pressed="true" android:drawable="@color/pressed_card" />
     <item android:drawable="@drawable/calculator_button_normal" />
 </selector>

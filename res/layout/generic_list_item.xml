@@ -27,7 +27,7 @@
 
 	<TextView android:id="@+id/label" android:layout_width="wrap_content"
 		style="@style/TextView" android:textSize="@dimen/text_normal" 
-		android:layout_height="wrap_content" android:layout_toRightOf="@+id/divider"
+		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true" android:layout_marginBottom="8dip"
 		android:layout_marginTop="-10dip" android:singleLine="true"
 		android:ellipsize="marquee" 		
@@ -43,7 +43,7 @@
 
 	<TextView android:id="@+id/line1" android:layout_width="wrap_content"
 		style="@style/TextView" android:textSize="@dimen/text_large" 
-		android:layout_height="wrap_content" android:layout_toRightOf="@+id/divider"
+		android:layout_height="wrap_content"
 		android:layout_alignParentTop="true" android:layout_above="@id/label"
 		android:layout_alignWithParentIfMissing="true"
 		android:singleLine="true" android:gravity="center_vertical"

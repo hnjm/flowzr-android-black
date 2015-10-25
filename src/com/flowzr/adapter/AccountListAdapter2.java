@@ -28,7 +28,7 @@ import com.flowzr.orb.EntityManager;
 import java.text.DateFormat;
 import java.util.Date;
 
-import com.google.android.gms.internal.db;
+
 
 public class AccountListAdapter2 extends ResourceCursorAdapter {
 	

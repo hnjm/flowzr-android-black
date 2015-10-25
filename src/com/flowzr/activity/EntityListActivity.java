@@ -64,7 +64,7 @@ public class EntityListActivity extends ActionBarActivity {
 	    }
     	//@see: http://stackoverflow.com/questions/16539251/get-rid-of-blue-line, 
         //only way found to remove on various devices 2.3x, 3.0, ...
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#121212")));   
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#121212")));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);		
@@ -96,7 +96,7 @@ public class EntityListActivity extends ActionBarActivity {
 			transaction.replace(R.id.fragment_container,new ExchangeRatesListFragment());			
 		} else if (intent.hasExtra(REQUEST_CATEGORY_SELECTOR)) {
 				intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.category_selector);
-				transaction.replace(R.id.fragment_container,new CategorySelectorFragment());			
+				transaction.replace(R.id.fragment_container,new CategorySelectorFragment());
 			} else if (intent.hasExtra(REQUEST_SCHEDULED)) {
 				intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.scheduled_transactions);
 				transaction.replace(R.id.fragment_container,new ScheduledListActivity());			

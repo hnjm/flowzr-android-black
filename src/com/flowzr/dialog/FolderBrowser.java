@@ -8,12 +8,14 @@
 
 package com.flowzr.dialog;
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 import com.flowzr.R;
@@ -84,7 +86,9 @@ public class FolderBrowser extends ListActivity {
     }
 
     private void createNewFolder() {
-        final EditText editText = new EditText(this);
+        LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final EditText editText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
+
         Dialog d = new AlertDialog.Builder(this)
                 .setTitle(R.string.create_new_folder_title)
                 .setView(editText)

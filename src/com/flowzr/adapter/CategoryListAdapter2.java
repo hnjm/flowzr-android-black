@@ -92,6 +92,7 @@ public class CategoryListAdapter2 extends BaseAdapter {
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		Holder h;
+
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.category_list_item2, parent, false);
 			h = Holder.create(convertView);

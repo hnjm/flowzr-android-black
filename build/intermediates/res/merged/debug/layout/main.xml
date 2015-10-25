@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2010 Denis Solonenko.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  
+  Contributors:
+      Denis Solonenko - initial API and implementation
+      Emmanuel Florent - port to Android API 11+
+-->
+
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_V"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/Theme.Financisto">
+
+ <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+     <FrameLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+     </FrameLayout>
+ </FrameLayout>
+
+
+<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pager"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+	</android.support.v4.view.ViewPager>
+
+   
+    <ListView android:id="@+id/navigationDrawer_L"
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@color/separator"
+        android:dividerHeight="0dp"
+        android:background="#2D2D2D"/>
+
+</android.support.v4.widget.DrawerLayout>
+
+
+<!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout/main.xml -->

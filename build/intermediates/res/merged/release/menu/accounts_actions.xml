@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+       
+    <item android:id="@+id/action_integrity_fix"
+    		android:title="@string/integrity_fix" 
+          android:icon="@drawable/ic_action_keyboard"  />
+
+	<!--
+    <item android:id="@+id/action_hide_closed"
+    		android:title="@string/hide_closed_accounts" 
+          android:icon="@drawable/ic_menu_filter_off"  />  
+     -->     
+
+	<item android:id="@+id/action_planner"
+		android:icon="@drawable/ic_action_go_to_today"
+		android:title="@string/planner" 
+		app:showAsAction="always"		
+		/>
+
+    <item android:id="@+id/action_scheduled_transaction"
+          android:icon="@drawable/ic_action_alarms"
+        android:title="@string/scheduled_transactions"
+        app:showAsAction="always"
+        />
+<!--
+    <item android:id="@+id/action_list_template"
+          android:icon="@drawable/ic_action_copy"
+          android:title="@string/template"
+          app:showAsAction="ifRoom" />
+-->
+    <item android:id="@+id/action_add_account"
+          android:icon="@drawable/ic_action_new"
+            android:title="@string/add_account"
+          app:showAsAction="always"  />
+
+
+</menu>
+<!-- From: file:/home/eflorent/project/flowzr-android-black/res/menu/accounts_actions.xml -->

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="http://schemas.android.com/tools">
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-sw720dp/dimens.xml -->
+    <eat-comment/>
+    <dimen name="dynamic_margin_card_horizontal">144dp</dimen>
+    <dimen name="dynamic_margin_card_vertical">12dp</dimen>
+    <dimen name="dynamic_margin_drawer_narrow_horizontal">144dp</dimen>
+    <dimen name="dynamic_margin_narrow_horizontal">144dp</dimen>
+    <dimen name="dynamic_margin_narrow_vertical">36dp</dimen>
+    <dimen name="margin_dynamic_large">204dp</dimen>
+    <dimen name="margin_dynamic_normal">96dp</dimen>
+    <dimen name="margin_land_normal">96dp</dimen>
+    <dimen name="text_large">22sp</dimen>
+    <dimen name="text_normal">20sp</dimen>
+    <dimen name="text_small">18sp</dimen>
+    <dimen name="text_xlarge">26sp</dimen>
+    <dimen name="text_xsmall">16sp</dimen>
+    <dimen name="text_xxlarge">34sp</dimen>
+    <dimen name="text_xxxlarge">42sp</dimen>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-sw720dp/consts.xml -->
+    <eat-comment/>
+    <item format="integer" name="column_count" ns1:ignore="UnusedResources" type="integer">2</item>
+    <item format="integer" name="layout_type" ns1:ignore="UnusedResources" type="integer">4</item>
+</resources>

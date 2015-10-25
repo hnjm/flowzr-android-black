@@ -13,20 +13,28 @@ package com.flowzr.export;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Environment;
-import com.google.api.client.http.InputStreamContent;
-import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.model.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import android.util.Log;
+
 import com.flowzr.R;
-import com.flowzr.export.docs.GoogleDriveClient;
+import com.flowzr.export.docs.ApiClientAsyncTask;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveApi.DriveContentsResult;
+import com.google.android.gms.drive.DriveFolder;
+import com.google.android.gms.drive.DriveId;
+import com.google.android.gms.drive.MetadataChangeSet;
 import com.flowzr.export.dropbox.Dropbox;
 import com.flowzr.utils.MyPreferences;
+//import com.google.api.client.http.InputStreamContent;
 
 import java.io.*;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
 public abstract class Export {
@@ -36,6 +44,9 @@ public abstract class Export {
 
     private final Context context;
     private final boolean useGzip;
+
+    private GoogleApiClient mGoogleApiClient;
+
 
     protected Export(Context context, boolean useGzip) {
         this.context = context;
@@ -70,37 +81,55 @@ public abstract class Export {
 	 * @param drive Google docs connection
 	 * @param targetFolder Google docs folder name
 	 * */
-	public String exportOnline(Drive drive, String targetFolder) throws Exception {
-		// get folder first
-        String folderId = GoogleDriveClient.getOrCreateDriveFolder(drive, targetFolder);
-		if (folderId == null) {
-            throw new ImportExportException(R.string.gdocs_folder_not_found);
-		}
 
-		// generation backup file
-		String fileName = generateFilename();
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+	public String exportOnline(final String targetFolder,final GoogleApiClient pGoogleApiClient) throws Exception {
+        this.mGoogleApiClient=pGoogleApiClient;
+        if (!mGoogleApiClient.isConnected()) {
+            Log.e("flowzr",context.getResources().getString(R.string.gdocs_connection_failed));
+            return context.getResources().getString(R.string.gdocs_connection_failed);
+        } else {
+            Log.e("flowzr","connected");
+        }
+
+        DriveId folderId = ApiClientAsyncTask.getOrCreateDriveFolder(mGoogleApiClient, targetFolder);
+        Log.i("flowzr", "Drive folder id is " + folderId.encodeToString());
+        final DriveFolder folder = Drive.DriveApi.getFolder(mGoogleApiClient, folderId);
+
+        // generation backup file
+        final String fileName = generateFilename();
+        Log.i("flowzr", "creating new drive content for " + fileName);
+        DriveContentsResult result = Drive.DriveApi.newDriveContents(mGoogleApiClient).await();
+        if (!result.getStatus().isSuccess()) {
+            Log.i("flowzr", "Failed to create new contents.");
+            return "failed to create new content";
+        }
+
+        Log.i("flowzr", "Sending file");
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         OutputStream out = new BufferedOutputStream(new GZIPOutputStream(outputStream));
-		generateBackup(out);
+        generateBackup(out);
 
-		// transforming streams
-		InputStream backup = new ByteArrayInputStream(outputStream.toByteArray());
+        //InputStreamContent mediaContent = new InputStreamContent(BACKUP_MIME_TYPE, new  BufferedInputStream(backup));
+        // Get an output stream for the contents.
+        OutputStream outputStream2 = result.getDriveContents().getOutputStream();
+        // transforming streams
+        //InputStream backup = new ByteArrayInputStream(outputStream.toByteArray());
+        outputStream2.write(outputStream.toByteArray());
+        outputStream2.close();
 
-        InputStreamContent mediaContent = new InputStreamContent(BACKUP_MIME_TYPE, new  BufferedInputStream(backup));
-        mediaContent.setLength(outputStream.size());
-        // File's metadata.
-        com.google.api.services.drive.model.File body = new com.google.api.services.drive.model.File();
-        body.setTitle(fileName);
-        body.setMimeType(BACKUP_MIME_TYPE);
-        body.setFileSize((long)outputStream.size());
-        List<ParentReference> parentReference = new ArrayList<ParentReference>();
-        parentReference.add(new ParentReference().setId(folderId)) ;
-        body.setParents(parentReference);
-        com.google.api.services.drive.model.File file = drive.files().insert(body, mediaContent).execute();
+        MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
+                .setTitle(fileName)
+                .setMimeType(BACKUP_MIME_TYPE)
+                .build();
 
-		return fileName;
-	}
-	
+        DriveFolder.DriveFileResult rslt = folder.createFile(mGoogleApiClient,
+                changeSet, result.getDriveContents()).await();
+
+        return fileName;
+    }
+
+
 	private String generateFilename() {
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd'_'HHmmss'_'SSS");
 		return df.format(new Date())+getExtension();
@@ -148,5 +177,6 @@ public abstract class Export {
         Dropbox dropbox = new Dropbox(context);
         dropbox.uploadFile(file);
     }
+
 
 }

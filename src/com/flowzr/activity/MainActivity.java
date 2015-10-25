@@ -88,46 +88,56 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
 		  
 	  }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log.e("flowzr", "config change");
+        initUI();
+        PinProtection.unlock(this);
+    }
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        initUI();
+	}
+
+    protected void initUI() {
         activity=this;
-		setContentView(R.layout.main);  
+        setContentView(R.layout.main);
+        actionBar = getSupportActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setHomeButtonEnabled(true);
 
-        actionBar = getSupportActionBar(); 		
-        
-        //@see: http://stackoverflow.com/questions/16539251/get-rid-of-blue-line, 
+
+        //@see: http://stackoverflow.com/questions/16539251/get-rid-of-blue-line,
         //only way found to remove on various devices 2.3x, 3.0, ...
-        actionBar.setBackgroundDrawable(new ColorDrawable(R.color.f_dark));   
-		
-        
-		setupDrawer();	
+		//actionBar.setBackgroundDrawable(new ColorDrawable(R.color.f_dark));
 
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+
+        setupDrawer();
+
 
         //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        
-		// create new tabs and and set up the titles of the tabs
-		mAccountTab = setupAccountsTab(actionBar);
-		mBlotterTab = setupBlotterTab(actionBar);
-		mBudgetsTab = setupBudgetsTab(actionBar);
+
+        // create new tabs and and set up the titles of the tabs
+        mAccountTab = setupAccountsTab(actionBar);
+        mBlotterTab = setupBlotterTab(actionBar);
+        mBudgetsTab = setupBudgetsTab(actionBar);
 
         Intent intent= getIntent();
-		
-		mAdapter = new MyAdapter(getSupportFragmentManager(),intent);
-		viewPager = (ViewPager) findViewById(R.id.pager);	
-		viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-		viewPager.setAdapter(mAdapter);
-		viewPager.setOnPageChangeListener(this);
-		
-		mAccountTab.setTabListener(this);
-		mBlotterTab.setTabListener(this);		
-		mBudgetsTab.setTabListener(this);
-		
-		addMyTabs();
-		
+
+        mAdapter = new MyAdapter(getSupportFragmentManager(),intent);
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(mAdapter);
+        viewPager.setOnPageChangeListener(this);
+
+        mAccountTab.setTabListener(this);
+        mBlotterTab.setTabListener(this);
+        mBudgetsTab.setTabListener(this);
+
+        addMyTabs();
+
         if (intent.hasExtra(REQUEST_BLOTTER)) {
             blotterFragment=new BlotterFragment();
             if (intent.hasExtra(EntityListActivity.REQUEST_NEW_TRANSACTION_FROM_TEMPLATE)) {
@@ -135,39 +145,30 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
                 bundle.putInt(BlotterFragment.EXTRA_REQUEST_TYPE, BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
                 blotterFragment.setArguments(bundle);
             }
-        	loadTabFragment(blotterFragment,R.layout.blotter, intent.getExtras(), TAB_BLOTTER);
+            loadTabFragment(blotterFragment,R.layout.blotter, intent.getExtras(), TAB_BLOTTER);
 
         } else if (intent.hasExtra(REQUEST_SPLIT_BLOTTER)) {
-        	loadTabFragment(new SplitsBlotterActivity(),R.layout.blotter, intent.getExtras(), TAB_BLOTTER);
+            loadTabFragment(new SplitsBlotterActivity(),R.layout.blotter, intent.getExtras(), TAB_BLOTTER);
         } else 	if (intent.hasExtra(REQUEST_BUDGET_BLOTTER)) {
-        	loadTabFragment(new BudgetBlotterFragment(),R.layout.blotter, intent.getExtras(), TAB_BLOTTER);		
-		} else {
-            StartupScreen startupScreen=MyPreferences.getStartupScreen(this);        
-        	viewPager.setCurrentItem(startupScreen.ordinal());
+            loadTabFragment(new BudgetBlotterFragment(),R.layout.blotter, intent.getExtras(), TAB_BLOTTER);
+        } else {
+            StartupScreen startupScreen=MyPreferences.getStartupScreen(this);
+            viewPager.setCurrentItem(startupScreen.ordinal());
         }
 
         if (WebViewDialog.checkVersionAndShowWhatsNewIfNeeded(this)) {
-        	if (mDrawerLayout!=null) {
-        		mDrawerLayout.openDrawer(Gravity.LEFT);
-        	}
-        }        
-              
-        initialLoad();
-                
-        FlowzrSyncEngine.setUpdatable(this);
-	}
+            if (mDrawerLayout!=null) {
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+            }
+        }
 
-//	@Override
-//	public void onConfigurationChanged(Configuration newConfig) {
-//	    super.onConfigurationChanged(newConfig);
-//
-//	    // Checks the orientation of the screen
-//	    if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//	        Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
-//	    } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-//	        Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
-//	    }
-//	}
+        initialLoad();
+
+        FlowzrSyncEngine.setUpdatable(this);
+    }
+
+
+
 	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
@@ -205,7 +206,7 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
         if (resultCode == MainActivity.RESULT_OK && requestCode == BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST) {
             blotterFragment.createTransactionFromTemplate(data);
         }
-
+        refreshCurrentTab();
     }
 
     private void initialLoad() {
@@ -249,16 +250,19 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
     }
 
     public void refreshCurrentTab() {   
-    	Log.d("financisto","refresh all tabs");
-        Fragment fragment=this.getSupportFragmentManager().findFragmentById(R.id.pager);
-        RefreshSupportedActivity activity = (RefreshSupportedActivity) fragment;
-        if (activity!=null) {
-	        activity.recreateCursor();
-	        activity.integrityCheck();
-	        viewPager.getAdapter().notifyDataSetChanged();
-	        viewPager.destroyDrawingCache();       
-	        viewPager.setCurrentItem(viewPager.getCurrentItem());
-        }
+		try {
+			Fragment fragment = this.getSupportFragmentManager().findFragmentById(R.id.pager);
+			RefreshSupportedActivity activity = (RefreshSupportedActivity) fragment;
+			if (activity != null) {
+				activity.recreateCursor();
+				activity.integrityCheck();
+				viewPager.getAdapter().notifyDataSetChanged();
+				viewPager.destroyDrawingCache();
+				viewPager.setCurrentItem(viewPager.getCurrentItem());
+			}
+		} catch (Exception e) {
+			//pass
+		}
     }
     
     private void setMyTabText(Tab tab, String text) {

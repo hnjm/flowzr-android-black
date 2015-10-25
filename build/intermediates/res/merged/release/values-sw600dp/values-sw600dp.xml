@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="http://schemas.android.com/tools">
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-sw600dp/values-sw600dp.xml -->
+    <eat-comment/>
+    <dimen name="abc_action_bar_content_inset_material">24dp</dimen>
+    <dimen name="abc_action_bar_default_height_material">64dp</dimen>
+    <dimen name="abc_action_bar_default_padding_end_material">8dp</dimen>
+    <dimen name="abc_action_bar_default_padding_start_material">8dp</dimen>
+    <dimen name="abc_config_prefDialogWidth">580dp</dimen>
+    <dimen name="abc_text_size_subtitle_material_toolbar">16dp</dimen>
+    <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-sw600dp/dimens.xml -->
+    <eat-comment/>
+    <dimen name="card_margin">16dp</dimen>
+    <dimen name="dynamic_margin_card_horizontal">72dp</dimen>
+    <dimen name="dynamic_margin_card_vertical">12dp</dimen>
+    <dimen name="dynamic_margin_drawer_narrow_horizontal">72dp</dimen>
+    <dimen name="dynamic_margin_narrow_horizontal">72dp</dimen>
+    <dimen name="dynamic_margin_narrow_vertical">24dp</dimen>
+    <dimen name="margin_dynamic_large">80dp</dimen>
+    <dimen name="margin_dynamic_normal">72dp</dimen>
+    <dimen name="margin_land_normal">72dp</dimen>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.2.0/res/values-sw600dp/values-sw600dp.xml -->
+    <eat-comment/>
+    <dimen name="mr_media_route_controller_art_max_height">480dp</dimen>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-sw600dp/dimens.xml -->
+    <eat-comment/>
+    <dimen name="text_large">20sp</dimen>
+    <dimen name="text_normal">18sp</dimen>
+    <dimen name="text_small">16sp</dimen>
+    <dimen name="text_xlarge">24sp</dimen>
+    <dimen name="text_xsmall">14sp</dimen>
+    <dimen name="text_xxlarge">30sp</dimen>
+    <dimen name="text_xxxlarge">38sp</dimen>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-sw600dp/values-sw600dp.xml -->
+    <eat-comment/>
+    <integer name="abc_max_action_buttons">5</integer>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-sw600dp/consts.xml -->
+    <eat-comment/>
+    <item format="integer" name="layout_type" ns1:ignore="UnusedResources" type="integer">2</item>
+</resources>
