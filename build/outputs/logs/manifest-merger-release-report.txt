@@ -1,421 +1,267 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:14:1-430:12
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:14:1-377:12
 	xmlns:android
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:14:11-69
 	package
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:15:5-25
 	android:versionName
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:15:26-51
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:15:26-53
 	android:versionCode
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:15:52-77
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:15:54-79
 		INJECTED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml
 		INJECTED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml
 	android:installLocation
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:16:5-43
 uses-feature#0x00020000
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:20:5-22:34
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:23:5-25:33
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:23:5-25:33
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:23:5-25:33
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:23:5-25:33
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:19:5-21:34
+MERGED from [com.google.android.gms:play-services-maps:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.3.0/AndroidManifest.xml:22:5-24:33
 	android:required
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:22:9-32
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:21:9-32
 	android:glEsVersion
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:21:9-41
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:20:9-41
 uses-permission#android.permission.GET_ACCOUNTS
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:25:5-70
-MERGED from [com.google.android.gms:play-services-wallet:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.8.0/AndroidManifest.xml:21:5-70
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:24:5-70
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:25:22-68
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:24:22-68
 uses-permission#android.permission.MANAGE_ACCOUNTS
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:26:5-73
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:25:5-73
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:26:22-71
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:25:22-71
 uses-permission#android.permission.AUTHENTICATE_ACCOUNTS
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:27:5-79
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:26:5-79
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:27:22-77
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:26:22-77
 uses-permission#android.permission.USE_CREDENTIALS
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:28:5-73
-MERGED from [com.google.android.gms:play-services-wallet:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.8.0/AndroidManifest.xml:22:5-73
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:27:5-73
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:28:22-71
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:27:22-71
 uses-sdk
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:30:5-72
-MERGED from [com.android.support:appcompat-v7:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-ads:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.8.0/AndroidManifest.xml:23:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-analytics:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-appindexing:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-analytics:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-appindexing:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-appinvite:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-appstate:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-cast:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:mediarouter-v7:22.2.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.2.0/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:appcompat-v7:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-drive:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-fitness:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-location:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:27:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-games:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-drive:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-gcm:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-identity:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-location:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:27:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:27:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-nearby:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-panorama:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-plus:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-safetynet:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-vision:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/7.8.0/AndroidManifest.xml:4:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-wallet:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.8.0/AndroidManifest.xml:19:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-identity:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:27:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
-MERGED from [com.google.android.gms:play-services-wearable:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:20:5-43
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:29:5-72
+MERGED from [com.android.support:multidex:1.0.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/multidex/1.0.1/AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:appcompat-v7:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:design:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/design/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.google.android.gms:play-services-base:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.google.android.gms:play-services-drive:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-base:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.google.android.gms:play-services-location:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-base:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.google.android.gms:play-services-maps:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.3.0/AndroidManifest.xml:26:5-42
+MERGED from [com.google.android.gms:play-services-base:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.google.android.gms:play-services-auth:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/8.3.0/AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-base:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.google.android.gms:play-services-plus:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-base:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.google.android.gms:play-services-gcm:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-base:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
 	android:targetSdkVersion
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:30:41-70
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:29:41-70
 		INJECTED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml
 		INJECTED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml
 	android:minSdkVersion
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:30:15-40
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:29:15-40
 		INJECTED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml
 		INJECTED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml
 supports-screens
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:32:5-37:40
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:31:5-36:40
 	android:resizeable
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:36:13-38
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:35:13-38
 	android:largeScreens
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:35:13-40
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:34:13-40
 	android:anyDensity
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:37:13-38
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:36:13-38
 	android:normalScreens
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:34:13-41
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:33:13-41
 	android:smallScreens
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:33:13-40
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:32:13-40
 uses-feature#android.hardware.touchscreen
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:39:5-90
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:38:5-90
 	android:required
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:39:63-87
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:38:63-87
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:39:19-62
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:38:19-62
 uses-feature#android.hardware.camera
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:40:5-85
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:39:5-85
 	android:required
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:40:58-82
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:39:58-82
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:40:19-57
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:39:19-57
 uses-feature#android.hardware.location
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:41:5-87
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:40:5-87
 	android:required
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:41:60-84
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:40:60-84
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:41:19-59
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:40:19-59
 uses-feature#android.hardware.location.network
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:42:5-95
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:41:5-95
 	android:required
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:42:68-92
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:41:68-92
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:42:19-67
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:41:19-67
 uses-feature#android.hardware.location.gps
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:43:5-91
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:42:5-91
 	android:required
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:43:64-88
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:42:64-88
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:43:19-63
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:42:19-63
 permission#android.permission.STATUS_BAR_SERVICE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:44:2-105
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:43:2-105
 	android:protectionLevel
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:44:67-102
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:43:67-102
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:44:14-66
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:43:14-66
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:45:5-80
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:44:5-80
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:45:22-78
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:44:22-78
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:46:5-78
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:45:5-78
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:46:22-76
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:45:22-76
 uses-permission#android.permission.CAMERA
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:47:5-65
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:46:5-65
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:47:22-62
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:46:22-62
 uses-permission#android.permission.INTERNET
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:48:5-66
-MERGED from [com.google.android.gms:play-services-ads:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.8.0/AndroidManifest.xml:20:5-66
-MERGED from [com.google.android.gms:play-services-analytics:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.8.0/AndroidManifest.xml:21:5-67
-MERGED from [com.google.android.gms:play-services-analytics:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.8.0/AndroidManifest.xml:21:5-67
-MERGED from [com.google.android.gms:play-services-appinvite:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.8.0/AndroidManifest.xml:19:5-67
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:21:5-66
-MERGED from [com.google.android.gms:play-services-gcm:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.8.0/AndroidManifest.xml:22:5-67
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:21:5-66
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:21:5-66
-MERGED from [com.google.android.gms:play-services-wallet:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.8.0/AndroidManifest.xml:20:5-66
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:21:5-66
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:47:5-66
+MERGED from [com.google.android.gms:play-services-maps:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.3.0/AndroidManifest.xml:21:5-66
+MERGED from [com.google.android.gms:play-services-gcm:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.3.0/AndroidManifest.xml:22:5-67
+MERGED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:21:5-67
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:48:22-64
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:47:22-64
 uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:49:5-81
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:48:5-81
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:49:22-78
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:48:22-78
 uses-permission#android.permission.VIBRATE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:50:5-65
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:49:5-65
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:50:22-63
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:49:22-63
 uses-permission#android.permission.WAKE_LOCK
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:51:5-67
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:50:5-67
+MERGED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:24:5-67
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:51:22-65
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:50:22-65
 uses-permission#com.android.launcher.permission.INSTALL_SHORTCUT
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:52:5-87
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:51:5-87
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:52:22-85
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:51:22-85
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:53:5-80
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:22:5-80
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:22:5-80
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:22:5-80
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:22:5-80
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:52:5-80
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:53:22-78
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:52:22-78
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:54:5-78
-MERGED from [com.google.android.gms:play-services-ads:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.8.0/AndroidManifest.xml:21:5-78
-MERGED from [com.google.android.gms:play-services-analytics:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.8.0/AndroidManifest.xml:22:5-79
-MERGED from [com.google.android.gms:play-services-analytics:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.8.0/AndroidManifest.xml:22:5-79
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:20:5-78
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:20:5-78
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:20:5-78
-MERGED from [com.google.android.gms:play-services-nearby:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.8.0/AndroidManifest.xml:19:5-79
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:20:5-78
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:53:5-78
+MERGED from [com.google.android.gms:play-services-maps:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.3.0/AndroidManifest.xml:20:5-78
+MERGED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:22:5-79
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:54:22-76
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:53:22-76
 uses-permission#com.android.vending.BILLING
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:55:5-67
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:54:5-67
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:55:22-64
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:54:22-64
 uses-permission#com.google.android.c2dm.permission.RECEIVE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:57:5-82
-MERGED from [com.google.android.gms:play-services-gcm:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.8.0/AndroidManifest.xml:21:5-82
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:56:5-82
+MERGED from [com.google.android.gms:play-services-gcm:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.3.0/AndroidManifest.xml:21:5-82
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:57:22-79
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:56:22-79
 permission#com.flowzr.permission.C2D_MESSAGE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:58:2-101
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:57:2-101
 	android:protectionLevel
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:58:63-98
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:57:63-98
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:58:14-62
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:57:14-62
 uses-permission#com.flowzr.permission.C2D_MESSAGE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:59:5-72
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:58:5-72
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:59:22-70
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:58:22-70
 uses-permission#com.google.android.providers.gsf.permission.READ_GSERVICES
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:60:2-94
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:59:2-94
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:60:19-92
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:59:19-92
 uses-permission#com.flowzr.permission.MAPS_RECEIVE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:61:5-73
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:60:5-73
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:61:22-71
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:60:22-71
 application
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:63:5-428:16
-MERGED from [com.android.support:appcompat-v7:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-ads:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.8.0/AndroidManifest.xml:24:5-32:19
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-analytics:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.8.0/AndroidManifest.xml:24:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-appindexing:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-analytics:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.8.0/AndroidManifest.xml:24:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-appindexing:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-appinvite:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.8.0/AndroidManifest.xml:20:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-appstate:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-cast:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:mediarouter-v7:22.2.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.2.0/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:appcompat-v7:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-drive:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-fitness:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-location:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:28:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-games:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-drive:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-gcm:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.8.0/AndroidManifest.xml:24:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-identity:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-location:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:28:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:28:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-nearby:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.8.0/AndroidManifest.xml:20:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-panorama:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-plus:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-safetynet:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-vision:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/7.8.0/AndroidManifest.xml:5:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-identity:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-maps:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/AndroidManifest.xml:28:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-wearable:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.8.0/AndroidManifest.xml:19:5-20
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.1.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/AndroidManifest.xml:22:5-20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:62:5-375:16
+MERGED from [com.android.support:appcompat-v7:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/design/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:20:5-24:19
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-drive:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/8.3.0/AndroidManifest.xml:19:5-20
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:20:5-24:19
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-location:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.3.0/AndroidManifest.xml:19:5-20
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:20:5-24:19
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-maps:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.3.0/AndroidManifest.xml:27:5-20
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:20:5-24:19
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-auth:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/8.3.0/AndroidManifest.xml:20:5-25:19
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:20:5-24:19
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-plus:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.3.0/AndroidManifest.xml:19:5-20
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:20:5-24:19
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-gcm:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.3.0/AndroidManifest.xml:24:5-20
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:20:5-24:19
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:26:5-46:19
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:20:5-24:19
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:64:43-75
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:63:43-75
 	android:icon
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:64:13-42
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:63:13-42
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:63:18-57
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:62:18-57
 	android:description
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:65:7-52
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:64:7-52
+	android:name
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:65:13-72
 uses-library#com.google.android.maps
 ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:67:3-58
 	android:name
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:67:17-55
 meta-data#com.google.android.gms.version
 ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:69:4-117
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
-MERGED from [com.google.android.gms:play-services-base:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:21:9-23:69
 	android:name
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:69:15-60
 	android:value
@@ -549,13 +395,11 @@ ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:138:1
 	android:name
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:138:25-67
 activity#com.flowzr.activity.MainActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:142:3-151:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:142:3-149:14
 	android:label
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:142:51-83
 	android:configChanges
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:143:13-74
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:144:50-86
 	android:taskAffinity
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:144:13-49
 	android:name
@@ -570,525 +414,495 @@ category#android.intent.category.LAUNCHER
 ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:147:5-65
 	android:name
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:147:15-62
-meta-data#android.support.UI_OPTIONS
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:149:9-150:63
-	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:149:20-61
-	android:value
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:150:20-60
 activity#com.flowzr.activity.TransactionActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:153:3-167:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:151:3-161:14
 	android:windowSoftInputMode
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:156:4-64
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:154:4-64
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:154:49-84
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:152:49-84
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:155:4-65
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:157:48-84
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:153:4-65
 	android:taskAffinity
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:157:4-47
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:155:4-47
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:154:4-48
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:152:4-48
 intent-filter#android.intent.action.MAIN+android.intent.category.DEFAULT+com.flowzr.NEW_TRANSACTION
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:158:4-162:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:156:4-160:20
 action#com.flowzr.NEW_TRANSACTION
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:160:5-57
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:158:5-57
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:160:13-54
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:158:13-54
 category#android.intent.category.DEFAULT
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:161:5-64
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:159:5-64
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:161:15-61
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:159:15-61
 activity#com.flowzr.activity.TransferActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:169:3-181:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:163:3-173:14
 	android:windowSoftInputMode
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:172:4-64
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:166:4-64
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:170:46-78
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:164:46-78
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:171:4-65
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:173:45-81
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:165:4-65
 	android:taskAffinity
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:173:4-44
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:167:4-44
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:170:4-45
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:164:4-45
 intent-filter#android.intent.action.MAIN+android.intent.category.DEFAULT+com.flowzr.NEW_TRANSFER
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:174:4-178:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:168:4-172:20
 action#com.flowzr.NEW_TRANSFER
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:176:5-54
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:170:5-54
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:176:13-51
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:170:13-51
 activity#com.flowzr.activity.PinActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:183:3-184:36
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:175:3-176:36
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:183:50-83
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:175:50-83
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:183:13-49
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:175:13-49
 	android:launchMode
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:184:4-34
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:176:4-34
 activity#com.flowzr.activity.BlotterActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:186:3-189:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:178:3-179:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:186:54-85
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:178:54-85
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:186:13-53
-	android:value
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:186:87-127
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:178:13-53
 activity#com.flowzr.activity.PlannerActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:191:9-194:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:181:9-182:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:191:60-91
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:181:60-91
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:191:19-59
-	android:value
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:191:92-132
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:181:19-59
 activity#com.flowzr.activity.MassOpActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:196:9-199:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:184:9-185:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:196:59-98
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:184:59-98
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:196:19-58
-	android:value
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:196:99-139
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:184:19-58
 activity#com.flowzr.activity.LocationActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:201:3-89
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:187:3-89
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:201:55-87
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:187:55-87
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:201:13-54
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:187:13-54
 activity#com.flowzr.activity.ExchangeRateActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:203:9-207:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:189:9-191:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:203:65-102
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:189:65-102
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:204:19-80
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:204:81-117
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:190:19-80
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:203:19-64
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:189:19-64
 activity#com.flowzr.activity.RecurrenceActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:209:5-213:28
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:193:5-195:28
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:209:59-88
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:193:59-88
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:210:8-58
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:210:59-95
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:194:8-58
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:209:15-58
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:193:15-58
 activity#com.flowzr.activity.RecurActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:215:5-219:17
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:197:5-199:17
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:215:54-83
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:197:54-83
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:216:4-54
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:216:55-91
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:198:4-54
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:215:15-53
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:197:15-53
 activity#com.flowzr.activity.NotificationOptionsActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:221:3-225:15
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:201:3-203:15
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:221:66-102
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:201:66-102
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:222:5-55
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:222:56-92
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:202:5-55
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:221:13-65
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:201:13-65
 activity#com.flowzr.activity.AccountActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:227:3-231:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:205:3-207:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:227:54-85
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:205:54-85
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:228:4-65
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:228:66-102
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:206:4-65
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:227:13-53
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:205:13-53
 activity#com.flowzr.activity.ReportActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:234:3-235:67
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:210:3-211:67
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:234:53-83
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:210:53-83
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:235:4-65
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:211:4-65
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:234:13-52
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:210:13-52
 activity#com.flowzr.activity.CurrencyActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:237:3-241:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:213:3-215:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:237:55-87
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:213:55-87
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:238:19-80
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:238:81-117
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:214:19-80
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:237:13-54
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:213:13-54
 activity#com.flowzr.activity.AttributeActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:243:3-247:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:217:3-219:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:243:56-89
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:217:56-89
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:244:44-105
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:218:44-105
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:244:4-43
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:243:90-126
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:218:4-43
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:243:13-55
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:217:13-55
 activity#com.flowzr.activity.DateFilterActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:249:3-253:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:221:3-223:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:249:57-87
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:221:57-87
+	android:configChanges
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:222:44-105
+	android:theme
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:222:4-43
+	android:name
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:221:13-56
+activity#com.flowzr.activity.BlotterFilterActivity
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:225:3-227:15
+	android:label
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:225:60-90
+	android:configChanges
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:226:44-105
+	android:theme
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:226:4-43
+	android:name
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:225:13-59
+activity#com.flowzr.activity.ReportFilterActivity
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:229:9-231:20
+	android:label
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:229:65-95
+	android:configChanges
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:230:59-120
+	android:theme
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:230:19-58
+	android:name
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:229:19-64
+activity#com.flowzr.activity.CategoryActivity
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:233:3-235:14
+	android:label
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:233:55-87
+	android:configChanges
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:234:4-65
+	android:name
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:233:13-54
+activity#com.flowzr.widget.QuickAmountInput
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:237:3-238:76
+	android:label
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:238:4-34
+	android:theme
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:238:35-74
+	android:name
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:237:13-52
+activity#com.flowzr.widget.CalculatorInput
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:240:3-241:80
+	android:label
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:241:4-38
+	android:theme
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:241:39-78
+	android:name
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:240:13-51
+activity#com.flowzr.activity.BudgetActivity
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:243:3-245:14
+	android:label
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:243:53-84
+	android:configChanges
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:244:4-65
+	android:name
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:243:13-52
+activity#com.flowzr.activity.ProjectActivity
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:249:3-251:14
+	android:label
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:249:54-85
 	android:configChanges
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:250:44-105
 	android:theme
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:250:4-43
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:249:88-124
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:249:13-56
-activity#com.flowzr.activity.BlotterFilterActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:255:3-259:15
-	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:255:60-90
-	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:256:44-105
-	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:256:4-43
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:255:91-127
-	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:255:13-59
-activity#com.flowzr.activity.ReportFilterActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:261:9-265:20
-	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:261:65-95
-	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:262:59-120
-	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:262:19-58
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:261:96-132
-	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:261:19-64
-activity#com.flowzr.activity.CategoryActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:267:3-271:14
-	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:267:55-87
-	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:268:4-65
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:268:66-102
-	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:267:13-54
-activity#com.flowzr.widget.QuickAmountInput
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:273:3-274:76
-	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:274:4-34
-	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:274:35-74
-	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:273:13-52
-activity#com.flowzr.widget.CalculatorInput
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:276:3-277:80
-	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:277:4-38
-	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:277:39-78
-	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:276:13-51
-activity#com.flowzr.activity.BudgetActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:279:3-283:14
-	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:279:53-84
-	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:280:4-65
-	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:279:13-52
-	android:value
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:280:66-106
-activity#com.flowzr.activity.ProjectActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:287:3-291:14
-	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:287:54-85
-	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:288:44-105
-	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:288:4-43
-	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:287:13-53
-	android:value
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:287:86-126
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:249:13-53
 activity#com.flowzr.activity.PayeeActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:293:9-297:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:253:9-255:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:293:58-87
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:253:58-87
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:294:53-114
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:254:53-114
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:294:13-52
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:254:13-52
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:293:19-57
-	android:value
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:293:88-128
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:253:19-57
 activity#com.flowzr.activity.CsvExportActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:300:3-93
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:258:3-93
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:300:56-90
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:258:56-90
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:300:13-55
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:258:13-55
 activity#com.flowzr.activity.CsvImportActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:301:9-99
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:259:9-99
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:301:62-96
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:259:62-96
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:301:19-61
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:259:19-61
 activity#com.flowzr.activity.QifExportActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:303:9-98
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:261:9-98
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:303:62-96
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:261:62-96
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:303:19-61
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:261:19-61
 activity#com.flowzr.activity.QifImportActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:304:9-98
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:262:9-98
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:304:62-96
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:262:62-96
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:304:19-61
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:262:19-61
 activity#com.flowzr.activity.MonthlyViewActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:306:3-96
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:264:3-96
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:306:58-94
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:264:58-94
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:306:13-57
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:264:13-57
 activity#com.flowzr.activity.CCardStatementClosingDayActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:307:3-109
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:265:3-109
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:307:71-106
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:265:71-106
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:307:13-70
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:265:13-70
 activity#com.flowzr.activity.Report2DChartActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:309:3-313:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:267:3-269:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:310:6-36
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:310:37-73
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:268:6-36
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:309:14-60
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:267:14-60
+activity#com.flowzr.activity.TransactionPreferencesActivity
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:272:9-274:57
+	android:label
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:274:13-55
+	android:theme
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:273:13-55
+	android:name
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:272:19-74
 activity#com.flowzr.activity.ReportPreferencesActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:315:3-317:57
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:276:3-278:57
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:317:13-55
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:278:13-55
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:316:13-66
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:277:13-66
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:315:13-63
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:276:13-63
 activity#com.flowzr.activity.AboutActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:318:9-89
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:279:9-89
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:318:58-87
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:279:58-87
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:318:19-57
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:279:19-57
 activity#com.flowzr.activity.WebViewActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:319:9-91
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:280:9-91
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:319:60-89
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:280:60-89
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:319:19-59
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:280:19-59
 activity#com.flowzr.activity.SplitTransactionActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:321:9-325:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:282:9-284:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:322:12-53
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:322:54-90
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:283:12-53
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:321:19-68
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:282:19-68
 activity#com.flowzr.activity.SplitTransferActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:326:9-330:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:285:9-287:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:327:12-50
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:327:51-87
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:286:12-50
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:326:19-65
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:285:19-65
 activity#com.flowzr.dialog.FolderBrowser
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:332:9-95
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:289:9-95
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:332:56-93
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:289:56-93
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:332:19-55
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:289:19-55
 activity#com.flowzr.activity.CategorySelectorActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:333:9-337:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:290:9-292:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:334:49-88
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:334:12-48
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:291:13-52
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:333:19-68
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:290:19-68
 activity#com.flowzr.activity.AccountListTotalsDetailsActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:339:9-346:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:294:9-301:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:339:77-107
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:294:77-107
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:340:59-120
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:296:13-74
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:340:19-58
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:339:108-144
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:295:19-58
 	android:parentActivityName
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:340:121-163
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:297:13-55
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:339:19-76
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:294:19-76
 meta-data#android.support.PARENT_ACTIVITY
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:341:7-343:45
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:298:7-300:45
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:342:13-59
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:299:13-59
 	android:value
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:343:13-42
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:300:13-42
 activity#com.flowzr.activity.BlotterTotalsDetailsActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:348:9-355:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:303:9-308:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:348:73-103
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:303:73-103
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:349:59-120
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:304:59-120
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:349:19-58
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:348:104-140
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:304:19-58
 	android:parentActivityName
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:349:121-163
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:304:121-163
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:348:19-72
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:303:19-72
 activity#com.flowzr.activity.BudgetListTotalsDetailsActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:357:9-364:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:310:9-316:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:357:76-106
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:310:76-106
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:358:59-120
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:311:59-120
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:358:19-58
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:357:107-143
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:311:19-58
 	android:parentActivityName
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:358:121-163
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:312:13-55
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:357:19-75
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:310:19-75
 activity#com.flowzr.activity.PurgeAccountActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:366:9-114
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:318:9-114
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:366:65-112
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:318:65-112
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:366:19-64
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:318:19-64
 activity#com.flowzr.activity.FlowzrSyncActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:368:9-372:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:320:9-322:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:368:63-98
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:320:63-98
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:369:9-72
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:369:104-140
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:321:9-72
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:368:19-62
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:320:19-62
 	android:launchMode
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:369:73-103
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:321:73-103
 activity#com.flowzr.activity.PreferencesActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:374:9-376:25
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:324:9-326:25
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:374:64-99
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:324:64-99
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:375:13-66
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:325:13-66
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:374:19-63
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:324:19-63
 activity#com.flowzr.activity.FlowzrPreferencesActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:378:9-380:50
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:328:9-330:50
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:380:13-48
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:330:13-48
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:379:13-66
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:329:13-66
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:378:19-69
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:328:19-69
 activity#com.flowzr.activity.BackupPreferencesActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:381:9-383:50
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:331:9-333:50
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:383:13-48
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:333:13-48
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:382:13-66
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:332:13-66
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:381:19-69
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:331:19-69
 activity#org.achartengine.GraphicalActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:385:9-70
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:335:9-70
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:385:19-68
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:335:19-68
 activity#com.dropbox.client2.android.AuthActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:387:9-397:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:337:9-347:20
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:389:19-80
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:339:19-80
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:387:19-74
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:337:19-74
 	android:launchMode
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:388:19-50
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:338:19-50
 intent-filter#android.intent.action.VIEW+android.intent.category.BROWSABLE+android.intent.category.DEFAULT
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:390:13-396:29
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:340:13-346:29
 action#android.intent.action.VIEW
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:393:17-69
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:343:17-69
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:393:25-66
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:343:25-66
 category#android.intent.category.BROWSABLE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:394:17-77
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:344:17-77
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:394:27-75
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:344:27-75
 activity#com.flowzr.activity.BackupListActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:399:3-416:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:349:3-364:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:400:4-34
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:350:4-34
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:401:4-43
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:402:47-83
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:351:4-43
 	android:parentActivityName
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:402:4-46
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:352:4-46
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:399:13-56
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:349:13-56
 meta-data#com.google.android.apps.drive.APP_ID
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:408:13-111
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:356:13-111
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:408:24-75
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:356:24-75
 	android:value
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:408:76-108
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:356:76-108
 intent-filter#com.google.android.apps.drive.DRIVE_OPEN
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:409:13-412:29
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:357:13-360:29
 action#com.google.android.apps.drive.DRIVE_OPEN
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:410:17-83
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:358:17-83
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:410:25-80
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:358:25-80
 activity#com.flowzr.activity.EntityListActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:418:3-426:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:366:3-373:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:419:4-36
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:367:4-36
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:418:57-106
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:366:57-106
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:420:4-43
-	uiOptions
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:419:37-73
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:368:4-43
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:418:13-56
-activity#com.google.android.gms.ads.AdActivity
-ADDED from [com.google.android.gms:play-services-ads:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.8.0/AndroidManifest.xml:26:9-29:64
-	android:configChanges
-		ADDED from [com.google.android.gms:play-services-ads:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.8.0/AndroidManifest.xml:28:13-122
-	android:theme
-		ADDED from [com.google.android.gms:play-services-ads:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.8.0/AndroidManifest.xml:29:13-61
-	android:name
-		ADDED from [com.google.android.gms:play-services-ads:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.8.0/AndroidManifest.xml:27:13-65
-activity#com.google.android.gms.ads.purchase.InAppPurchaseActivity
-ADDED from [com.google.android.gms:play-services-ads:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.8.0/AndroidManifest.xml:30:9-31:52
-	android:theme
-		ADDED from [com.google.android.gms:play-services-ads:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.8.0/AndroidManifest.xml:31:13-50
-	android:name
-		ADDED from [com.google.android.gms:play-services-ads:7.8.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.8.0/AndroidManifest.xml:30:19-91
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:366:13-56
+android:uses-permission#android.permission.READ_PHONE_STATE
+IMPLIED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:14:1-377:12 reason: com.commonsware.cwac.wakeful has a targetSdkVersion < 4
 android:uses-permission#android.permission.READ_EXTERNAL_STORAGE
-IMPLIED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:14:1-430:12 reason: com.google.android.gms.maps requested WRITE_EXTERNAL_STORAGE
+IMPLIED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:14:1-377:12 reason: com.commonsware.cwac.wakeful requested WRITE_EXTERNAL_STORAGE
+activity#com.google.android.gms.auth.api.signin.internal.SignInHubActivity
+ADDED from [com.google.android.gms:play-services-auth:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/8.3.0/AndroidManifest.xml:21:9-24:46
+	android:theme
+		ADDED from [com.google.android.gms:play-services-auth:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/8.3.0/AndroidManifest.xml:22:19-78
+	android:exported
+		ADDED from [com.google.android.gms:play-services-auth:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/8.3.0/AndroidManifest.xml:24:19-43
+	android:excludeFromRecents
+		ADDED from [com.google.android.gms:play-services-auth:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/8.3.0/AndroidManifest.xml:23:19-52
+	android:name
+		ADDED from [com.google.android.gms:play-services-auth:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/8.3.0/AndroidManifest.xml:21:19-72
+provider#com.google.android.gms.measurement.AppMeasurementContentProvider
+ADDED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:28:7-31:37
+	android:exported
+		ADDED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:31:11-35
+	android:authorities
+		ADDED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:29:11-76
+	android:name
+		ADDED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:30:11-90
+receiver#com.google.android.gms.measurement.AppMeasurementReceiver
+ADDED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:33:7-39:18
+	android:enabled
+		ADDED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:35:11-33
+	android:name
+		ADDED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:34:11-83
+intent-filter#com.google.android.gms.measurement.UPLOAD
+ADDED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:36:9-38:25
+action#com.google.android.gms.measurement.UPLOAD
+ADDED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:37:11-77
+	android:name
+		ADDED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:37:19-75
+service#com.google.android.gms.measurement.AppMeasurementService
+ADDED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:41:7-44:37
+	android:exported
+		ADDED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:44:11-35
+	android:enabled
+		ADDED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:43:11-33
+	android:name
+		ADDED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:42:11-82

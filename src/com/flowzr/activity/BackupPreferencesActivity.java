@@ -114,6 +114,9 @@ public class BackupPreferencesActivity extends PreferenceActivity implements Goo
         linkToDropbox();
         setCurrentDatabaseBackupFolder();
         renderDriveAccount();
+        // @TODO enable google drive autobackup
+        Preference pDriveAutoUpload = preferenceScreen.findPreference("google_drive_upload_autobackup");
+        pDriveAutoUpload.setEnabled(false);
 	}
 
     private String getDriveAccountAndStoreInPrefs() {
@@ -277,7 +280,7 @@ public class BackupPreferencesActivity extends PreferenceActivity implements Goo
         if (mGoogleApiClient!=null) {
             mGoogleApiClient.disconnect();
         }
-		PinProtection.lock(this);
+		//PinProtection.lock(this);
 	}
 
 	@Override

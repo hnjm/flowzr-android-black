@@ -361,7 +361,7 @@ public class MonthlyViewActivity extends ListActivity {
                 TextView totalText = (TextView)findViewById(R.id.monthly_result);
                 if (isStatementPreview) {
                     u.setAmountText(totalText, currency, (-1)*total, false);
-                    totalText.setTextColor(Color.BLACK);
+                    //totalText.setTextColor(Color.BLACK);
                 } else {
                     if (total<0) {
                         u.setAmountText(totalText, currency, (-1)*total, false);
@@ -390,7 +390,7 @@ public class MonthlyViewActivity extends ListActivity {
         TextView totalText = (TextView)findViewById(R.id.monthly_result);
         // display total = 0
         u.setAmountText(totalText, currency, 0, false);
-        totalText.setTextColor(Color.BLACK);
+        //totalText.setTextColor(Color.BLACK);
         // hide list and display empty message
         ((TextView)findViewById(android.R.id.empty)).setText(R.string.no_transactions);
         setListAdapter(null);

@@ -9,8 +9,15 @@
   Contributors:
       Denis Solonenko - initial API and implementation
 -->
+<android.support.design.widget.CoordinatorLayout
+    android:layout_margin="0dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/main_layout"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="horizontal" >
@@ -54,5 +61,36 @@
         /> 
 
 </LinearLayout>
-    
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/bAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="44dp"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_action_new"
+        app:layout_anchor="@id/main_layout"
+        app:layout_anchorGravity="bottom|right|end"/>
+
+    <View
+        android:id="@+id/dummy"
+        android:layout_width="60dp"
+        android:layout_height="120dp"
+        app:layout_anchor="@id/bAdd"
+        app:layout_anchorGravity="bottom|left" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/bAddTransfer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_action_import_export"
+        app:layout_anchor="@id/dummy"
+        app:layout_anchorGravity="bottom|left"/>
+
+</android.support.design.widget.CoordinatorLayout>
+
 <!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout-land/blotter.xml -->

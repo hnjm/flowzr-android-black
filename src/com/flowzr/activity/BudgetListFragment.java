@@ -21,6 +21,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -65,7 +69,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 	private WhereFilter filter = WhereFilter.empty();
 
 	public BudgetListFragment() {
-		super(R.layout.budget_list);		
+		super(R.layout.budget_list);
 	}
 	
 	private ArrayList<Budget> budgets;
@@ -81,6 +85,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 		if (filter.isEmpty()) {
 			filter.put(new DateTimeCriteria(PeriodType.THIS_MONTH));
 		}
+
 	}
 
   	
@@ -119,7 +124,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 		handler = new Handler();
 		recreateCursor();
         totalText = ( TextView ) getView().findViewById(R.id.total);
-        if (getView().findViewById(R.id.fragment_land_container)!=null) {       	
+		if (getView().findViewById(R.id.fragment_land_container)!=null) {
     		Fragment fragment=new BudgetListTotalsDetailsActivity();
     		Bundle bundle= new Bundle();
     		fragment.setArguments(bundle);        	
@@ -138,10 +143,13 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 	        });
 	        calculateTotals();
         }
+		if (getView().findViewById(R.id.bAdd)!=null) {
+			getView().findViewById(R.id.bAdd).setVisibility(View.GONE);
+			getView().findViewById(R.id.bAddTransfer).setVisibility(View.GONE);
+		}
+
     }
 
-
-	
     private void showTotals() {
 		Intent intent=new Intent(getActivity(),EntityListActivity.class);
 		intent.putExtra(EntityListActivity.REQUEST_BUDGET_TOTALS, true);
@@ -158,7 +166,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {		
-		Log.i("flowzr","entering on nactivity result");
+
 		if (requestCode == FILTER_BUDGET_REQUEST) {
 			if (resultCode == MainActivity.RESULT_FIRST_USER) {
 				filter.clear();				
@@ -324,8 +332,14 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 			if (isRunning) {
 				if (BudgetListFragment.this.getActivity()!=null) {
 	                Utils u = new Utils(BudgetListFragment.this.getActivity());
-	                if (adapter!=null) {
+	                if (adapter!=null && totalText!=null) {
 	                	u.setTotal(totalText, result);
+
+						SpannableString spannablecontent=new SpannableString(totalText.getText());
+						spannablecontent.setSpan(new AbsoluteSizeSpan(20,true), 0, spannablecontent.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+						// set Text here
+						totalText.setText(spannablecontent);
+
 	                	((BudgetListAdapter)adapter).notifyDataSetChanged();
 	                }
 				}

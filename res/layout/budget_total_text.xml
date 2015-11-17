@@ -10,22 +10,24 @@
     <LinearLayout
 	    xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="82dp"
+        android:background="#37474F"
         android:layout_width="fill_parent">
 
-    <ToggleButton android:layout_width="@dimen/recommended_touch_size" android:layout_height="@dimen/recommended_touch_size"
+    <ImageButton android:layout_width="@dimen/recommended_touch_size" android:layout_height="@dimen/recommended_touch_size"
         android:layout_margin="@dimen/space_normal"
         android:gravity="center_vertical"
         android:layout_gravity="center_vertical"
         android:id="@+id/toggle"
         android:textOn=""
         android:textOff=""
-        android:background="@drawable/btn_toggle_income_expense_bg" />
+
+        android:background="@drawable/ic_action_mail" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/total"
-            style="@style/TextView"
+            style="@style/TextViewUserInput"
             android:layout_gravity="center_vertical"
             android:gravity="end|center_vertical"
             android:textSize="@dimen/text_xxlarge"

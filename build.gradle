@@ -1,5 +1,7 @@
 buildscript {
     repositories {
+        maven { url "http://repo.commonsware.com.s3.amazonaws.com" }
+        maven { url "https://repository-achartengine.forge.cloudbees.com/snapshot/" }
         mavenCentral()
     }
 
@@ -9,6 +11,12 @@ buildscript {
 }
 
 apply plugin: 'android'
+
+repositories {
+    maven { url "http://repo.commonsware.com.s3.amazonaws.com" }
+    maven { url "https://repository-achartengine.forge.cloudbees.com/snapshot/" }
+    mavenCentral()
+}
 
 android {
     lintOptions {
@@ -21,10 +29,10 @@ android {
     }
     signingConfigs {
         config {
-            keyAlias 'direct raise'
-            keyPassword 'devaki'
-            storeFile file('/home/eflorent/Téléchargements/key_store')
-            storePassword 'devaki'
+            storeFile file('/home/eflorent/key_store')
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEY_ALIAS")
+            keyPassword System.getenv("KEY_PASSWORD")
         }
     }
     compileSdkVersion 'Google Inc.:Google APIs:23'
@@ -57,15 +65,17 @@ android {
         signingConfig signingConfigs.config
         minSdkVersion 9
         targetSdkVersion 21
+        multiDexEnabled true
     }
     productFlavors {
     }
     buildTypes {
         debug {
-            signingConfig signingConfigs.config
-            //minifyEnabled true
+            minifyEnabled false
             proguardFile 'proguard-google-api-client.txt'
-            proguardFile getDefaultProguardFile('proguard-android.txt')
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro', 'proguard-rules.txt'
+
         }
         release {
             debuggable false
@@ -74,44 +84,35 @@ android {
             renderscriptDebuggable false
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_6
-        targetCompatibility JavaVersion.VERSION_1_6
-    }
+
 
 }
 
 dependencies {
     compile files('libs/dropbox-android-sdk-1.5.4.jar')
-    compile files('libs/CWAC-WakefulIntentService.jar')
-    compile files('libs/achartengine-1.0.0.jar')
-    compile files('libs/CWAC-WakefulIntentService.jar')
     compile files('libs/dropbox-android-sdk-1.5.4.jar')
     compile files('libs/gson-2.2.4.jar')
     compile files('libs/rfc2445-no-joda.jar')
-    compile files('libs/trove-3.0.2-long.jar')
-    compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'com.google.android.gms:play-services:7.8.0'
     compile files('libs/json_simple-1.1.jar')
     compile files('libs/google-api-client-android-1.20.0.jar')
     compile files('libs/google-http-client-1.20.0.jar')
-    //compile files('libs/google-api-client-1.17.0-rc.jar')
+    compile fileTree(dir: 'libs', include: ['**/*.jar'])
+    compile 'com.commonsware.cwac:wakeful:1.0.1'
+    compile 'org.achartengine:achartengine:1.2.0'
+    compile 'net.sf.trove4j:trove4j:3.0.3'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.google.android.gms:play-services-base:8.3.0'
+    compile 'com.google.android.gms:play-services-drive:8.3.0'
+    compile 'com.google.android.gms:play-services-location:8.3.0'
+    compile 'com.google.android.gms:play-services-auth:8.3.0'
+    compile 'com.google.android.gms:play-services-plus:8.3.0'
+    compile 'com.google.android.gms:play-services-gcm:8.3.0'
 }
 
-/**
- *
- *
- //
- //
- //
- //compile files('libs/google-http-client-android-1.17.0-rc.jar')
- //compile files('libs/google-http-client-gson-1.17.0-rc.jar')
- //
- provided files('libs/google-http-client-jackson2-1.17.0-rc.jar')
- provided files('libs/google-oauth-client-1.17.0-rc.jar')
- provided files('libs/httpclient-4.0.3.jar')
- provided files('libs/httpcore-4.0.1.jar')
- provided files('libs/httpmime-4.0.3.jar')
 
- **/
+ 
+ 
+ 
+
 

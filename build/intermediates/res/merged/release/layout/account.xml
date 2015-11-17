@@ -7,24 +7,51 @@
   
   Contributors:
       Denis Solonenko - initial API and implementation
+      Emmanuel Florent - Add icon title, port to appcompat 21+
 -->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="fill_parent" android:layout_width="fill_parent"	
-	android:orientation="vertical">
-	
-	<ScrollView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:layout_weight="1">
-		
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:layout_width="fill_parent" android:layout_height="fill_parent"
-			android:orientation="vertical" android:id="@+id/layout"
-	        android:paddingTop="@dimen/dynamic_margin_narrow_vertical"
-	        android:paddingBottom="@dimen/dynamic_margin_narrow_vertical"
-        	android:paddingLeft="@dimen/dynamic_margin_narrow_horizontal"
-        	android:paddingRight="@dimen/dynamic_margin_narrow_horizontal"/>			
-	
-	</ScrollView>
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:animateLayoutChanges="true"
+android:focusable="true"
+android:focusableInTouchMode="true"
+android:orientation="vertical"
+tools:context=".ui.currencies.CurrencyEditActivity">
+<LinearLayout
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:background="#37474F" android:paddingBottom="@dimen/space_xlarge">
 
+	<EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:padding="@dimen/space_large" android:layout_marginLeft="@dimen/space_xlarge"
+		android:textStyle="bold"
+		android:id="@+id/account_title" style="@style/TextViewUserInput"
+		android:text="Budget A" android:focusableInTouchMode="true"
+		android:layout_gravity="center_horizontal"
+		android:textSize="@dimen/text_xxlarge">
+	</EditText>
+
+
+</LinearLayout>
+
+<ScrollView
+	android:layout_height="0px"
+	android:layout_weight="1"
+	android:animateLayoutChanges="true"
+	android:scrollbars="none"
+	android:layout_width="fill_parent">
+
+
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:layout_marginTop="@dimen/space_large"
+		android:paddingBottom="@dimen/space_xxlarge"
+		android:orientation="vertical" android:id="@+id/layout">
+	</LinearLayout>
+</ScrollView>
+
+<include layout="@layout/include_edit_buttons" />
 </LinearLayout>
 <!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout/account.xml -->

@@ -118,7 +118,7 @@ public class PreferencesActivity extends PreferenceActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        PinProtection.lock(this.getApplicationContext());
+        //PinProtection.lock(this.getApplicationContext());
     }
     	
 }

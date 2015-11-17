@@ -22,6 +22,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,26 +36,26 @@ import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
 import com.flowzr.model.MultiChoiceItem;
 import com.flowzr.utils.PinProtection;
+import com.flowzr.utils.Utils;
 import com.flowzr.view.NodeInflater;
 
 import java.util.List;
 
-public abstract class AbstractEditorActivity extends ActionBarActivity implements ActivityLayoutListener {
+public abstract class AbstractEditorActivity extends AppCompatActivity implements ActivityLayoutListener {
 
 	protected DatabaseAdapter db;
 	protected MyEntityManager em;
 	
 	protected ActivityLayout x;
 
+    protected Utils u;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         // Setup ActionBar		
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //@see: http://stackoverflow.com/questions/16539251/get-rid-of-blue-line, 
-        //only way found to remove on various devices 2.3x, 3.0, ...
-		//getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
-		
+
 		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		NodeInflater nodeInflater = new NodeInflater(layoutInflater);
 
@@ -162,23 +163,26 @@ public abstract class AbstractEditorActivity extends ActionBarActivity implement
 		db.close();
 		super.onDestroy();		
 	}
-	
-	
+
+
     @Override
     protected void onPause() {
         super.onPause();
         if (shouldLock()) {
-        	PinProtection.lock(this);
+            PinProtection.lock(this);
         }
     }
-    
+
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         if (shouldLock()) {
-        	PinProtection.unlock(this);
+            PinProtection.unlock(this);
         }
+    }
+    /**
+    protected boolean shouldLock() {
+        return true;
     }	
-	
+	**/
 }

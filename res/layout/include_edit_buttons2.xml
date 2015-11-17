@@ -13,18 +13,26 @@
 
     <Button
         android:id="@+id/cancelButton"
-        android:layout_width="0dp"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:text="@string/cancel"
         android:textColor="?android:textColorPrimary"
         tools:stateListAnimator="@android:animator/fade_in" />
 
     <Button
-        android:id="@+id/saveButton"
-        android:layout_width="0dp"
+        android:id="@+id/saveAddButton"
+        android:layout_width="@dimen/recommended_touch_size"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:text="+"
+        android:textColor="?android:textColorPrimary"
+        tools:stateListAnimator="@android:animator/fade_in" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:layout_width="fill_parent"
         android:text="@string/save"
         android:textColor="?android:textColorPrimary"
         tools:stateListAnimator="@android:animator/fade_in" />

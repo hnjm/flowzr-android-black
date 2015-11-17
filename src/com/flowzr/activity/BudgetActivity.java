@@ -14,17 +14,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import com.flowzr.R;
+import com.flowzr.graph.Amount;
 import com.flowzr.model.*;
 import com.flowzr.utils.RecurUtils;
 import com.flowzr.utils.RecurUtils.Recur;
 import com.flowzr.utils.Utils;
 import com.flowzr.widget.AmountInput;
+import com.flowzr.widget.CalculatorInput;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -36,7 +40,8 @@ public class BudgetActivity extends AbstractEditorActivity {
 	private static final int NEW_CATEGORY_REQUEST = 1;
 	private static final int NEW_PROJECT_REQUEST = 2;
 	private static final int RECUR_REQUEST = 3;
-	
+	public static final int CALCULATOR_REQUEST = 4 ;
+
 	private AmountInput amountInput;
 
 	private EditText titleText;
@@ -57,6 +62,14 @@ public class BudgetActivity extends AbstractEditorActivity {
 
     private ListAdapter accountAdapter;
     private int selectedAccountOption;
+	private TextView totalText;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        //getMenuInflater().inflate(R.menu.ok_cancel, menu);
+        return true;
+    }
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,60 +84,73 @@ public class BudgetActivity extends AbstractEditorActivity {
 		
 		LinearLayout layout = (LinearLayout) findViewById(R.id.list);
 		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		titleText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 
-		x.addEditNode(layout, R.string.title, titleText);
-
-		accountText = x.addListNode(layout, R.id.account,
-				R.string.account, R.string.select_account);
-		categoryText = x.addListNodePlus(layout, R.id.category,
-				R.id.category_add, R.string.categories, R.string.no_categories);
-		projectText = x.addListNodePlus(layout, R.id.project,
-				R.id.project_add, R.string.projects, R.string.no_projects);
-		cbIncludeSubCategories = x.addCheckboxNode(layout,
-				R.id.include_subcategories, R.string.include_subcategories,
-				R.string.include_subcategories_summary, true);
-		cbMode = x.addCheckboxNode(layout, R.id.budget_mode, R.string.budget_mode,
-				R.string.budget_mode_summary, false);
-        cbIncludeCredit = x.addCheckboxNode(layout,
-                R.id.include_credit, R.string.include_credit,
-                R.string.include_credit_summary, true);
-        cbSavingBudget = x.addCheckboxNode(layout,
-                R.id.type, R.string.budget_type_saving,
-                R.string.budget_type_saving_summary, false);
+		titleText = (EditText) findViewById(R.id.budget_title);
+		// (EditText) layoutInflater.inflate(R.layout.edit_text, null);
+		//x.addEditNode(layout, R.string.title, titleText);
 
 		amountInput = new AmountInput(this);
 		amountInput.setOwner(this);
-        amountInput.setIncome();
-        amountInput.disableIncomeExpenseButton();
-		x.addEditNode(layout, R.string.amount, amountInput);
+		amountInput.setIncome();
+		//amountInput.disableIncomeExpenseButton();
 
-		periodRecurText = x.addListNode(layout, R.id.period_recur, R.string.period_recur, R.string.no_recur);
+		//x.addEditNode(layout, R.string.amount, amountInput);
 
-//		Button bOK = (Button) findViewById(R.id.bOK);
-//		bOK.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View arg0) {
-//				if (checkSelected(budget.currency != null ? budget.currency : budget.account, R.string.select_account)) {
-//					updateBudgetFromUI();
-//					long id = em.insertBudget(budget);
-//					Intent intent = new Intent();
-//					intent.putExtra(BUDGET_ID_EXTRA, id);
-//					setResult(RESULT_OK, intent);
-//					finish();
-//				}
-//			}
-//
-//		});
-//
-//		Button bCancel = (Button) findViewById(R.id.bCancel);
-//		bCancel.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View arg0) {
-//				setResult(RESULT_CANCELED);
-//				finish();
-//			}
-//		});
+		periodRecurText = x.addListNode2(layout, R.id.period_recur,R.drawable.ic_repeat_white_48dp, R.string.period_recur,  getResources().getString(R.string.no_recur));
+		accountText = x.addListNode2(layout, R.id.account, R.drawable.ic_action_accounts, R.string.account, getResources().getString(R.string.select_account));
+		categoryText=x.addListNodeCategory(layout);
+		projectText = x.addListNode2(layout, R.id.project, R.drawable.ic_action_important, R.string.project, getResources().getString(R.string.no_projects));
+
+		cbIncludeSubCategories = x.addCheckboxNode(layout,
+				R.id.include_subcategories, R.string.include_subcategories,R.drawable.ic_expand_more_white_48dp,
+				R.string.include_subcategories_summary, true);
+
+		cbMode = x.addCheckboxNode(layout, R.id.budget_mode,R.string.budget_mode,R.drawable.ic_select_all_white_48dp,
+				R.string.budget_mode_summary, false);
+        cbIncludeCredit = x.addCheckboxNode(layout,
+                R.id.include_credit, R.string.include_credit,R.drawable.ic_toggle_income,
+                R.string.include_credit_summary, true);
+        cbSavingBudget = x.addCheckboxNode(layout,
+				R.id.type, R.string.budget_type_saving, R.drawable.account_type_asset,
+				R.string.budget_type_saving_summary, false);
+
+		Button bOK = (Button) findViewById(R.id.saveButton);
+		bOK.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				if (checkSelected(budget.currency != null ? budget.currency : budget.account, R.string.select_account)) {
+					updateBudgetFromUI();
+					long id = em.insertBudget(budget);
+					Intent intent = new Intent();
+					intent.putExtra(BUDGET_ID_EXTRA, id);
+					setResult(RESULT_OK, intent);
+					finish();
+				}
+			}
+		});
+
+		Button bCancel = (Button) findViewById(R.id.cancelButton);
+		bCancel.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				setResult(RESULT_CANCELED);
+				finish();
+			}
+		});
+
+		totalText = ( TextView ) findViewById(R.id.total);
+		totalText.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				Intent intent = new Intent(getApplicationContext(), CalculatorInput.class);
+				if (budget.currencyId > -1) {
+					intent.putExtra(AmountInput.EXTRA_CURRENCY, budget.currencyId);
+				}
+				intent.putExtra(AmountInput.EXTRA_AMOUNT, totalText.getText().toString().trim());
+				startActivityForResult(intent, CALCULATOR_REQUEST);
+			}
+		});
 
 		Intent intent = getIntent();
 		if (intent != null) {
@@ -136,7 +162,11 @@ public class BudgetActivity extends AbstractEditorActivity {
 				selectRecur(RecurUtils.createDefaultRecur().toString());
 			}
 		}
+		titleText.requestFocus();
+		//ImageButton toggle = (ImageButton) findViewById(R.id.toggle);
 	}
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -177,7 +207,14 @@ public class BudgetActivity extends AbstractEditorActivity {
 
     private void editBudget() {
 		titleText.setText(budget.title);
-		amountInput.setAmount(budget.amount);
+
+		totalText = ( TextView ) findViewById(R.id.total);
+		Total t =new Total(budget.currency);
+		t.balance=budget.amount;
+		u = new Utils(this);
+		u.setTotal(totalText, t);
+        totalText.setTextColor(getResources().getColor(R.color.f_blue_lighter1));
+		//amountInput.setAmount(budget.amount);
 		updateEntities(this.categories, budget.categories);
 		selectCategories();
 		updateEntities(this.projects, budget.projects);
@@ -220,7 +257,6 @@ public class BudgetActivity extends AbstractEditorActivity {
 
 	protected void updateBudgetFromUI() {
 		budget.title = titleText.getText().toString();
-		budget.amount = amountInput.getAmount();
         if (cbSavingBudget.isChecked()) {
             budget.amount = -budget.amount;
         }
@@ -310,9 +346,9 @@ public class BudgetActivity extends AbstractEditorActivity {
         selectedAccountOption = selectedPos;
         accountText.setText(option.title);
         if (option.currency != null) {
-            amountInput.setCurrency(option.currency);
+            //amountInput.setCurrency(option.currency);
         } else {
-            amountInput.setCurrency(option.account.currency);
+            //amountInput.setCurrency(option.account.currency);
         }
     }
 
@@ -359,9 +395,22 @@ public class BudgetActivity extends AbstractEditorActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK) {
-			if (amountInput.processActivityResult(requestCode, data)) {
-				return;
+			Total t =new Total(budget.currency);
+			String amount = data.getStringExtra(AmountInput.EXTRA_AMOUNT);
+			if (amount != null) {
+				try {
+					BigDecimal d = new BigDecimal(amount).setScale(2,
+							BigDecimal.ROUND_HALF_UP);
+					t.balance=d.unscaledValue().longValue();
+					budget.amount=d.unscaledValue().longValue();
+					u = new Utils(this);
+					u.setTotal(totalText, t);
+					totalText.setTextColor(getResources().getColor(R.color.f_blue_lighter1));
+				} catch (NumberFormatException ex) {
+					ex.printStackTrace();
+				}
 			}
+
 			switch (requestCode) {
                 case NEW_CATEGORY_REQUEST:
                     categories = merge(categories, db.getCategoriesList(true));

@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.*;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
@@ -35,6 +36,7 @@ import com.flowzr.R;
 import com.flowzr.adapter.BlotterListAdapter;
 import com.flowzr.adapter.TransactionsListAdapter;
 import com.flowzr.blotter.AccountTotalCalculationTask;
+import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.blotter.BlotterTotalCalculationTask;
 import com.flowzr.blotter.TotalCalculationTask;
 import com.flowzr.filter.WhereFilter;
@@ -61,7 +63,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
 	private static final int NEW_TRANSACTION_REQUEST = 1;
 	private static final int NEW_TRANSFER_REQUEST = 3;
 	public static final int NEW_TRANSACTION_FROM_TEMPLATE_REQUEST = 5;
-	private static final int MONTHLY_VIEW_REQUEST = 6;
+	private static final int MONTHLY_VIEW_REQUEST = 8;
 	private static final int BILL_PREVIEW_REQUEST = 7;
 	
 	protected static final int FILTER_REQUEST = 6;
@@ -80,7 +82,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
 	protected boolean saveFilter;
 	protected WhereFilter blotterFilter = WhereFilter.empty();
 
-    private boolean isAccountBlotter = false;
+    //private boolean isAccountBlotter = false;
 
 	protected TextView totalText;
 	
@@ -90,72 +92,31 @@ public class BlotterFragment extends AbstractTotalListFragment {
 	    inflater.inflate(R.menu.blotter_actions, menu);
 	}    
     
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);	
-		
-		Bundle args=this.getArguments();
 
-		if (args != null && blotterFilter.isEmpty()) {
-			blotterFilter = WhereFilter.fromBundle(args);			
-			saveFilter = args.getBoolean(SAVE_FILTER, false);
-            isAccountBlotter = args.getBoolean(BlotterFilterActivity.IS_ACCOUNT_FILTER, false);
-		}	else {
-			Intent intent = getActivity().getIntent();
-			if (intent != null) {			
-				blotterFilter = WhereFilter.fromIntent(intent);
-				saveFilter = intent.getBooleanExtra(SAVE_FILTER, false);
-	            isAccountBlotter = intent.getBooleanExtra(BlotterFilterActivity.IS_ACCOUNT_FILTER, false);
-			}	
-    		if (saveFilter) {
-    			saveFilter();
-    		}			
-		}
-
-
-
-
-	}
 
 	public static Fragment newInstance(Bundle args) {
 	    BlotterFragment f = new BlotterFragment();
         f.setArguments(args);        
         return f;
-	}   
+	}
 
-	public void onResume(Bundle savedInstanceState) {
-		if (savedInstanceState != null) {
-			blotterFilter = WhereFilter.fromBundle(savedInstanceState);
-		}    	
-    }
-    
+
     @Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-	
-		if (savedInstanceState != null) {
-			blotterFilter = WhereFilter.fromBundle(savedInstanceState);
-		}
-		if (saveFilter && blotterFilter.isEmpty()) {	
-			blotterFilter = WhereFilter.fromSharedPreferences(getActivity().getPreferences(0));
-		}		
 
-		Bundle args=this.getArguments();
-		if (args != null) {
-			blotterFilter = WhereFilter.fromBundle(args);			
-			saveFilter = args.getBoolean(SAVE_FILTER, false);
-            isAccountBlotter = args.getBoolean(BlotterFilterActivity.IS_ACCOUNT_FILTER, false);
-		}	else {
-			Intent intent = getActivity().getIntent();
-			if (intent != null) {			
-				blotterFilter = WhereFilter.fromIntent(intent);
-				saveFilter = intent.getBooleanExtra(SAVE_FILTER, false);
-	            isAccountBlotter = intent.getBooleanExtra(BlotterFilterActivity.IS_ACCOUNT_FILTER, false);
-			}	
-    		if (saveFilter) {
-    			saveFilter();
-    		}			
-		}		
-		
+        Bundle args=this.getArguments();
+        if (args != null   ) {
+            blotterFilter = WhereFilter.fromBundle(args);
+            saveFilter = args.getBoolean(SAVE_FILTER, false);
+        }
+         if (savedInstanceState != null && savedInstanceState.getBoolean(BlotterFilterActivity.IS_ACCOUNT_FILTER,false)==false  ) {
+             blotterFilter = WhereFilter.fromBundle(savedInstanceState);
+             saveFilter=false;
+         }
+        if (saveFilter) {
+            blotterFilter = WhereFilter.fromSharedPreferences(getActivity().getPreferences(0));
+        }
+        super.onActivityCreated(savedInstanceState);
 		totalText = (TextView)getView().findViewById(R.id.total); // set for calculation task
 		if (totalText!=null) { //ex: ScheduledListFragment
 		    totalText.setOnTouchListener(new OnTouchListener() {
@@ -164,18 +125,44 @@ public class BlotterFragment extends AbstractTotalListFragment {
 	                showTotals();
 					return false;
 				}
-	        });					
+    	        });
 		}
-		calculateTotals();
+
 		getActivity().setTitle(blotterFilter.getTitle());
 		prepareAddButtonActionGrid();
+
         if (args != null && args.containsKey(BlotterFragment.EXTRA_REQUEST_TYPE)) {
             if (args.getInt(BlotterFragment.EXTRA_REQUEST_TYPE)==BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST) {
                 createFromTemplate();
             }
         }
-    }    
-    
+
+        calculateTotals();
+        if (getView().findViewById(R.id.bAdd)!=null) {
+            getView().findViewById(R.id.bAdd).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addItem(NEW_TRANSACTION_REQUEST, TransactionActivity.class);
+                }
+            });
+
+            getView().findViewById(R.id.bAddTransfer).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addItem(NEW_TRANSFER_REQUEST, TransferActivity.class);
+                }
+            });
+        }
+
+
+
+    }
+
+    @Override
+    public void onCreate (Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
 	protected void calculateTotals() {	
 
         if (getView().findViewById(R.id.fragment_land_container)!=null) {       	
@@ -224,7 +211,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
         
 		Intent intent=new Intent(getActivity(),EntityListActivity.class);
 		intent.putExtra(EntityListActivity.REQUEST_BLOTTER_TOTALS, true);
-		blotterFilter.toIntent(intent);
+        blotterFilter.toIntent(intent);
 		startActivity(intent);        
     }
 
@@ -233,7 +220,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
 	                                ContextMenuInfo menuInfo) {
 	    super.onCreateContextMenu(menu, v, menuInfo);
 	    MenuInflater inflater = getActivity().getMenuInflater();
-	    inflater.inflate(R.menu.transaction_context, menu);
+        inflater.inflate(R.menu.transaction_context, menu);
 	}  
     
     protected void prepareActionGrid() {
@@ -244,8 +231,8 @@ public class BlotterFragment extends AbstractTotalListFragment {
             actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_split, R.string.duplicate));
             actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.transaction_status_cleared, R.string.clear));
             actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.transaction_status_reconciled, R.string.reconcile));
-            actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_copy, R.string.template));
-            actionGrid.setOnQuickActionClickListener(transactionActionListener);
+        actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_copy, R.string.template));
+        actionGrid.setOnQuickActionClickListener(transactionActionListener);
     }
     
     private QuickActionWidget.OnQuickActionClickListener transactionActionListener = new QuickActionWidget.OnQuickActionClickListener() {
@@ -320,11 +307,20 @@ public class BlotterFragment extends AbstractTotalListFragment {
 
     @Override
 	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		blotterFilter.toBundle(outState);	
+        super.onSaveInstanceState(outState);
+		blotterFilter.toBundle(outState);
+        outState.putBoolean(BlotterFilterActivity.IS_ACCOUNT_FILTER,!saveFilter);
 	}
 
-	protected void createFromTemplate() {
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        blotterFilter.fromBundle(savedInstanceState);
+    }
+
+
+    protected void createFromTemplate() {
 		Bundle bundle= new Bundle();
 		bundle.putInt(EXTRA_REQUEST_TYPE, NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);		
 		Intent intent = new Intent(getActivity(), EntityListActivity.class);
@@ -412,24 +408,23 @@ public class BlotterFragment extends AbstractTotalListFragment {
 	}
 
     private void editTransaction(long id) {
-
 		new BlotterOperations(this, db, id).editTransaction();
     }
 
     @Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.i("flowzr","Fragment on activity result");
         if (requestCode == FILTER_REQUEST) {
 			if (resultCode == MainActivity.RESULT_FIRST_USER) {
 				blotterFilter.clear();	
 				((MainActivity)getActivity()).mAdapter.setFilter(new Bundle());	
 			} else if (resultCode == MainActivity.RESULT_OK) {
-				blotterFilter = WhereFilter.fromIntent(data);							
-			}	
-			if (saveFilter) {
-				saveFilter();
+                blotterFilter.clear();
+				blotterFilter = WhereFilter.fromIntent(data);
 			}
-			recreateCursor();			
+            saveFilter=true;
+			//recreateCursor();
+            saveFilter();
+
 		} 
 		
 		if (resultCode == MainActivity.RESULT_OK && requestCode == NEW_TRANSACTION_FROM_TEMPLATE_REQUEST) {
@@ -516,7 +511,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
 				createFromTemplate();
 				return true;
 //			case R.id.action_list_template:
-//		    	((MainActivity) getActivity()).loadTabFragment(new TemplatesListActivity(),R.layout.blotter, new Bundle(),MainActivity.TAB_BLOTTER); 	 		
+//		    	((MainActivity) getActivity()).loadTabFragment(new TemplatesListActivity(),R.layout.blotter, new Bundle(),MainActivity.TAB_BLOTTER);
 //				return true;
 			case R.id.action_mass_op:
 				intent = new Intent(getActivity(),EntityListActivity.class);
@@ -542,7 +537,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
 	        case R.id.action_filter:
 	            intent = new Intent(BlotterFragment.this.getActivity(), BlotterFilterActivity.class);
 				blotterFilter.toIntent(intent);
-                intent.putExtra(BlotterFilterActivity.IS_ACCOUNT_FILTER, isAccountBlotter && blotterFilter.getAccountId() > 0);
+                intent.putExtra(BlotterFilterActivity.IS_ACCOUNT_FILTER, blotterFilter.getAccountId() > 0);
 				startActivityForResult(intent, FILTER_REQUEST);
 				return true;
 	        case R.id.opt_menu_bill:

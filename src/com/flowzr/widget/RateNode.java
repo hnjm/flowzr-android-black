@@ -1,10 +1,14 @@
-/*
- * Copyright (c) 2012 Denis Solonenko.
+/*******************************************************************************
+ * Copyright (c) 2010 Denis Solonenko.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- */
+ *
+ * Contributors:
+ *     Denis Solonenko - initial API and implementation
+ *     Emmanuel Florent - Port to AppCompat 21,  add icon title
+ ******************************************************************************/
 
 package com.flowzr.widget;
 
@@ -50,7 +54,7 @@ public class RateNode {
     public View rateInfoNode;
     public TextView rateInfo;
     public EditText rate;
-    public ImageButton bCalc;
+    //public ImageButton bCalc;
 
     public ImageButton bDownload;
 
@@ -75,8 +79,8 @@ public class RateNode {
             }
         });
         rateInfo = (TextView)rateInfoNode.findViewById(R.id.data);
-        bCalc = (ImageButton)rateInfoNode.findViewById(R.id.rateCalculator);
-        bCalc.setOnClickListener(new View.OnClickListener(){
+        //bCalc = (ImageButton)rateInfoNode.findViewById(R.id.rateCalculator);
+        rateInfoNode.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Activity activity = owner.getActivity();
@@ -96,13 +100,13 @@ public class RateNode {
 
     public void disableAll() {
         rate.setEnabled(false);
-        bCalc.setEnabled(false);
+        rateInfo.setEnabled(false);
         bDownload.setEnabled(false);
     }
 
     public void enableAll() {
         rate.setEnabled(true);
-        bCalc.setEnabled(true);
+        rateInfo.setEnabled(true);
         bDownload.setEnabled(true);
     }
 

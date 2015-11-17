@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *     Denis Solonenko - initial API and implementation
+ *     Emmanuel Florent - Port to AppCompat 21,  add icon title
  ******************************************************************************/
 package com.flowzr.view;
 

@@ -51,10 +51,10 @@
             <shape>
                 <corners android:radius="5dip" />
                 <gradient
-                        android:startColor="#fff22222"
-                        android:centerColor="#ff77b539"
+                        android:startColor="@color/negative_amount"
+                        android:centerColor="@color/f_green_darker3"
                         android:centerY="0.75"
-                        android:endColor="#ff39b54a"
+                        android:endColor="@color/positive_amount"
                         android:angle="0"
                 />
             </shape>

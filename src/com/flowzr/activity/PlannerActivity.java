@@ -66,8 +66,18 @@ public class PlannerActivity extends BlotterFragment {
     	thiscontext = container.getContext();
     	return inflater.inflate(R.layout.planner, container, false);
 	}
-    
-       
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadFilter();
+        setupFilter();
+        totalText = (TextView)getView().findViewById(R.id.total);
+        filterText = (TextView)getView().findViewById(R.id.period);
+        recreateCursor();
+        recreateAdapter();
+    }
+
     @Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -166,22 +176,35 @@ public class PlannerActivity extends BlotterFragment {
 
     @Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (resultCode == MainActivity.RESULT_OK && data!=null) {
-            DateTimeCriteria c = WhereFilter.dateTimeFromIntent(data);
-            applyDateTimeCriteria(c);
-            saveFilter();
+            try {
+                DateTimeCriteria c = WhereFilter.dateTimeFromIntent(data);
+                applyDateTimeCriteria(c);
+                saveFilter();
+                retrieveData();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             retrieveData();
         }
+
     }
 
     private PlannerTask task;
 
     private void retrieveData() {
-        if (task != null) {
-            task.cancel(true);
+        if (filter!=null) {
+            if (task != null) {
+                task.cancel(true);
+            }
+            if (filter.isEmpty()) {
+                filter=WhereFilter.empty();
+                applyDateTimeCriteria(null);
+            }
+            task = new PlannerTask(filter);
+            task.execute();
         }
-        task = new PlannerTask(filter);
-        task.execute();
     }
 
     private class PlannerTask extends AsyncTask<Void, Void, TransactionList> {
@@ -194,6 +217,9 @@ public class PlannerActivity extends BlotterFragment {
 
         @Override
         protected TransactionList doInBackground(Void... voids) {
+            if (filter.isEmpty()) {
+                applyDateTimeCriteria(null);
+            }
             FuturePlanner planner = new FuturePlanner(db, filter, new Date());
             return planner.getPlannedTransactionsWithTotals();
         }

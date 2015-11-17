@@ -21,6 +21,7 @@ import com.flowzr.R;
 import com.flowzr.adapter.TransactionsListAdapter;
 import com.flowzr.blotter.TotalCalculationTask;
 import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.*;
 import com.flowzr.utils.CurrencyCache;
 
@@ -37,6 +38,10 @@ public class BudgetBlotterFragment extends BlotterFragment {
         
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
+        Bundle args=this.getArguments();
+        if (args != null ) {
+            blotterFilter = WhereFilter.fromBundle(args);
+        }
 		db=new DatabaseAdapter(getActivity());
 		em=db.em();
 		categories = MyEntity.asMap(db.getCategoriesList(true));

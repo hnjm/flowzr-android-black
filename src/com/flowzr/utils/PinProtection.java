@@ -47,6 +47,7 @@ public class PinProtection {
         @Override
         public LockState lock(Context c) {
             lockTime = System.currentTimeMillis();
+            //Log.e("flowzr","locktime: " + String.valueOf(lockTime));
             return this;
         }
 
@@ -57,7 +58,6 @@ public class PinProtection {
                 long curTime = System.currentTimeMillis();
                 long lockTimeMs = Math.max(MIN_DELTA_TIME_MS, TimeUnit.MILLISECONDS.convert(lockWaitTime, TimeUnit.SECONDS));
                 long deltaTimeMs = curTime - lockTime;
-                Log.i("flowzr","delta" + String.valueOf(deltaTimeMs));
                 if (deltaTimeMs > lockTimeMs) {
                     askForPin(c);
                     return LOCKED;

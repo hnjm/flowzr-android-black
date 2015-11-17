@@ -22,6 +22,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.TextAppearanceSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -161,7 +162,7 @@ public class Utils {
                         ? R.style.TextAppearance_ZeroAmountBig
                         : (amount > 0 ? R.style.TextAppearance_PositiveAmountBig : R.style.TextAppearance_NegativeAmountBig));
 	}
-	
+
 	public static int moveCursor(Cursor cursor, String idColumnName, long id) {
         int pos = cursor.getColumnIndexOrThrow(idColumnName);
         if (cursor.moveToFirst()) {
@@ -309,6 +310,7 @@ public class Utils {
 
     private void setAmountTextWithTwoAmounts(TextView textView, Currency c, long amount1, long amount2) {
         SpannableStringBuilder sb = new SpannableStringBuilder();
+
         sb.append(Utils.amountToString(c, amount1, false));
         int x = sb.length();
         sb.setSpan(getAmountSpan(context, amount1), 0, x, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -316,7 +318,7 @@ public class Utils {
         sb.append(Utils.amountToString(c, amount2, false));
         sb.setSpan(getAmountSpan(context, amount2), x+3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         if (textView!=null) {
-        	textView.setText(sb, TextView.BufferType.NORMAL);
+			textView.setText(sb, TextView.BufferType.NORMAL);
         }
     }
 

@@ -38,8 +38,8 @@
             android:textColor="@color/text_primary_inverted"
             android:textSize="@dimen/text_xsmall"
 	        android:layout_height="wrap_content"
-	        android:layout_marginRight="@dimen/space_small"
-	        android:layout_marginLeft="@dimen/space_small"
+	        android:layout_marginRight="2dp"
+	        android:layout_marginLeft="2dp"
 	        android:layout_marginBottom="0dp"
             android:layout_marginTop="8dp"
             android:text="NOV,2014"/>
@@ -58,7 +58,6 @@
     </LinearLayout>
 
     </LinearLayout>
-
 
     <ImageView android:id="@+id/right_top"
                android:layout_width="wrap_content" android:layout_height="wrap_content"

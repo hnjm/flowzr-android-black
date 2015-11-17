@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import com.flowzr.R;
 import com.flowzr.adapter.BlotterListAdapter;
 import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.db.DatabaseHelper;
 import com.flowzr.filter.DateTimeCriteria;
 import com.flowzr.model.Category;
 import com.flowzr.model.CategoryTree;
@@ -82,39 +84,53 @@ public class CategorySelectorFragment extends AbstractListFragment {
             navigator.separateIncomeAndExpense();
         }
         attributes = db.getAllAttributesMap();
-
-   
-        
     }
     
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		menu.clear();		
-		inflater.inflate(R.menu.category_selector_actions, menu);    
+		menu.clear();
+		inflater.inflate(R.menu.category_selector_actions, menu);
+        if (!navigator.canGoBack()) {
+            menu.removeItem(R.id.bBack);
+        }
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 	
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-        case R.id.bBack: 
-            if (navigator.goBack()) {
-                recreateAdapter();
-            }    	    
-	    case R.id.bSelect:
-            confirmSelection();
-	    }
+        switch (item.getItemId()) {
+            case android.R.id.home:
+            case R.id.bBack:
+                if (navigator.goBack()) {
+                    recreateAdapter();
+                }
+                getActivity().supportInvalidateOptionsMenu();
+                break;
+            case R.id.bSelect:
+                confirmSelection();
+            break;
+            case R.id.bAdd:
+                Intent intent = new Intent(getActivity(), CategoryActivity.class);
+                startActivityForResult(intent, CATEGORY_ADD);
+            break;
+        }
 	    return true;
 	}
-    
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        navigator = new CategoryTreeNavigator(db);
+        recreateAdapter();
+        navigator.selectedCategoryId=data.getLongExtra(DatabaseHelper.CategoryColumns._id.name(), 0);
+        navigator.selectCategory(data.getLongExtra(DatabaseHelper.CategoryColumns._id.name(), 0));
+        confirmSelection();
+    }
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
-        //actionGrid = new QuickActionGrid(this.getActivity());
 	    actionGrid=null;
-	        
 	        Intent intent = getActivity().getIntent();
 	        if (intent != null) {
 	            boolean includeSplit = intent.getBooleanExtra(INCLUDE_SPLIT_CATEGORY, false);
@@ -124,6 +140,13 @@ public class CategorySelectorFragment extends AbstractListFragment {
 	            long selectedCategoryId = intent.getLongExtra(SELECTED_CATEGORY_ID, 0);
 	            navigator.selectCategory(selectedCategoryId);
 	        }
+        //FAB
+        getView().findViewById(R.id.bSelect).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmSelection();
+            }
+        });
 	}
     
     private void confirmSelection() {
@@ -160,6 +183,7 @@ public class CategorySelectorFragment extends AbstractListFragment {
 
     @Override
     protected void viewItem(View v, int position, long id) {
+
     	navigator.selectCategory(id);
     	navigator.selectedCategoryId=id;
     	if (navigator.navigateTo(id)) {
@@ -171,6 +195,7 @@ public class CategorySelectorFragment extends AbstractListFragment {
 //                confirmSelection();
 //            }
         }
+        getActivity().supportInvalidateOptionsMenu();
     }
 
     public static boolean pickCategory(Activity activity, long selectedCategoryId, boolean includeSplitCategory) {

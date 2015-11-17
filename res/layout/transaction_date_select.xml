@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    style="@style/ButtonBar"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageButton android:id="@+id/status" android:layout_width="wrap_content"
+        android:layout_height="fill_parent" android:src="@drawable/transaction_status_unreconciled_2"/>
+    <Button android:layout_width="wrap_content" android:gravity="center"
 
+        android:text="04/03/09"  android:id="@+id/date"
+        android:layout_height="wrap_content" android:layout_weight="1" />
+    <Button android:layout_width="wrap_content" android:gravity="center"
+        android:text="12:56 PM" android:id="@+id/time"
+        android:layout_height="wrap_content"  />
 </LinearLayout>

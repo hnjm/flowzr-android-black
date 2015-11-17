@@ -55,27 +55,8 @@ import com.flowzr.model.Total;
 import com.flowzr.report.ReportType;
 import com.flowzr.utils.IntegrityFix;
 import com.flowzr.utils.MyPreferences;
-import com.flowzr.utils.Utils;
 import com.flowzr.view.NodeInflater;
 
-//import static com.flowzr.utils.MyPreferences.isQuickMenuEnabledForAccount;
-
-/*
- * Dev note:
- * Little change in contextual menus
- * -longClick  : contextualMenu
- * -simple tap : show blotter (1)
- * API<isGreenDroid supported - Android ContextMenu
- * API>isGReenDroid supported - GreenDroid QuickAction as standard (+1 Twitter Android app has it)
- * in order to keep compatibility for API<11 I didn't went up to contextual action mode 
- * (http://developer.android.com/guide/topics/ui/menus.html#context-menu)
- * See : http://www.miximum.fr/tutos/849-porting-the-contextual-anction-mode-for-pre-honeycomb-android-apps
- * for a possible greendroid replacement ?
- * 
- * While refactoring to fragment I may have lost the QuickOptionMenu enabled see (1)
- * 
- * 
- */
 
 public class AccountListFragment extends AbstractTotalListFragment  {
 	
@@ -83,17 +64,11 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     public static final int EDIT_ACCOUNT_REQUEST = 2;
     private static final int VIEW_ACCOUNT_REQUEST = 3;
     private static final int PURGE_ACCOUNT_REQUEST = 4;
-
-    protected Menu myMenu;
 	protected TextView totalText;
 
     OnAccountSelectedListener mListener;
     
 
-    public void onResume(Bundle s) {
-    	Log.i("flowzr", "entering on resume");
-    }
-    
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -122,7 +97,6 @@ public class AccountListFragment extends AbstractTotalListFragment  {
         intent.putExtra(EntityListActivity.REQUEST_NEW_TRANSACTION_FROM_TEMPLATE, true);
         intent.putExtra(EXTRA_REQUEST_TYPE, BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
         startActivityForResult(intent, BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
-
     }
 
 	@Override
@@ -135,7 +109,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 	            addItem();
 	            return true;
 //	        case R.id.action_hide_closed: 
-//	        	//@TODO unimplemented
+//	        	//@TODO unimplemented account list hide closed accounts
 //	            return true;
 	        case R.id.action_integrity_fix: 
 	            doIntegrityFix();

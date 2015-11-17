@@ -8,44 +8,42 @@
   ~ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 -->
 
+
+
     <LinearLayout
-        android:id="@+id/container_V"
 	    xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent" android:background="@color/f_dark"
-        android:layout_height="@dimen/recommended_touch_size">
-
-    <LinearLayout
-	    xmlns:android="http://schemas.android.com/apk/res/android"    
-
+        android:background="@color/total_bg_color"
+        android:layout_height="72dp"
+        android:padding="@dimen/space_small"
+        android:layout_margin="@dimen/space_small"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/recommended_touch_size"
         android:layout_alignParentBottom="true"
         android:gravity="center_vertical"       
         android:orientation="horizontal"
-    	style="@style/ButtonBar">
+        android:elevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">        
+
         <TextView
  	       android:id="@+id/total_title"
             style="@style/TextView"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="@string/balance"
+
             android:textSize="@dimen/text_xlarge" />
 
         <TextView
             android:id="@+id/total"
             style="@style/TextView"
-            android:textSize="@dimen/text_xlarge" />
+            android:textSize="@dimen/text_xxxlarge" />
             
-        <ImageView style="@style/MoreButton" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" />
+
             
     </LinearLayout>
     </LinearLayout>
-    </LinearLayout>
+
  
 
 

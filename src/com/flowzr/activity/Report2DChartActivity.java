@@ -522,7 +522,9 @@ public class Report2DChartActivity extends AbstractListFragment {
 
 	@Override
 	public void onDestroy() {
-		dbAdapter.close();
+		if (dbAdapter!=null) {
+			dbAdapter.close();
+		}
 		super.onDestroy();
 	}
 

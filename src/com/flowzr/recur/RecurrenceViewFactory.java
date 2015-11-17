@@ -340,7 +340,7 @@ public class RecurrenceViewFactory {
 		public void createNodes(LinearLayout layout) {
 			removeAllViewsFromParent(repeatWeeksEditText);
 			x.addEditNode(layout, R.string.recur_interval_every_x_week, repeatWeeksEditText);
-			daysOfWeekText = x.addListNode(layout, R.id.recurrence_pattern, R.string.recurrence_weekly_days, daysToString());
+			daysOfWeekText = x.addListNode2(layout, R.id.recurrence_pattern,R.drawable.ic_today_white_48dp, R.string.recurrence_weekly_days, daysToString());
 		}
 
 		@Override
@@ -516,7 +516,7 @@ public class RecurrenceViewFactory {
 				if (num > 1) {
 					x.addTitleNodeNoDivider(layout, DAY_TITLES[i]);
 				}
-				patternText[i] = x.addListNode(layout, 100+i, R.string.recurrence_monthly_pattern, activity.getString(pattern[i].titleId));
+				patternText[i] = x.addListNode2(layout, 100+i, R.drawable.ic_today_white_48dp,R.string.recurrence_monthly_pattern, activity.getString(pattern[i].titleId));
 				switch (pattern[i]) {
 				case EVERY_NTH_DAY:
 					removeAllViewsFromParent(everyNthDayEditText[i]);
@@ -524,7 +524,7 @@ public class RecurrenceViewFactory {
 					everyNthDayEditText[i].setText("15");
 					break;
 				case SPECIFIC_DAY:
-					specificDayText[i] = x.addListNode(layout, 200+i, R.string.recurrence_monthly_specific_day, specificDayStr(i));
+					specificDayText[i] = x.addListNode2(layout, 200+i,R.drawable.ic_today_white_48dp, R.string.recurrence_monthly_specific_day, specificDayStr(i));
 					break;
 				}				
 			}

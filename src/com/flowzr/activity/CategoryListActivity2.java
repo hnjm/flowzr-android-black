@@ -117,13 +117,12 @@ public class CategoryListActivity2 extends AbstractListFragment {
 
 	@Override
 	protected void viewItem(View v, final int position, long id) {
-		Intent intent = new Intent(this.getActivity(), MainActivity.class);
+		Intent intent = new Intent(this.getActivity(), EntityListActivity.class);
 		Category cat = db.getCategory(id);
         Criteria blotterFilter = Criteria.btw(BlotterFilter.CATEGORY_LEFT, String.valueOf(cat.left), String.valueOf(cat.right));
         blotterFilter.toIntent(cat.getTitle(), intent);
 		intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
-        startActivity(intent);	
-        getActivity().finish();
+        startActivity(intent);
 	}	
 	
 	

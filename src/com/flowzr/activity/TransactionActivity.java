@@ -34,11 +34,6 @@ import java.util.*;
 
 import static com.flowzr.utils.AndroidUtils.isGreenDroidSupported;
 import static com.flowzr.utils.Utils.isNotEmpty;
-/***
- * TODO : save and new is broken
- * @author eflorent
- *
- */
 
 public class TransactionActivity extends AbstractTransactionActivity {
 
@@ -46,8 +41,8 @@ public class TransactionActivity extends AbstractTransactionActivity {
 	public static final String AMOUNT_EXTRA = "accountAmount";
     public static final String ACTIVITY_STATE = "ACTIVITY_STATE";
 
-	private static final int MENU_TURN_GPS_ON = Menu.FIRST;
     private static final int SPLIT_REQUEST = 5001;
+    private static final int BLOTTER_PREFERENCES = 5002;
 
     private final Currency currencyAsAccount = new Currency();
 
@@ -57,7 +52,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
 	private TextView differenceText;
 	private boolean isUpdateBalanceMode = false;
 	private long currentBalance;
-	private Utils u;
+
 
     private LinearLayout splitsLayout;
     private TextView unsplitAmountText;
@@ -66,11 +61,12 @@ public class TransactionActivity extends AbstractTransactionActivity {
     private QuickActionWidget unsplitActionGrid;
     private long selectedOriginCurrencyId = -1;
 
+
     public TransactionActivity() {
 	}
 
 	protected int getLayoutId() {
-		return MyPreferences.isUseFixedLayout(this) ? R.layout.transaction_fixed : R.layout.transaction_free;
+		return R.layout.transaction_free;
 	}
 
     @Override
@@ -84,7 +80,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
     
 	@Override
 	protected void internalOnCreate() {
-		u = new Utils(this);
+
 		Intent intent = getIntent();
 		if (intent != null) {
 			if (intent.hasExtra(CURRENT_BALANCE_EXTRA)) {
@@ -102,8 +98,53 @@ public class TransactionActivity extends AbstractTransactionActivity {
 			}
 		}
         prepareUnsplitActionGrid();
+
         currencyAsAccount.name = getString(R.string.original_currency_as_account);
+
+        ToggleButton toggleView = (ToggleButton) findViewById(R.id.toggle);
+        if (transaction.fromAmount>0) {
+            toggleView.setChecked(true);
+        }
+        toggleView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean income) {
+                if (income) {
+                    transaction.fromAmount = Math.abs(rateView.getFromAmount());
+                } else {
+                    transaction.fromAmount = -Math.abs(rateView.getFromAmount());
+                }
+
+                rateView.setFromAmount(transaction.fromAmount);
+                Total t = new Total(rateView.getCurrencyFrom());
+                t.balance = transaction.fromAmount;
+                u.setTotal(totalText, t);
+            }
+        });
+        findViewById(R.id.saveAddButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOKClicked();
+                Intent intent2 = new Intent(getApplicationContext(), TransactionActivity.class);
+                intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
+                intent2.putExtra(ACCOUNT_ID_EXTRA, transaction.fromAccountId);
+                if (saveAndFinish()) {
+                    intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
+                    startActivityForResult(intent2, -1);
+                }
+            }
+        });
+
+
 	}
+
+    protected void switchIncomeExpenseButton(Category category) {
+        ToggleButton toggleView = (ToggleButton) findViewById(R.id.toggle);
+        if (category.isIncome()) {
+            toggleView.setChecked(true);
+        } else if (category.isExpense()) {
+            toggleView.setChecked(false);
+        }
+    }
 
     private void prepareUnsplitActionGrid() {
         if (isGreenDroidSupported()) {
@@ -187,8 +228,64 @@ public class TransactionActivity extends AbstractTransactionActivity {
 
     @Override
 	protected void createListNodes(LinearLayout layout) {
-		//account
-		accountText = x.addListNode(layout, R.id.account, R.string.account, R.string.select_account);
+        rateView.createTransactionUI();
+        //rateView.hideFromAmount();
+
+
+
+
+        // difference
+        if (isUpdateBalanceMode) {
+            differenceText = x.addInfoNode(layout, -1, R.string.difference, "0");
+            rateView.setFromAmount(currentBalance);
+            rateView.setAmountFromChangeListener(new AmountInput.OnAmountChangedListener() {
+                @Override
+                public void onAmountChanged(long oldAmount, long newAmount) {
+                    long balanceDifference = newAmount - currentBalance;
+                    u.setAmountText(differenceText, rateView.getCurrencyFrom(), balanceDifference, true);
+                    Total t = new Total(rateView.getCurrencyFrom());
+                    t.balance=currentBalance;
+                    u.setTotal(totalText,t);
+                }
+            });
+            if (currentBalance > 0) {
+                rateView.setIncome();
+            } else {
+                rateView.setExpense();
+            }
+        } else {
+            if (currentBalance > 0) {
+                rateView.setIncome();
+            } else {
+                rateView.setExpense();
+            }
+
+
+
+            createSplitsLayout(layout);
+            rateView.setAmountFromChangeListener(new AmountInput.OnAmountChangedListener() {
+                @Override
+                public void onAmountChanged(long oldAmount, long newAmount) {
+                    updateUnsplitAmount();
+                    Total t = new Total(rateView.getCurrencyFrom());
+                    t.balance=newAmount;
+                    u.setTotal(totalText,t);
+                }
+            });
+        }
+
+        if (!isUpdateBalanceMode && MyPreferences.isShowCurrency(this)) {
+            currencyText = x.addListNode2(layout, R.id.original_currency, R.drawable.ic_action_currencies,R.string.currency, getResources().getString(R.string.original_currency_as_account));
+        } else {
+            currencyText = new TextView(this);
+        }
+
+		//account(LinearLayout layout, int id,int drawableId, int labelId, String defaultValue)
+		accountText = x.addListNode2(layout, R.id.account, R.drawable.ic_action_accounts, R.string.account, getResources().getString(R.string.select_account));
+        //amount
+
+
+
         //payee
         isShowPayee = MyPreferences.isShowPayee(this);
         if (isShowPayee) {
@@ -204,43 +301,8 @@ public class TransactionActivity extends AbstractTransactionActivity {
         }
 		//category
         categorySelector.createNode(layout, true);
-		//amount
-        if (!isUpdateBalanceMode && MyPreferences.isShowCurrency(this)) {
-            currencyText = x.addListNode(layout, R.id.original_currency, R.string.currency, R.string.original_currency_as_account);
-        } else {
-            currencyText = new TextView(this);
-        }
-        rateView.createTransactionUI();
-		// difference
-		if (isUpdateBalanceMode) {
-			differenceText = x.addInfoNode(layout, -1, R.string.difference, "0");
-            rateView.setFromAmount(currentBalance);
-            rateView.setAmountFromChangeListener(new AmountInput.OnAmountChangedListener() {
-                @Override
-                public void onAmountChanged(long oldAmount, long newAmount) {
-                    long balanceDifference = newAmount - currentBalance;
-                    u.setAmountText(differenceText, rateView.getCurrencyFrom(), balanceDifference, true);
-                }
-            });
-            if (currentBalance > 0) {
-                rateView.setIncome();
-            } else {
-                rateView.setExpense();
-            }
-		} else {
-            if (currentBalance > 0) {
-                rateView.setIncome();
-            } else {
-                rateView.setExpense();
-            }
-            createSplitsLayout(layout);
-            rateView.setAmountFromChangeListener(new AmountInput.OnAmountChangedListener() {
-                @Override
-                public void onAmountChanged(long oldAmount, long newAmount) {
-                    updateUnsplitAmount();
-                }
-            });
-        }
+
+
 	}
 
     private void selectLastCategoryForPayee(long id) {
@@ -290,15 +352,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
         return amount;
     }
 
-    protected void switchIncomeExpenseButton(Category category) {
-        if (!isUpdateBalanceMode) {
-            if (category.isIncome()) {
-                rateView.setIncome();
-            } else {
-                rateView.setExpense();
-            }
-        }
-    }
+
 
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
@@ -345,6 +399,9 @@ public class TransactionActivity extends AbstractTransactionActivity {
         } else {
             rateView.setFromAmount(transaction.fromAmount);
         }
+        Total t = new Total(rateView.getCurrencyFrom());
+        t.balance=transaction.fromAmount;
+        u.setTotal(totalText,t);
     }
 
     private void fetchSplits() {
@@ -389,6 +446,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
         return selectedOriginCurrencyId > 0 && selectedOriginCurrencyId != selectedAccount.currency.id;
     }
 
+
     @Override
     protected Account selectAccount(long accountId, boolean selectLast) {
         Account a = super.selectAccount(accountId, selectLast);
@@ -407,20 +465,26 @@ public class TransactionActivity extends AbstractTransactionActivity {
     public boolean onOptionsItemSelected(MenuItem item)
     {
         switch (item.getItemId())
-        {	
-        	case R.id.action_done:
+        {
+            case R.id.action_settings:
+                Intent intent = new Intent(this.getApplicationContext(), TransactionPreferencesActivity.class);
+                startActivityForResult(intent, BLOTTER_PREFERENCES);
+                return true;
+            case R.id.action_done:
         		onOKClicked();
         		 saveAndFinish();
         		return true;
+            /**
         	case R.id.action_done_new:
         		onOKClicked();
-                Intent intent= getIntent();
-        		intent.putExtra(DATETIME_EXTRA, transaction.dateTime);
+                Intent intent2= getIntent();
+        		intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
         		if (saveAndFinish()) { 
-                    intent.putExtra(DATETIME_EXTRA, transaction.dateTime);
-                    startActivityForResult(intent, -1);
+                    intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
+                    startActivityForResult(intent2, -1);
                     return true;
                 }
+             **/
         	case R.id.action_cancel:
                 setResult(RESULT_CANCELED);
                 finish();
@@ -559,7 +623,6 @@ public class TransactionActivity extends AbstractTransactionActivity {
         super.onSaveInstanceState(outState);
         try {
             if (categorySelector.isSplitCategorySelected()) {
-                Log.d("Financisto", "Saving splits...");
                 ActivityState state = new ActivityState();
                 state.categoryId = categorySelector.getSelectedCategoryId();
                 state.idSequence = idSequence;
@@ -698,7 +761,6 @@ public class TransactionActivity extends AbstractTransactionActivity {
 
     @Override
     protected void onDestroy() {
-        Log.d("Financisto", "TransactionActivity.onDestroy");
         if (payeeAdapter != null) {
             payeeAdapter.changeCursor(null);
         }

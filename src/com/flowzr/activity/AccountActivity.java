@@ -18,7 +18,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,7 +39,8 @@ public class AccountActivity extends AbstractEditorActivity {
 	public static final String ACCOUNT_ID_EXTRA = "accountId";
 	
 	private static final int NEW_CURRENCY_REQUEST = 1;
-	
+	private static final int REQUEST_NEW_CURRENCY =  667;
+
 	private AmountInput amountInput;
 	private AmountInput limitInput;
 	private View limitAmountView;
@@ -66,74 +69,33 @@ public class AccountActivity extends AbstractEditorActivity {
 	private Account account = new Account();
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		return true;
+	}
+
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.account);
 
+		LinearLayout layout = (LinearLayout)findViewById(R.id.layout);
+
 		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		accountTitle = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
+		accountTitle= (EditText) findViewById(R.id.account_title);
 		accountTitle.setSingleLine();
-
-		issuerName = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
-		issuerName.setSingleLine();
-
-		numberText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
-		numberText.setHint(R.string.card_number_hint);
-		numberText.setSingleLine();
-
-		this.sortOrderText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
-		sortOrderText.setInputType(InputType.TYPE_CLASS_NUMBER);
-        sortOrderText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
-		sortOrderText.setSingleLine();
-
-		closingDayText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
-		closingDayText.setInputType(InputType.TYPE_CLASS_NUMBER);
-		closingDayText.setHint(R.string.closing_day_hint);
-		closingDayText.setSingleLine();
-
-		paymentDayText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
-		paymentDayText.setInputType(InputType.TYPE_CLASS_NUMBER);
-		paymentDayText.setHint(R.string.payment_day_hint);
-		paymentDayText.setSingleLine();
-
-		amountInput = new AmountInput(this);
-		amountInput.setOwner(this);
-
-		limitInput = new AmountInput(this);
-		limitInput.setOwner(this);
-
-		LinearLayout layout = (LinearLayout)findViewById(R.id.layout);		
 
 		accountTypeAdapter = new EntityEnumAdapter<AccountType>(this, AccountType.values());
 		accountTypeNode = x.addListNodeIcon(layout, R.id.account_type, R.string.account_type, R.string.account_type);
-		
+
 		cardIssuerAdapter = new EntityEnumAdapter<CardIssuer>(this, CardIssuer.values());
 		cardIssuerNode = x.addListNodeIcon(layout, R.id.card_issuer, R.string.card_issuer, R.string.card_issuer);
 		setVisibility(cardIssuerNode, View.GONE);
-		
-		issuerNode = x.addEditNode(layout, R.string.issuer, issuerName);
-		setVisibility(issuerNode, View.GONE);
-		
-		numberNode = x.addEditNode(layout, R.string.card_number, numberText);
-		setVisibility(numberNode, View.GONE);
-		
-		closingDayNode = x.addEditNode(layout, R.string.closing_day, closingDayText);
-		setVisibility(closingDayNode, View.GONE);
-		
-		paymentDayNode = x.addEditNode(layout, R.string.payment_day, paymentDayText);
-		setVisibility(paymentDayNode, View.GONE);		
 
 		currencyCursor = em.getAllCurrencies("name");
-		startManagingCursor(currencyCursor);		
+		startManagingCursor(currencyCursor);
 		currencyAdapter = TransactionUtils.createCurrencyAdapter(this, currencyCursor);
-
-		x.addEditNode(layout, R.string.title, accountTitle);		
-		currencyText = x.addListNodePlus(layout, R.id.currency, R.id.currency_add, R.string.currency, R.string.select_currency);
-		
-		limitInput.setExpense();
-		limitInput.disableIncomeExpenseButton();
-		limitAmountView = x.addEditNode(layout, R.string.limit_amount, limitInput);
-		setVisibility(limitAmountView, View.GONE);
+		currencyText = x.addListNode2(layout, R.id.currency, android.R.color.transparent, R.id.currency_add, getResources().getString(R.string.select_currency));
 
 		Intent intent = getIntent();
 		if (intent != null) {
@@ -143,30 +105,157 @@ public class AccountActivity extends AbstractEditorActivity {
 				if (this.account == null) {
 					this.account = new Account();
 				}
-			} else {
-				selectAccountType(AccountType.valueOf(account.type));
 			}
 		}
 
+
+		amountInput = new AmountInput(this);
+		amountInput.setOwner(this);
+		limitInput = new AmountInput(this);
+		limitInput.setOwner(this);
+
+		limitInput.setExpense();
+		limitInput.setColor(getResources().getColor(R.color.negative_amount));
+		limitInput.disableIncomeExpenseButton();
+		limitAmountView = x.addEditNode2(layout, R.drawable.ic_network_locked_white_48dp, R.string.limit_amount,limitInput);
+		setVisibility(limitAmountView, View.GONE);
+
 		if (account.id == -1) {
 			x.addEditNode(layout, R.string.opening_amount, amountInput);
-            amountInput.setIncome();
+			amountInput.setIncome();
+			amountInput.setColor(R.color.f_blue_lighter1);
 		}
+
 
 		noteText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
+		noteText.setLines(2);
+		noteText.setHint(R.string.note);
+		x.addEditNode2(layout, R.drawable.ic_subject_white_48dp, noteText);
 
-        noteText.setLines(2);
-        x.addEditNode(layout, R.string.note, noteText);
+		issuerName = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
+		x.addEditNode2(layout, R.drawable.ic_contact_phone_white_48dp,issuerName);
+		issuerName.setHint(R.string.issuer);
+		issuerName.setSingleLine();
 
-		x.addEditNode(layout, R.string.sort_order, sortOrderText);
+		numberText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
+		numberNode=x.addEditNode2(layout, R.drawable.ic_vpn_key_white_48dp, numberText);
+		numberText.setHint(R.string.card_number);
+		numberText.setSingleLine();
+		setVisibility(numberNode, View.GONE);
+
+		closingDayText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
+		closingDayText.setInputType(InputType.TYPE_CLASS_NUMBER);
+		closingDayText.setHint(R.string.closing_day_hint);
+		closingDayText.setSingleLine();
+		closingDayNode = x.addEditNode2(layout, R.drawable.ic_schedule_white_48dp,R.string.closing_day, closingDayText);
+		setVisibility(closingDayNode, View.GONE);
+
+		paymentDayText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
+		paymentDayText.setInputType(InputType.TYPE_CLASS_NUMBER);
+		paymentDayText.setHint(R.string.payment_day_hint);
+		paymentDayText.setSingleLine();
+		paymentDayNode = x.addEditNode2(layout, R.drawable.ic_today_white_48dp,R.string.payment_day, paymentDayText);
+		setVisibility(paymentDayNode, View.GONE);
+
 		isIncludedIntoTotals = x.addCheckboxNode(layout,
-				R.id.is_included_into_totals, R.string.is_included_into_totals,
+				R.id.is_included_into_totals, R.string.is_included_into_totals,R.drawable.ic_functions_white_48dp,
 				R.string.is_included_into_totals_summary, true);
-		
+
+		sortOrderText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
+		sortOrderText.setInputType(InputType.TYPE_CLASS_NUMBER);
+		sortOrderText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
+		sortOrderText.setSingleLine();
+		x.addEditNode2(layout, R.drawable.ic_sort_white_48dp, R.string.sort_order, sortOrderText);
+
+
+
 		if (account.id > 0) {
+			selectAccountType(AccountType.valueOf(account.type));
 			editAccount();
+			noteText.requestFocus();
+		} else {
+			accountTitle.setText("");
+			accountTitle.requestFocus();
 		}
 
+		findViewById(R.id.saveButton).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				saveAndFinish();
+			}
+		});
+
+		findViewById(R.id.cancelButton).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setResult(RESULT_CANCELED);
+				finish();
+			}
+		});
+
+	}
+
+	public boolean saveAndFinish() {
+		if (account.currency == null) {
+			Toast.makeText(AccountActivity.this, R.string.select_currency, Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (Utils.isEmpty(accountTitle)) {
+			accountTitle.setError(getString(R.string.title));
+			return false;
+		}
+		AccountType type = AccountType.valueOf(account.type);
+		if (type.hasIssuer) {
+			account.issuer = Utils.text(issuerName);
+		}
+		if (type.hasNumber) {
+			account.number = Utils.text(numberText);
+		}
+
+		/********** validate closing and payment days **********/
+		if (type.isCreditCard) {
+			String closingDay = Utils.text(closingDayText);
+			account.closingDay = closingDay == null ? 0 : Integer.parseInt(closingDay);
+			if (account.closingDay != 0) {
+				if (account.closingDay>31) {
+					Toast.makeText(AccountActivity.this, R.string.closing_day_error, Toast.LENGTH_SHORT).show();
+					return false;
+				}
+			}
+
+			String paymentDay = Utils.text(paymentDayText);
+			account.paymentDay = paymentDay == null ? 0 : Integer.parseInt(paymentDay);
+			if (account.paymentDay != 0) {
+				if (account.paymentDay>31) {
+					Toast.makeText(AccountActivity.this, R.string.payment_day_error, Toast.LENGTH_SHORT).show();
+					return false;
+				}
+			}
+		}
+
+		account.title = text(accountTitle);
+		account.creationDate = System.currentTimeMillis();
+		String sortOrder = text(sortOrderText);
+		account.sortOrder = sortOrder == null ? 0 : Integer.parseInt(sortOrder);
+		account.isIncludeIntoTotals  = isIncludedIntoTotals.isChecked();
+		account.limitAmount = -Math.abs(limitInput.getAmount());
+		account.note = text(noteText);
+
+		long accountId = em.saveAccount(account);
+		long amount = amountInput.getAmount();
+		if (amount != 0) {
+			Transaction t = new Transaction();
+			t.fromAccountId = accountId;
+			t.categoryId = 0;
+			t.note = getResources().getText(R.string.opening_amount) + " (" +account.title + ")";
+			t.fromAmount = amount;
+			db.insertOrUpdate(t, null);
+		}
+		Intent intent = new Intent();
+		intent.putExtra(ACCOUNT_ID_EXTRA, accountId);
+		setResult(RESULT_OK, intent);
+		finish();
+		return true;
 	}
 
     @Override
@@ -175,66 +264,7 @@ public class AccountActivity extends AbstractEditorActivity {
         switch (item.getItemId())
         {	
         	case R.id.action_done:
-        		if (account.currency == null) {
-					Toast.makeText(AccountActivity.this, R.string.select_currency, Toast.LENGTH_SHORT).show();
-					return false;	
-				}
-				if (Utils.isEmpty(accountTitle)) {
-					accountTitle.setError(getString(R.string.title));
-					return false;
-				}
-				AccountType type = AccountType.valueOf(account.type);
-				if (type.hasIssuer) {
-					account.issuer = Utils.text(issuerName);
-				}
-				if (type.hasNumber) {
-					account.number = Utils.text(numberText);
-				}
-				
-				/********** validate closing and payment days **********/
-				if (type.isCreditCard) {
-					String closingDay = Utils.text(closingDayText);
-					account.closingDay = closingDay == null ? 0 : Integer.parseInt(closingDay);
-					if (account.closingDay != 0) {
-						if (account.closingDay>31) {
-							Toast.makeText(AccountActivity.this, R.string.closing_day_error, Toast.LENGTH_SHORT).show();
-							return false;	
-						}	
-					}
-					
-					String paymentDay = Utils.text(paymentDayText);
-					account.paymentDay = paymentDay == null ? 0 : Integer.parseInt(paymentDay);	
-					if (account.paymentDay != 0) {
-						if (account.paymentDay>31) {
-							Toast.makeText(AccountActivity.this, R.string.payment_day_error, Toast.LENGTH_SHORT).show();
-							return false;	
-						}
-					}
-				}	
-
-				account.title = text(accountTitle);
-				account.creationDate = System.currentTimeMillis();
-				String sortOrder = text(sortOrderText);
-				account.sortOrder = sortOrder == null ? 0 : Integer.parseInt(sortOrder);
-				account.isIncludeIntoTotals  = isIncludedIntoTotals.isChecked();
-				account.limitAmount = -Math.abs(limitInput.getAmount());
-                account.note = text(noteText);
-				
-				long accountId = em.saveAccount(account);
-				long amount = amountInput.getAmount();
-				if (amount != 0) {
-					Transaction t = new Transaction();
-					t.fromAccountId = accountId;
-					t.categoryId = 0;
-					t.note = getResources().getText(R.string.opening_amount) + " (" +account.title + ")";
-					t.fromAmount = amount;
-					db.insertOrUpdate(t, null);
-				}
-				Intent intent = new Intent();
-				intent.putExtra(ACCOUNT_ID_EXTRA, accountId);
-				setResult(RESULT_OK, intent);
-				finish();
-			
+				saveAndFinish();
         		return true;
         	case R.id.action_cancel:
 				setResult(RESULT_CANCELED);
@@ -258,9 +288,9 @@ public class AccountActivity extends AbstractEditorActivity {
 				x.selectPosition(this, R.id.card_issuer, R.string.card_issuer, cardIssuerAdapter, 
 						account.cardIssuer != null ? CardIssuer.valueOf(account.cardIssuer).ordinal() : 0);
 				break;
-			case R.id.currency:				
-				x.select(this, R.id.currency, R.string.currency, currencyCursor, currencyAdapter, 
-						"_id", account.currency != null ? account.currency.id : -1);
+			case R.id.currency:
+				x.selectWithAddOption(this, R.id.currency, R.string.currency, currencyCursor, currencyAdapter,
+						"_id", account.currency != null ? account.currency.id : -1, R.string.new_currency,REQUEST_NEW_CURRENCY);
 				break;
 			case R.id.currency_add:
                 addNewCurrency();
@@ -287,7 +317,11 @@ public class AccountActivity extends AbstractEditorActivity {
 	public void onSelectedId(int id, long selectedId) {
 		switch(id) {
 			case R.id.currency:
-				selectCurrency(selectedId);
+				if (selectedId==REQUEST_NEW_CURRENCY) {
+					addNewCurrency();
+				} else {
+					selectCurrency(selectedId);
+				}
 				break;
 		}
 	}
@@ -313,7 +347,7 @@ public class AccountActivity extends AbstractEditorActivity {
 		label.setText(type.titleId);
 
 		setVisibility(cardIssuerNode, type.isCard ? View.VISIBLE : View.GONE);
-		setVisibility(issuerNode, type.hasIssuer ? View.VISIBLE : View.GONE);
+		//setVisibility(issuerNode, type.hasIssuer ? View.VISIBLE : View.GONE);
 		setVisibility(numberNode, type.hasNumber ? View.VISIBLE : View.GONE);
 		setVisibility(closingDayNode, type.isCreditCard ? View.VISIBLE : View.GONE);
 		setVisibility(paymentDayNode, type.isCreditCard ? View.VISIBLE : View.GONE);

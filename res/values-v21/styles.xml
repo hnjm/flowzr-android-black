@@ -2,11 +2,9 @@
 <resources>
 
     <style name="Theme.Financisto" parent="@style/Theme.AppCompat">
-        <!--        <item name="android:actionBarStyle">@style/ActionBar.Solid.Financisto</item> -->
-        <item name="actionBarStyle">@style/ActionBar.Solid.Financisto</item>
-        <item name="colorControlActivated">#18FFFF</item>
-        <item name="colorAccent">@color/f_green_lighter2</item>
+        <item name="colorControlActivated">@color/pressed_card</item>
+        <item name="colorAccent">@color/color_accent</item>
         <item name="alertDialogTheme">@style/dialog</item>
-        <item name="android:statusBarColor">@color/statusBarColor</item>
+        <item name="android:navigationBarColor">@color/navigationBarColor</item>
     </style>
 </resources>

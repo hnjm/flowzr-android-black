@@ -15,8 +15,7 @@
 	
 	<LinearLayout 
 		android:layout_height="wrap_content"
-		android:layout_width="fill_parent" 
-		android:background="#000"
+		android:layout_width="fill_parent"
 		android:paddingTop="2dp">
 		
 		<ImageButton android:id="@+id/bt_month_previous"
@@ -43,7 +42,6 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" 
 		android:layout_weight="1"
-		android:background="#111111"
 		android:visibility="gone" />
 	
 	<TextView android:id="@id/android:empty" 
@@ -55,16 +53,14 @@
 	
 	<LinearLayout 
 		android:layout_height="wrap_content"
-		android:layout_width="fill_parent" 
-		android:background="#000"
+		android:layout_width="fill_parent"
 		android:paddingTop="2dp">
 	
 		<TextView android:id="@+id/monthly_result_label"
 			android:layout_width="wrap_content"
 			android:layout_height="fill_parent"
 			android:gravity="left|center"
-			android:textColor="#000"
-			android:background="#DEDEDE"
+			style="@style/TextView"
 			android:text="@string/bill_on" />
 			
 		<TextView android:id="@+id/monthly_result"
@@ -72,9 +68,8 @@
 			android:layout_width="fill_parent" 
 			android:layout_weight="1"
 			android:gravity="right|center"
-			android:textStyle="bold" 
-			android:background="#DEDEDE"
-			android:textColor="#000"
+			android:textStyle="bold"
+			style="@style/TextView"
             android:text=""/>
 	</LinearLayout>
 

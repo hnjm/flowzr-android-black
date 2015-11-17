@@ -7,25 +7,33 @@
  * 
  * Contributors:
  *     Denis Solonenko - initial API and implementation
+ *     Emmanuel Florent - Port to AppCompat 21,  add icon title
  ******************************************************************************/
 package com.flowzr.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseHelper.AccountColumns;
 import com.flowzr.model.Account;
+import com.flowzr.model.Category;
+import com.flowzr.model.Total;
 import com.flowzr.model.Transaction;
 import com.flowzr.utils.MyPreferences;
+import com.flowzr.widget.AmountInput;
 
 public class TransferActivity extends AbstractTransactionActivity {
 
-    private TextView accountFromText;
+	private static final int BLOTTER_PREFERENCES = 5002 ;
+	private TextView accountFromText;
     private TextView accountToText;
 
 	private long selectedAccountFromId = -1;
@@ -44,6 +52,23 @@ public class TransferActivity extends AbstractTransactionActivity {
 				timeText.setEnabled(false);			
 			}			
 		}
+		ToggleButton toggleView = (ToggleButton) findViewById(R.id.toggle);
+		toggleView.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_action_import_export));
+		findViewById(R.id.saveAddButton).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onOKClicked();
+				Intent intent2 = new Intent(getApplicationContext(), TransferActivity.class);
+				intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
+				intent2.putExtra(ACCOUNT_ID_EXTRA, transaction.fromAccountId);
+				if (saveAndFinish()) {
+					intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
+					startActivityForResult(intent2, -1);
+				}
+			}
+		});
+
+
 	}
 
     protected void fetchCategories() {
@@ -52,14 +77,13 @@ public class TransferActivity extends AbstractTransactionActivity {
     }
 
 	protected int getLayoutId() {
-		return MyPreferences.isUseFixedLayout(this) ? R.layout.transfer_fixed : R.layout.transfer_free;
+		return R.layout.transfer_free;
 	}
 	
 	@Override
 	protected void createListNodes(LinearLayout layout) {
-        accountFromText = x.addListNode(layout, R.id.account_from, R.string.account_from, R.string.select_account);
-        accountToText = x.addListNode(layout, R.id.account_to, R.string.account_to, R.string.select_account);
-        // amounts
+        accountFromText = x.addListNode2(layout, R.id.account_from, R.drawable.ic_action_account_from, R.string.account_from,getResources().getString(R.string.select_account));
+		accountToText = x.addListNode2(layout, R.id.account_to, R.drawable.ic_action_account_to, R.string.account_to, getResources().getString(R.string.select_account));
         rateView.createTransferUI();
         // payee
         isShowPayee = MyPreferences.isShowPayeeInTransfers(this);
@@ -72,6 +96,19 @@ public class TransferActivity extends AbstractTransactionActivity {
         } else {
             categorySelector.createDummyNode();
         }
+
+		Total t = new Total(rateView.getCurrencyFrom());
+		t.balance=transaction.fromAmount;
+		u.setTotal(totalText, t);
+		rateView.setAmountFromChangeListener(new AmountInput.OnAmountChangedListener() {
+			@Override
+			public void onAmountChanged(long oldAmount, long newAmount) {
+				Total t = new Total(rateView.getCurrencyFrom());
+				t.balance = newAmount;
+				u.setTotal(totalText, t);
+			}
+		});
+
 	}
 	
     @Override
@@ -105,24 +142,11 @@ public class TransferActivity extends AbstractTransactionActivity {
     public boolean onOptionsItemSelected(MenuItem item)
     {
         switch (item.getItemId())
-        {	
-        	case R.id.action_done:
-        		onOKClicked();
-        		 saveAndFinish();
-        		return true;
-        	case R.id.action_done_new:
-        		onOKClicked();
-                Intent intent= getIntent();
-        		intent.putExtra(DATETIME_EXTRA, transaction.dateTime);
-        		if (saveAndFinish()) { 
-                    intent.putExtra(DATETIME_EXTRA, transaction.dateTime);
-                    startActivityForResult(intent, -1);
-                    return true;
-                }
-        	case R.id.action_cancel:
-                setResult(RESULT_CANCELED);
-                finish();
-                return true;
+        {
+			case R.id.action_settings:
+				Intent intent = new Intent(this.getApplicationContext(), TransactionPreferencesActivity.class);
+				startActivityForResult(intent, BLOTTER_PREFERENCES);
+				return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -207,7 +231,12 @@ public class TransferActivity extends AbstractTransactionActivity {
         return account;
 	}
 
-	protected void selectAccount(Account account, TextView accountText, boolean selectLast) {
+    @Override
+    protected void switchIncomeExpenseButton(Category category) {
+
+    }
+
+    protected void selectAccount(Account account, TextView accountText, boolean selectLast) {
         accountText.setText(account.title);
         if (selectLast && isRememberLastAccount) {
             selectToAccount(account.lastAccountId);

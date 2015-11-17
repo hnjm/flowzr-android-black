@@ -90,10 +90,10 @@ public class BudgetListAdapter extends BaseAdapter {
 		sb.setLength(0);
 		Recur r = b.getRecur();
 		if (r.interval != RecurInterval.NO_RECUR) {
-			sb.append("#").append(b.recurNum+1).append(" ");
+			sb.append("#").append(b.recurNum+1).append("  ");
 		}
 		sb.append(DateUtils.formatDateRange(context, b.startDate, b.endDate, 
-				DateUtils.FORMAT_SHOW_TIME|DateUtils.FORMAT_SHOW_DATE|DateUtils.FORMAT_ABBREV_MONTH));
+				DateUtils.FORMAT_SHOW_DATE|DateUtils.FORMAT_ABBREV_MONTH));
 		v.topView.setText(sb.toString());
 		
 		if (b.updated) {			

@@ -19,7 +19,7 @@
 <array name="nav_drawer_icons">
 <item>@drawable/ic_action_accounts</item>
 <item>@drawable/ic_action_view_as_list</item>
-<item>@drawable/ic_action_important</item>
+<item>@drawable/ic_action_mail</item>
 
 <item>@drawable/ic_action_cast</item>
 <item>@drawable/ic_action_view_as_grid</item>

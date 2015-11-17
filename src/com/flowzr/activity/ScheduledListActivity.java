@@ -97,7 +97,13 @@ public class ScheduledListActivity extends BlotterFragment {
 		internalOnCreateTemplates();
 		recreateCursor();
 		recreateAdapter();
-		if (getView().findViewById(R.id.fragment_land_container)!=null) { 
+		if (getView().findViewById(R.id.total_text_layout)!=null) {
+			getView().findViewById(R.id.total_text_layout).setVisibility(View.GONE);
+		}
+		if (getView().findViewById(R.id.bAddTransfer)!=null) {
+			getView().findViewById(R.id.bAddTransfer).setVisibility(View.GONE);
+		}
+		if (getView().findViewById(R.id.fragment_land_container)!=null) {
 			getView().findViewById(R.id.fragment_land_container).setVisibility(View.GONE);
 		}    		
     }

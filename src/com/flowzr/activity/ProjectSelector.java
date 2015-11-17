@@ -9,7 +9,9 @@
 package com.flowzr.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -24,6 +26,7 @@ import com.flowzr.utils.TransactionUtils;
 
 import java.util.ArrayList;
 
+import static android.content.Context.ACCESSIBILITY_SERVICE;
 import static com.flowzr.activity.AbstractEditorActivity.setVisibility;
 
 /**
@@ -59,7 +62,7 @@ public class ProjectSelector {
 
     public void createNode(LinearLayout layout) {
         if (isShowProject) {
-            projectText = x.addListNodePlus(layout, R.id.project, R.id.project_add, R.string.project, R.string.no_project);
+            projectText= x.addListNode2(layout, R.id.project, R.drawable.ic_action_important, R.string.project,layout.getResources().getString(R.string.select_project));
             projectNode = (View) projectText.getTag();
         }
     }
@@ -71,7 +74,7 @@ public class ProjectSelector {
                 break;
             case R.id.project_add: {
                 Intent intent = new Intent(activity, ProjectActivity.class);
-                activity.startActivityForResult(intent, -1);
+                activity.startActivityForResult(intent, AbstractTransactionActivity.NEW_PROJECT_REQUEST);
                 break;
             }
         }
@@ -79,7 +82,7 @@ public class ProjectSelector {
 
     private void pickProject() {
         int selectedProjectPos = MyEntity.indexOf(projects, selectedProjectId);
-        x.selectPosition(activity, R.id.project, R.string.project, projectAdapter, selectedProjectPos);
+        x.selectPositionWithAddOption(activity, R.id.project, R.string.project, projectAdapter, selectedProjectPos, R.string.create);
     }
 
     public void onSelectedPos(int id, int selectedPos) {
@@ -91,8 +94,15 @@ public class ProjectSelector {
     }
 
     private void onProjectSelected(int selectedPos) {
-        Project p = projects.get(selectedPos);
-        selectProject(p);
+        if (selectedPos== DialogInterface.BUTTON_NEUTRAL) {
+            Intent intent = new Intent(activity, ProjectActivity.class);
+            activity.startActivityForResult(intent, AbstractTransactionActivity.NEW_PROJECT_REQUEST);
+        }else {
+            Log.e("flowzr",String.valueOf(selectedPos));
+            Project p = projects.get(selectedPos);
+            Log.e("flowzr",p.title);
+            selectProject(p);
+        }
     }
 
     public void selectProject(long projectId) {
@@ -107,12 +117,13 @@ public class ProjectSelector {
             projectText.setText(p.title);
             selectedProjectId = p.id;
         }
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
-                case R.id.project_add:
+                case AbstractTransactionActivity.NEW_PROJECT_REQUEST:
                     onNewProject(data);
                     break;
             }
@@ -128,12 +139,12 @@ public class ProjectSelector {
     }
 
     public void setProjectNodeVisible(boolean visible) {
-        if (isShowProject) {
+        if (isShowProject && projectNode!=null) {
             setVisibility(projectNode, visible ? View.VISIBLE : View.GONE);
         }
     }
 
     public long getSelectedProjectId() {
-        return projectNode == null || projectNode.getVisibility() == View.GONE ? 0 : selectedProjectId;
+            return selectedProjectId;
     }
 }

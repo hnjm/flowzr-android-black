@@ -57,7 +57,7 @@
     <item>Budgets</item>
     <item>Reports</item>
   </string-array>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-es/values-es.xml -->
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-es/values-es.xml -->
     <eat-comment/>
     <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Ir a la pantalla de inicio"</string>
     <string msgid="1397052879051804371" name="abc_action_bar_home_description_format">"%1$s, %2$s"</string>
@@ -184,10 +184,10 @@
     <string name="closing_day_title">Día de Cierre del Extracto</string>
     <string name="collapse_blotter_buttons">Collapse Blotter buttons</string>
     <string name="collapse_blotter_buttons_summary">Group New Transaction/Transfer/Template buttons together (requires restart)</string>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/res/values-es/common_strings.xml -->
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/res/values-es/common_strings.xml -->
     <eat-comment/>
     <string msgid="6428604800157361567" name="common_android_wear_notification_needs_update_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> necesita que la aplicación Android Wear se actualice."</string>
-    <string msgid="2453027084525739603" name="common_android_wear_update_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> no se ejecutará hasta que no actualices la aplicación Android Wear."</string>
+    <string msgid="2453027084525739603" name="common_android_wear_update_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> no funcionará hasta que no actualices la aplicación Android Wear."</string>
     <string msgid="1366439133145190222" name="common_android_wear_update_title">"Actualizar Android Wear"</string>
     <string msgid="6534628256897874213" name="common_google_play_services_api_unavailable_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> necesita uno o varios servicios de Google Play que no están disponibles en este momento. Ponte en contacto con el desarrollador para obtener ayuda."</string>
     <string msgid="4181637455539816337" name="common_google_play_services_enable_button">"Habilitar servicios de Google Play"</string>
@@ -195,8 +195,8 @@
     <string msgid="529078775174559253" name="common_google_play_services_enable_title">"Habilitar servicios de Google Play"</string>
     <string msgid="2443362625939284971" name="common_google_play_services_error_notification_requested_by_msg">"Solicitada por <ns1:g id="APP_NAME">%1$s</ns1:g>"</string>
     <string msgid="8515591849428043265" name="common_google_play_services_install_button">"Descargar servicios de Google Play"</string>
-    <string msgid="8836325110837822534" name="common_google_play_services_install_text_phone">"<ns1:g id="APP_NAME">%1$s</ns1:g> no se ejecutará si los servicios de Google Play no están instalados en tu teléfono."</string>
-    <string msgid="542176290824754127" name="common_google_play_services_install_text_tablet">"<ns1:g id="APP_NAME">%1$s</ns1:g> no se ejecutará si los servicios de Google Play no están instalados en tu tablet."</string>
+    <string msgid="8836325110837822534" name="common_google_play_services_install_text_phone">"<ns1:g id="APP_NAME">%1$s</ns1:g> no funcionará si los servicios de Google Play no están instalados en tu teléfono."</string>
+    <string msgid="542176290824754127" name="common_google_play_services_install_text_tablet">"<ns1:g id="APP_NAME">%1$s</ns1:g> no funcionará si los servicios de Google Play no están instalados en tu tablet."</string>
     <string msgid="26645092511305524" name="common_google_play_services_install_title">"Descargar servicios de Google Play"</string>
     <string msgid="4983316348021735578" name="common_google_play_services_invalid_account_text">"La cuenta especificada no existe en este dispositivo. Selecciona otra cuenta."</string>
     <string msgid="1066672360770936753" name="common_google_play_services_invalid_account_title">"Cuenta no válida"</string>
@@ -211,13 +211,15 @@
     <string msgid="7682982632307307938" name="common_google_play_services_unsupported_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> se basa en los servicios de Google Play, pero no son compatibles con tu dispositivo. Ponte en contacto con el fabricante para obtener asistencia."</string>
     <string msgid="6334768798839376943" name="common_google_play_services_unsupported_title">"Servicios de Google Play"</string>
     <string msgid="8932944190611227642" name="common_google_play_services_update_button">"Actualizar"</string>
-    <string msgid="5709479369299147668" name="common_google_play_services_update_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> no se ejecutará hasta que no actualices los servicios de Google Play."</string>
-    <string msgid="6006316683626838685" name="common_google_play_services_update_title">"Actualizar servicios de Google Play"</string>
-    <string msgid="2201289642219771610" name="common_google_play_services_updating_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> no se ejecutará hasta que finalice la actualización en curso de los servicios de Google Play."</string>
+    <string msgid="5709479369299147668" name="common_google_play_services_update_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> no funcionará hasta que no actualices los servicios de Google Play."</string>
+    <string msgid="6006316683626838685" name="common_google_play_services_update_title">"Actualiza los servicios de Google Play"</string>
+    <string msgid="2201289642219771610" name="common_google_play_services_updating_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> no funcionará hasta que finalice la actualización en curso de los servicios de Google Play."</string>
     <string msgid="815008177440683245" name="common_google_play_services_updating_title">"Actualización servicios Play en curso"</string>
     <string msgid="411506735369601515" name="common_open_on_phone">"Abrir en teléfono"</string>
-    <string msgid="9071884888741449141" name="common_signin_button_text">"Iniciar sesión"</string>
-    <string msgid="2429381841831957106" name="common_signin_button_text_long">"Iniciar sesión con Google"</string>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/res/values-es/base_strings.xml -->
+    <eat-comment/>
+    <string msgid="3156914698180786012" name="common_signin_button_text">"Iniciar sesión"</string>
+    <string msgid="1483290677806110088" name="common_signin_button_text_long">"Iniciar sesión con Google"</string>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-es/strings.xml -->
     <eat-comment/>
     <string name="confirm_pin">Confirmar PIN</string>
@@ -414,16 +416,6 @@
     <string name="more_products">Más productos...</string>
     <string name="move_go_to_marker">Ir al marcador</string>
     <string name="move_marker_to_center">Centrar marcador</string>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.2.0/res/values-es/values-es.xml -->
-    <eat-comment/>
-    <string msgid="4271159405637008602" name="mr_media_route_button_content_description">"Salida multimedia"</string>
-    <string msgid="7553005460920830010" name="mr_media_route_chooser_searching">"Buscando dispositivos…"</string>
-    <string msgid="7106830097177242655" name="mr_media_route_chooser_title">"Conectar a dispositivo"</string>
-    <string msgid="109793632378378069" name="mr_media_route_controller_disconnect">"Desconectar"</string>
-    <string msgid="5441529851481176817" name="mr_system_route_name">"Sistema"</string>
-    <string msgid="7498112907524977311" name="mr_user_route_category_name">"Dispositivos"</string>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-es/strings.xml -->
-    <eat-comment/>
     <string name="my_location">Mi ubicación</string>
     <string name="negative_opening_amount">Apertura con saldo negativo</string>
     <string name="negative_opening_amount_summary">Crear cuenta con saldo negativo de apertura</string>
@@ -753,7 +745,7 @@
     <string name="startup_screen">Startup screen</string>
     <string name="startup_screen_summary">Select tab which will be selected on startup</string>
     <string name="statement_error">Debe fijar los días del pago y del cierre de esta tarjeta de crédito en las propiedades de su cuenta.</string>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-es/values-es.xml -->
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-es/values-es.xml -->
     <eat-comment/>
     <string msgid="2869576371154716097" name="status_bar_notification_info_overflow">"+999"</string>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-es/strings.xml -->
@@ -819,11 +811,6 @@
     <string name="user_password">Contraseña</string>
     <string name="user_password_summary">Contraseña de la cuenta de Google</string>
     <string name="view">Examinar</string>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.8.0/res/values-es/wallet_strings.xml -->
-    <eat-comment/>
-    <string name="wallet_buy_button_place_holder">Comprar con Google</string>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-es/strings.xml -->
-    <eat-comment/>
     <string name="warning">Aviso</string>
     <string name="wednesday">Miércoles</string>
     <string name="weekday">día laborable</string>

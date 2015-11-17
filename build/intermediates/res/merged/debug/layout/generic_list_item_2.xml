@@ -8,22 +8,20 @@
   
   Contributors:
       Denis Solonenko - initial API and implementation
+      Emmanuel Florent - port to appcompat
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:paddingLeft="0dip" android:paddingRight="@dimen/space_normal"
-	android:paddingBottom="@dimen/space_normal" android:paddingTop="@dimen/space_small"
 	android:layout_height="wrap_content" android:layout_width="fill_parent">
 
-
-
-	<ImageView android:id="@+id/icon" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:paddingLeft="10dp"
-		android:paddingRight="10dp" android:src="@drawable/account_type_card_visa" android:layout_marginTop="5dp"/>
+	<ImageView android:id="@+id/icon"
+		android:layout_height="44dp"
+		android:layout_width="44dp"
+		 android:src="@drawable/account_type_card_visa"
+		android:layout_margin="@dimen/space_large"/>
 
 	<ImageView android:id="@+id/active_icon" android:src="@drawable/icon_lock"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:paddingLeft="10dp" android:paddingRight="10dp"/>
-
+		android:paddingLeft="22dp" android:paddingRight="10dp"/>
 
 	<TextView android:layout_width="wrap_content"
 		style="@style/TextView" android:textSize="@dimen/text_small"	

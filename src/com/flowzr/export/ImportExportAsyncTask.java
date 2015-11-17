@@ -17,6 +17,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.flowzr.utils.MyPreferences;
 
 import static com.flowzr.export.Export.uploadBackupFileToDropbox;
@@ -50,6 +52,8 @@ public abstract class ImportExportAsyncTask extends AsyncTask<String, String, Ob
 			return work(context, db, params);
 		} catch(Exception ex){
 			Log.e("Financisto", "Unable to do import/export", ex);
+            ex.printStackTrace();
+            Toast.makeText(context,context.getString(R.string.backup) + context.getString(R.string.fail),Toast.LENGTH_LONG).show();
 			return ex;
 		} finally {
 			db.close();

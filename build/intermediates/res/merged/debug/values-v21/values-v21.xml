@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-v21/values-v21.xml -->
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/design/23.1.1/res/values-v21/values-v21.xml -->
+    <eat-comment/>
+    <dimen name="design_navigation_padding_top_default">24dp</dimen>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v21/values-v21.xml -->
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance.Material"/>
     <style name="Base.TextAppearance.AppCompat.Body1" parent="android:TextAppearance.Material.Body1"/>
@@ -65,8 +68,6 @@
         <item name="actionBarDivider">?android:attr/actionBarDivider</item>
         <item name="actionBarItemBackground">@drawable/abc_action_bar_item_background_material</item>
         <item name="actionButtonStyle">?android:attr/actionButtonStyle</item>
-        <item name="actionMenuTextColor">?android:attr/actionMenuTextColor</item>
-        <item name="actionMenuTextAppearance">?android:attr/actionMenuTextAppearance</item>
         <item name="actionModeBackground">?android:attr/actionModeBackground</item>
         <item name="actionModeCloseDrawable">?android:attr/actionModeCloseDrawable</item>
         <item name="actionOverflowButtonStyle">?android:attr/actionOverflowButtonStyle</item>
@@ -114,8 +115,6 @@
         <item name="actionBarDivider">?android:attr/actionBarDivider</item>
         <item name="actionBarItemBackground">@drawable/abc_action_bar_item_background_material</item>
         <item name="actionButtonStyle">?android:attr/actionButtonStyle</item>
-        <item name="actionMenuTextColor">?android:attr/actionMenuTextColor</item>
-        <item name="actionMenuTextAppearance">?android:attr/actionMenuTextAppearance</item>
         <item name="actionModeBackground">?android:attr/actionModeBackground</item>
         <item name="actionModeCloseDrawable">?android:attr/actionModeCloseDrawable</item>
         <item name="actionOverflowButtonStyle">?android:attr/actionOverflowButtonStyle</item>
@@ -242,4 +241,12 @@
     </style>
     <style name="Platform.ThemeOverlay.AppCompat.Dark"/>
     <style name="Platform.ThemeOverlay.AppCompat.Light"/>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-v21/styles.xml -->
+    <eat-comment/>
+    <style name="Theme.Financisto" parent="@style/Theme.AppCompat">
+        <item name="colorControlActivated">@color/pressed_card</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="alertDialogTheme">@style/dialog</item>
+        <item name="android:navigationBarColor">@color/navigationBarColor</item>
+    </style>
 </resources>

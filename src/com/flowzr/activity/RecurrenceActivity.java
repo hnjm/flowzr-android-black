@@ -143,7 +143,7 @@ public class RecurrenceActivity extends AbstractEditorActivity {
 
 	public void createNodes() {
 		layout.removeAllViews();
-		x.addListNode(layout, R.id.recurrence_pattern, R.string.recurrence_pattern, getString(recurrence.pattern.frequency.titleId));
+		x.addListNode2(layout, R.id.recurrence_pattern, R.drawable.ic_repeat_white_48dp, R.string.recurrence_pattern , getString(recurrence.pattern.frequency.titleId));
 		if (recurrencePatternView != null) {
 			recurrencePatternView.createNodes(layout);
 			startDateView = x.addInfoNode(layout, R.id.start_date, R.string.recurrence_period_starts_on_date, 
@@ -151,7 +151,7 @@ public class RecurrenceActivity extends AbstractEditorActivity {
 			startTimeView = x.addInfoNode(layout, R.id.start_time, R.string.recurrence_period_starts_on_time, 
 					DateUtils.getTimeFormat(this).format(recurrence.getStartDate().getTime()));
 			if (recurrence.pattern.frequency != RecurrenceFrequency.GEEKY) {
-				x.addListNode(layout, R.id.recurrence_period, R.string.recurrence_period, getString(recurrence.period.until.titleId));
+				x.addListNode2(layout, R.id.recurrence_period, R.drawable.ic_today_white_48dp, R.string.recurrence_period, getString(recurrence.period.until.titleId));
 				if (recurrencePeriodView != null) {
 					recurrencePeriodView.createNodes(layout);
 				}
@@ -195,7 +195,6 @@ public class RecurrenceActivity extends AbstractEditorActivity {
 			case R.id.result: {
 				try {
                     String stateAsString = stateToString();
-                    Log.d("RRULE", stateAsString);
 					Recurrence r = Recurrence.parse(stateAsString);
 					DateRecurrenceIterator ri = r.createIterator(new Date());
 					StringBuilder sb = new StringBuilder();

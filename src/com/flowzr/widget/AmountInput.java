@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *     Denis Solonenko - initial API and implementation
+ *     Emmanuel Florent - Port to AppCompat 21,  add icon title
  ******************************************************************************/
 package com.flowzr.widget;
 
@@ -51,7 +52,7 @@ public class AmountInput extends LinearLayout {
 	private EditText secondary;
 	
 	private int requestId;
-	private OnAmountChangedListener onAmountChangedListener;
+	protected OnAmountChangedListener onAmountChangedListener;
     private boolean incomeExpenseEnabled = true;
 
 	public AmountInput(Context context, AttributeSet attrs) {
@@ -133,7 +134,13 @@ public class AmountInput extends LinearLayout {
 				startInputActivity(QuickAmountInput.class);
 			}
 		});
-		findViewById(R.id.calculator).setOnClickListener(new OnClickListener() {
+		findViewById(R.id.primary).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startInputActivity(CalculatorInput.class);
+			}
+		});
+		findViewById(R.id.secondary).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				startInputActivity(CalculatorInput.class);
@@ -325,6 +332,7 @@ public class AmountInput extends LinearLayout {
 
 	public void setColor(int color) {
 		primary.setTextColor(color);
+		((TextView)findViewById(R.id.dot)).setTextColor(color);
 		secondary.setTextColor(color);
 	}
 

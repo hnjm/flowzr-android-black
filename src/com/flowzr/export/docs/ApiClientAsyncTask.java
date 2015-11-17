@@ -23,6 +23,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveFile;
@@ -65,6 +66,7 @@ public abstract class ApiClientAsyncTask<Params, Progress, Result>
                 .setAccountName(MyPreferences.getGoogleDriveAccount(context))
                 .addScope(Drive.SCOPE_FILE);
         mClient = builder.build();
+        //
     }
 
     public Metadata getFileForName(DriveFolder driveFolder, String filename) {
@@ -113,6 +115,7 @@ public abstract class ApiClientAsyncTask<Params, Progress, Result>
             return new ImportExportException(R.string.gdocs_backup_failed);
         }
         if (!mClient.isConnected()) {
+            Log.e("flowzr","not connected");
             return new ImportExportException(R.string.gdocs_credentials_not_configured);
         }
         try {

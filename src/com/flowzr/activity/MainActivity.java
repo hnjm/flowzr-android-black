@@ -12,6 +12,10 @@
 package com.flowzr.activity;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
@@ -33,6 +37,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.commonsware.cwac.wakeful.WakefulIntentService;
 import com.flowzr.R;
 import com.flowzr.activity.AccountListFragment.OnAccountSelectedListener;
 import com.flowzr.blotter.BlotterFilter;
@@ -42,8 +48,11 @@ import com.flowzr.dialog.WebViewDialog;
 import com.flowzr.export.csv.Csv;
 import com.flowzr.export.flowzr.FlowzrSyncEngine;
 import com.flowzr.filter.Criteria;
+import com.flowzr.service.FinancistoService;
 import com.flowzr.utils.*;
 import com.flowzr.utils.MyPreferences.StartupScreen;
+
+import java.util.List;
 
 import static com.flowzr.service.DailyAutoBackupScheduler.scheduleNextAutoBackup;
 import static com.flowzr.service.FlowzrAutoSyncScheduler.scheduleNextAutoSync;
@@ -74,7 +83,7 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
 
     private static BlotterFragment blotterFragment;
 
-
+		/**
 	  public final void updateActivityFromBgThread() {
 		    runOnUiThread(new Runnable() {
 		      @Override
@@ -82,19 +91,21 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
 		        updateActivity();
 		      }});
 		  }	
-	  
+	  **/
+		/**
 	  public void updateActivity() {
 		 
 		  
 	  }
-
+		**/
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        Log.e("flowzr", "config change");
-        initUI();
+        //initUI();
         PinProtection.unlock(this);
     }
+
+
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,12 +172,35 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
                 mDrawerLayout.openDrawer(Gravity.LEFT);
             }
         }
-
         initialLoad();
-
         FlowzrSyncEngine.setUpdatable(this);
     }
 
+
+	public static Intent createExplicitFromImplicitIntent(Context context, Intent implicitIntent) {
+		//Retrieve all services that can match the given intent
+		PackageManager pm = context.getPackageManager();
+		List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
+
+		//Make sure only one match was found
+		if (resolveInfo == null || resolveInfo.size() != 1) {
+			return null;
+		}
+
+		//Get component info and create ComponentName
+		ResolveInfo serviceInfo = resolveInfo.get(0);
+		String packageName = serviceInfo.serviceInfo.packageName;
+		String className = serviceInfo.serviceInfo.name;
+		ComponentName component = new ComponentName(packageName, className);
+
+		//Create a new intent. Use the old one for extras and such reuse
+		Intent explicitIntent = new Intent(implicitIntent);
+
+		//Set the component to be explicit
+		explicitIntent.setComponent(component);
+
+		return explicitIntent;
+	}
 
 
 	
@@ -184,10 +218,8 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
     @Override
     protected void onResume()
     {
-        super.onResume();
-        if (PinProtection.isUnlocked()) {
-
-        }
+		PinProtection.unlock(this);
+		super.onResume();
     }
 	
 	public void addMyTabs() {
@@ -198,7 +230,8 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
            
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	super.onActivityResult(requestCode, resultCode, data);
+		PinProtection.unlock(this);
+		super.onActivityResult(requestCode, resultCode, data);
     	if (requestCode == CHANGE_PREFERENCES) {
             scheduleNextAutoBackup(this);
             scheduleNextAutoSync(this);
@@ -292,7 +325,7 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
 		aTab.setIcon(R.drawable.ic_action_mail);
 		return aTab;
     }
-        
+	/**
     private void openBrowser(String url) {
         try {
             Intent browserIntent = new Intent("android.intent.action.VIEW", Uri.parse(url));
@@ -302,10 +335,10 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
             Toast.makeText(this, R.string.donate_error, Toast.LENGTH_LONG).show();
         }
     }
+	*/
    
   	@Override
 	public void onAccountSelected(String title, long id) {
-	
 		Bundle bundle = new Bundle();
         Criteria.eq(BlotterFilter.FROM_ACCOUNT_ID, String.valueOf(id))
         	.toBundle(title, bundle);
@@ -314,14 +347,7 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
 	    bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.blotter);
 	    fragment.setArguments(bundle);
 	    loadTabFragment(fragment, R.layout.blotter, bundle, 1);
-        try {
-            viewPager.getAdapter().notifyDataSetChanged();
-            setMyTitle(title);
-        } catch(Exception e) {
-
-        }
-
-	}	
+	}
   	
   	public void setMyTitle(String t) {
   	  SpannableString s = new SpannableString(t);
@@ -356,7 +382,17 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
   	    
   	   @Override
   	    public int getItemPosition(Object object){
-  		   return POSITION_NONE;
+		   if (object.getClass().getSimpleName().equals(AccountListFragment.class.getCanonicalName())) {
+			   return 0;
+		   }
+		   if (object.getClass().getSimpleName().equals(BlotterFragment.class.getCanonicalName())) {
+			   return 1;
+		   }
+		   if (object.getClass().getSimpleName().equals(BudgetListFragment.class.getCanonicalName())) {
+			   return 2;
+		   }
+		   return POSITION_NONE;
+
   	    }
   	    
   	   @Override
@@ -405,7 +441,7 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
 
 	@Override
 	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
-		// 		
+		viewPager.setCurrentItem(arg0.getPosition());
 	}
 
 	@Override
@@ -425,10 +461,13 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
         {
             case android.R.id.home:
             {
+				Log.e("flowzr","home");
             	if (mDrawerLayout!=null) {
+					Log.e("flowzr","home2");
 	                if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
 	                    mDrawerLayout.closeDrawer(mDrawerList);
 	                } else {
+						Log.e("flowzr","home3");
 	                    mDrawerLayout.openDrawer(mDrawerList);
 	                }
             	}
@@ -436,22 +475,32 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
             }
 
         }
+		Log.e("flowzr","go to super");
         return super.onOptionsItemSelected(item);
     }
-  	
-  	@Override
-  	public void onBackPressed() {
-  		if (isTaskRoot()) {
-	  		if (viewPager.getCurrentItem()!=0) {
-	  			viewPager.setCurrentItem(0);
-	  		} else {
-	  			super.onBackPressed();
-	  		}
-  		} else {
-  			super.onBackPressed();  			
-  		}  		
-  	}  	
-	
+
+	@Override
+	public void onBackPressed() {
+		if (isTaskRoot()) {
+
+			if (mDrawerLayout!=null) {
+				if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+					mDrawerLayout.closeDrawer(mDrawerList);
+					return;
+				}
+			}
+
+			if (viewPager.getCurrentItem()!=0) {
+				viewPager.setCurrentItem(0);
+			} else {
+				super.onBackPressed();
+			}
+		} else {
+			super.onBackPressed();
+		}
+	}
+
+
 }
 
 

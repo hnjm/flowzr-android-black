@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <EditText xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/EditTextUserInput">
+    style="@style/EditTextUserInput"
+    android:background="@null"
+    android:paddingBottom="@dimen/space_normal"
+    android:paddingLeft="0dp"
+    android:layout_marginLeft="0dp"
+    >
 </EditText>

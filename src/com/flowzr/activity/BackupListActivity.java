@@ -479,7 +479,7 @@ public class BackupListActivity extends AppCompatActivity implements GoogleApiCl
         if (mClient!=null) {
             mClient.disconnect();
         }
-        PinProtection.lock(this.getApplicationContext());
+        //PinProtection.lock(this.getApplicationContext());
     }
     
     @Override
@@ -560,8 +560,8 @@ public class BackupListActivity extends AppCompatActivity implements GoogleApiCl
             Log.e("flowzr", "Exception while starting resolution activity", e);
             e.printStackTrace();
         }
-        showErrorPopup(this, R.string.gdocs_connection_failed);
-        //Toast.makeText(this,R.string.gdocs_connection_failed,Toast.LENGTH_LONG).show();
+        //showErrorPopup(this, R.string.gdocs_connection_failed);
+        Toast.makeText(this,R.string.gdocs_connection_failed,Toast.LENGTH_LONG).show();
     }
 
 

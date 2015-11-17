@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     Denis Solonenko - initial API and implementation
+ *     Emmanuel Florent - port to AppCompat, added FAB button
  ******************************************************************************/
 package com.flowzr.widget;
 
@@ -58,14 +59,25 @@ public class CalculatorInput extends ActionBarActivity implements OnClickListene
 
         setContentView(R.layout.calculator);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  
-        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#121212")));
-        
+        getSupportActionBar().setTitle("");
+
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         for (int id : buttons) {
             Button b = (Button) findViewById(id);
             b.setOnClickListener(this);
         }
+
+        findViewById(R.id.fab).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isInEquals) {
+                    doEqualsChar();
+                }
+                close();
+
+            }
+        });
 
         tvResult = (TextView) findViewById(R.id.result);
         tvOp = (TextView) findViewById(R.id.op);
@@ -83,7 +95,7 @@ public class CalculatorInput extends ActionBarActivity implements OnClickListene
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.ok_cancel, menu);
+        //getMenuInflater().inflate(R.menu.ok_cancel, menu);
         return true;
     }
     
@@ -99,7 +111,7 @@ public class CalculatorInput extends ActionBarActivity implements OnClickListene
                 close();
 			
         		return true;
-	    	case R.id.action_cancel:
+	    	case android.R.id.home:
 				setResult(RESULT_CANCELED);
 				finish();
 	    		return true;        
@@ -166,8 +178,8 @@ public class CalculatorInput extends ActionBarActivity implements OnClickListene
             switch (c) {
                 case '+':
                 case '-':
-                case '/':
-                case '*':
+                case '÷':
+                case '×':
                     doOpChar(c);
                     break;
                 case '%':
@@ -227,10 +239,10 @@ public class CalculatorInput extends ActionBarActivity implements OnClickListene
             case '-':
                 stack.push(new BigDecimal(valOne).subtract(new BigDecimal(valTwo)).toPlainString());
                 break;
-            case '*':
+            case '×':
                 stack.push(new BigDecimal(valOne).multiply(new BigDecimal(valTwo)).toPlainString());
                 break;
-            case '/':
+            case '÷':
                 BigDecimal d2 = new BigDecimal(valTwo);
                 if (d2.intValue() == 0) {
                     stack.push("0.0");

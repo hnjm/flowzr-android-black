@@ -7,21 +7,10 @@
 			android:title="@string/force_gps_location"           
           app:showAsAction="ifRoom"  />
 
-
-    <item android:id="@+id/action_cancel"
-          android:icon="@drawable/ic_action_cancel" 
-			app:title="@string/cancel"           
-          app:showAsAction="always"  />
-
-    <item android:id="@+id/action_done_new"
-          android:icon="@drawable/ic_action_new"
-			android:title="@string/save_and_new"           
-          app:showAsAction="always"  />
-
-    <item android:id="@+id/action_done"
-          android:icon="@drawable/ic_action_done"
-			android:title="@string/ok"           
-          app:showAsAction="always"  />
+    <item android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_settings"
+        android:title="@string/preferences"
+        app:showAsAction="always"  />
 
 
 </menu>

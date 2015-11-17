@@ -990,8 +990,6 @@ public class FlowzrSyncEngine  {
                 exRate.fromCurrencyId=fromCurrency.id;
                 exRate.rate=rate;
                 exRate.date=effective_date;
-                Log.i("PLOP","Save Rate");
-                Log.i("PLOP",jsonObjectEntity.toString());
                 dba.saveRate(exRate);
             }
         } catch (Exception e) {
@@ -1857,8 +1855,6 @@ public class FlowzrSyncEngine  {
         } else if (clazz==MyLocation.class) {
             saveOrUpdateLocationFromJSON(getLocalKey(tableName,remoteKey),o);
         } else if (tableName.equals("currency_exchange_rate"))  {
-            Log.i("PLOP","pulll rate");
-            Log.i("PLOP",o.toString());
             saveOrUpdateCurrencyRateFromJSON(o);
         } else if (clazz==Category.class)  {
             saveOrUpdateCategoryFromJSON(getLocalKey(tableName,remoteKey),o);

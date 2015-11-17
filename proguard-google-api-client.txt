@@ -32,3 +32,10 @@
 # Suppress warnings on sun.misc.Unsafe
 -dontnote sun.misc.Unsafe
 -dontwarn sun.misc.Unsafe
+
+-dontwarn java.lang.invoke**
+-dontwarn org.apache.lang.**
+-dontwarn org.apache.commons.**
+-dontwarn com.nhaarman.**
+-dontwarn se.emilsjolander.**
+

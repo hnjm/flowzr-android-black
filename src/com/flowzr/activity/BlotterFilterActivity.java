@@ -98,7 +98,7 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
 			updateStatusFromFilter();
             disableAccountResetButtonIfNeeded();
 		}
-		
+
 	}
 
     @Override

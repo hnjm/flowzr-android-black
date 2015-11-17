@@ -7,29 +7,98 @@
   
   Contributors:
       Denis Solonenko - initial API and implementation
+      Emmanuel Florent - Port to AppCompat 21,  add icon title, add FAB button
 -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-	    android:paddingLeft="@dimen/dynamic_margin_narrow_horizontal"
-	    android:paddingRight="@dimen/dynamic_margin_narrow_horizontal"
-		android:orientation="vertical">
-		<LinearLayout android:layout_height="wrap_content"
-			android:layout_width="fill_parent" style="@style/ButtonBar">
-			<ImageButton android:id="@+id/status" android:layout_width="wrap_content" style="@style/Button.Select" 
-				android:layout_height="wrap_content" android:src="@drawable/transaction_status_unreconciled_2"/>
-			<Button android:layout_width="wrap_content" android:gravity="center" style="@style/Button.Select" 
-				android:text="04/03/09"  android:id="@+id/date"
-				android:layout_height="wrap_content" android:layout_weight="1" />
-			<Button android:layout_width="wrap_content" android:gravity="center" style="@style/Button.Select" 
-				android:text="12:56 PM" android:id="@+id/time"
-				android:layout_height="wrap_content" />
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:layout_width="fill_parent" android:layout_height="fill_parent"
-			android:orientation="vertical" android:id="@+id/list" />
+<android.support.design.widget.CoordinatorLayout
+	android:layout_margin="0dp"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
-	</LinearLayout>
-</ScrollView>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        tools:context=".ui.currencies.CurrencyEditActivity"
+        android:id="@+id/main_layout">
 
+        <include layout="@layout/transaction_total_text"/>
+
+        <LinearLayout android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
+            <ImageButton android:id="@+id/status"
+                android:layout_marginLeft="@dimen/space_normal" android:layout_gravity="center"
+                android:layout_marginRight="@dimen/space_large"
+                android:layout_width="@dimen/recommended_touch_size"
+                android:layout_height="@dimen/recommended_touch_size"
+                android:background="@null"
+                android:src="@drawable/transaction_status_unreconciled_2"/>
+            <Button android:layout_width="wrap_content" android:gravity="center"
+                android:text="04/03/09"  android:id="@+id/date"
+                android:layout_height="wrap_content" android:layout_weight="1" />
+            <Button android:layout_width="wrap_content" android:gravity="center"
+                android:text="12:56 PM" android:id="@+id/time"
+                android:layout_marginRight="@dimen/space_normal"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:animateLayoutChanges="true"
+            android:scrollbars="none"
+            android:layout_width="fill_parent">
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:layout_marginTop="@dimen/space_large"
+                android:paddingBottom="@dimen/space_xxlarge"
+                android:orientation="vertical" android:id="@+id/list">
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/dummy2"
+        android:layout_width="44dp"
+        android:layout_height="120dp"
+        app:layout_anchor="@id/main_layout"
+        app:layout_anchorGravity="center|bottom" />
+
+
+    <android.support.design.widget.FloatingActionButton
+    android:id="@+id/saveButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:clickable="true"
+    android:src="@drawable/ic_action_done"
+    app:layout_anchor="@id/dummy2"
+        android:elevation="6dp"
+    app:layout_anchorGravity="bottom|right"/>
+
+    <View
+    android:id="@+id/dummy"
+    android:layout_width="60dp"
+    android:layout_height="32dp"
+    app:layout_anchor="@id/saveButton"
+    app:layout_anchorGravity="bottom|right" />
+
+    <android.support.design.widget.FloatingActionButton
+    android:id="@+id/saveAddButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:clickable="true"
+        android:elevation="6dp"
+    android:src="@drawable/ic_action_new"
+    app:layout_anchor="@id/dummy"
+    app:layout_anchorGravity="center|bottom|right"/>
+
+</android.support.design.widget.CoordinatorLayout>

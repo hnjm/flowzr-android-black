@@ -60,6 +60,10 @@
 				
 				
 			</TableRow>
-		</TableLayout><TextView android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1"></TextView>
+		</TableLayout>
+	<!--
+	<TextView android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1"></TextView>
+
+	-->
 </LinearLayout>
 <!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout-land/lock.xml -->

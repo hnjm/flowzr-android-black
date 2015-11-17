@@ -1,0 +1,282 @@
+-injars /home/eflorent/project/flowzr-android-black/build/intermediates/multi-dex/release/allclasses.jar
+-outjars /home/eflorent/project/flowzr-android-black/build/intermediates/multi-dex/release/componentClasses.jar
+
+-libraryjars /home/eflorent/Android/Sdk/build-tools/23.0.1/lib/shrinkedAndroid.jar
+
+-forceprocessing
+-dontoptimize
+-dontobfuscate
+-dontpreverify
+-dontwarn
+-printconfiguration /home/eflorent/project/flowzr-android-black/build/intermediates/multi-dex/release/components.flags
+
+
+-keep class android.support.multidex.MultiDexApplication {
+    <init>();
+    void attachBaseContext(android.content.Context);
+}
+
+-keep class com.flowzr.activity.AccountWidget {
+    <init>();
+}
+
+-keep class com.flowzr.activity.AccountWidget3x1 {
+    <init>();
+}
+
+-keep class com.flowzr.activity.AccountWidget4x1 {
+    <init>();
+}
+
+-keep class com.flowzr.activity.ScheduledAlarmReceiver {
+    <init>();
+}
+
+-keep class com.flowzr.export.flowzr.GcmBroadcastReceiver {
+    <init>();
+}
+
+-keep class com.flowzr.export.flowzr.GCMIntentService {
+    <init>();
+}
+
+-keep class com.flowzr.activity.PackageReplaceReceiver {
+    <init>();
+}
+
+-keep class com.flowzr.service.FinancistoService {
+    <init>();
+}
+
+-keep class com.flowzr.activity.MainActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.TransactionActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.TransferActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.PinActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.BlotterActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.PlannerActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.MassOpActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.LocationActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.ExchangeRateActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.RecurrenceActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.RecurActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.NotificationOptionsActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.AccountActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.ReportActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.CurrencyActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.AttributeActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.DateFilterActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.BlotterFilterActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.ReportFilterActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.CategoryActivity {
+    <init>();
+}
+
+-keep class com.flowzr.widget.QuickAmountInput {
+    <init>();
+}
+
+-keep class com.flowzr.widget.CalculatorInput {
+    <init>();
+}
+
+-keep class com.flowzr.activity.BudgetActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.ProjectActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.PayeeActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.CsvExportActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.CsvImportActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.QifExportActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.QifImportActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.MonthlyViewActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.CCardStatementClosingDayActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.Report2DChartActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.TransactionPreferencesActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.ReportPreferencesActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.AboutActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.WebViewActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.SplitTransactionActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.SplitTransferActivity {
+    <init>();
+}
+
+-keep class com.flowzr.dialog.FolderBrowser {
+    <init>();
+}
+
+-keep class com.flowzr.activity.CategorySelectorActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.AccountListTotalsDetailsActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.BlotterTotalsDetailsActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.BudgetListTotalsDetailsActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.PurgeAccountActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.FlowzrSyncActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.PreferencesActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.FlowzrPreferencesActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.BackupPreferencesActivity {
+    <init>();
+}
+
+-keep class org.achartengine.GraphicalActivity {
+    <init>();
+}
+
+-keep class com.dropbox.client2.android.AuthActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.BackupListActivity {
+    <init>();
+}
+
+-keep class com.flowzr.activity.EntityListActivity {
+    <init>();
+}
+
+-keep class com.google.android.gms.auth.api.signin.internal.SignInHubActivity {
+    <init>();
+}
+
+-keep class com.google.android.gms.measurement.AppMeasurementContentProvider {
+    <init>();
+}
+
+-keep class com.google.android.gms.measurement.AppMeasurementReceiver {
+    <init>();
+}
+
+-keep class com.google.android.gms.measurement.AppMeasurementService {
+    <init>();
+}
+
+-keep public class * extends android.app.backup.BackupAgent {
+    <init>();
+}
+
+-keep public class * extends java.lang.annotation.Annotation {
+    <fields>;
+    <methods>;
+}

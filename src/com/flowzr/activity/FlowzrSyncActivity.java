@@ -408,7 +408,7 @@ public class FlowzrSyncActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        PinProtection.lock(this.getApplicationContext());
+        //PinProtection.lock(this.getApplicationContext());
     }
 
     @Override

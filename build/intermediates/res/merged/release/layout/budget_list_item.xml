@@ -17,7 +17,7 @@
 
 	<TextView android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:singleLine="true"
-		android:id="@+id/top" android:text="top" 
+		android:id="@+id/top" android:text="top"
 		style="@style/TextView" android:textSize="@dimen/text_small" 
 		android:paddingTop="2dp" />
 
@@ -27,7 +27,8 @@
 		<TextView android:id="@+id/center" android:text="center"
 			android:singleLine="true" android:layout_width="wrap_content"
 			android:layout_weight="1" android:layout_height="wrap_content"
-			style="@style/TextView" android:textSize="@dimen/text_large" 
+			style="@style/TextView" android:textSize="@dimen/text_large"
+			android:textStyle="bold"
 			android:layout_marginTop="-5dp" android:ellipsize="marquee"/>
 		<TextView android:layout_width="wrap_content"
 			android:singleLine="true" android:id="@+id/right_center"
@@ -52,8 +53,8 @@
 
 	<ProgressBar android:id="@+id/progress" android:max="100"
 		android:layout_alignParentRight="true" android:layout_width="fill_parent"
-		android:progress="0" android:paddingBottom="4dp"
-		android:layout_height="12dp" style="@style/ProgressBarBudget"
+		android:progress="0" android:paddingBottom="2dp" android:paddingTop="4dp"
+		android:layout_height="14dp" style="@style/ProgressBarBudget"
 		android:layout_below="@id/layout1" android:layout_alignLeft="@id/layout1" />
 
 </RelativeLayout>

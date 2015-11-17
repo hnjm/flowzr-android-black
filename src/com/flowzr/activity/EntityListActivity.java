@@ -26,13 +26,15 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TypefaceSpan;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
 
-public class EntityListActivity extends ActionBarActivity {
+public class EntityListActivity extends AppCompatActivity {
 
 	public final static String REQUEST_BLOTTER_TOTALS="REQUEST_BLOTTER_TOTALS";
 	public final static String REQUEST_BLOTTER="REQUEST_BLOTTER";
@@ -87,7 +89,12 @@ public class EntityListActivity extends ActionBarActivity {
 			Fragment f= new BudgetBlotterFragment();
 			f.setArguments(intent.getExtras());
 			intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.blotter);
-			transaction.replace(R.id.fragment_container,f);        	
+			transaction.replace(R.id.fragment_container,f);
+		} else 	if (intent.hasExtra(REQUEST_BLOTTER)) {
+			Fragment f= new BlotterFragment();
+			f.setArguments(intent.getExtras());
+			intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.blotter);
+			transaction.replace(R.id.fragment_container,f);
 		} else if (intent.hasExtra(REQUEST_REPORTS)) {
 			intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.reports_list);
 			transaction.replace(R.id.fragment_container,new ReportsListFragment());						
@@ -99,7 +106,7 @@ public class EntityListActivity extends ActionBarActivity {
 				transaction.replace(R.id.fragment_container,new CategorySelectorFragment());
 			} else if (intent.hasExtra(REQUEST_SCHEDULED)) {
 				intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.scheduled_transactions);
-				transaction.replace(R.id.fragment_container,new ScheduledListActivity());			
+				transaction.replace(R.id.fragment_container, new ScheduledListActivity());
 			} else if (intent.hasExtra(REQUEST_PLANNER)) {
 				intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.planner);
 				if (findViewById(R.id.fragment_land_container)!=null) {
@@ -132,7 +139,7 @@ public class EntityListActivity extends ActionBarActivity {
 		else {
 			transaction.replace(R.id.fragment_container,new EntityListFragment());
 		}
-		transaction.commit(); 
+		transaction.commit();
 	}
      	
   	public void setMyTitle(String t) {
@@ -144,11 +151,11 @@ public class EntityListActivity extends ActionBarActivity {
     
 	public void loadFragment(Fragment fragment) {				
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.replace(R.id.fragment_container,fragment);
-		transaction.addToBackStack(null);
-		transaction.commit();
+		transaction.replace(R.id.fragment_container, fragment);
+		//transaction.addToBackStack(null);
+		transaction.commitAllowingStateLoss();
 	}
-  	
+
   	@Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -163,7 +170,7 @@ public class EntityListActivity extends ActionBarActivity {
                     Intent upIntent = tsb.getIntents()[intentCount - 1];
                     if (NavUtils.shouldUpRecreateTask(this, upIntent))
                     {
-                        // This activity is not part of the application's task, so create a new task with a synthesized back stack.
+                         //his activity is not part of the application's task, so create a new task with a synthesized back stack.
                         tsb.startActivities();
                         finish();
                     }
@@ -175,6 +182,7 @@ public class EntityListActivity extends ActionBarActivity {
                 }
                 else
                 {
+
                     onBackPressed();
                 }
                 return true;
@@ -183,7 +191,7 @@ public class EntityListActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-	
+
   	@Override
   	public void onBackPressed() {
   		Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
@@ -197,5 +205,5 @@ public class EntityListActivity extends ActionBarActivity {
   			super.onBackPressed();
   		}
   	}
-  	
+
 }

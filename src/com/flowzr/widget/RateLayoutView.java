@@ -1,5 +1,16 @@
-package com.flowzr.widget;
+/*******************************************************************************
+ * Copyright (c) 2010 Denis Solonenko.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ * Contributors:
+ *     Denis Solonenko - initial API and implementation
+ *     Emmanuel Florent - Port to AppCompat 21,  add icon title
+ ******************************************************************************/
 
+package com.flowzr.widget;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -111,7 +122,7 @@ public class RateLayoutView implements RateNodeOwner {
     private void updateTitle(View node, int titleId, Currency currency) {
         TextView title = (TextView) node.findViewById(R.id.label);
         if (currency != null && currency.id > 0) {
-            title.setText(activity.getString(titleId)+" ("+currency.name+")");
+            title.setText(currency.name);
         } else {
             title.setText(activity.getString(titleId));
         }
@@ -289,6 +300,17 @@ public class RateLayoutView implements RateNodeOwner {
     public void selectSameCurrency(Currency currency) {
         selectCurrencyFrom(currency);
         selectCurrencyTo(currency);
+    }
+
+    public void hideFromAmount() {
+        this.amountInputFromNode.setVisibility(View.GONE);
+    }
+    public void invertSign() {
+        //amountInputFromNode.findViewById(R.id.toggle).callOnClick();
+        long amount = amountInputFrom.getAmount();
+        amountInputFrom.onAmountChangedListener.onAmountChanged(-amount, amount);
+        // amountFromChangeListener.onAmountChanged(amountInputFrom.getAmount(), amountInputFrom.getAmount() - amountInputFrom.getAmount()*2);
+        //this.amountInputFromNode.setVisibility(View.GONE);
     }
 
 }

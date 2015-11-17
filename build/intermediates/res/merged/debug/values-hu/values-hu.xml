@@ -57,7 +57,7 @@
     <item>Költségvetések</item>
     <item>Jelentések</item>
   </string-array>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-hu/values-hu.xml -->
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-hu/values-hu.xml -->
     <eat-comment/>
     <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Ugrás a főoldalra"</string>
     <string msgid="1397052879051804371" name="abc_action_bar_home_description_format">"%1$s, %2$s"</string>
@@ -184,7 +184,7 @@
     <string name="closing_day_title">Kimutatás zárónapja</string>
     <string name="collapse_blotter_buttons">A napló gombjainak összecsukása</string>
     <string name="collapse_blotter_buttons_summary">Az Új tranzakció/átvezetés/sablon gombok csoportosítása (újraindítás szükséges)</string>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/res/values-hu/common_strings.xml -->
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/res/values-hu/common_strings.xml -->
     <eat-comment/>
     <string msgid="6428604800157361567" name="common_android_wear_notification_needs_update_text">"A(z) <ns1:g id="APP_NAME">%1$s</ns1:g> alkalmazás az Android Wear alkalmazás frissítését igényli."</string>
     <string msgid="2453027084525739603" name="common_android_wear_update_text">"A(z) <ns1:g id="APP_NAME">%1$s</ns1:g> alkalmazás csak az Android Wear alkalmazás frissítését követően fog működni."</string>
@@ -216,8 +216,10 @@
     <string msgid="2201289642219771610" name="common_google_play_services_updating_text">"A(z) <ns1:g id="APP_NAME">%1$s</ns1:g> alkalmazás nem fut a Google Play-szolgáltatások nélkül, amelyek éppen frissülnek."</string>
     <string msgid="815008177440683245" name="common_google_play_services_updating_title">"A Google Play-szolgáltatások frissülnek"</string>
     <string msgid="411506735369601515" name="common_open_on_phone">"Megnyitás a telefonon"</string>
-    <string msgid="9071884888741449141" name="common_signin_button_text">"Belépés"</string>
-    <string msgid="2429381841831957106" name="common_signin_button_text_long">"Google-bejelentkezés"</string>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/res/values-hu/base_strings.xml -->
+    <eat-comment/>
+    <string msgid="3156914698180786012" name="common_signin_button_text">"Bejelentkezés"</string>
+    <string msgid="1483290677806110088" name="common_signin_button_text_long">"Bejelentkezés Google-fiókkal"</string>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-hu/strings.xml -->
     <eat-comment/>
     <string name="confirm_pin">PIN megerősítése</string>
@@ -414,16 +416,6 @@
     <string name="more_products">További termékek...</string>
     <string name="move_go_to_marker">Vissza a jelölőhöz</string>
     <string name="move_marker_to_center">A jelölő középre állítása</string>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.2.0/res/values-hu/values-hu.xml -->
-    <eat-comment/>
-    <string msgid="4271159405637008602" name="mr_media_route_button_content_description">"Médiakimenet"</string>
-    <string msgid="7553005460920830010" name="mr_media_route_chooser_searching">"Eszközkeresés…"</string>
-    <string msgid="7106830097177242655" name="mr_media_route_chooser_title">"Csatlakozás adott eszközhöz"</string>
-    <string msgid="109793632378378069" name="mr_media_route_controller_disconnect">"Leválasztás"</string>
-    <string msgid="5441529851481176817" name="mr_system_route_name">"Rendszer"</string>
-    <string msgid="7498112907524977311" name="mr_user_route_category_name">"Eszközök"</string>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-hu/strings.xml -->
-    <eat-comment/>
     <string name="my_location">Pozícióm</string>
     <string name="negative_opening_amount">Negatív nyitó egyenleg</string>
     <string name="negative_opening_amount_summary">Nyissa meg a számlát negatív nyitó egyenleggel</string>
@@ -753,7 +745,7 @@
     <string name="startup_screen">Kezdőképernyő</string>
     <string name="startup_screen_summary">Annak a fülnek a kiválasztása, amelyet mutasson a program indításakor</string>
     <string name="statement_error">Kérjük, állítsa be a fizetés napját és a zárónapot ehhez a hitelkártyához a számlatulajdonságoknál!</string>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-hu/values-hu.xml -->
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-hu/values-hu.xml -->
     <eat-comment/>
     <string msgid="2869576371154716097" name="status_bar_notification_info_overflow">"999+"</string>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-hu/strings.xml -->

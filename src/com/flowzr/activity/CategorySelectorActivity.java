@@ -70,7 +70,7 @@ public class CategorySelectorActivity extends AbstractListActivity {
             navigator.separateIncomeAndExpense();
         }
         attributes = db.getAllAttributesMap();
-
+        /**
         bBack = (Button)findViewById(R.id.bBack);
         bBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,14 +80,16 @@ public class CategorySelectorActivity extends AbstractListActivity {
                 }
             }
         });
+        **/
         Button bSelect = (Button)findViewById(R.id.bSelect);
+        /**
         bSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 confirmSelection();
             }
         });
-        
+        **/
         Intent intent = getIntent();
         if (intent != null) {
             boolean includeSplit = intent.getBooleanExtra(INCLUDE_SPLIT_CATEGORY, false);

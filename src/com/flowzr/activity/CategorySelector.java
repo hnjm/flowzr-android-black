@@ -84,17 +84,11 @@ public class CategorySelector {
     }
 
     public void createNode(LinearLayout layout, boolean showSplitButton) {
-        if (showSplitButton) {
-            categoryText = x.addListNodeCategory(layout);
-        } else {
-            categoryText = x.addListNodePlus(layout, R.id.category, R.id.category_add, R.string.category, R.string.select_category);
-        }
+        categoryText = x.addListNodeCategory(layout);
         categoryText.setText(R.string.no_category);
     }
 
     public void createDummyNode() {
-        //LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //categoryText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
         categoryText = new EditText(activity);
     }
 

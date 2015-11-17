@@ -8,21 +8,23 @@
   
   Contributors:
       Denis Solonenko - initial API and implementation
+      Emmanuel Florent - Port to AppCompat 21,  add icon title
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="wrap_content"
 	android:paddingRight="?android:attr/scrollbarSize" android:background="@drawable/activated_background"
 	android:orientation="horizontal" android:gravity="bottom" android:paddingBottom="@dimen/space_small" 
 	android:focusable="true" android:clickable="true" android:minHeight="@dimen/select_entry_height">
-	<!-- ?android:attr/listPreferredItemHeight -->
-	<ImageView android:id="@+id/icon" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" 
-		android:paddingRight="4dip" android:paddingLeft="11dip"
-		android:gravity="center_vertical"
-		android:background="@drawable/activated_background"
-		android:src="@drawable/icon" />
+	<LinearLayout
+		android:layout_width="64dp" android:layout_gravity="center" android:gravity="center"
+		android:layout_height="@dimen/recommended_touch_size">
+		<ImageView android:layout_height="24dp" android:layout_width="24dp"
+			android:layout_marginLeft="@dimen/space_large"
+			android:id="@+id/icon" android:layout_gravity="center"
+			android:focusable="true" android:clickable="true" />
+	</LinearLayout>
 	<RelativeLayout android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:layout_marginLeft="8dip"
+		android:layout_height="wrap_content" android:layout_marginLeft="@dimen/space_xlarge"
 		android:layout_marginTop="3dip" android:layout_marginBottom="3dip"
 		android:layout_weight="1" android:duplicateParentState="true">
 		<TextView android:id="@+id/label" android:layout_width="wrap_content"
@@ -33,11 +35,14 @@
 		<TextView android:id="@+id/data" android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:layout_below="@+id/label"
 			android:layout_alignLeft="@+id/label" 
-			style="@style/TextView" android:textSize="@dimen/text_small"
+			style="@style/TextViewUserInput" android:textSize="@dimen/text_small"
 			android:maxLines="1" android:duplicateParentState="true"
 			android:text="Data" android:visibility="gone"/>
 	</RelativeLayout>
-	<ImageView style="@style/MoreButton" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" />
+
+	<ImageView android:layout_height="24dp" android:layout_width="24dp" android:layout_marginTop="@dimen/space_normal"
+		android:background="@drawable/ic_arrow_drop_down_white_48dp"  android:layout_marginLeft="@dimen/space_xlarge"
+		android:focusable="true" android:clickable="true" />
+
 </LinearLayout>
 <!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout/select_entry_icon.xml -->

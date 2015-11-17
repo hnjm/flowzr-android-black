@@ -8,39 +8,84 @@
   
   Contributors:
       Denis Solonenko - initial API and implementation
+      Emmanuel Florent - add floating action button, new UI
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    android:layout_margin="0dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/total_text"/>
-    
-  	<ListView
-        android:id="@android:id/list"
-        style="@style/ListView"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/separator_V"
-        android:paddingRight="@dimen/dynamic_margin_narrow_horizontal"
-        android:paddingLeft="@dimen/dynamic_margin_narrow_horizontal"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_margin="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/main_layout">
 
-	<TextView 	
-		android:id="@id/android:empty"
-		android:text="@string/no_transactions"
-        style="@style/TextView"
-        android:layout_width="0dp"
-        
-        android:layout_weight="1"
-        android:textSize="@dimen/text_large"/>
+        <include layout="@layout/total_text"/>
+
+        <ListView
+            android:id="@android:id/list"
+            style="@style/ListView"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/separator_V"
+            android:paddingRight="@dimen/space_small"
+            android:paddingLeft="@dimen/space_small"/>
+
+        <TextView
+            android:id="@id/android:empty"
+            android:text="@string/no_transactions"
+            style="@style/TextView"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="@dimen/text_large"/>
+
+        <TextView android:id="@+id/integrity_error"
+                  android:text="@string/integrity_error"
+                  style="@style/TextView"
+                  android:textColor="#f26522"
+                  android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/dummy2"
+        android:layout_width="44dp"
+        android:layout_height="120dp"
+        app:layout_anchor="@id/main_layout"
+        app:layout_anchorGravity="center|bottom" />
 
 
-    <TextView android:id="@+id/integrity_error"
-		      android:text="@string/integrity_error"
-        	  style="@style/TextView"
-              android:textColor="#f26522" 
-              android:visibility="gone"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/bAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="44dp"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:elevation="6dp"
+        android:src="@drawable/ic_action_new"
+        app:layout_anchor="@id/dummy2"
+        app:layout_anchorGravity="bottom|right"/>
 
+    <View
+        android:id="@+id/dummy"
+        android:layout_width="60dp"
+        android:layout_height="120dp"
+        app:layout_anchor="@id/bAdd"
+        app:layout_anchorGravity="bottom|right" />
 
-</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/bAddTransfer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:elevation="6dp"
+        android:src="@drawable/ic_action_import_export"
+        app:layout_anchor="@id/dummy"
+        app:layout_anchorGravity="bottom|right"/>
 
-
+</android.support.design.widget.CoordinatorLayout>

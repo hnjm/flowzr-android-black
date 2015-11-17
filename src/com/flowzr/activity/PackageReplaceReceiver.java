@@ -42,7 +42,7 @@ public class PackageReplaceReceiver extends BroadcastReceiver {
 
     protected void requestScheduleAll(Context context) {
         try {
-            Intent serviceIntent = new Intent(FinancistoService.ACTION_SCHEDULE_ALL);
+            Intent serviceIntent = MainActivity.createExplicitFromImplicitIntent(context,new Intent(FinancistoService.ACTION_SCHEDULE_ALL));
             WakefulIntentService.sendWakefulWork(context, serviceIntent);
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,16 +51,16 @@ public class PackageReplaceReceiver extends BroadcastReceiver {
 
     protected void requestScheduleAutoBackup(Context context) {
         try {
-            Intent serviceIntent = new Intent(FinancistoService.ACTION_SCHEDULE_AUTO_BACKUP);
+            Intent serviceIntent = MainActivity.createExplicitFromImplicitIntent(context, new Intent(FinancistoService.ACTION_SCHEDULE_AUTO_BACKUP));
             WakefulIntentService.sendWakefulWork(context, serviceIntent);
         } catch (Exception e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
     }
     
     protected void requestScheduleAutoSync(Context context) {
         try {
-            Intent serviceIntent = new Intent(FinancistoService.ACTION_SCHEDULE_AUTO_SYNC);
+            Intent serviceIntent =MainActivity.createExplicitFromImplicitIntent(context, new Intent(FinancistoService.ACTION_SCHEDULE_AUTO_SYNC));
             WakefulIntentService.sendWakefulWork(context, serviceIntent);
         } catch (Exception e) {
             e.printStackTrace();

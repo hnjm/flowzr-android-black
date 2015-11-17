@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -257,6 +258,7 @@ public abstract class AbstractListFragment extends ListFragment implements Refre
 
     @Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.e("flowzr", "abstract list fragment in activity result");
 		if (resultCode == MainActivity.RESULT_OK) {
 			recreateCursor();
 		}

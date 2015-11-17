@@ -196,7 +196,7 @@ public class MyPreferences {
 
     public static boolean isShowCurrency(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getBoolean("ntsl_show_currency", true);
+        return sharedPreferences.getBoolean("ntsl_show_currency", false);
     }
 
     public static int getPayeeOrder(Context context) {

@@ -11,6 +11,10 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.content.Context;
+import android.support.design.internal.NavigationMenuView;
+import android.support.design.widget.NavigationView;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
@@ -25,6 +29,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -72,25 +77,31 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
 	protected static ViewPager viewPager;
 
 	public MyAdapter mAdapter;
+
+    protected void attachBaseContext(Context base)
+    {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 	
-	
-    public void loadTabFragment(Fragment fragment, int rId, Bundle bundle, int tabId) {   
-	    bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, rId);  	
-    	fragment.setArguments(bundle);
-	    mAdapter.setMyArguments(fragment,bundle); 
-	    try {
-	    	viewPager.setCurrentItem(tabId);
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	    }
-        //viewPager.getAdapter().notifyDataSetChanged();
-    }  
-	
+    public void loadTabFragment(Fragment fragment, int rId, Bundle bundle, int tabId) {
+        bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, rId);
+        fragment.setArguments(bundle);
+        mAdapter.setMyArguments(fragment, bundle);
+        mAdapter.notifyDataSetChanged();
+        try {
+            viewPager.getAdapter().notifyDataSetChanged();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        viewPager.setCurrentItem(tabId);
+    }
+
+
 	protected void setupDrawer() {
 				
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_V);
 		mDrawerList = (ListView) findViewById(R.id.navigationDrawer_L);
-
 		// setting list adapter for Navigation Drawer		
 		String[] mDrawerStrings = { getResources().getString(R.string.account),
 				getResources().getString(R.string.blotter),
@@ -129,6 +140,7 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         if (mDrawerLayout!=null) {
         	mDrawerLayout.setDrawerListener(mDrawerToggle);
             mDrawerToggle.syncState();
+            mDrawerLayout.setVerticalScrollBarEnabled(false);
         }
 	}
     
@@ -195,18 +207,15 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        if (!PinProtection.isUnlocked()) {
-            PinProtection.lock(this.getApplicationContext());
-        }
-    }
-    
-    @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         PinProtection.unlock(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        PinProtection.lock(this);
     }
 
     @Override
@@ -215,16 +224,14 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         PinProtection.immediateLock(this);
     }
 
-
-     	
   	public void setMyTitle(String t) {
   	  SpannableString s = new SpannableString(t);
   	  s.setSpan(new TypefaceSpan("sans-serif"), 0, s.length(),
               Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
       actionBar.setTitle(s);
   	}
-    
-  	@Override
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         switch (item.getItemId())
@@ -240,7 +247,7 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
                     {
                         // This activity is not part of the application's task, so create a new task with a synthesized back stack.
                         tsb.startActivities();
-                        finish();
+                        //finish();
                     }
                     else
                     {

@@ -57,7 +57,7 @@
     <item>Orçamentos</item>
     <item>Relatórios</item>
   </string-array>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-pt-rPT/values-pt-rPT.xml -->
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-pt-rPT/values-pt-rPT.xml -->
     <eat-comment/>
     <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Navegar para a página inicial"</string>
     <string msgid="1397052879051804371" name="abc_action_bar_home_description_format">"%1$s, %2$s"</string>
@@ -184,7 +184,7 @@
     <string name="closing_day_title">Dia de fechamento da fatura</string>
     <string name="collapse_blotter_buttons">Agrupar botões no registo</string>
     <string name="collapse_blotter_buttons_summary">Agrupar botões de Nova Transação/Transferência/Modelo (requer reinicialização)</string>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/res/values-pt-rPT/common_strings.xml -->
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/res/values-pt-rPT/common_strings.xml -->
     <eat-comment/>
     <string msgid="6428604800157361567" name="common_android_wear_notification_needs_update_text">"O <ns1:g id="APP_NAME">%1$s</ns1:g> requer uma atualização da aplicação Android Wear."</string>
     <string msgid="2453027084525739603" name="common_android_wear_update_text">"O <ns1:g id="APP_NAME">%1$s</ns1:g> não será executado enquanto não atualizar a aplicação Android Wear."</string>
@@ -216,8 +216,10 @@
     <string msgid="2201289642219771610" name="common_google_play_services_updating_text">"O <ns1:g id="APP_NAME">%1$s</ns1:g> não é executado sem os serviços do Google Play, os quais estão a ser atualizados."</string>
     <string msgid="815008177440683245" name="common_google_play_services_updating_title">"Serviços do Google Play em atualização"</string>
     <string msgid="411506735369601515" name="common_open_on_phone">"Abrir no telemóvel"</string>
-    <string msgid="9071884888741449141" name="common_signin_button_text">"Inic. ses."</string>
-    <string msgid="2429381841831957106" name="common_signin_button_text_long">"Inic. sessão com o Google"</string>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/res/values-pt-rPT/base_strings.xml -->
+    <eat-comment/>
+    <string msgid="3156914698180786012" name="common_signin_button_text">"Iniciar sessão"</string>
+    <string msgid="1483290677806110088" name="common_signin_button_text_long">"Iniciar sessão com o Google"</string>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-pt-rPT/strings.xml -->
     <eat-comment/>
     <string name="confirm_pin">Confirmar senha</string>
@@ -414,16 +416,6 @@
     <string name="more_products">Mais produtos.</string>
     <string name="move_go_to_marker">Ir para marca</string>
     <string name="move_marker_to_center">Marque para centralizar</string>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.2.0/res/values-pt-rPT/values-pt-rPT.xml -->
-    <eat-comment/>
-    <string msgid="4271159405637008602" name="mr_media_route_button_content_description">"Saída de som multimédia"</string>
-    <string msgid="7553005460920830010" name="mr_media_route_chooser_searching">"A pesquisar dispositivos…"</string>
-    <string msgid="7106830097177242655" name="mr_media_route_chooser_title">"Ligar ao dispositivo"</string>
-    <string msgid="109793632378378069" name="mr_media_route_controller_disconnect">"Desassociar"</string>
-    <string msgid="5441529851481176817" name="mr_system_route_name">"Sistema"</string>
-    <string msgid="7498112907524977311" name="mr_user_route_category_name">"Dispositivos"</string>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-pt-rPT/strings.xml -->
-    <eat-comment/>
     <string name="my_location">Minha localização</string>
     <string name="negative_opening_amount">Saldo de abertura negativo</string>
     <string name="negative_opening_amount_summary">Abrir conta com saldo negativo</string>
@@ -753,7 +745,7 @@
     <string name="startup_screen">Ecrã inicial</string>
     <string name="startup_screen_summary">Selecione o tab que será selecionado no inicio</string>
     <string name="statement_error">Favor registrar dias de pagamento e fechamento da fatura deste cartão nas propriedades da conta.</string>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-pt-rPT/values-pt-rPT.xml -->
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-pt-rPT/values-pt-rPT.xml -->
     <eat-comment/>
     <string msgid="2869576371154716097" name="status_bar_notification_info_overflow">"+999"</string>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-pt-rPT/strings.xml -->
