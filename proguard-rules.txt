@@ -1,0 +1,5 @@
+-keep class com.flowzr.** { *; }
+-keep class org.apache.** { *; }
+-keep class com.google.** { *; }
+
+

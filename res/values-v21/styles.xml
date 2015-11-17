@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Financisto" parent="@style/Theme.AppCompat">
+        <!--        <item name="android:actionBarStyle">@style/ActionBar.Solid.Financisto</item> -->
+        <item name="actionBarStyle">@style/ActionBar.Solid.Financisto</item>
+        <item name="colorControlActivated">#18FFFF</item>
+        <item name="colorAccent">@color/f_green_lighter2</item>
+        <item name="alertDialogTheme">@style/dialog</item>
+        <item name="android:statusBarColor">@color/statusBarColor</item>
+    </style>
+</resources>
