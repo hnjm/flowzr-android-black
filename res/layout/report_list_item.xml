@@ -11,18 +11,20 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
+	android:clickable="false"
+	android:descendantFocusability="blocksDescendants"
 	android:layout_height="?android:attr/listPreferredItemHeight">
 
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    	style="@style/ListItem">
+		android:layout_width="fill_parent"
+		android:layout_height="?android:attr/listPreferredItemHeight">
 
 	<TextView android:id="@+id/line1" android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
 		android:layout_alignWithParentIfMissing="true"
 		android:singleLine="true" android:gravity="center_vertical"
 		android:layout_marginLeft="@dimen/space_large" android:ellipsize="marquee" android:text="line1"
-		style="@style/TextView" android:textSize="@dimen/text_normal"
-		/>
+		style="@style/TextView" android:textSize="@dimen/text_normal" />
 		
 	<TextView android:id="@+id/label" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:layout_toRightOf="@id/icon"
@@ -30,8 +32,7 @@
 		 android:singleLine="true"
 		android:ellipsize="marquee"  android:layout_above="@id/label"
 		android:layout_marginLeft="11dip" android:text=""
-		style="@style/TextView" android:textSize="@dimen/text_small" 
-		/>
+		style="@style/TextView" android:textSize="@dimen/text_small" />
 
 	</LinearLayout>
 </RelativeLayout>
