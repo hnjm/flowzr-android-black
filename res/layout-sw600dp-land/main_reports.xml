@@ -11,38 +11,51 @@
       Emmanuel Florent - port to Android API 11+
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:paddingRight="@dimen/space_small"	
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent" 
-		android:orientation="horizontal" >
-		
+<android.support.design.widget.CoordinatorLayout
+	android:id="@+id/content"
+	android:fitsSystemWindows="true"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
 	<LinearLayout
-		android:paddingTop="@dimen/space_small"
-    	android:layout_width="330dip"
-    	android:layout_height="wrap_content"
-	    android:orientation="vertical">
-    
-	    <FrameLayout    
-	        android:layout_gravity="center_horizontal"	    
-		    android:layout_width="310dip"
-		    android:background="@color/f_dark"
-    	    android:id="@+id/fragment_container"
-	        android:layout_height="match_parent" />
+			android:paddingTop="?attr/actionBarSize"
+			android:paddingRight="@dimen/space_small"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:orientation="horizontal" >
+
+		<LinearLayout
+			android:paddingTop="@dimen/space_small"
+			android:layout_width="330dip"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<FrameLayout
+				android:layout_gravity="center_horizontal"
+				android:layout_width="310dip"
+				android:background="@color/f_dark"
+				android:id="@+id/fragment_container"
+				android:layout_height="match_parent" />
+
+		</LinearLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:paddingRight="@dimen/space_large"
+			android:layout_height="wrap_content"
+			android:orientation="vertical" android:layout_weight="1">
+
+			<FrameLayout
+				android:id="@+id/fragment_land_container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" />
+
+		</LinearLayout>
 
 	</LinearLayout>
-	<LinearLayout 
-    	android:layout_width="match_parent"
-	    android:paddingRight="@dimen/space_large"
-    	android:layout_height="wrap_content" 	
-	    android:orientation="vertical" android:layout_weight="1">
 
-	    <FrameLayout 
-    	    android:id="@+id/fragment_land_container"
-	        android:layout_width="match_parent"
-    	    android:layout_height="wrap_content" /> 
+	<include layout="@layout/toolbar"/>
 
-	</LinearLayout>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
 

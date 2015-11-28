@@ -13,8 +13,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.flowzr"
     android:installLocation="internalOnly"
-    android:versionCode="202"
-    android:versionName="1.7.2" >
+    android:versionCode="209"
+    android:versionName="1.7.3" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -92,12 +92,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <!--
-                debug key 
-                 <meta-data android:name="com.google.android.maps.v2.API_KEY"
-                android:value="AIzaSyBPLy-r6DHS23XJ2spttuFpkpMPJBlYzg0"/>      
-        -->
         <!-- release key -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
@@ -183,8 +177,7 @@
         <activity
             android:name="com.flowzr.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:taskAffinity=".MainActivity" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -195,8 +188,7 @@
             android:name="com.flowzr.activity.TransactionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/transaction"
-            android:taskAffinity=".TransactionActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
+            android:taskAffinity=".TransactionActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="com.flowzr.NEW_TRANSACTION" />
@@ -273,26 +265,22 @@
         <activity
             android:name="com.flowzr.activity.AttributeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/attribute"
-            android:theme="@style/FinancistoDialog" >
+            android:label="@string/attribute" >
         </activity>
         <activity
             android:name="com.flowzr.activity.DateFilterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/filter"
-            android:theme="@style/FinancistoDialog" >
+            android:label="@string/filter" >
         </activity>
         <activity
             android:name="com.flowzr.activity.BlotterFilterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/filter"
-            android:theme="@style/FinancistoDialog" >
+            android:label="@string/filter" >
         </activity>
         <activity
             android:name="com.flowzr.activity.ReportFilterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/filter"
-            android:theme="@style/FinancistoDialog" >
+            android:label="@string/filter" >
         </activity>
         <activity
             android:name="com.flowzr.activity.CategoryActivity"
@@ -315,14 +303,12 @@
         <activity
             android:name="com.flowzr.activity.ProjectActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/project"
-            android:theme="@style/FinancistoDialog" >
+            android:label="@string/project" >
         </activity>
         <activity
             android:name="com.flowzr.activity.PayeeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/payee"
-            android:theme="@style/FinancistoDialog" >
+            android:label="@string/payee" >
         </activity>
         <activity
             android:name="com.flowzr.activity.CsvExportActivity"

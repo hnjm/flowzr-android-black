@@ -70,6 +70,7 @@ public class RecurrenceActivity extends AbstractEditorActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.recurrence);
+		initToolbar();
 
 		layout = (LinearLayout)findViewById(R.id.layout);
 		viewFactory = new RecurrenceViewFactory(this);

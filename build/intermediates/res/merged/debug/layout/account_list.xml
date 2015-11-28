@@ -12,12 +12,14 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:elevation="8dp"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
         <include layout="@layout/total_text"/>
 
     <ListView
+        android:layout_marginRight="@dimen/space_small"
         android:layout_height="fill_parent"
         android:id="@android:id/list"
         style="@style/ListView"
@@ -54,7 +56,10 @@
         android:textSize="@dimen/text_xlarge" />
 
 </LinearLayout>
-
+    <FrameLayout
+        android:id="@+id/fragment_land_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
 
 </LinearLayout>
 

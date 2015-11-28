@@ -53,7 +53,8 @@ public abstract class ImportExportAsyncTask extends AsyncTask<String, String, Ob
 		} catch(Exception ex){
 			Log.e("Financisto", "Unable to do import/export", ex);
             ex.printStackTrace();
-            Toast.makeText(context,context.getString(R.string.backup) + context.getString(R.string.fail),Toast.LENGTH_LONG).show();
+
+            //Toast.makeText(context,context.getString(R.string.backup) + context.getString(R.string.fail),Toast.LENGTH_LONG).show();
 			return ex;
 		} finally {
 			db.close();

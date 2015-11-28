@@ -49,7 +49,7 @@ public class PurgeAccountActivity extends AbstractEditorActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.purge_account);
-
+        initToolbar();
         df = DateUtils.getLongDateFormat(this);
 
         layout = (LinearLayout)findViewById(R.id.layout);

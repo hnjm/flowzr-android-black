@@ -15,6 +15,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -37,6 +39,16 @@ public abstract class AbstractExportActivity extends AppCompatActivity {
 	private Button bPeriod;
 	private DateFormat df;
 
+	protected void initToolbar() {
+		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		final ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
+	}
+
+
     public AbstractExportActivity(int layoutId) {
         this.layoutId = layoutId;
     }
@@ -45,8 +57,6 @@ public abstract class AbstractExportActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(layoutId);
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
 		df = DateUtils.getShortDateFormat(this);
 		
 		filter.put(new DateTimeCriteria(PeriodType.THIS_MONTH));
@@ -134,6 +144,19 @@ public abstract class AbstractExportActivity extends AppCompatActivity {
 			}
 			updatePeriod();
 		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+			case android.R.id.home:
+			{
+				onBackPressed();
+			}
+		}
+		return super.onOptionsItemSelected(item);
 	}
 	
 	

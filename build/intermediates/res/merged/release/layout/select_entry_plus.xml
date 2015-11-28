@@ -10,12 +10,9 @@
       Denis Solonenko - initial API and implementation
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/top_layout" android:layout_width="fill_parent"
-	android:layout_height="wrap_content" android:paddingRight="?android:attr/scrollbarSize"
-	android:minHeight="@dimen/select_entry_height"
-	android:background="@drawable/activated_background"
-	android:orientation="horizontal" android:gravity="bottom" android:paddingBottom="@dimen/space_small" 
-	android:focusable="true" android:clickable="true">
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	style="@style/ListItem">
 	<ImageView style="@style/PlusButton" android:layout_width="wrap_content"
 		android:id="@+id/plus_minus" android:layout_height="wrap_content" 
 		android:focusable="true" android:clickable="true"/>

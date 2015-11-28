@@ -13,26 +13,22 @@
 package com.flowzr.activity;
 
 import com.flowzr.R;
-import com.flowzr.blotter.AccountTotalCalculationTask;
-import com.flowzr.utils.PinProtection;
-
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.Window;
+
+import javax.persistence.Entity;
+
 
 public class EntityListActivity extends AppCompatActivity {
 
@@ -43,19 +39,47 @@ public class EntityListActivity extends AppCompatActivity {
 	public final static String REQUEST_EXCHANGE_RATES="REQUEST_EXCHANGE_RATES";
 	public final static String REQUEST_BUDGET_BLOTTER="REQUEST_BUDGET_BLOTTER";
 	public final static String REQUEST_REPORTS="REQUEST_REPORTS";
-	public final static String REQUEST_ENTITIES="REQUEST_ENTITIES";
 	public final static String REQUEST_PLANNER="REQUEST_PLANNER";
 	public final static String REQUEST_CATEGORY_SELECTOR="REQUEST_CATEGORY_SELECTOR";
 	public final static String REQUEST_SCHEDULED="REQUEST_SCHEDULED";
 	public final static String REQUEST_NEW_TRANSACTION_FROM_TEMPLATE="REQUEST_NEW_TRANSACTION_FROM_TEMPLATE";
 	public final static String REQUEST_BUDGET_TOTALS="REQUEST_BUDGET_TOTALS";
 	public final static String REQUEST_ACCOUNT_TOTALS="REQUEST_ACCOUNT_TOTALS";
-	
+
+	public void setMyTitle(String t) {
+		SpannableString s = new SpannableString(t);
+		s.setSpan(new TypefaceSpan("sans-serif"), 0, s.length(),
+				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		getSupportActionBar().setTitle(s);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+		fragment.onActivityResult(requestCode, resultCode, data);
+	}
+
+
+	public void loadFragment(Fragment fragment) {
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.replace(R.id.fragment_container, fragment);
+		//transaction.addToBackStack(null);
+		transaction.commitAllowingStateLoss();
+	}
+
+	protected void initToolbar() {
+		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		final ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
+	}
+
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState); 
-	    //requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);		
-		
+		super.onCreate(savedInstanceState);
 	    Intent intent=getIntent();
 	    if (intent.hasExtra(ReportsListFragment.EXTRA_REPORT_TYPE)
 	    		|| intent.hasExtra(REQUEST_REPORTS)
@@ -64,16 +88,9 @@ public class EntityListActivity extends AppCompatActivity {
 	    } else {
 	    	setContentView(R.layout.main_entities);  
 	    }
-    	//@see: http://stackoverflow.com/questions/16539251/get-rid-of-blue-line, 
-        //only way found to remove on various devices 2.3x, 3.0, ...
-        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#121212")));
+		initToolbar();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);		
-		
-        ActionBar actionBar = getSupportActionBar();		
-		actionBar.setDisplayHomeAsUpEnabled(true);
-        //setupDrawer();	
+
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		if (intent.hasExtra(ReportsListFragment.EXTRA_REPORT_TYPE)) {
 				intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.report);
@@ -141,69 +158,16 @@ public class EntityListActivity extends AppCompatActivity {
 		}
 		transaction.commit();
 	}
-     	
-  	public void setMyTitle(String t) {
-  	  SpannableString s = new SpannableString(t);
-  	  s.setSpan(new TypefaceSpan("sans-serif"), 0, s.length(),
-              Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-      getSupportActionBar().setTitle(s);
-  	}
-    
-	public void loadFragment(Fragment fragment) {				
-		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.replace(R.id.fragment_container, fragment);
-		//transaction.addToBackStack(null);
-		transaction.commitAllowingStateLoss();
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+			case android.R.id.home: {
+				super.onBackPressed();
+			}
+		}
+		return super.onOptionsItemSelected(item);
 	}
-
-  	@Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-            {
-                TaskStackBuilder tsb = TaskStackBuilder.create(this);
-                final int intentCount = tsb.getIntentCount();
-                if (intentCount > 0)
-                {
-                    Intent upIntent = tsb.getIntents()[intentCount - 1];
-                    if (NavUtils.shouldUpRecreateTask(this, upIntent))
-                    {
-                         //his activity is not part of the application's task, so create a new task with a synthesized back stack.
-                        tsb.startActivities();
-                        finish();
-                    }
-                    else
-                    {
-                        // This activity is part of the application's task, so simply navigate up to the hierarchical parent activity.
-                        NavUtils.navigateUpTo(this, upIntent);
-                    }
-                }
-                else
-                {
-
-                    onBackPressed();
-                }
-                return true;
-            }
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-  	@Override
-  	public void onBackPressed() {
-  		Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-  		if (f instanceof ReportFragment) {
-  	  		if (((ReportFragment) f).viewingPieChart) {
-  	  			((ReportFragment) f).selectReport();
-  	  		} else {
-  	  			super.onBackPressed();
-  	  		}
-  		} else {
-  			super.onBackPressed();
-  		}
-  	}
 
 }

@@ -258,7 +258,6 @@ public abstract class AbstractListFragment extends ListFragment implements Refre
 
     @Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.e("flowzr", "abstract list fragment in activity result");
 		if (resultCode == MainActivity.RESULT_OK) {
 			recreateCursor();
 		}

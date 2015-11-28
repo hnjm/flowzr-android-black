@@ -9,33 +9,25 @@
       Denis Solonenko - initial API and implementation
       Emmanuel Florent - Port to android support - added FAB button
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
+
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/content"
+	android:fitsSystemWindows="true"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+<LinearLayout
+	android:paddingTop="?attr/actionBarSize"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:animateLayoutChanges="true"
 	android:focusable="true"
 	android:focusableInTouchMode="true"
-	android:orientation="vertical"
-	tools:context=".ui.currencies.CurrencyEditActivity">
-	<LinearLayout
-		android:layout_width="fill_parent"         android:background="#37474F"
-		android:layout_height="wrap_content">
+	android:orientation="vertical">
 
-		<EditText android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:padding="@dimen/space_large"
-			android:textStyle="bold"
-			android:id="@+id/budget_title"
-
-			android:text="" android:focusableInTouchMode="true"
-			android:layout_gravity="center_horizontal"
-			android:textSize="@dimen/text_xxlarge">
-		</EditText>
-
-
-	</LinearLayout>
-
+	<include layout="@layout/layout_title"/>
 	<include layout="@layout/budget_total_text"/>
 	<ScrollView
 		android:layout_height="0px"
@@ -54,5 +46,17 @@
 		</LinearLayout>
 	</ScrollView>
 
-	<include layout="@layout/include_edit_buttons" />
 </LinearLayout>
+<include layout="@layout/toolbar"/>
+
+<android.support.design.widget.FloatingActionButton
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_margin="16dp"
+android:clickable="true"
+android:src="@drawable/ic_action_done"
+android:elevation="6dp"
+android:id="@+id/saveButton"
+android:layout_gravity="bottom|end" />
+
+	</android.support.design.widget.CoordinatorLayout>

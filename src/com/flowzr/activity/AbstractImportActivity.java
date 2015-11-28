@@ -14,7 +14,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -35,12 +38,20 @@ public abstract class AbstractImportActivity extends AppCompatActivity {
         this.layoutId = layoutId;
     }
 
+    protected void initToolbar() {
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layoutId);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        initToolbar();
         bBrowse = (ImageButton) findViewById(R.id.btn_browse);
         bBrowse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,8 +60,8 @@ public abstract class AbstractImportActivity extends AppCompatActivity {
             }
         });
         edFilename = (EditText) findViewById(R.id.edFilename);
-
         internalOnCreate();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     protected void openFile() {
@@ -108,5 +119,20 @@ public abstract class AbstractImportActivity extends AppCompatActivity {
     protected abstract void savePreferences();
 
     protected abstract void restorePreferences();
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+            {
+                onBackPressed();
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

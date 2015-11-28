@@ -28,12 +28,18 @@ public class AccountListTotalsDetailsActivity extends AbstractTotalsDetailsFragm
         super(R.string.account_total_in_currency);
     }
 
-    /**
+
     @Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
     }
-    **/
+
+
+	@Override
+	public void onSaveInstanceState(final Bundle outState) {
+		// super.onSaveInstanceState(outState);
+	}
+
     protected Total getTotalInHomeCurrency() {
         return db.getAccountsTotalInHomeCurrency();
     }

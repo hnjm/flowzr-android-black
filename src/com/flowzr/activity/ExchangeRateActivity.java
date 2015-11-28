@@ -57,7 +57,7 @@ public class ExchangeRateActivity extends AbstractEditorActivity implements Rate
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exchange_rate);
-
+        initToolbar();
         Intent intent = getIntent();
         if (intent == null) {
             finish();

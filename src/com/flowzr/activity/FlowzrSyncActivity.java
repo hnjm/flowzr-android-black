@@ -21,6 +21,7 @@ import com.flowzr.export.flowzr.FlowzrSyncTask;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.PinProtection;
 import android.accounts.Account;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -32,6 +33,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -71,25 +73,25 @@ public class FlowzrSyncActivity extends AppCompatActivity {
         setReady();
         if (MainActivity.activity !=null) {
             runOnUiThread(new Runnable() {
-                public void run() {
-                    ((MainActivity)MainActivity.activity).refreshCurrentTab();
-                }
-            });
+				public void run() {
+					((MainActivity) MainActivity.activity).refreshCurrentTab();
+				}
+			});
 
         }
     }
 
     public void setReady() {
         runOnUiThread(new Runnable() {
-            public void run() {
-                TextView tv = (TextView) findViewById(R.id.sync_was);
-                long lastSyncLocalTimestamp = MyPreferences.getFlowzrLastSync(FlowzrSyncActivity.this);
-                tv.setText(getString(R.string.flowzr_sync_was) + " " + new Date(lastSyncLocalTimestamp).toLocaleString());
-                CheckBox chk=(CheckBox)findViewById(R.id.chk_sync_from_zero);
-                chk.setChecked(false);
-                setProgressBarIndeterminateVisibility(false);
-            }
-        });
+			public void run() {
+				TextView tv = (TextView) findViewById(R.id.sync_was);
+				long lastSyncLocalTimestamp = MyPreferences.getFlowzrLastSync(FlowzrSyncActivity.this);
+				tv.setText(getString(R.string.flowzr_sync_was) + " " + new Date(lastSyncLocalTimestamp).toLocaleString());
+				CheckBox chk = (CheckBox) findViewById(R.id.chk_sync_from_zero);
+				chk.setChecked(false);
+				setProgressBarIndeterminateVisibility(false);
+			}
+		});
     }
 
 
@@ -145,7 +147,7 @@ public class FlowzrSyncActivity extends AppCompatActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
-	        case android.R.id.home:
+			case android.R.id.home:
 	        {
 	        	if (this.isTaskRoot()) {
 	        		startActivity(new Intent (this,MainActivity.class));
@@ -153,7 +155,7 @@ public class FlowzrSyncActivity extends AppCompatActivity {
 	        	} else {
 	        		onBackPressed();
 	        	}
-	        }	    
+	        }
 	    	case R.id.action_sync: 
 	        	startSync();            	
 	            return true;
@@ -190,19 +192,30 @@ public class FlowzrSyncActivity extends AppCompatActivity {
 
     }
 
+	protected void initToolbar() {
+		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		final ActionBar actionBar = getSupportActionBar();
+
+		if (actionBar != null) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
+	}
+
+
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     	setContentView(R.layout.flowzr_sync);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
+		//setupDrawer();
+		initToolbar();
     	renderLastTime();
     	CheckBox chkForce= (CheckBox) findViewById(R.id.chk_sync_from_zero);
         chkForce.setOnClickListener(new View.OnClickListener() {        		
         	public void onClick(View v) {
         			resetLastTime();
         			renderLastTime();
-        		}
+			}
 			});
         Button syncButton = (Button) findViewById(R.id.sync);
         syncButton.setOnClickListener(new View.OnClickListener() {        		
@@ -260,6 +273,7 @@ public class FlowzrSyncActivity extends AppCompatActivity {
 	            Log.i(TAG, "No valid Google Play Services APK found.");
 	        }
         }
+		initToolbar();
 	}
 
 	public void resetLastTime () {

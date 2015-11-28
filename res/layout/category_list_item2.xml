@@ -14,17 +14,20 @@
                 android:layout_width="fill_parent"
                 android:layout_height="?android:attr/listPreferredItemHeight"
                 android:paddingLeft="0dip" android:paddingRight="12dip">
-    <TextView android:id="@+id/indicator"
-              android:layout_alignParentLeft="true"
-              android:layout_height="fill_parent"
-              android:layout_width="3dp"
-              android:layout_marginLeft="5dp"
-              android:layout_marginBottom="3dp"
-              android:layout_marginTop="3dp"/>
+    <LinearLayout
+        android:id="@+id/indicator_layout"
+        android:gravity="center"
+        android:layout_width="72dp"
+        android:layout_height="?attr/listPreferredItemHeight">
+        <TextView android:id="@+id/indicator"
+            android:layout_height="16dp"
+            android:layout_width="16dp" />
+    </LinearLayout>
+
     <ImageView android:id="@+id/span"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:layout_toRightOf="@id/indicator"
+               android:layout_toRightOf="@id/indicator_layout"
                android:layout_alignParentTop="true"
                android:layout_alignWithParentIfMissing="true"
                android:layout_alignParentBottom="true"
@@ -33,7 +36,7 @@
     <TextView android:id="@+id/label"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_toRightOf="@id/indicator"
+              android:layout_toRightOf="@id/indicator_layout"
               android:layout_alignParentBottom="true"
               android:layout_marginBottom="8dip"
               android:layout_alignWithParentIfMissing="true"
@@ -46,7 +49,7 @@
     <TextView android:id="@+id/line1"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_toRightOf="@id/indicator"
+              android:layout_toRightOf="@id/indicator_layout"
               android:layout_alignParentTop="true"
               android:layout_above="@id/label"
               android:layout_alignWithParentIfMissing="true"

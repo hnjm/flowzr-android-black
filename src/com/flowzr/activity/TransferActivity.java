@@ -45,6 +45,7 @@ public class TransferActivity extends AbstractTransactionActivity {
 	@Override
 	protected void internalOnCreate() {
 		super.internalOnCreate();
+		initToolbar();
 		if (transaction.isTemplateLike()) {
 			setTitle(transaction.isTemplate() ? R.string.transfer_template : R.string.transfer_schedule);
 			if (transaction.isTemplate()) {			

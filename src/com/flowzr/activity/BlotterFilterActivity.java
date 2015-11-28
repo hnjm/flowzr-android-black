@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.support.design.widget.FloatingActionButton;
+import android.view.MotionEvent;
 import android.widget.*;
 import com.flowzr.R;
 import com.flowzr.blotter.BlotterFilter;
@@ -67,6 +69,7 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.blotter_filter);
+		initToolbar();
 		
 		df = DateUtils.getShortDateFormat(this);
 		sortBlotterEntries = getResources().getStringArray(R.array.sort_blotter_entries);
@@ -98,6 +101,40 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
 			updateStatusFromFilter();
             disableAccountResetButtonIfNeeded();
 		}
+
+		findViewById(R.id.saveButton).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent data = new Intent();
+				filter.toIntent(data);
+				setResult(RESULT_OK, data);
+				finish();
+			}
+		});
+
+		findViewById(R.id.scroll)
+				.setOnTouchListener(new View.OnTouchListener() {
+					@Override
+					public boolean onTouch(View v, MotionEvent event) {
+						FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.saveButton);
+						switch (event.getAction()) {
+							case MotionEvent.ACTION_SCROLL:
+							case MotionEvent.ACTION_MOVE:
+								if (fab != null)
+									fab.hide();
+								break;
+							case MotionEvent.ACTION_DOWN:
+								break;
+							case MotionEvent.ACTION_CANCEL:
+							case MotionEvent.ACTION_UP:
+								if (fab != null)
+									fab.show();
+								break;
+						}
+						return false;
+					}
+				});
+
 
 	}
 
@@ -132,14 +169,15 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
         return super.onOptionsItemSelected(item);
     }
     
-    
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.filter_actions, menu);
+		// empty (fab)
+        //getMenuInflater().inflate(R.menu.filter_actions, menu);
         return true;
     }
+
 
     private boolean isAccountFilter() {
         return isAccountFilter && accountId > 0;
@@ -158,12 +196,16 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
 
     private void showMinusButton(TextView textView) {
         ImageView v = findMinusButton(textView);
-        v.setVisibility(View.VISIBLE);
+		if (v!=null) {
+			v.setVisibility(View.VISIBLE);
+		}
     }
 
     private void hideMinusButton(TextView textView) {
         ImageView v = findMinusButton(textView);
-        v.setVisibility(View.GONE);
+		if (v!=null) {
+			v.setVisibility(View.GONE);
+		}
     }
 
     private ImageView findMinusButton(TextView textView) {

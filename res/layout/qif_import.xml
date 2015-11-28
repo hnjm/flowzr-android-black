@@ -6,31 +6,60 @@
   ~ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent" android:layout_height="fill_parent"
-              android:orientation="vertical" android:padding="3dp">
-    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1">
-        <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:paddingTop="?attr/actionBarSize"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ScrollView android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+        <LinearLayout android:layout_width="fill_parent"
+            android:padding="@dimen/space_normal"
+            android:layout_height="fill_parent"
                       android:orientation="vertical">
             <include layout="@layout/filename"/>
-            <include layout="@layout/list_divider"/>
-            <TextView android:layout_height="wrap_content"
-                      android:layout_width="fill_parent" android:layout_marginLeft="3dp"
-                      android:text="@string/date_format"/>
-            <Spinner android:layout_height="wrap_content" android:layout_width="fill_parent"
-                     android:id="@+id/spinnerDateFormats"
-                     android:entries="@array/qif_date_format_values"/>
-            <include layout="@layout/list_divider"/>
-            <TextView android:layout_height="wrap_content"
-                      android:layout_width="fill_parent" android:layout_marginLeft="3dp"
-                      android:text="@string/currency"/>
-            <Spinner android:layout_height="wrap_content" android:layout_width="fill_parent"
-                     android:id="@+id/spinnerCurrency"/>
-            <include layout="@layout/list_divider"/>
-            <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_weight="1"
-                      android:gravity="center" android:text="@string/qif_import_disclaimer"
-                      android:textColor="@color/restored_transaction_color"/>
+
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/spinnerDateFormats"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                app:ms_multiline="false"
+                android:entries="@array/qif_date_format_values"
+                app:ms_hint="@string/date_format">
+            </fr.ganfra.materialspinner.MaterialSpinner>
+
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/spinnerCurrency"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                app:ms_multiline="false"
+                android:entries="@array/qif_date_format_values"
+                app:ms_hint="@string/currency">
+            </fr.ganfra.materialspinner.MaterialSpinner>
+
+
+            <TextView android:layout_height="@dimen/recommended_touch_size"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/qif_import_disclaimer"
+                android:textColor="@color/f_red"/>
+
         </LinearLayout>
     </ScrollView>
     <include layout="@layout/ok_cancel_buttons"/>
 </LinearLayout>
+<include layout="@layout/toolbar"/>
+    </android.support.design.widget.CoordinatorLayout>

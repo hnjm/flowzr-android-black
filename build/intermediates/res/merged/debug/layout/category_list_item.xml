@@ -10,10 +10,10 @@
       Denis Solonenko - initial API and implementation
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="?android:attr/listPreferredItemHeight"
+	android:layout_width="fill_parent"
+	android:layout_height="?android:attr/listPreferredItemHeight"
 	android:paddingLeft="0dip" android:paddingRight="12dip"
-    android:background="@color/f_red"
-	>
+    android:background="@color/f_red">
 	<TextView android:id="@+id/span" android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_alignParentTop="true"

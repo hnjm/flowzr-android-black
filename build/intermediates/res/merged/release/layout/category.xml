@@ -8,20 +8,32 @@
   Contributors:
       Denis Solonenko - initial API and implementation
 -->
-<LinearLayout android:layout_height="fill_parent"
-	android:layout_width="fill_parent" android:orientation="vertical"
-	xmlns:android="http://schemas.android.com/apk/res/android">
-	<ScrollView android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_weight="1" android:id="@+id/scroll">
-		<LinearLayout android:layout_height="wrap_content"
-			android:paddingTop="@dimen/dynamic_margin_narrow_vertical"
-			android:paddingBottom="@dimen/dynamic_margin_narrow_vertical"
-    		android:paddingLeft="@dimen/dynamic_margin_narrow_horizontal"
-		    android:paddingRight="@dimen/dynamic_margin_narrow_horizontal"		
-			android:id="@+id/layout" android:layout_width="fill_parent"
-			android:orientation="vertical" />
-	</ScrollView>
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/content"
+	android:fitsSystemWindows="true"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
 
-</LinearLayout>	
-<!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout/category.xml -->
+	<LinearLayout android:layout_height="fill_parent"
+		android:layout_width="fill_parent"
+		android:orientation="vertical"
+		android:paddingTop="?attr/actionBarSize"
+		android:focusable="true"
+		xmlns:android="http://schemas.android.com/apk/res/android">
+
+		<ScrollView android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1" android:id="@+id/scroll">
+			<LinearLayout android:layout_height="wrap_content"
+				android:id="@+id/layout"
+				android:layout_width="fill_parent"
+				android:orientation="vertical" />
+		</ScrollView>
+
+	</LinearLayout>
+
+	<include layout="@layout/toolbar"/>
+
+</android.support.design.widget.CoordinatorLayout><!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout/category.xml -->

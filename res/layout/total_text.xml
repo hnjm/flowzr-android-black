@@ -14,8 +14,9 @@
 	    xmlns:android="http://schemas.android.com/apk/res/android"
         android:background="@color/total_bg_color"
         android:layout_height="72dp"
+    android:id="@+id/total_layout"
         android:padding="@dimen/space_small"
-        android:layout_margin="@dimen/space_small"
+        android:layout_margin="0dp"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:gravity="center_vertical"       
@@ -31,10 +32,11 @@
             style="@style/TextView"
             android:layout_width="0dp"
             android:layout_weight="1"
-
+            android:focusable="true"
             android:textSize="@dimen/text_xlarge" />
 
         <TextView
+            android:layout_marginRight="@dimen/space_normal"
             android:id="@+id/total"
             style="@style/TextView"
             android:textSize="@dimen/text_xxxlarge" />

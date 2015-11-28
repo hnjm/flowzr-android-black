@@ -9,7 +9,9 @@
 -->
     <LinearLayout android:id="@+id/total_text_layout"
 	    xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_height="82dp"
+        android:layout_height="76dp"
+        android:background="@color/total_bg_color"
+        android:elevation="4dp"
         android:layout_width="fill_parent">
 
     <ToggleButton android:layout_width="@dimen/recommended_touch_size" android:layout_height="@dimen/recommended_touch_size"

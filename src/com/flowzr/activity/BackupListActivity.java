@@ -47,6 +47,8 @@ import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.MetadataBuffer;
 import com.google.android.gms.plus.Plus;
+
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -62,6 +64,7 @@ import android.os.Message;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -107,13 +110,20 @@ public class BackupListActivity extends AppCompatActivity implements GoogleApiCl
         return true;
     }
 
+    protected void initToolbar() {
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_entities);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        initToolbar();
 
 		ListView listview= (ListView)findViewById(R.id.listview);
 		listview.setAdapter(new BackupListAdapter(this, backups));  
@@ -226,30 +236,8 @@ public class BackupListActivity extends AppCompatActivity implements GoogleApiCl
         		return true;
             case android.R.id.home:
             {
-                TaskStackBuilder tsb = TaskStackBuilder.create(this);
-                final int intentCount = tsb.getIntentCount();
-                if (intentCount > 0)
-                {
-                    Intent upIntent = tsb.getIntents()[intentCount - 1];
-                    if (NavUtils.shouldUpRecreateTask(this, upIntent))
-                    {
-                        // This activity is not part of the application's task, so create a new task with a synthesized back stack.
-                        tsb.startActivities();
-                        finish();
-                    }
-                    else
-                    {
-                        // This activity is part of the application's task, so simply navigate up to the hierarchical parent activity.
-                        NavUtils.navigateUpTo(this, upIntent);
-                    }
-                }
-                else
-                {
-                    onBackPressed();
-                }
-                return true;
+                onBackPressed();
             }
-
         }
         return super.onOptionsItemSelected(item);
     }	
@@ -260,7 +248,7 @@ public class BackupListActivity extends AppCompatActivity implements GoogleApiCl
         ProgressDialog d = ProgressDialog.show(this, null, getString(R.string.backup_database_inprogress), true);
         new BackupExportTask(this, d, true).execute();
     }
-
+    /**
     private void doBackupTo() {
         ProgressDialog d = ProgressDialog.show(this, null, getString(R.string.backup_database_inprogress), true);
         final BackupExportTask t = new BackupExportTask(this, d, false);
@@ -274,6 +262,7 @@ public class BackupListActivity extends AppCompatActivity implements GoogleApiCl
         });
         t.execute((String[]) null);
     }
+    **/
 
     private void startBackupToChooser(String backupFileName) {
         File file = Export.getBackupFile(this, backupFileName);
@@ -554,12 +543,14 @@ public class BackupListActivity extends AppCompatActivity implements GoogleApiCl
             GoogleApiAvailability.getInstance().getErrorDialog(this, result.getErrorCode(), 0).show();
             return;
         }
+        /**
         try {
-            result.startResolutionForResult(this, REQUEST_CODE_RESOLUTION);
+            //result.startResolutionForResult(this, REQUEST_CODE_RESOLUTION);
         } catch (IntentSender.SendIntentException e) {
             Log.e("flowzr", "Exception while starting resolution activity", e);
             e.printStackTrace();
         }
+         **/
         //showErrorPopup(this, R.string.gdocs_connection_failed);
         Toast.makeText(this,R.string.gdocs_connection_failed,Toast.LENGTH_LONG).show();
     }

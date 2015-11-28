@@ -15,9 +15,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
+
+import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
 import com.flowzr.model.MultiChoiceItem;
@@ -32,18 +35,28 @@ public abstract class AbstractActivity extends AppCompatActivity implements Acti
 	protected MyEntityManager em;
 	
 	protected ActivityLayout x;
-	
+
+	protected void initToolbar() {
+		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		final ActionBar actionBar = getSupportActionBar();
+
+		if (actionBar != null) {
+			actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
 		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		NodeInflater nodeInflater = new NodeInflater(layoutInflater);
 		x = new ActivityLayout(nodeInflater, this);
 		db = new DatabaseAdapter(this);
 		db.open();
 		em = db.em();
+		initToolbar();
 	}
 	
 

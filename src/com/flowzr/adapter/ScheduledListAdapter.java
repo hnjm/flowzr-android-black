@@ -40,6 +40,7 @@ public class ScheduledListAdapter extends BaseAdapter {
 	private final Date dt = new Date();
 	private final int transferColor;
 	private final int scheduledColor;
+	private final int inverseColor;
 	private final Drawable icBlotterIncome;
 	private final Drawable icBlotterExpense;
 	private final Drawable icBlotterTransfer;	
@@ -56,6 +57,7 @@ public class ScheduledListAdapter extends BaseAdapter {
 		this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.transferColor = context.getResources().getColor(R.color.transfer_color);
 		this.scheduledColor = context.getResources().getColor(R.color.scheduled);
+		this.inverseColor = context.getResources().getColor(R.color.text_primary_inverted);
 		this.icBlotterIncome = context.getResources().getDrawable(R.drawable.ic_blotter_income);
 		this.icBlotterExpense = context.getResources().getDrawable(R.drawable.ic_blotter_expense);
 		this.icBlotterTransfer = context.getResources().getDrawable(R.drawable.ic_blotter_transfer);
@@ -95,9 +97,9 @@ public class ScheduledListAdapter extends BaseAdapter {
 		}
 		TransactionInfo t = getItem(position);
 		if (t.nextDateTime != null && t.nextDateTime.after(now)) {
-			v.indicator.setBackgroundColor(scheduledColor);			
+			v.indicator.setBackgroundColor(scheduledColor);
 		} else {
-			v.indicator.setBackgroundColor(Color.TRANSPARENT);			
+			v.indicator.setBackgroundColor(Color.TRANSPARENT);
 		}
 		TextView noteView = t.isTemplate == 1 ? v.bottomView : v.centerView;
 		if (t.toAccount != null) {
@@ -173,9 +175,9 @@ public class ScheduledListAdapter extends BaseAdapter {
 				} else {
 					v.bottomView.setText("?");					
 				}
-				v.day_TV.setTextColor(v.topView.getTextColors().getDefaultColor());
-				v.month_TV.setTextColor(v.topView.getTextColors().getDefaultColor());
-				v.bottomView.setTextColor(v.topView.getTextColors().getDefaultColor());
+				v.day_TV.setTextColor(inverseColor);
+				v.month_TV.setTextColor(inverseColor);
+				//v.bottomView.setTextColor(v.topView.getTextColors().getDefaultColor());
 			} else {
 				long date = t.dateTime;
 				dt.setTime(date);

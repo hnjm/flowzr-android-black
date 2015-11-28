@@ -16,18 +16,6 @@
  
 <!-- List Item Icons(Images) with strings(text of company name) -->
 <!-- Keep them with titles array accordingly -->
-<array name="nav_drawer_icons">
-<item>@drawable/ic_action_accounts</item>
-<item>@drawable/ic_action_view_as_list</item>
-<item>@drawable/ic_action_mail</item>
-
-<item>@drawable/ic_action_cast</item>
-<item>@drawable/ic_action_view_as_grid</item>
-<item>@drawable/ic_action_cloud</item>
-<item>@drawable/ic_action_usb</item>
-<item>@drawable/ic_action_settings</item>
-<item>@drawable/ic_action_about</item>
-</array>
     <string name="widget_2x1">Flowzr</string>
     <string name="widget_3x1">Flowzr</string>
     <string name="widget_4x1">Flowzr</string>

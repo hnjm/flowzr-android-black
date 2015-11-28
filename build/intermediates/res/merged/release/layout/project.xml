@@ -8,23 +8,75 @@
   Contributors:
       Denis Solonenko - initial API and implementation
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="fill_parent" android:layout_width="fill_parent"
-	android:orientation="vertical"
-	android:paddingTop="@dimen/dynamic_margin_narrow_vertical"
-	android:paddingBottom="@dimen/dynamic_margin_narrow_vertical"
-    android:paddingLeft="@dimen/dynamic_margin_narrow_horizontal"
-    android:paddingRight="@dimen/dynamic_margin_narrow_horizontal">
-	<TextView android:layout_height="wrap_content"
-		android:layout_width="fill_parent" android:text="@string/title" />
-	<EditText android:layout_height="wrap_content"
-		android:layout_width="fill_parent" android:id="@+id/title" />
-    <TextView android:layout_height="wrap_content"
-              android:layout_width="fill_parent" android:text="@string/is_active" />
-    <CheckBox android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:id="@+id/isActive" style="@style/CheckBox"/>
-	<TextView android:layout_height="wrap_content"
-		android:layout_width="fill_parent" android:layout_weight="1" />
-</LinearLayout>
-<!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout/project.xml -->
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:paddingTop="?attr/actionBarSize"
+        android:focusable="true"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <include layout="@layout/layout_title"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:focusable="true"
+            android:clickable="true">
+
+                <LinearLayout
+                    android:layout_width="72dp" android:layout_gravity="center" android:gravity="center"
+                    android:layout_height="@dimen/recommended_touch_size">
+
+                    <ImageView android:layout_height="16dp" android:layout_width="16dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/icon"
+                        android:src="@drawable/ic_action_not_secure"
+                        android:layout_marginLeft="@dimen/dynamic_margin_narrow_vertical"
+                        android:focusable="true" android:clickable="true" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView android:id="@+id/data" android:layout_width="wrap_content"
+                        android:layout_weight="1" android:layout_marginTop="@dimen/space_normal"
+                        android:layout_height="@dimen/recommended_touch_size"
+                        style="@style/TextView" android:textSize="@dimen/text_normal"
+                        android:text="@string/is_active" />
+
+
+                    <CheckBox android:id="@+id/isActive"
+                        style="@style/CheckBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/toolbar"/>
+
+</android.support.design.widget.CoordinatorLayout><!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout/project.xml -->

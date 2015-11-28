@@ -11,10 +11,19 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
-import android.support.design.internal.NavigationMenuView;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.design.widget.NavigationView;
 import android.support.multidex.MultiDex;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
@@ -22,188 +31,234 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TypefaceSpan;
 import android.os.Bundle;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.TypedArray;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+
 import com.flowzr.R;
-import com.flowzr.activity.MainActivity.MyAdapter;
-import com.flowzr.adapter.NavDrawerListAdapter;
-import com.flowzr.model.NavDrawerItem;
 import com.flowzr.utils.*;
-import java.util.ArrayList;
 
 public class AbstractActionBarActivity  extends AppCompatActivity {
 
-
     private static final int CHANGE_PREFERENCES = 6;
-
     private static final int ACTIVITY_BACKUP = 8;    
 
-    private static final int MENU_ACCOUNTS = 0;  
-    private static final int MENU_BLOTTER = 1;  
-    private static final int MENU_BUDGET = 2;      
-    
-    private static final int MENU_REPORTS = 3;     
-    private static final int MENU_ENTITIES = 4;
-    private static final int MENU_CLOUD_SYNC = 5;
-    private static final int MENU_BACKUP = 6;
-    private static final int MENU_PREFERENCES = 7;    
-    private static final int MENU_ABOUT = 8;
-    
-	public static final int TAB_BLOTTER = 1;
-	public static final int TAB_REPORT = 3;
-
-    protected static final String REQUEST_BLOTTER = "REQUEST_BLOTTER";   
-	
-	public android.support.v7.app.ActionBar actionBar;
+	public Toolbar actionBar;
 	// Within which the entire activity is enclosed
 	protected DrawerLayout mDrawerLayout;
-	// ListView represents Navigation Drawer
-	protected ListView mDrawerList;	
-	private ActionBarDrawerToggle mDrawerToggle;
-
-	private TypedArray navMenuIcons;
-	private ArrayList<NavDrawerItem> navDrawerItems;
-	private NavDrawerListAdapter adapter;    
 	protected static ViewPager viewPager;
 
 	public MyAdapter mAdapter;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private boolean isDrawerLocked;
+
+
+
+    public static class MyAdapter extends FragmentPagerAdapter {
+        Bundle bundle;
+        private String tabtitles[] = new String[] { "Tab1", "Tab2", "Tab3" };
+        public static BlotterFragment blotterFragment;
+        public static AccountListFragment accountListFragment;
+        public static BudgetListFragment budgetListFragment;
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabtitles[position];
+        }
+
+        public MyAdapter(FragmentManager fm, Intent i) {
+            super(fm);
+            bundle=i.getExtras();
+        }
+
+        public void setFilter(Bundle b) {
+            bundle=b;
+        }
+
+        public void setMyArguments(Bundle b) {
+            bundle=b;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public int getItemPosition(Object object){
+            return POSITION_NONE; // clear cache
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+
+            if (position==0) {
+                accountListFragment= (AccountListFragment) AccountListFragment.newInstance(bundle);
+                return  accountListFragment;
+            }
+            if (position==1) {
+                blotterFragment = (BlotterFragment) BlotterFragment.newInstance(bundle);
+                return blotterFragment;
+            }
+            if (position==2) {
+                budgetListFragment= (BudgetListFragment) BudgetListFragment.newInstance(bundle);
+                return budgetListFragment;
+            }
+            return null;
+        }
+    }
 
     protected void attachBaseContext(Context base)
     {
         super.attachBaseContext(base);
-        MultiDex.install(this);
-    }
-	
-    public void loadTabFragment(Fragment fragment, int rId, Bundle bundle, int tabId) {
-        bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, rId);
-        fragment.setArguments(bundle);
-        mAdapter.setMyArguments(fragment, bundle);
-        mAdapter.notifyDataSetChanged();
-        try {
-            viewPager.getAdapter().notifyDataSetChanged();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        viewPager.setCurrentItem(tabId);
+        MultiDex.install(this); //Whoo whoo ...
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    protected void initToolbar() {
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
 
 	protected void setupDrawer() {
-				
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_V);
-		mDrawerList = (ListView) findViewById(R.id.navigationDrawer_L);
-		// setting list adapter for Navigation Drawer		
-		String[] mDrawerStrings = { getResources().getString(R.string.account),
-				getResources().getString(R.string.blotter),
-				getResources().getString(R.string.budget),
-				getResources().getString(R.string.reports),
-				getResources().getString(R.string.entities),
-				getResources().getString(R.string.flowzr_sync),
-				getResources().getString(R.string.backup),
-				getResources().getString(R.string.preferences),
-				getResources().getString(R.string.about)				
-				};
-				
-		
-		navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);		
-		navDrawerItems = new ArrayList<NavDrawerItem>();
-		navDrawerItems.add(new NavDrawerItem(mDrawerStrings[0], navMenuIcons.getResourceId(0, -1)));
-		navDrawerItems.add(new NavDrawerItem(mDrawerStrings[1], navMenuIcons.getResourceId(1, -1)));
-		navDrawerItems.add(new NavDrawerItem(mDrawerStrings[2], navMenuIcons.getResourceId(2, -1)));
-		navDrawerItems.add(new NavDrawerItem(mDrawerStrings[3], navMenuIcons.getResourceId(3, -1)));
-		navDrawerItems.add(new NavDrawerItem(mDrawerStrings[4], navMenuIcons.getResourceId(4, -1)));
-		navDrawerItems.add(new NavDrawerItem(mDrawerStrings[5], navMenuIcons.getResourceId(5, -1)));
-		navDrawerItems.add(new NavDrawerItem(mDrawerStrings[6], navMenuIcons.getResourceId(6, -1)));
-		navDrawerItems.add(new NavDrawerItem(mDrawerStrings[7], navMenuIcons.getResourceId(7, -1)));
-		navDrawerItems.add(new NavDrawerItem(mDrawerStrings[8], navMenuIcons.getResourceId(8, -1)));		
-				
-		adapter = new NavDrawerListAdapter(getApplicationContext(),navDrawerItems);
-		mDrawerList.setAdapter(adapter);
+        NavigationView view = (NavigationView) findViewById(R.id.navigation_view);
 
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-
-        mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.menu,R.string.close) {
-
-        };
-
-        if (mDrawerLayout!=null) {
-        	mDrawerLayout.setDrawerListener(mDrawerToggle);
-            mDrawerToggle.syncState();
-            mDrawerLayout.setVerticalScrollBarEnabled(false);
+        if (findViewById(R.id.fragment_land_container)!=null) { // in sw600dp-land
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN, view);
+            mDrawerLayout.setScrimColor(Color.TRANSPARENT);
+            mDrawerLayout.openDrawer(GravityCompat.START);
+            isDrawerLocked = true;
         }
+
+        if (!isDrawerLocked) {
+            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.menu, R.string.close) {
+            };
+            mDrawerToggle.syncState();
+            mDrawerLayout.setDrawerListener(mDrawerToggle);
+        }
+
+        view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                switch (menuItem.getItemId()) {
+                    case R.id.drawer_item_account:
+                        menuItem.setChecked(true);
+                        viewPager.setCurrentItem(0);
+                        break;
+                    case R.id.drawer_item_blotter:
+                        menuItem.setChecked(true);
+                        loadTabFragment(R.layout.blotter, new Bundle(), 1);
+                        mAdapter.notifyDataSetChanged();
+                        break;
+                    case R.id.drawer_item_budget:
+                        menuItem.setChecked(true);
+                        viewPager.setCurrentItem(2);
+                        break;
+                    case R.id.drawer_item_reports:
+                        Intent intent = new Intent(getApplicationContext(), EntityListActivity.class);
+                        intent.putExtra(EntityListActivity.REQUEST_REPORTS, true);
+                        startActivity(intent);
+                        break;
+                    case R.id.drawer_item_entities:
+                        startActivity(new Intent(getApplicationContext(), EntityListActivity.class));
+                        break;
+                    case R.id.drawer_item_preferences:
+                        startActivityForResult(new Intent(getApplicationContext(), PreferencesActivity.class), CHANGE_PREFERENCES);
+                        break;
+                    case R.id.drawer_item_about:
+                        startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                        break;
+                    case R.id.drawer_item_sync:
+                        startActivity(new Intent(getApplicationContext(), FlowzrSyncActivity.class));
+                        break;
+                    case R.id.drawer_item_backup:
+                        startActivityForResult(new Intent(getApplicationContext(), BackupListActivity.class), ACTIVITY_BACKUP);
+                        break;
+                }
+                if (!isDrawerLocked) {
+                    mDrawerLayout.closeDrawers();
+                }
+                return false;
+            }
+        });
 	}
-    
+
+
+    public void loadTabFragment( int rId, Bundle bundle, final int tabId) {
+        Intent data=new Intent(this,BlotterFragment.class);
+        data.putExtras(bundle);
+        bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, rId);
+        mAdapter.blotterFragment.onActivityResult(BlotterFragment.FILTER_REQUEST, MainActivity.RESULT_OK, data);
+        viewPager.setCurrentItem(tabId);
+
+        //mAdapter.setMyArguments(bundle);
+        //mAdapter.notifyDataSetChanged();
+        //mAdapter.getItem(tabId);
+        //viewPager.getAdapter().notifyDataSetChanged();
+        //try {
+        //    viewPager.setCurrentItem(tabId,true);
+        //} catch (Exception e)  {
+        //    e.printStackTrace();
+        //}
+
+    }
+
+
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        if (mDrawerLayout!=null) {
-        	mDrawerToggle.syncState();
+        if (mDrawerLayout!=null && !isDrawerLocked) {
+            mDrawerToggle.syncState();
         }
-    }
-
-
-    
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            switch (position) {            	
-	    		case MENU_ACCOUNTS:      
-	    			viewPager.setCurrentItem(0);
-	            break;
-	    		case MENU_BLOTTER: 
-	    			loadTabFragment(new BlotterFragment(), R.layout.blotter, new Bundle(), 1);
-	    			mAdapter.notifyDataSetChanged();
-	  
-	            break;
-	    		case MENU_BUDGET:      
-	    			viewPager.setCurrentItem(2);
-	            break;            
-	            case MENU_REPORTS:      
-	        			Intent intent=new Intent(parent.getContext(),EntityListActivity.class);
-	        			intent.putExtra(EntityListActivity.REQUEST_REPORTS, true);
-	        			startActivity(intent);
-	                break;
-            	case MENU_ENTITIES:          		
-	                startActivity(new Intent(parent.getContext(), EntityListActivity.class));
-	                break;
-	            case MENU_PREFERENCES:
-	                startActivityForResult(new Intent(parent.getContext(), PreferencesActivity.class), CHANGE_PREFERENCES);
-	                break;
-	            case MENU_ABOUT:
-	                startActivity(new Intent(parent.getContext(), AboutActivity.class));
-	                break;
-	            case MENU_CLOUD_SYNC:
-	                startActivity(new Intent(parent.getContext(), FlowzrSyncActivity.class));
-	                break;
-	            case MENU_BACKUP:
-	                startActivityForResult(new Intent(parent.getContext(), BackupListActivity.class), ACTIVITY_BACKUP);
-	            	break;
-            }
-            if (mDrawerLayout!=null) {
-            	mDrawerLayout.closeDrawer(mDrawerList);            
-            }
-		}
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        PinProtection.unlock(this);
-        if (mDrawerLayout!=null) {
+        if (mDrawerLayout!=null ) {
             mDrawerToggle.onConfigurationChanged(newConfig);
+            if (newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE) {
+                mDrawerLayout.findViewById(R.id.drawer_header).setVisibility(View.GONE);
+            } else {
+                mDrawerLayout.findViewById(R.id.drawer_header).setVisibility(View.VISIBLE);
+            }
         }
+        PinProtection.unlock(this);
+        mAdapter.notifyDataSetChanged();
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
     }
 
     @Override
@@ -224,12 +279,6 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         PinProtection.immediateLock(this);
     }
 
-  	public void setMyTitle(String t) {
-  	  SpannableString s = new SpannableString(t);
-  	  s.setSpan(new TypefaceSpan("sans-serif"), 0, s.length(),
-              Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-      actionBar.setTitle(s);
-  	}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -265,6 +314,4 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }

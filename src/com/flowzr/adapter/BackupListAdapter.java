@@ -60,7 +60,7 @@ public class BackupListAdapter extends BaseAdapter {
 		}
 		BackupType r = backups[position];
 		h.title.setText(r.titleId);
-		h.label.setText(r.summaryId);
+		//h.label.setText(r.summaryId);
 		//h.icon.setImageResource(r.iconId);
 		return convertView;
 	}

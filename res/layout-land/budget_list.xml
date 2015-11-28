@@ -12,12 +12,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:orientation="horizontal" >
+		android:orientation="horizontal"
+        android:weightSum="1">
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="0dp"
     android:layout_height="wrap_content" android:gravity="center"
-    android:orientation="vertical" android:layout_weight="1">
+    android:orientation="vertical" android:layout_weight="0.65">
 
     <ListView
         android:layout_height="fill_parent"  
@@ -58,11 +59,12 @@
 </LinearLayout>
 </LinearLayout>
 
-    <FrameLayout  android:layout_weight="1.3141592654"
+    <FrameLayout  android:layout_weight="0.35"
         android:id="@+id/fragment_land_container"
-        android:layout_width="match_parent" 
+        android:layout_width="0dp"
+        android:background="@color/total_bg_color"
         android:gravity="center_vertical"
         android:paddingRight="@dimen/space_large"
-        android:layout_height="wrap_content" /> 
+        android:layout_height="fill_parent" />
 
 </LinearLayout>

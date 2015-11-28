@@ -45,6 +45,7 @@ public class SplitTransactionActivity extends AbstractSplitActivity implements C
         View v = x.addEditNode(layout, R.string.amount, amountInput);
         amountTitle = (TextView) v.findViewById(R.id.label);
         categorySelector.createAttributesLayout(layout);
+        initToolbar();
     }
 
     @Override

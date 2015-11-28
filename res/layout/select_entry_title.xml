@@ -10,11 +10,10 @@
       Denis Solonenko - initial API and implementation
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:background="@drawable/activated_background"
-	android:minHeight="@dimen/title_entry_height" android:gravity="bottom"
-	android:paddingBottom="@dimen/space_small" 
-	android:orientation="vertical" android:clickable="false" android:focusable="false">
+	android:id="@+id/top_layout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	style="@style/ListItem">
 
 	<TextView android:id="@+id/label" android:singleLine="true"
 		android:paddingTop="@dimen/space_normal" android:paddingLeft="@dimen/space_normal"

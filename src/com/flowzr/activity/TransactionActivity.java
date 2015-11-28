@@ -11,6 +11,7 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.*;
 import greendroid.widget.QuickActionGrid;
@@ -80,7 +82,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
     
 	@Override
 	protected void internalOnCreate() {
-
+        initToolbar();
 		Intent intent = getIntent();
 		if (intent != null) {
 			if (intent.hasExtra(CURRENT_BALANCE_EXTRA)) {
@@ -120,6 +122,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
                 u.setTotal(totalText, t);
             }
         });
+
         findViewById(R.id.saveAddButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -78,11 +78,12 @@ public class AccountActivity extends AbstractEditorActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.account);
+		initToolbar();
 
 		LinearLayout layout = (LinearLayout)findViewById(R.id.layout);
 
 		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		accountTitle= (EditText) findViewById(R.id.account_title);
+		accountTitle= (EditText) findViewById(R.id.title);
 		accountTitle.setSingleLine();
 
 		accountTypeAdapter = new EntityEnumAdapter<AccountType>(this, AccountType.values());
@@ -185,13 +186,6 @@ public class AccountActivity extends AbstractEditorActivity {
 			}
 		});
 
-		findViewById(R.id.cancelButton).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				setResult(RESULT_CANCELED);
-				finish();
-			}
-		});
 
 	}
 

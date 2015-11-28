@@ -11,18 +11,19 @@
       Emmanuel Florent - added icon titles
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/top_layout" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:paddingRight="?android:attr/scrollbarSize"
-	android:orientation="horizontal" android:gravity="center_vertical"
-	android:focusable="true" android:clickable="true">
+	android:id="@+id/top_layout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	style="@style/ListItem">
 
     <LinearLayout
-        android:layout_width="64dp" android:layout_gravity="center" android:gravity="center"
+        android:layout_width="72dp" android:layout_gravity="center" android:gravity="center"
         android:layout_height="@dimen/recommended_touch_size">
 
-	<ImageView android:layout_height="24dp" android:layout_width="24dp"
+	<ImageView android:layout_height="16dp" android:layout_width="16dp"
 		android:layout_gravity="center"
 		android:id="@+id/icon"
+		android:layout_marginLeft="@dimen/dynamic_margin_narrow_vertical"
 		android:focusable="true" android:clickable="true" />
 
     </LinearLayout>

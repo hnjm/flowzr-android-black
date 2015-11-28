@@ -53,7 +53,7 @@ public class ReportFilterActivity extends AbstractEditorActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.blotter_filter);
-
+        initToolbar();
         df = DateUtils.getShortDateFormat(this);
         filterValueNotFound = getString(R.string.filter_value_not_found);
 

@@ -9,19 +9,19 @@ package com.google.android.gms.base;
 public final class R {
 	public static final class attr {
 		public static final int ambientEnabled = 0x7f010063;
-		public static final int buttonSize = 0x7f010084;
+		public static final int buttonSize = 0x7f010096;
 		public static final int cameraBearing = 0x7f010054;
 		public static final int cameraTargetLat = 0x7f010055;
 		public static final int cameraTargetLng = 0x7f010056;
 		public static final int cameraTilt = 0x7f010057;
 		public static final int cameraZoom = 0x7f010058;
 		public static final int circleCrop = 0x7f010052;
-		public static final int colorScheme = 0x7f010085;
+		public static final int colorScheme = 0x7f010097;
 		public static final int imageAspectRatio = 0x7f010051;
 		public static final int imageAspectRatioAdjust = 0x7f010050;
 		public static final int liteMode = 0x7f010059;
 		public static final int mapType = 0x7f010053;
-		public static final int scopeUris = 0x7f010086;
+		public static final int scopeUris = 0x7f010098;
 		public static final int uiCompass = 0x7f01005a;
 		public static final int uiMapToolbar = 0x7f010062;
 		public static final int uiRotateGestures = 0x7f01005b;
@@ -33,27 +33,27 @@ public final class R {
 		public static final int zOrderOnTop = 0x7f010061;
 	}
 	public static final class color {
-		public static final int common_action_bar_splitter = 0x7f0c0019;
-		public static final int common_google_signin_btn_text_dark = 0x7f0c0098;
-		public static final int common_google_signin_btn_text_dark_default = 0x7f0c001a;
-		public static final int common_google_signin_btn_text_dark_disabled = 0x7f0c001b;
-		public static final int common_google_signin_btn_text_dark_focused = 0x7f0c001c;
-		public static final int common_google_signin_btn_text_dark_pressed = 0x7f0c001d;
-		public static final int common_google_signin_btn_text_light = 0x7f0c0099;
-		public static final int common_google_signin_btn_text_light_default = 0x7f0c001e;
-		public static final int common_google_signin_btn_text_light_disabled = 0x7f0c001f;
-		public static final int common_google_signin_btn_text_light_focused = 0x7f0c0020;
-		public static final int common_google_signin_btn_text_light_pressed = 0x7f0c0021;
-		public static final int common_plus_signin_btn_text_dark = 0x7f0c009a;
-		public static final int common_plus_signin_btn_text_dark_default = 0x7f0c0022;
-		public static final int common_plus_signin_btn_text_dark_disabled = 0x7f0c0023;
-		public static final int common_plus_signin_btn_text_dark_focused = 0x7f0c0024;
-		public static final int common_plus_signin_btn_text_dark_pressed = 0x7f0c0025;
-		public static final int common_plus_signin_btn_text_light = 0x7f0c009b;
-		public static final int common_plus_signin_btn_text_light_default = 0x7f0c0026;
-		public static final int common_plus_signin_btn_text_light_disabled = 0x7f0c0027;
-		public static final int common_plus_signin_btn_text_light_focused = 0x7f0c0028;
-		public static final int common_plus_signin_btn_text_light_pressed = 0x7f0c0029;
+		public static final int common_action_bar_splitter = 0x7f0c001b;
+		public static final int common_google_signin_btn_text_dark = 0x7f0c009d;
+		public static final int common_google_signin_btn_text_dark_default = 0x7f0c001c;
+		public static final int common_google_signin_btn_text_dark_disabled = 0x7f0c001d;
+		public static final int common_google_signin_btn_text_dark_focused = 0x7f0c001e;
+		public static final int common_google_signin_btn_text_dark_pressed = 0x7f0c001f;
+		public static final int common_google_signin_btn_text_light = 0x7f0c009e;
+		public static final int common_google_signin_btn_text_light_default = 0x7f0c0020;
+		public static final int common_google_signin_btn_text_light_disabled = 0x7f0c0021;
+		public static final int common_google_signin_btn_text_light_focused = 0x7f0c0022;
+		public static final int common_google_signin_btn_text_light_pressed = 0x7f0c0023;
+		public static final int common_plus_signin_btn_text_dark = 0x7f0c009f;
+		public static final int common_plus_signin_btn_text_dark_default = 0x7f0c0024;
+		public static final int common_plus_signin_btn_text_dark_disabled = 0x7f0c0025;
+		public static final int common_plus_signin_btn_text_dark_focused = 0x7f0c0026;
+		public static final int common_plus_signin_btn_text_dark_pressed = 0x7f0c0027;
+		public static final int common_plus_signin_btn_text_light = 0x7f0c00a0;
+		public static final int common_plus_signin_btn_text_light_default = 0x7f0c0028;
+		public static final int common_plus_signin_btn_text_light_disabled = 0x7f0c0029;
+		public static final int common_plus_signin_btn_text_light_focused = 0x7f0c002a;
+		public static final int common_plus_signin_btn_text_light_pressed = 0x7f0c002b;
 	}
 	public static final class drawable {
 		public static final int common_full_open_on_phone = 0x7f020089;
@@ -98,12 +98,12 @@ public final class R {
 		public static final int common_plus_signin_btn_text_light_focused = 0x7f0200b0;
 		public static final int common_plus_signin_btn_text_light_normal = 0x7f0200b1;
 		public static final int common_plus_signin_btn_text_light_pressed = 0x7f0200b2;
-		public static final int ic_plusone_medium_off_client = 0x7f020150;
-		public static final int ic_plusone_small_off_client = 0x7f020151;
-		public static final int ic_plusone_standard_off_client = 0x7f020152;
-		public static final int ic_plusone_tall_off_client = 0x7f020153;
-		public static final int powered_by_google_dark = 0x7f020193;
-		public static final int powered_by_google_light = 0x7f020194;
+		public static final int ic_plusone_medium_off_client = 0x7f020151;
+		public static final int ic_plusone_small_off_client = 0x7f020152;
+		public static final int ic_plusone_standard_off_client = 0x7f020153;
+		public static final int ic_plusone_tall_off_client = 0x7f020154;
+		public static final int powered_by_google_dark = 0x7f020195;
+		public static final int powered_by_google_light = 0x7f020196;
 	}
 	public static final class id {
 		public static final int adjust_height = 0x7f0d0073;
@@ -187,7 +187,7 @@ public final class R {
 		public static final int MapAttrs_uiZoomGestures = 12;
 		public static final int MapAttrs_useViewLifecycle = 13;
 		public static final int MapAttrs_zOrderOnTop = 14;
-		public static final int[] SignInButton = { 0x7f010084, 0x7f010085, 0x7f010086 };
+		public static final int[] SignInButton = { 0x7f010096, 0x7f010097, 0x7f010098 };
 		public static final int SignInButton_buttonSize = 0;
 		public static final int SignInButton_colorScheme = 1;
 		public static final int SignInButton_scopeUris = 2;

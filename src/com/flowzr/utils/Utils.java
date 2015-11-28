@@ -324,7 +324,7 @@ public class Utils {
 
     private void setTotalError(TextView totalText) {
         totalText.setText(R.string.not_available);
-        Drawable dr = context.getResources().getDrawable(R.drawable.total_error);
+        Drawable dr = context.getResources().getDrawable(R.drawable.ic_action_warning);
         dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
         totalText.setError(totalText.getText(), dr);
     }

@@ -8,10 +8,22 @@
   Contributors:
       Denis Solonenko - initial API and implementation
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-	<ScrollView android:layout_height="wrap_content"
+
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/content"
+	android:fitsSystemWindows="true"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<LinearLayout
+		android:paddingTop="?attr/actionBarSize"
+		android:layout_gravity="center_horizontal"
+		android:gravity="center_horizontal"
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+	<ScrollView android:layout_height="wrap_content" android:id="@+id/scroll"
 		android:layout_weight="1" android:layout_width="fill_parent">
 		<LinearLayout android:layout_height="wrap_content" android:id="@+id/layout"
 			android:layout_weight="1" android:layout_width="fill_parent" 
@@ -21,5 +33,9 @@
 		    android:paddingRight="@dimen/dynamic_margin_narrow_horizontal"
 			android:orientation="vertical"/>
 	</ScrollView>
-</RelativeLayout>
+	</LinearLayout>
+	<include layout="@layout/toolbar"/>
+	<include layout="@layout/save_fab"/>
+
+</android.support.design.widget.CoordinatorLayout>
 <!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout/blotter_filter.xml -->

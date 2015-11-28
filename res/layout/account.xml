@@ -9,48 +9,39 @@
       Denis Solonenko - initial API and implementation
       Emmanuel Florent - Add icon title, port to appcompat 21+
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:animateLayoutChanges="true"
-android:focusable="true"
-android:focusableInTouchMode="true"
-android:orientation="vertical"
-tools:context=".ui.currencies.CurrencyEditActivity">
-<LinearLayout
-	android:layout_width="fill_parent" android:layout_height="wrap_content"
-    android:background="#37474F" android:paddingBottom="@dimen/space_xlarge">
 
-	<EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:padding="@dimen/space_large" android:layout_marginLeft="@dimen/space_xlarge"
-		android:textStyle="bold"
-		android:id="@+id/account_title" style="@style/TextViewUserInput"
-		android:text="Budget A" android:focusableInTouchMode="true"
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/content"
+	android:fitsSystemWindows="true"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<LinearLayout
+		android:paddingTop="?attr/actionBarSize"
 		android:layout_gravity="center_horizontal"
-		android:textSize="@dimen/text_xxlarge">
-	</EditText>
+		android:gravity="center_horizontal"
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
 
+		<include layout="@layout/layout_title"/>
 
-</LinearLayout>
+	<ScrollView
+		android:layout_weight="1"
+		android:layout_height="0dp"
+		android:layout_width="fill_parent"
+		android:animateLayoutChanges="true"
+		android:scrollbars="none">
 
-<ScrollView
-	android:layout_height="0px"
-	android:layout_weight="1"
-	android:animateLayoutChanges="true"
-	android:scrollbars="none"
-	android:layout_width="fill_parent">
-
-
-
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:layout_marginTop="@dimen/space_large"
-		android:paddingBottom="@dimen/space_xxlarge"
-		android:orientation="vertical" android:id="@+id/layout">
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:orientation="vertical" android:id="@+id/layout">
+		</LinearLayout>
+	</ScrollView>
 	</LinearLayout>
-</ScrollView>
 
-<include layout="@layout/include_edit_buttons" />
-</LinearLayout>
+	<include layout="@layout/toolbar"/>
+	<include layout="@layout/save_fab"/>
+
+</android.support.design.widget.CoordinatorLayout>

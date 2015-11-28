@@ -8,9 +8,20 @@
   Contributors:
       Denis Solonenko - initial API and implementation
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent" android:layout_height="fill_parent"
-              android:orientation="vertical" android:padding="3dp">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:paddingTop="?attr/actionBarSize"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ScrollView android:layout_width="fill_parent" android:layout_height="0dp" android:layout_weight="1">
         <LinearLayout
                 android:layout_width="fill_parent" android:layout_height="0dp"
@@ -70,4 +81,6 @@
     </ScrollView>
     <include layout="@layout/ok_cancel_buttons"/>
 </LinearLayout>
+    <include layout="@layout/toolbar"/>
+</android.support.design.widget.CoordinatorLayout>
 <!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout/csv_export.xml -->

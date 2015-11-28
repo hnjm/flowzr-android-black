@@ -28,6 +28,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import fr.ganfra.materialspinner.MaterialSpinner;
+
 public class AttributeActivity extends AbstractEditorActivity implements OnItemSelectedListener {
 	
 	public static final String CATEGORY_ID = "category_id";
@@ -45,16 +47,16 @@ public class AttributeActivity extends AbstractEditorActivity implements OnItemS
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-				
 		setContentView(R.layout.attribute);
+		initToolbar();
 
 		db = new DatabaseAdapter(this);
 		db.open();
 		
-		typeSpinner = (Spinner)findViewById(R.id.type);
+		typeSpinner = (MaterialSpinner)findViewById(R.id.type);
 		typeSpinner.setOnItemSelectedListener(this);
 
-		nameTextView = (EditText)findViewById(R.id.name);
+		nameTextView = (EditText)findViewById(R.id.title);
 		valuesTextView = (EditText)findViewById(R.id.values);
 		defaultValueTextView = (EditText)findViewById(R.id.default_value_text);
 		defaultValueCheckBox = (CheckBox)findViewById(R.id.default_value_check);

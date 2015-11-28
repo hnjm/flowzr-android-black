@@ -42,6 +42,7 @@ public class CsvExportActivity extends AbstractExportActivity {
         exportSplits = new CheckBox(this); //(CheckBox)findViewById(R.id.checkboxExportSplits);
         includeHeader = (CheckBox)findViewById(R.id.checkboxIncludeHeader);
         uploadToDropbox = (CheckBox)findViewById(R.id.checkboxUploadToDropbox);
+        initToolbar();
     }
 
     @Override

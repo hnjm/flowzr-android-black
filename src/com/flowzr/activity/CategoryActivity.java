@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,13 +64,10 @@ public class CategoryActivity extends AbstractEditorActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.category);
-
+		initToolbar();
 		types = getResources().getStringArray(R.array.attribute_types);
-
 		scrollView = (ScrollView)findViewById(R.id.scroll);
-		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		categoryTitle = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
-		categoryTitle.setSingleLine();
+
 		
 		Intent intent = getIntent();
 		if (intent != null) {
@@ -92,13 +90,24 @@ public class CategoryActivity extends AbstractEditorActivity {
 		startManagingCursor(categoryCursor);
 
 		LinearLayout layout = (LinearLayout)findViewById(R.id.layout);
-		parentCategoryText = x.addListNode(layout, R.id.category, R.string.parent, R.string.select_category);
+        LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        LinearLayout titleLayout = new LinearLayout(this);
-        layoutInflater.inflate(R.layout.category_title, titleLayout, true);
-        incomeExpenseButton = (ToggleButton) titleLayout.findViewById(R.id.toggle);
-        categoryTitle = (EditText) titleLayout.findViewById(R.id.primary);
-		x.addEditNode(layout, R.string.title, titleLayout);
+		LinearLayout titleLayout = new LinearLayout(this);
+		layoutInflater.inflate(R.layout.category_title, layout, true);
+
+
+
+		//x.addEditNode(layout, R.string.title, titleLayout);
+
+        categoryTitle=(EditText)layoutInflater
+                .inflate(R.layout.category_title, null)
+                .findViewById(R.id.title);
+
+        categoryTitle = (EditText) findViewById(R.id.title);
+        categoryTitle.setSingleLine();
+        incomeExpenseButton = (ToggleButton) findViewById(R.id.toggle);
+
+		parentCategoryText = x.addListNode(layout, R.id.category, R.string.parent, R.string.select_category);
 
 		attributesLayout = (LinearLayout)x.addTitleNodeNoDivider(layout, R.string.attributes).findViewById(R.id.layout);
 		x.addInfoNodePlus(attributesLayout, R.id.new_attribute, R.id.add_attribute, R.string.add_attribute);
@@ -110,6 +119,8 @@ public class CategoryActivity extends AbstractEditorActivity {
 				db, this, android.R.layout.simple_spinner_dropdown_item, categoryCursor);
 			
 		editCategory();
+
+
 	}
 
     @Override

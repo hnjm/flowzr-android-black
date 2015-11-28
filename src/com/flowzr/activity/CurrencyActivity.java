@@ -64,7 +64,7 @@ public class CurrencyActivity extends AbstractEditorActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.currency);
-
+		initToolbar();
 		db = new DatabaseAdapter(this);
 		db.open();
 		em = db.em();
@@ -80,7 +80,7 @@ public class CurrencyActivity extends AbstractEditorActivity {
         symbolFormat = (Spinner)findViewById(R.id.spinnerSymbolFormat);
         symbolFormat.setSelection(0);
 
-		maxDecimals = decimals.getCount()-1;
+		maxDecimals = decimals.getCount();
 		
 		decimalSeparatorsItems = getResources().getStringArray(R.array.decimal_separators);
 		groupSeparatorsItems = getResources().getStringArray(R.array.group_separators);
@@ -114,7 +114,7 @@ public class CurrencyActivity extends AbstractEditorActivity {
 					currency.decimals = maxDecimals-decimals.getSelectedItemPosition();
 					currency.decimalSeparator = decimalSeparators.getSelectedItem().toString();
 					currency.groupSeparator = groupSeparators.getSelectedItem().toString();
-                    currency.symbolFormat = symbolFormats[symbolFormat.getSelectedItemPosition()];
+                    currency.symbolFormat = symbolFormats[symbolFormat.getSelectedItemPosition() -1 ];
 					long id = em.saveOrUpdate(currency);
 					CurrencyCache.initialize(em);
 					Intent data = new Intent();
@@ -146,9 +146,9 @@ public class CurrencyActivity extends AbstractEditorActivity {
 		CheckBox isDefault = (CheckBox)findViewById(R.id.is_default);
 		isDefault.setChecked(currency.isDefault);
 		decimals.setSelection(maxDecimals-currency.decimals);
-		decimalSeparators.setSelection(indexOf(decimalSeparatorsItems, currency.decimalSeparator, s.getDecimalSeparator()));
-		groupSeparators.setSelection(indexOf(groupSeparatorsItems, currency.groupSeparator, s.getGroupingSeparator()));
-        symbolFormat.setSelection(currency.symbolFormat.ordinal());
+		decimalSeparators.setSelection(indexOf(decimalSeparatorsItems, currency.decimalSeparator, s.getDecimalSeparator()) +1);
+		groupSeparators.setSelection(indexOf(groupSeparatorsItems, currency.groupSeparator, s.getGroupingSeparator()) +1);
+        symbolFormat.setSelection(currency.symbolFormat.ordinal() + 1);
 	}
 
 	private int indexOf(String[] a, String v, char c) {
@@ -157,13 +157,13 @@ public class CurrencyActivity extends AbstractEditorActivity {
 		for (int i=0; i<count; i++) {
 			String s = a[i];
 			if (v != null && s.charAt(1) == v.charAt(1)) {
-				return i;
+				return i ;
 			} 
 			if (s.charAt(1) == c) {
 				d = i;
 			}
 		}
-		return d;
+		return d ;
 	}
 
 	@Override

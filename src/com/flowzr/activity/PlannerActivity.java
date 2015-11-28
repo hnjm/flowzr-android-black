@@ -87,6 +87,16 @@ public class PlannerActivity extends BlotterFragment {
         filterText = (TextView)getView().findViewById(R.id.period);
         recreateCursor();
         recreateAdapter();
+        getActivity().supportInvalidateOptionsMenu();
+        /**
+        getView().findViewById(R.id.action_filter).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFilter();
+            }
+        });
+        **/
+
     }
     
     @Override
@@ -94,21 +104,30 @@ public class PlannerActivity extends BlotterFragment {
 		menu.findItem(R.id.action_list_template).setVisible(false);
 		menu.findItem(R.id.action_mass_op).setVisible(false);
 		menu.findItem(R.id.opt_menu_bill).setVisible(false);
-		menu.findItem(R.id.opt_menu_month).setVisible(false);		
+		menu.findItem(R.id.opt_menu_month).setVisible(false);
+        menu.findItem(R.id.action_filter).setOnMenuItemClickListener(
+                new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        showFilter();
+                        return false;
+                    }
+                }
+        );
     }
-    
-	@Override
+
+    @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle presses on the action bar items
+	    // caught by parent but needed
 	    switch (item.getItemId()) {
 	        case R.id.action_filter: 
-	        	showFilter();
+	        	//showFilter(); #shown by parent
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
-    
+
     private void loadFilter() {
         SharedPreferences preferences = getActivity().getPreferences(PreferenceActivity.MODE_PRIVATE);
         filter = WhereFilter.fromSharedPreferences(preferences);
@@ -137,6 +156,7 @@ public class PlannerActivity extends BlotterFragment {
     }
 
     private void showFilter() {
+        Log.e("flowzr","show filter");
         Intent intent = new Intent(this.getActivity(), DateFilterActivity.class);
         intent.putExtra(DateFilterActivity.EXTRA_FILTER_DONT_SHOW_NO_FILTER, true);
         intent.putExtra(DateFilterActivity.EXTRA_FILTER_SHOW_PLANNER, true);

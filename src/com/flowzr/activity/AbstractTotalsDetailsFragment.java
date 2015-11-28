@@ -10,6 +10,7 @@ package com.flowzr.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -34,6 +35,7 @@ import com.flowzr.model.Currency;
 import com.flowzr.model.Total;
 import com.flowzr.rates.ExchangeRate;
 import com.flowzr.rates.ExchangeRateProvider;
+import com.flowzr.utils.PinProtection;
 import com.flowzr.utils.Utils;
 import com.flowzr.view.NodeInflater;
 
@@ -84,6 +86,8 @@ public abstract class AbstractTotalsDetailsFragment extends Fragment implements 
         calculateTotals();
     }
 
+
+
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	return inflater.inflate(R.layout.totals_details, container, false);
@@ -96,8 +100,6 @@ public abstract class AbstractTotalsDetailsFragment extends Fragment implements 
         task.execute();
     }
 
-
-    
     private class CalculateAccountsTotalsTask extends AsyncTask<Void, Void, TotalsInfo> {
 
         @Override
@@ -153,7 +155,7 @@ public abstract class AbstractTotalsDetailsFragment extends Fragment implements 
 
         private void addAmountAndErrorNode(Total total) {
             TextView data = x.addInfoNode(layout, -1, R.string.not_available, "");
-            Drawable dr = getResources().getDrawable(R.drawable.total_error);
+            Drawable dr = getResources().getDrawable(R.drawable.ic_action_warning);
             dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
             if (total.currency == Currency.EMPTY) {
                 data.setText(R.string.currency_make_default_warning);

@@ -73,22 +73,6 @@
         <item>10</item>
         <item>15</item>
     </string-array>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values/strings.xml -->
-    <eat-comment/>
-    <array name="nav_drawer_icons">
-<item>@drawable/ic_action_accounts</item>
-<item>@drawable/ic_action_view_as_list</item>
-<item>@drawable/ic_action_mail</item>
-
-<item>@drawable/ic_action_cast</item>
-<item>@drawable/ic_action_view_as_grid</item>
-<item>@drawable/ic_action_cloud</item>
-<item>@drawable/ic_action_usb</item>
-<item>@drawable/ic_action_settings</item>
-<item>@drawable/ic_action_about</item>
-</array>
-    <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values/common.xml -->
-    <eat-comment/>
     <string-array name="numbers">
 		<item>1</item>
 		<item>2</item>
@@ -279,6 +263,7 @@
     <color name="abc_search_url_text_selected">@android:color/black</color>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values/colors.xml -->
     <eat-comment/>
+    <color name="accent_26">#261976d2</color>
     <color name="accent_material_dark">#1976d2</color>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
@@ -311,6 +296,7 @@
     <color name="category_type_expense">@color/f_red</color>
     <color name="category_type_income">@color/f_green_darker1</color>
     <color name="cleared_transaction_color">@color/f_green_darker3</color>
+    <color name="colorPrimary">@color/f_dark_lighter1</color>
     <color name="color_accent">@color/accent_material_dark</color>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/res/values/base_colors.xml -->
     <eat-comment/>
@@ -348,6 +334,10 @@
     <color name="dim_foreground_disabled_material_light">#80323232</color>
     <color name="dim_foreground_material_dark">#ffbebebe</color>
     <color name="dim_foreground_material_light">#ff323232</color>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.github.ganfra/material-spinner/1.1.1/res/values/values.xml -->
+    <eat-comment/>
+    <color name="disabled_color">#44000000</color>
+    <color name="error_color">#E7492E</color>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values/colors.xml -->
     <eat-comment/>
     <color name="f_blue">#1976D2</color>
@@ -412,7 +402,7 @@
     <color name="pad_button_text_color">#FFF</color>
     <color name="pending_transaction_color">@color/f_blue_darker2</color>
     <color name="positive_amount">@color/f_green_darker1</color>
-    <color name="pressed_card">#90caf9</color>
+    <color name="pressed_card">@color/colorPrimary</color>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="primary_dark_material_dark">@android:color/black</color>
@@ -433,7 +423,7 @@
     <color name="ripple_material_light">#1f000000</color>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values/colors.xml -->
     <eat-comment/>
-    <color name="scheduled">@color/f_green_lighter3</color>
+    <color name="scheduled">@color/future_color</color>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="secondary_text_default_material_dark">#b3ffffff</color>
@@ -454,11 +444,12 @@
     <color name="text_accent">@color/f_green_lighter1</color>
     <color name="text_green">@color/positive_amount</color>
     <color name="text_primary">@color/f_light_darker1</color>
-    <color name="text_primary_inverted">@color/f_light_darker1</color>
+    <color name="text_primary_inverted">@color/f_dark_lighter1</color>
     <color name="text_red">@color/negative_amount</color>
     <color name="text_secondary">@color/f_light_darker5</color>
     <color name="text_yellow">@color/f_orange</color>
-    <color name="total_bg_color">@color/f_dark_lighter1</color>
+    <color name="title_bg_color">@color/f_dark_lighter2</color>
+    <color name="total_bg_color">@color/f_dark_lighter2</color>
     <color name="transfer_color">@color/f_orange</color>
     <color name="unreconciled_transaction_color">#2196F3</color>
     <declare-styleable name="ActionBar"><attr name="navigationMode"><enum name="normal" value="0"/><enum name="listMode" value="1"/><enum name="tabMode" value="2"/></attr><attr name="displayOptions"><flag name="none" value="0"/><flag name="useLogo" value="0x1"/><flag name="showHome" value="0x2"/><flag name="homeAsUp" value="0x4"/><flag name="showTitle" value="0x8"/><flag name="showCustom" value="0x10"/><flag name="disableHome" value="0x20"/></attr><attr name="title"/><attr format="string" name="subtitle"/><attr format="reference" name="titleTextStyle"/><attr format="reference" name="subtitleTextStyle"/><attr format="reference" name="icon"/><attr format="reference" name="logo"/><attr format="reference" name="divider"/><attr format="reference" name="background"/><attr format="reference|color" name="backgroundStacked"/><attr format="reference|color" name="backgroundSplit"/><attr format="reference" name="customNavigationLayout"/><attr name="height"/><attr format="reference" name="homeLayout"/><attr format="reference" name="progressBarStyle"/><attr format="reference" name="indeterminateProgressStyle"/><attr format="dimension" name="progressBarPadding"/><attr name="homeAsUpIndicator"/><attr format="dimension" name="itemPadding"/><attr format="boolean" name="hideOnContentScroll"/><attr format="dimension" name="contentInsetStart"/><attr format="dimension" name="contentInsetEnd"/><attr format="dimension" name="contentInsetLeft"/><attr format="dimension" name="contentInsetRight"/><attr format="dimension" name="elevation"/><attr format="reference" name="popupTheme"/></declare-styleable>
@@ -485,6 +476,7 @@
     <declare-styleable name="ListPopupWindow"><attr name="android:dropDownVerticalOffset"/><attr name="android:dropDownHorizontalOffset"/></declare-styleable>
     <declare-styleable name="LoadingImageView"><attr format="enum" name="imageAspectRatioAdjust"><enum name="none" value="0"/><enum name="adjust_width" value="1"/><enum name="adjust_height" value="2"/></attr><attr format="float" name="imageAspectRatio"/><attr format="boolean" name="circleCrop"/></declare-styleable>
     <declare-styleable name="MapAttrs"><attr format="enum" name="mapType"><enum name="none" value="0"/><enum name="normal" value="1"/><enum name="satellite" value="2"/><enum name="terrain" value="3"/><enum name="hybrid" value="4"/></attr><attr format="float" name="cameraBearing"/><attr format="float" name="cameraTargetLat"/><attr format="float" name="cameraTargetLng"/><attr format="float" name="cameraTilt"/><attr format="float" name="cameraZoom"/><attr format="boolean" name="liteMode"/><attr format="boolean" name="uiCompass"/><attr format="boolean" name="uiRotateGestures"/><attr format="boolean" name="uiScrollGestures"/><attr format="boolean" name="uiTiltGestures"/><attr format="boolean" name="uiZoomControls"/><attr format="boolean" name="uiZoomGestures"/><attr format="boolean" name="useViewLifecycle"/><attr format="boolean" name="zOrderOnTop"/><attr format="boolean" name="uiMapToolbar"/><attr format="boolean" name="ambientEnabled"/></declare-styleable>
+    <declare-styleable name="MaterialSpinner"><attr format="integer" name="ms_baseColor"/><attr format="integer" name="ms_highlightColor"/><attr format="integer" name="ms_errorColor"/><attr format="string" name="ms_error"/><attr format="string" name="ms_hint"/><attr format="color" name="ms_hintColor"/><attr format="string" name="ms_floatingLabelText"/><attr format="color" name="ms_floatingLabelColor"/><attr format="boolean" name="ms_multiline"/><attr format="integer" name="ms_nbErrorLines"/><attr format="string" name="ms_typeface"/><attr format="boolean" name="ms_alignLabels"/><attr format="dimension" name="ms_thickness"/><attr format="dimension" name="ms_thickness_error"/><attr format="dimension" name="ms_arrowSize"/><attr format="color" name="ms_arrowColor"/><attr format="boolean" name="ms_enableFloatingLabel"/><attr format="boolean" name="ms_enableErrorLabel"/></declare-styleable>
     <declare-styleable name="MenuGroup"><attr name="android:id"/><attr name="android:menuCategory"/><attr name="android:orderInCategory"/><attr name="android:checkableBehavior"/><attr name="android:visible"/><attr name="android:enabled"/></declare-styleable>
     <declare-styleable name="MenuItem"><attr name="android:id"/><attr name="android:menuCategory"/><attr name="android:orderInCategory"/><attr name="android:title"/><attr name="android:titleCondensed"/><attr name="android:icon"/><attr name="android:alphabeticShortcut"/><attr name="android:numericShortcut"/><attr name="android:checkable"/><attr name="android:checked"/><attr name="android:visible"/><attr name="android:enabled"/><attr name="android:onClick"/><attr name="showAsAction"><flag name="never" value="0"/><flag name="ifRoom" value="1"/><flag name="always" value="2"/><flag name="withText" value="4"/><flag name="collapseActionView" value="8"/></attr><attr format="reference" name="actionLayout"/><attr format="string" name="actionViewClass"/><attr format="string" name="actionProviderClass"/></declare-styleable>
     <declare-styleable name="MenuView"><attr name="android:itemTextAppearance"/><attr name="android:horizontalDivider"/><attr name="android:verticalDivider"/><attr name="android:headerBackground"/><attr name="android:itemBackground"/><attr name="android:windowAnimationStyle"/><attr name="android:itemIconDisabledAlpha"/><attr format="boolean" name="preserveIconSpacing"/></declare-styleable>
@@ -623,6 +615,17 @@
     <dimen name="dynamic_margin_drawer_narrow_horizontal">16dp</dimen>
     <dimen name="dynamic_margin_narrow_horizontal">8dp</dimen>
     <dimen name="dynamic_margin_narrow_vertical">16dp</dimen>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.github.ganfra/material-spinner/1.1.1/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="error_label_spacing">12dp</dimen>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="fab_compat_margin">0dp</dimen>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.github.ganfra/material-spinner/1.1.1/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="floating_label_bottom_spacing">8dp</dimen>
+    <dimen name="floating_label_inside_spacing">12dp</dimen>
+    <dimen name="floating_label_top_spacing">4dp</dimen>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values/gd.xml -->
     <eat-comment/>
     <dimen name="gd_arrow_offset">5dp</dimen>
@@ -634,11 +637,17 @@
     <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <dimen name="item_touch_helper_max_drag_scroll_per_frame">20dp</dimen>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.github.ganfra/material-spinner/1.1.1/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="label_text_size">12sp</dimen>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="margin_dynamic_large">16dp</dimen>
     <dimen name="margin_dynamic_normal">12dp</dimen>
     <dimen name="margin_land_normal">8dp</dimen>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.github.ganfra/material-spinner/1.1.1/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="min_content_height">20dp</dimen>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <dimen name="notification_large_icon_height">64dp</dimen>
@@ -664,6 +673,9 @@
     <dimen name="report_margin_right">22dp</dimen>
     <dimen name="report_margin_top">22dp</dimen>
     <dimen name="report_point">3dp</dimen>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.github.ganfra/material-spinner/1.1.1/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="right_left_spinner_padding">8dp</dimen>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values/common.xml -->
     <eat-comment/>
     <dimen name="select_entry_height">51dp</dimen>
@@ -688,6 +700,10 @@
     <eat-comment/>
     <dimen name="title_entry_height">25dp</dimen>
     <dimen name="transaction_icon_padding">10dp</dimen>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.github.ganfra/material-spinner/1.1.1/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="underline_bottom_spacing">4dp</dimen>
+    <dimen name="underline_top_spacing">8dp</dimen>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="widget_button_width">52.0dip</dimen>
@@ -2688,9 +2704,7 @@
         <item name="android:textColor">@color/f_blue_lighter1</item>
     </style>
     <style name="Button.Borderless">
-        <!--
                 <item name="android:background">@drawable/btn_borderless</item>
-        -->
     </style>
     <style name="Button.Select">
         <item name="android:background">@drawable/ic_arrow_drop_down_black_48dp</item>
@@ -2699,7 +2713,6 @@
         <item name="android:paddingLeft">12dp</item>
         <item name="android:textSize">@dimen/text_large</item>
         <item name="android:textStyle">bold</item>
-
         <item name="android:textColor">@color/f_blue_lighter1</item>
     </style>
     <style name="ButtonBar">
@@ -2721,9 +2734,6 @@
         <item name="android:textSize">@dimen/text_normal</item>
         <item name="android:textColor">@color/text_primary</item>
     </style>
-    <style name="CupcakeDialog" parent="android:Theme.Dialog">
-        <item name="android:windowAnimationStyle">@null</item>
-    </style>
     <style name="DownButton">
         <item name="android:background">@drawable/btn_circle</item>
         <item name="android:src">@drawable/ic_btn_round_down</item>
@@ -2733,10 +2743,9 @@
     </style>
     <style name="DropDownNav.Financisto" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
         <item name="android:background">@drawable/ic_arrow_drop_down_black_48dp</item>
-        <!--
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_financisto</item>
+<!--
+        <item name="android:dropDownSelector">@drawable/activated_background2</item>
         -->
-        <item name="android:dropDownSelector">@drawable/activated_background</item>
     </style>
     <style name="EditText">
         <item name="android:layout_width">match_parent</item>
@@ -2788,8 +2797,8 @@
     <style name="GreenDroid.Widget.QuickAction"/>
     <style name="GreenDroid.Widget.QuickAction.Grid">
         <item name="android:padding">7dp</item>
-        <item name="android:listSelector">@drawable/gd_quick_action_grid_selector</item>
-        <item name="android:background">@drawable/gd_quick_action_grid_bg</item>
+        <item name="android:listSelector">?android:attr/listChoiceBackgroundIndicator</item>
+        <item name="android:background">#f2f2f2</item>
         <item name="android:gravity">center</item>
         <item name="android:fadingEdgeLength">0dp</item>
         <item name="android:stretchMode">columnWidth</item>
@@ -2798,27 +2807,23 @@
     </style>
     <style name="GreenDroid.Widget.QuickAction.Grid.Item" parent="@style/GreenDroid.Widget.QuickAction.Item">
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">65dp</item>
+        <item name="android:layout_height">?android:attr/listPreferredItemHeight</item>
     </style>
     <style name="GreenDroid.Widget.QuickAction.Item">
         <item name="android:layout_height">fill_parent</item>
         <item name="android:paddingRight">10dp</item>
         <item name="android:paddingLeft">10dp</item>
-        <item name="android:drawablePadding">5dp</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">#333</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values/styles.xml -->
     <eat-comment/>
     <style name="ListItem">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:focusableInTouchMode">true</item>
         <item name="android:minHeight">@dimen/recommended_touch_size</item>
-        <item name="android:paddingLeft">@dimen/space_normal</item>
-        <item name="android:paddingRight">@dimen/space_normal</item>
-        <item name="android:paddingTop">@dimen/space_normal</item>
-        <item name="android:paddingBottom">@dimen/space_normal</item>
-        <item name="android:listSelector">@drawable/activated_background</item>
+        <item name="android:background">@drawable/activated_background2</item>
     </style>
     <style name="ListView">
         <item name="android:layout_width">match_parent</item>
@@ -2828,18 +2833,20 @@
         <item name="android:paddingRight">@dimen/space_small</item>
         <item name="android:clipToPadding">false</item>
         <item name="android:scrollbarStyle">outsideOverlay</item>
-<!--        <item name="android:listSelector">@drawable/btn_borderless</item>-->
-        <item name="android:listSelector">@drawable/activated_background</item>
+        <!-- <item name="android:listSelector">@drawable/activated_background2</item> -->
     </style>
     <style name="MinusButton">
         <item name="android:src">@drawable/ic_action_cancel</item>
     </style>
     <style name="MoreButton">
-        <item name="android:src">@drawable/ic_arrow_drop_down_black_48dp</item>
+        <item name="android:background">@drawable/ic_arrow_drop_down_white_48dp</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:paddingLeft">0dp</item>
         <item name="android:paddingRight">@dimen/space_xlarge</item>
         <item name="android:layout_alignParentRight">true</item>
+    </style>
+    <style name="NavigationDrawerStyle">
+        <item name="android:textSize">@dimen/text_large</item><!-- text size in menu-->
     </style>
     <style name="PadButtonStyle">
         <item name="android:layout_width">fill_parent</item>
@@ -2963,7 +2970,7 @@
         <item name="android:progressDrawable">@drawable/progress_horizontal_financisto</item>
     </style>
     <style name="ProgressBarBudget" parent="@android:style/Widget.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_horizontal_budget</item>
+        <item name="android:progressDrawable">@drawable/ic_action_warning</item>
         <item name="android:minHeight">12dip</item>
         <item name="android:maxHeight">12dip</item>
     </style>
@@ -3017,19 +3024,6 @@
     </style>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values/styles.xml -->
     <eat-comment/>
-    <style name="Separator">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/separator</item>
-        <item name="android:background">@color/separator</item>
-    </style>
-    <style name="Separator.Vertical">
-        <item name="android:layout_width">@dimen/separator</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/separator</item>
-    </style>
-    <style name="Separator.Vertical.Thin">
-        <item name="android:layout_width">@dimen/separator_thin</item>
-    </style>
     <style name="SpinnerAppTheme" parent="android:Widget.Spinner">
 
         <item name="android:background">@drawable/ic_arrow_drop_down_black_48dp</item>
@@ -3037,9 +3031,6 @@
     </style>
     <style name="SplitButton">
         <item name="android:src">@drawable/ic_action_split</item>
-    </style>
-    <style name="TallTitleBarTheme" parent="android:Theme.NoTitleBar">
-        <item name="android:windowContentOverlay">@null</item>
     </style>
     <style name="TextAppearance" parent="android:TextAppearance.Small">
         <item name="android:textStyle">normal</item>
@@ -3161,14 +3152,18 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text_primary</item>
-        <item name="android:listSelector">@drawable/activated_background</item>
+        <!--
+        <item name="android:listSelector">@drawable/activated_background2</item>
+        -->
     </style>
     <style name="TextView.Select">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingLeft">12dp</item>
         <item name="android:textSize">@dimen/text_large</item>
-        <item name="android:listSelector">@drawable/activated_background</item>
+        <!--
+        <item name="android:listSelector">@drawable/activated_background2</item>
+        -->
     </style>
     <style name="TextViewUserInput" parent="TextView">
         <item name="android:textColor">@color/f_blue_lighter2</item>
@@ -3199,13 +3194,14 @@
     </style>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values/styles.xml -->
     <eat-comment/>
-    <style name="Theme.Financisto" parent="@style/Theme.AppCompat">
-        <!--
-        <item name="actionBarStyle">@style/ActionBar.Solid.Financisto</item>
-        -->
-        <item name="colorControlActivated">@color/pressed_card</item>
+    <style name="Theme.Financisto" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/f_dark_lighter2</item> 
+        <item name="colorPrimaryDark">@color/f_dark_lighter1</item> 
+        <item name="colorControlHighlight">@color/color_accent</item> 
         <item name="colorAccent">@color/color_accent</item>
-        <item name="alertDialogTheme">@style/dialog</item>
+        <!--
+        <item name="selectableItemBackground">@drawable/activated_background2</item>
+        -->
     </style>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>

@@ -28,6 +28,7 @@ import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.datetime.DateUtils;
 import com.flowzr.datetime.Period;
 import com.flowzr.datetime.PeriodType;
+import com.flowzr.export.csv.Csv;
 import com.flowzr.filter.DateTimeCriteria;
 import com.flowzr.filter.WhereFilter;
 import com.flowzr.utils.RecurUtils;
@@ -40,6 +41,7 @@ import java.util.Calendar;
 
 import static com.flowzr.datetime.DateUtils.is24HourFormat;
 import static com.flowzr.utils.EnumUtils.createSpinnerAdapter;
+
 
 public class DateFilterActivity extends AbstractEditorActivity {
 	
@@ -55,7 +57,6 @@ public class DateFilterActivity extends AbstractEditorActivity {
 	private Spinner spinnerPeriodType;
 	private Button buttonPeriodFrom;
 	private Button buttonPeriodTo;
-	
 	private DateFormat df;
     private PeriodType[] periods = PeriodType.allRegular();
 
@@ -64,6 +65,7 @@ public class DateFilterActivity extends AbstractEditorActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.date_filter);
+		initToolbar();
 
 		df = DateUtils.getShortDateFormat(this);
 
@@ -145,7 +147,7 @@ public class DateFilterActivity extends AbstractEditorActivity {
         {	
         	case R.id.action_done:
 				Intent data = new Intent();
-				PeriodType period = periods[spinnerPeriodType.getSelectedItemPosition()];
+				PeriodType period = periods[spinnerPeriodType.getSelectedItemPosition()-1];
 				data.putExtra(EXTRA_FILTER_PERIOD_TYPE, period.name());
 				data.putExtra(EXTRA_FILTER_PERIOD_FROM, cFrom.getTimeInMillis());
 				data.putExtra(EXTRA_FILTER_PERIOD_TO, cTo.getTimeInMillis());
@@ -158,31 +160,13 @@ public class DateFilterActivity extends AbstractEditorActivity {
                 return true;
         	case android.R.id.home:
             {
-                TaskStackBuilder tsb = TaskStackBuilder.create(this);
-                final int intentCount = tsb.getIntentCount();
-                if (intentCount > 0)
-                {
-                    Intent upIntent = tsb.getIntents()[intentCount - 1];
-                    if (NavUtils.shouldUpRecreateTask(this, upIntent))
-                    {
-                        // This activity is not part of the application's task, so create a new task with a synthesized back stack.
-                        tsb.startActivities();
-                        finish();
-                    }
-                    else
-                    {
-                        // This activity is part of the application's task, so simply navigate up to the hierarchical parent activity.
-                        NavUtils.navigateUpTo(this, upIntent);
-                    }
-                }
-                else
-                {
-                    onBackPressed();
-                }
+				setResult(RESULT_CANCELED);
+				finish();
                 return true;
             }                
         }
-        return super.onOptionsItemSelected(item);
+		return true;
+        //return super.onOptionsItemSelected(item);
     }
     
     private void setCorrectPeriods(Intent intent) {
@@ -197,12 +181,17 @@ public class DateFilterActivity extends AbstractEditorActivity {
         spinnerPeriodType.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                PeriodType period = periods[position];
-                if (period == PeriodType.CUSTOM) {
-                    selectCustom();
-                } else {
-                    selectPeriod(period);
-                }
+				try {
+					PeriodType period = periods[position-1];
+					if (period == PeriodType.CUSTOM) {
+						selectCustom();
+					} else {
+						selectPeriod(period);
+					}
+				} catch (Exception e){
+					e.printStackTrace();
+				}
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -211,19 +200,19 @@ public class DateFilterActivity extends AbstractEditorActivity {
     }
 
     private void selectPeriod(Period p) {
-		spinnerPeriodType.setSelection(indexOf(p.type));
+		spinnerPeriodType.setSelection(indexOf(p.type) +1);
 	}
 
 	private void selectPeriod(long from, long to) {
 		cFrom.setTimeInMillis(from);
 		cTo.setTimeInMillis(to);			
-		spinnerPeriodType.setSelection(indexOf(PeriodType.CUSTOM));
+		spinnerPeriodType.setSelection(indexOf(PeriodType.CUSTOM)+1);
 	}
 
     private int indexOf(PeriodType type) {
         for (int i = 0; i < periods.length; i++) {
             if (periods[i] == type) {
-                return i;
+                return i ;
             }
         }
         return 0;

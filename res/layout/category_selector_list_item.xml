@@ -10,15 +10,22 @@
       Denis Solonenko - initial API and implementation
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:paddingLeft="0dip" android:paddingRight="12dip" android:id="@+id/layout"
-                android:layout_width="fill_parent" android:layout_height="64dp">
+                android:id="@+id/layout"
+                android:layout_width="fill_parent"
+                android:layout_height="?attr/listPreferredItemHeight">
+    <LinearLayout
+        android:layout_width="72dp"
+        android:layout_height="?attr/listPreferredItemHeight"
+        android:gravity="center">
 
-    <TextView android:id="@+id/indicator" android:layout_alignParentLeft="true" android:layout_height="fill_parent"
+        <TextView android:id="@+id/indicator" android:layout_alignParentLeft="true"
+            android:layout_height="16dp"
+              android:layout_width="16dp"/>
 
-              android:layout_width="3dp" android:layout_marginBottom="3dp" android:layout_marginTop="3dp"/>
+    </LinearLayout>
 
     <ImageView android:id="@+id/right_top"
-               android:layout_width="wrap_content" android:layout_height="wrap_content"
+               android:layout_width="16dp" android:layout_height="16dp"
                android:layout_marginTop="4dp"
                android:layout_alignParentRight="true" android:layout_alignParentTop="true"
                android:src="@drawable/ic_blotter_income"/>
@@ -26,7 +33,7 @@
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content" android:singleLine="true" android:id="@+id/top" android:text="top"
               android:textSize="10sp" android:paddingTop="2dp" android:layout_toRightOf="@id/indicator"
-              android:layout_marginLeft="5dp"/>
+              android:layout_marginLeft="72dp"/>
 
     <TextView android:layout_height="wrap_content" android:id="@+id/center"
               android:layout_width="fill_parent" android:text="center"

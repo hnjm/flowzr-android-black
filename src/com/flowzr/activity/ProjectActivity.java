@@ -38,6 +38,7 @@ public class ProjectActivity extends AbstractEditorActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.project);
+        initToolbar();
 
         CheckBox activityCheckBox = (CheckBox) findViewById(R.id.isActive);
         activityCheckBox.setChecked(true);

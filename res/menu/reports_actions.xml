@@ -12,8 +12,9 @@
 		app:showAsAction="ifRoom"
 		/>
     <item android:id="@+id/bPieChart"
-          android:icon="@drawable/ic_tab_budgets" 
-		  app:showAsAction="ifRoom"
+          android:icon="@drawable/ic_tab_budgets"
+		android:title="@string/pie_chart"
+		app:showAsAction="ifRoom"
 		/>
     <item android:id="@+id/settings"
           android:icon="@drawable/ic_action_settings" 

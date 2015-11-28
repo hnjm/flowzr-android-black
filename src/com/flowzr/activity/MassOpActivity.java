@@ -24,7 +24,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.*;
 import com.flowzr.R;
 import com.flowzr.adapter.BlotterListAdapter;
@@ -39,6 +38,7 @@ public class MassOpActivity extends BlotterFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
 		long accountId = blotterFilter.getAccountId();
 		final MassOp[] operations = MassOp.values();
 		final Spinner spOperation = (Spinner)getView().findViewById(R.id.spOperation);
@@ -53,8 +53,13 @@ public class MassOpActivity extends BlotterFragment {
 				((BlotterListAdapter)getListAdapter()).uncheckAll();				
 				return true;
 			case R.id.proceed:
-				MassOp op = operations[spOperation.getSelectedItemPosition()];
-				applyMassOp(op);
+				if (spOperation.getSelectedItemPosition()>0) {
+					MassOp op = operations[spOperation.getSelectedItemPosition() - 1];
+					applyMassOp(op);
+				} else {
+					Toast.makeText(this.getActivity(),getResources().getString(R.string.select)
+							+ " " + getResources().getString(R.string.mass_operations),  Toast.LENGTH_SHORT).show();
+				}
 				return true;
 			case R.id.action_filter:
 				Intent intent = new Intent(getActivity(), BlotterFilterActivity.class);
@@ -100,6 +105,8 @@ public class MassOpActivity extends BlotterFragment {
 		l.setVisibility(LinearLayout.GONE);		
 		recreateAdapter();
         prepareActionGrid();
+
+		((EntityListActivity) getActivity()).getSupportActionBar().invalidateOptionsMenu();
 	}
 	
 	protected void applyMassOp(final MassOp op) {

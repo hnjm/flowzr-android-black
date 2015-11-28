@@ -13,6 +13,9 @@ package com.flowzr.activity;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.content.res.Configuration;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -55,6 +58,7 @@ import com.flowzr.model.Total;
 import com.flowzr.report.ReportType;
 import com.flowzr.utils.IntegrityFix;
 import com.flowzr.utils.MyPreferences;
+import com.flowzr.utils.PinProtection;
 import com.flowzr.view.NodeInflater;
 
 
@@ -67,7 +71,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 	protected TextView totalText;
 
     OnAccountSelectedListener mListener;
-    
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -90,19 +94,47 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     	return inflater.inflate(R.layout.account_list, container, false);
 	}
 
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getView().findViewById(R.id.fragment_land_container)!=null) {
+            Fragment fragment=new AccountListTotalsDetailsActivity();
+            getChildFragmentManager().beginTransaction().replace(R.id.fragment_land_container, fragment).addToBackStack(null).commit();
+            getChildFragmentManager().executePendingTransactions();
+
+        }
+        recreateCursor();
+        recreateAdapter();
+        calculateTotals();
+        integrityCheck();
+    }
+
+
+
     protected void createFromTemplate() {
         Bundle bundle= new Bundle();
         bundle.putInt(EXTRA_REQUEST_TYPE, BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
         Intent intent = new Intent(getActivity(), EntityListActivity.class);
         intent.putExtra(EntityListActivity.REQUEST_NEW_TRANSACTION_FROM_TEMPLATE, true);
         intent.putExtra(EXTRA_REQUEST_TYPE, BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
-        startActivityForResult(intent, BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
+        ActivityCompat.startActivityForResult(getActivity(), intent, BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST, getScaleUpOption());
+
     }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    DateTimeCriteria criteria;
 		Intent intent = null;
+        Bundle options= new Bundle();
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
 	        case R.id.action_add_account: 
@@ -132,7 +164,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 				intent = new Intent(getActivity(),EntityListActivity.class);
 				intent.putExtra(EntityListActivity.REQUEST_PLANNER, true);
 				filter.toIntent(intent);
-				startActivity(intent);						
+                ActivityCompat.startActivity(getActivity(), intent, getScaleUpOption());
             	return true;	            
 			case R.id.action_scheduled_transaction:
 				WhereFilter blotterFilter = new WhereFilter(getView().getResources().getString(R.string.scheduled));
@@ -143,7 +175,8 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 				intent = new Intent(getActivity(),EntityListActivity.class);
 				intent.putExtra(EntityListActivity.REQUEST_SCHEDULED, true);
 				blotterFilter.toIntent(intent);
-				startActivity(intent);	
+
+                ActivityCompat.startActivity(getActivity(), intent, getScaleUpOption());
 				return true;
 			default:
 	            return super.onOptionsItemSelected(item);
@@ -156,20 +189,10 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 		inflater.inflate(R.menu.accounts_actions, menu);    
 		super.onCreateOptionsMenu(menu, inflater);
 	}
+
+
 	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);		        
-        if (getView().findViewById(R.id.fragment_land_container)!=null) {       	
-    		Fragment fragment=new AccountListTotalsDetailsActivity();       	
-            getChildFragmentManager().beginTransaction().replace(R.id.fragment_land_container, fragment).commitAllowingStateLoss();
-            getChildFragmentManager().executePendingTransactions();
-        }
-		recreateCursor();
-		recreateAdapter();
-		calculateTotals();		
-        integrityCheck();                
-	}
+
 			
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
@@ -264,7 +287,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     private void deleteOldTransaction(long id) {
         Intent intent = new Intent(this.getActivity(), PurgeAccountActivity.class);
         intent.putExtra(PurgeAccountActivity.ACCOUNT_ID, id);
-        startActivityForResult(intent, PURGE_ACCOUNT_REQUEST);
+        ActivityCompat.startActivityForResult(getActivity(), intent, PURGE_ACCOUNT_REQUEST, getScaleUpOption());
     }
     
     private void closeAccount(long id) {
@@ -277,7 +300,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     private void addTransaction(long accountId, Class<? extends AbstractTransactionActivity> clazz) {
         Intent intent = new Intent(this.getActivity(), clazz);
         intent.putExtra(TransactionActivity.ACCOUNT_ID_EXTRA, accountId);
-        startActivityForResult(intent, VIEW_ACCOUNT_REQUEST);
+        ActivityCompat.startActivityForResult(getActivity(), intent, VIEW_ACCOUNT_REQUEST, getScaleUpOption());
     }
 
     @Override
@@ -311,7 +334,11 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     private void showTotals() {
 		Intent intent=new Intent(getActivity(),EntityListActivity.class);
 		intent.putExtra(EntityListActivity.REQUEST_ACCOUNT_TOTALS, true);
-		startActivity(intent);      
+        Bundle options = ActivityOptionsCompat.makeScaleUpAnimation(
+                getView(), 0, 0,
+                getActivity().findViewById(android.R.id.content).getWidth(),
+                getActivity().findViewById(android.R.id.content).getHeight()).toBundle();
+        ActivityCompat.startActivity(getActivity(), intent,  options);
     }
 	
 	public class AccountTotalsCalculationTask extends TotalCalculationTask {
@@ -352,7 +379,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
             Intent intent = new Intent(this.getActivity(), TransactionActivity.class);
             intent.putExtra(TransactionActivity.ACCOUNT_ID_EXTRA, a.id);
             intent.putExtra(TransactionActivity.CURRENT_BALANCE_EXTRA, a.totalAmount);
-            startActivityForResult(intent, 0);
+            ActivityCompat.startActivityForResult(getActivity(), intent, 0, getScaleUpOption());
             return true;
         }
         return false;
@@ -361,7 +388,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     @Override
 	protected void addItem() {		
 		Intent intent = new Intent(AccountListFragment.this.getActivity(), AccountActivity.class);
-		startActivityForResult(intent, NEW_ACCOUNT_REQUEST);
+        ActivityCompat.startActivityForResult(getActivity(), intent, NEW_ACCOUNT_REQUEST, getScaleUpOption());
 	}
 
 
@@ -394,7 +421,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     private void editAccount(long id) {
         Intent intent = new Intent(AccountListFragment.this.getActivity(), AccountActivity.class);
         intent.putExtra(AccountActivity.ACCOUNT_ID_EXTRA, id);
-        startActivityForResult(intent, EDIT_ACCOUNT_REQUEST);
+        ActivityCompat.startActivityForResult(getActivity(), intent, EDIT_ACCOUNT_REQUEST, getScaleUpOption());
     }
 
     private void showAccountInfo(long id) {
@@ -423,10 +450,9 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == VIEW_ACCOUNT_REQUEST || requestCode == PURGE_ACCOUNT_REQUEST) {
-			recreateCursor();
-		}
+
 		if (resultCode != MainActivity.RESULT_CANCELED ) {
+            recreateCursor();
 			((MainActivity)getActivity()).mAdapter.notifyDataSetChanged();
 		}
 

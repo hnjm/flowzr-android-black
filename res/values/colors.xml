@@ -2,12 +2,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
     <!-- ======================================================================================================== -->
     <!-- Other -->
-    <color name="pressed_card">#90caf9</color>
+    <color name="colorPrimary">@color/f_dark_lighter1</color>
+    <color name="pressed_card">@color/colorPrimary</color>
     <color name="accent_material_dark">#1976d2</color>
-    <color name="total_bg_color">@color/f_dark_lighter1</color>
+    <color name="total_bg_color">@color/f_dark_lighter2</color>
+    <color name="title_bg_color">@color/f_dark_lighter2</color>
     <color name="navigationBarColor">@color/f_dark</color>
     <color name="background_material_dark">@color/f_dark</color>
     <color name="color_accent">@color/accent_material_dark</color>
+    <color name="accent_26">#261976d2</color>
+
 
 
     <color name="f_blue">#1976D2</color>
@@ -54,7 +58,7 @@
     <color name="f_yellow">#FFEB3B</color>
 
 
-    <color name="scheduled">@color/f_green_lighter3</color>
+    <color name="scheduled">@color/future_color</color>
     <color name="positive_amount">@color/f_green_darker1</color>
     <color name="negative_amount">@color/f_red</color>
     <color name="transfer_color">@color/f_orange</color>
@@ -77,7 +81,7 @@
     <!-- ======================================================================================================== -->
     <color name="text_accent">@color/f_green_lighter1</color>
     <color name="text_primary">@color/f_light_darker1</color>
-    <color name="text_primary_inverted">@color/f_light_darker1</color>
+    <color name="text_primary_inverted">@color/f_dark_lighter1</color>
     <color name="text_secondary">@color/f_light_darker5</color>
     <color name="text_green">@color/positive_amount</color>
     <color name="text_red">@color/negative_amount</color>

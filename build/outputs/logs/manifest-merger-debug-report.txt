@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:14:1-377:12
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:14:1-370:12
 	xmlns:android
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:14:11-69
 	package
@@ -76,6 +76,11 @@ MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent
 MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
 MERGED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:18:5-42
 MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.github.ganfra:material-spinner:1.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.github.ganfra/material-spinner/1.1.1/AndroidManifest.xml:6:5-8:41
+MERGED from [com.android.support:appcompat-v7:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
 	android:targetSdkVersion
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:29:41-70
@@ -207,7 +212,7 @@ ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:60:5-
 	android:name
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:60:22-71
 application
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:62:5-375:16
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:62:5-368:16
 MERGED from [com.android.support:appcompat-v7:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:design:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/design/23.1.1/AndroidManifest.xml:22:5-20
@@ -238,6 +243,9 @@ MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowz
 MERGED from [com.google.android.gms:play-services-measurement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:26:5-46:19
 MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:20:5-24:19
 MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
 	android:label
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:63:43-75
 	android:icon
@@ -267,607 +275,591 @@ MERGED from [com.google.android.gms:play-services-basement:8.3.0] /home/eflorent
 	android:value
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:69:61-114
 meta-data#com.google.android.maps.v2.API_KEY
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:76:9-77:78
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:71:9-72:78
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:76:20-69
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:71:20-69
 	android:value
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:77:21-76
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:72:21-76
 receiver#com.flowzr.activity.AccountWidget
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:80:3-86:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:75:3-81:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:80:52-86
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:75:52-86
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:80:13-51
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:75:13-51
 intent-filter#android.appwidget.action.APPWIDGET_UPDATE+com.flowzr.UPDATE_WIDGET
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:81:7-84:23
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:76:7-79:23
 action#android.appwidget.action.APPWIDGET_UPDATE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:82:11-78
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:77:11-78
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:82:19-75
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:77:19-75
 action#com.flowzr.UPDATE_WIDGET
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:83:17-67
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:78:17-67
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:83:25-64
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:78:25-64
 meta-data#android.appwidget.provider
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:85:7-97
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:80:7-97
 	android:resource
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:85:60-94
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:80:60-94
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:85:18-59
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:80:18-59
 receiver#com.flowzr.activity.AccountWidget3x1
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:88:9-94:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:83:9-89:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:88:61-95
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:83:61-95
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:88:19-60
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:83:19-60
 receiver#com.flowzr.activity.AccountWidget4x1
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:96:9-102:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:91:9-97:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:96:61-95
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:91:61-95
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:96:19-60
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:91:19-60
 receiver#com.flowzr.activity.ScheduledAlarmReceiver
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:104:3-111:16
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:99:3-106:16
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:104:13-70
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:99:13-70
 intent-filter#android.intent.action.BOOT_COMPLETED+com.flowzr.SCHEDULED_ALARM+com.flowzr.SCHEDULED_BACKUP+com.flowzr.SCHEDULED_SYNC
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:105:7-110:23
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:100:7-105:23
 action#com.flowzr.SCHEDULED_ALARM
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:106:11-63
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:101:11-63
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:106:19-60
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:101:19-60
 action#com.flowzr.SCHEDULED_BACKUP
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:107:17-70
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:102:17-70
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:107:25-67
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:102:25-67
 action#com.flowzr.SCHEDULED_SYNC
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:108:17-68
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:103:17-68
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:108:25-65
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:103:25-65
 action#android.intent.action.BOOT_COMPLETED
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:109:11-73
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:104:11-73
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:109:19-70
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:104:19-70
 receiver#com.flowzr.export.flowzr.GcmBroadcastReceiver
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:113:9-120:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:108:9-115:20
 	android:permission
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:115:13-73
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:110:13-73
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:114:13-63
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:109:13-63
 intent-filter#com.flowzr+com.google.android.c2dm.intent.RECEIVE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:116:13-119:29
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:111:13-114:29
 action#com.google.android.c2dm.intent.RECEIVE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:117:17-81
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:112:17-81
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:117:25-78
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:112:25-78
 category#com.flowzr
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:118:17-55
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:113:17-55
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:118:27-52
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:113:27-52
 service#com.flowzr.export.flowzr.GCMIntentService
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:121:9-67
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:116:9-67
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:121:18-64
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:116:18-64
 receiver#com.flowzr.activity.PackageReplaceReceiver
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:124:3-129:16
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:119:3-124:16
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:124:13-60
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:119:13-60
 intent-filter#android.intent.action.PACKAGE_REPLACED
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:125:4-128:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:120:4-123:20
 action#android.intent.action.PACKAGE_REPLACED
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:126:8-72
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:121:8-72
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:126:16-69
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:121:16-69
 data
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:127:8-67
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:122:8-67
 	android:path
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:127:39-64
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:122:39-64
 	android:scheme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:127:14-38
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:122:14-38
 service#com.flowzr.service.FinancistoService
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:131:3-140:13
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:126:3-135:13
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:131:12-53
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:126:12-53
 intent-filter#com.flowzr.ACTION_AUTO_BACKUP+com.flowzr.ACTION_AUTO_SYNC+com.flowzr.ACTION_SCHEDULE_AUTO_BACKUP+com.flowzr.ACTION_SCHEDULE_AUTO_SYNC+com.flowzr.SCHEDULE_ALL+com.flowzr.SCHEDULE_ONE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:132:13-139:29
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:127:13-134:29
 action#com.flowzr.SCHEDULE_ONE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:133:17-66
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:128:17-66
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:133:25-63
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:128:25-63
 action#com.flowzr.SCHEDULE_ALL
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:134:17-66
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:129:17-66
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:134:25-63
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:129:25-63
 action#com.flowzr.ACTION_SCHEDULE_AUTO_BACKUP
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:135:17-81
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:130:17-81
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:135:25-78
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:130:25-78
 action#com.flowzr.ACTION_AUTO_BACKUP
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:136:17-72
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:131:17-72
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:136:25-69
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:131:25-69
 action#com.flowzr.ACTION_SCHEDULE_AUTO_SYNC
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:137:17-79
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:132:17-79
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:137:25-76
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:132:25-76
 action#com.flowzr.ACTION_AUTO_SYNC
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:138:17-70
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:133:17-70
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:138:25-67
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:133:25-67
 activity#com.flowzr.activity.MainActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:142:3-149:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:137:3-143:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:142:51-83
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:137:51-83
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:143:13-74
-	android:taskAffinity
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:144:13-49
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:138:13-74
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:142:13-50
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:137:13-50
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:145:4-148:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:139:4-142:20
 action#android.intent.action.MAIN
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:146:5-57
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:140:5-57
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:146:13-54
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:140:13-54
 category#android.intent.category.LAUNCHER
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:147:5-65
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:141:5-65
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:147:15-62
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:141:15-62
 activity#com.flowzr.activity.TransactionActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:151:3-161:14
-	android:windowSoftInputMode
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:154:4-64
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:145:3-154:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:152:49-84
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:146:49-84
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:153:4-65
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:147:4-65
 	android:taskAffinity
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:155:4-47
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:148:4-47
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:152:4-48
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:146:4-48
 intent-filter#android.intent.action.MAIN+android.intent.category.DEFAULT+com.flowzr.NEW_TRANSACTION
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:156:4-160:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:149:4-153:20
 action#com.flowzr.NEW_TRANSACTION
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:158:5-57
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:151:5-57
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:158:13-54
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:151:13-54
 category#android.intent.category.DEFAULT
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:159:5-64
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:152:5-64
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:159:15-61
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:152:15-61
 activity#com.flowzr.activity.TransferActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:163:3-173:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:156:3-166:14
 	android:windowSoftInputMode
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:166:4-64
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:159:4-64
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:164:46-78
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:157:46-78
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:165:4-65
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:158:4-65
 	android:taskAffinity
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:167:4-44
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:160:4-44
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:164:4-45
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:157:4-45
 intent-filter#android.intent.action.MAIN+android.intent.category.DEFAULT+com.flowzr.NEW_TRANSFER
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:168:4-172:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:161:4-165:20
 action#com.flowzr.NEW_TRANSFER
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:170:5-54
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:163:5-54
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:170:13-51
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:163:13-51
 activity#com.flowzr.activity.PinActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:175:3-176:36
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:168:3-169:36
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:175:50-83
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:168:50-83
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:175:13-49
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:168:13-49
 	android:launchMode
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:176:4-34
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:169:4-34
 activity#com.flowzr.activity.BlotterActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:178:3-179:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:171:3-172:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:178:54-85
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:171:54-85
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:178:13-53
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:171:13-53
 activity#com.flowzr.activity.PlannerActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:181:9-182:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:174:9-175:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:181:60-91
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:174:60-91
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:181:19-59
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:174:19-59
 activity#com.flowzr.activity.MassOpActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:184:9-185:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:177:9-178:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:184:59-98
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:177:59-98
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:184:19-58
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:177:19-58
 activity#com.flowzr.activity.LocationActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:187:3-89
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:180:3-89
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:187:55-87
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:180:55-87
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:187:13-54
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:180:13-54
 activity#com.flowzr.activity.ExchangeRateActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:189:9-191:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:182:9-184:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:189:65-102
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:182:65-102
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:190:19-80
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:183:19-80
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:189:19-64
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:182:19-64
 activity#com.flowzr.activity.RecurrenceActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:193:5-195:28
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:186:5-188:28
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:193:59-88
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:186:59-88
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:194:8-58
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:187:8-58
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:193:15-58
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:186:15-58
 activity#com.flowzr.activity.RecurActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:197:5-199:17
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:190:5-192:17
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:197:54-83
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:190:54-83
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:198:4-54
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:191:4-54
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:197:15-53
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:190:15-53
 activity#com.flowzr.activity.NotificationOptionsActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:201:3-203:15
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:194:3-196:15
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:201:66-102
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:194:66-102
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:202:5-55
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:195:5-55
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:201:13-65
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:194:13-65
 activity#com.flowzr.activity.AccountActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:205:3-207:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:198:3-200:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:205:54-85
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:198:54-85
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:206:4-65
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:199:4-65
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:205:13-53
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:198:13-53
 activity#com.flowzr.activity.ReportActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:210:3-211:67
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:203:3-204:67
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:210:53-83
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:203:53-83
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:211:4-65
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:204:4-65
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:210:13-52
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:203:13-52
 activity#com.flowzr.activity.CurrencyActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:213:3-215:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:206:3-208:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:213:55-87
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:206:55-87
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:214:19-80
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:207:19-80
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:213:13-54
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:206:13-54
 activity#com.flowzr.activity.AttributeActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:217:3-219:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:210:3-212:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:217:56-89
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:210:56-89
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:218:44-105
-	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:218:4-43
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:211:5-66
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:217:13-55
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:210:13-55
 activity#com.flowzr.activity.DateFilterActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:221:3-223:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:214:3-216:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:221:57-87
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:214:57-87
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:222:44-105
-	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:222:4-43
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:215:5-66
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:221:13-56
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:214:13-56
 activity#com.flowzr.activity.BlotterFilterActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:225:3-227:15
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:218:3-220:15
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:225:60-90
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:218:60-90
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:226:44-105
-	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:226:4-43
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:219:13-74
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:225:13-59
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:218:13-59
 activity#com.flowzr.activity.ReportFilterActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:229:9-231:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:222:9-224:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:229:65-95
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:222:65-95
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:230:59-120
-	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:230:19-58
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:223:19-80
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:229:19-64
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:222:19-64
 activity#com.flowzr.activity.CategoryActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:233:3-235:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:226:3-228:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:233:55-87
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:226:55-87
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:234:4-65
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:227:4-65
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:233:13-54
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:226:13-54
 activity#com.flowzr.widget.QuickAmountInput
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:237:3-238:76
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:230:3-231:76
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:238:4-34
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:231:4-34
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:238:35-74
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:231:35-74
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:237:13-52
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:230:13-52
 activity#com.flowzr.widget.CalculatorInput
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:240:3-241:80
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:233:3-234:80
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:241:4-38
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:234:4-38
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:241:39-78
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:234:39-78
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:240:13-51
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:233:13-51
 activity#com.flowzr.activity.BudgetActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:243:3-245:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:236:3-238:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:243:53-84
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:236:53-84
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:244:4-65
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:237:4-65
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:243:13-52
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:236:13-52
 activity#com.flowzr.activity.ProjectActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:249:3-251:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:242:3-244:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:249:54-85
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:242:54-85
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:250:44-105
-	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:250:4-43
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:243:4-65
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:249:13-53
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:242:13-53
 activity#com.flowzr.activity.PayeeActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:253:9-255:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:246:9-248:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:253:58-87
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:246:58-87
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:254:53-114
-	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:254:13-52
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:247:13-74
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:253:19-57
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:246:19-57
 activity#com.flowzr.activity.CsvExportActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:258:3-93
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:251:3-93
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:258:56-90
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:251:56-90
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:258:13-55
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:251:13-55
 activity#com.flowzr.activity.CsvImportActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:259:9-99
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:252:9-99
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:259:62-96
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:252:62-96
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:259:19-61
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:252:19-61
 activity#com.flowzr.activity.QifExportActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:261:9-98
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:254:9-98
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:261:62-96
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:254:62-96
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:261:19-61
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:254:19-61
 activity#com.flowzr.activity.QifImportActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:262:9-98
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:255:9-98
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:262:62-96
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:255:62-96
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:262:19-61
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:255:19-61
 activity#com.flowzr.activity.MonthlyViewActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:264:3-96
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:257:3-96
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:264:58-94
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:257:58-94
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:264:13-57
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:257:13-57
 activity#com.flowzr.activity.CCardStatementClosingDayActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:265:3-109
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:258:3-109
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:265:71-106
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:258:71-106
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:265:13-70
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:258:13-70
 activity#com.flowzr.activity.Report2DChartActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:267:3-269:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:260:3-262:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:268:6-36
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:261:6-36
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:267:14-60
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:260:14-60
 activity#com.flowzr.activity.TransactionPreferencesActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:272:9-274:57
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:265:9-267:57
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:274:13-55
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:267:13-55
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:273:13-55
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:266:13-55
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:272:19-74
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:265:19-74
 activity#com.flowzr.activity.ReportPreferencesActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:276:3-278:57
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:269:3-271:57
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:278:13-55
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:271:13-55
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:277:13-66
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:270:13-66
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:276:13-63
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:269:13-63
 activity#com.flowzr.activity.AboutActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:279:9-89
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:272:9-89
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:279:58-87
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:272:58-87
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:279:19-57
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:272:19-57
 activity#com.flowzr.activity.WebViewActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:280:9-91
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:273:9-91
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:280:60-89
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:273:60-89
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:280:19-59
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:273:19-59
 activity#com.flowzr.activity.SplitTransactionActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:282:9-284:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:275:9-277:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:283:12-53
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:276:12-53
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:282:19-68
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:275:19-68
 activity#com.flowzr.activity.SplitTransferActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:285:9-287:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:278:9-280:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:286:12-50
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:279:12-50
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:285:19-65
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:278:19-65
 activity#com.flowzr.dialog.FolderBrowser
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:289:9-95
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:282:9-95
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:289:56-93
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:282:56-93
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:289:19-55
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:282:19-55
 activity#com.flowzr.activity.CategorySelectorActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:290:9-292:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:283:9-285:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:291:13-52
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:284:13-52
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:290:19-68
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:283:19-68
 activity#com.flowzr.activity.AccountListTotalsDetailsActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:294:9-301:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:287:9-294:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:294:77-107
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:287:77-107
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:296:13-74
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:289:13-74
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:295:19-58
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:288:19-58
 	android:parentActivityName
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:297:13-55
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:290:13-55
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:294:19-76
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:287:19-76
 meta-data#android.support.PARENT_ACTIVITY
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:298:7-300:45
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:291:7-293:45
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:299:13-59
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:292:13-59
 	android:value
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:300:13-42
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:293:13-42
 activity#com.flowzr.activity.BlotterTotalsDetailsActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:303:9-308:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:296:9-301:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:303:73-103
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:296:73-103
+	android:configChanges
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:297:59-120
+	android:theme
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:297:19-58
+	android:parentActivityName
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:297:121-163
+	android:name
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:296:19-72
+activity#com.flowzr.activity.BudgetListTotalsDetailsActivity
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:303:9-309:20
+	android:label
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:303:76-106
 	android:configChanges
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:304:59-120
 	android:theme
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:304:19-58
 	android:parentActivityName
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:304:121-163
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:305:13-55
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:303:19-72
-activity#com.flowzr.activity.BudgetListTotalsDetailsActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:310:9-316:20
-	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:310:76-106
-	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:311:59-120
-	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:311:19-58
-	android:parentActivityName
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:312:13-55
-	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:310:19-75
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:303:19-75
 activity#com.flowzr.activity.PurgeAccountActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:318:9-114
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:311:9-114
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:318:65-112
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:311:65-112
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:318:19-64
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:311:19-64
 activity#com.flowzr.activity.FlowzrSyncActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:320:9-322:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:313:9-315:20
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:320:63-98
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:313:63-98
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:321:9-72
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:314:9-72
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:320:19-62
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:313:19-62
 	android:launchMode
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:321:73-103
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:314:73-103
 activity#com.flowzr.activity.PreferencesActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:324:9-326:25
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:317:9-319:25
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:324:64-99
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:317:64-99
+	android:theme
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:318:13-66
+	android:name
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:317:19-63
+activity#com.flowzr.activity.FlowzrPreferencesActivity
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:321:9-323:50
+	android:label
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:323:13-48
+	android:theme
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:322:13-66
+	android:name
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:321:19-69
+activity#com.flowzr.activity.BackupPreferencesActivity
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:324:9-326:50
+	android:label
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:326:13-48
 	android:theme
 		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:325:13-66
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:324:19-63
-activity#com.flowzr.activity.FlowzrPreferencesActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:328:9-330:50
-	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:330:13-48
-	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:329:13-66
-	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:328:19-69
-activity#com.flowzr.activity.BackupPreferencesActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:331:9-333:50
-	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:333:13-48
-	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:332:13-66
-	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:331:19-69
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:324:19-69
 activity#org.achartengine.GraphicalActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:335:9-70
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:328:9-70
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:335:19-68
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:328:19-68
 activity#com.dropbox.client2.android.AuthActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:337:9-347:20
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:330:9-340:20
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:339:19-80
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:332:19-80
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:337:19-74
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:330:19-74
 	android:launchMode
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:338:19-50
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:331:19-50
 intent-filter#android.intent.action.VIEW+android.intent.category.BROWSABLE+android.intent.category.DEFAULT
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:340:13-346:29
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:333:13-339:29
 action#android.intent.action.VIEW
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:343:17-69
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:336:17-69
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:343:25-66
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:336:25-66
 category#android.intent.category.BROWSABLE
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:344:17-77
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:337:17-77
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:344:27-75
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:337:27-75
 activity#com.flowzr.activity.BackupListActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:349:3-364:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:342:3-357:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:350:4-34
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:343:4-34
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:351:4-43
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:344:4-43
 	android:parentActivityName
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:352:4-46
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:345:4-46
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:349:13-56
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:342:13-56
 meta-data#com.google.android.apps.drive.APP_ID
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:356:13-111
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:349:13-111
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:356:24-75
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:349:24-75
 	android:value
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:356:76-108
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:349:76-108
 intent-filter#com.google.android.apps.drive.DRIVE_OPEN
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:357:13-360:29
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:350:13-353:29
 action#com.google.android.apps.drive.DRIVE_OPEN
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:358:17-83
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:351:17-83
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:358:25-80
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:351:25-80
 activity#com.flowzr.activity.EntityListActivity
-ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:366:3-373:14
+ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:359:3-366:14
 	android:label
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:367:4-36
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:360:4-36
 	android:configChanges
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:366:57-106
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:359:57-106
 	android:theme
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:368:4-43
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:361:4-43
 	android:name
-		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:366:13-56
+		ADDED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:359:13-56
 android:uses-permission#android.permission.READ_PHONE_STATE
-IMPLIED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:14:1-377:12 reason: com.commonsware.cwac.wakeful has a targetSdkVersion < 4
+IMPLIED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:14:1-370:12 reason: com.commonsware.cwac.wakeful has a targetSdkVersion < 4
 android:uses-permission#android.permission.READ_EXTERNAL_STORAGE
-IMPLIED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:14:1-377:12 reason: com.commonsware.cwac.wakeful requested WRITE_EXTERNAL_STORAGE
+IMPLIED from /home/eflorent/project/flowzr-android-black/AndroidManifest.xml:14:1-370:12 reason: com.commonsware.cwac.wakeful requested WRITE_EXTERNAL_STORAGE
 activity#com.google.android.gms.auth.api.signin.internal.SignInHubActivity
 ADDED from [com.google.android.gms:play-services-auth:8.3.0] /home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/8.3.0/AndroidManifest.xml:21:9-24:46
 	android:theme

@@ -66,6 +66,7 @@ public class QifExportActivity extends AbstractExportActivity implements Activit
         });
 
         clearFilter();
+        initToolbar();
     }
 
     @Override

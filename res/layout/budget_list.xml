@@ -13,6 +13,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
         <include layout="@layout/total_text"/>
 
     <ListView
@@ -53,5 +54,9 @@
 
 </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/fragment_land_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
 
 </LinearLayout>

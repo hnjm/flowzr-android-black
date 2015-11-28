@@ -75,7 +75,7 @@ public class BudgetActivity extends AbstractEditorActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.budget);
-
+		initToolbar();
         accountOptions = createAccountsList();
         accountAdapter = new ArrayAdapter<AccountOption>(this, android.R.layout.simple_spinner_dropdown_item, accountOptions);
 
@@ -85,7 +85,7 @@ public class BudgetActivity extends AbstractEditorActivity {
 		LinearLayout layout = (LinearLayout) findViewById(R.id.list);
 		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		titleText = (EditText) findViewById(R.id.budget_title);
+		titleText = (EditText) findViewById(R.id.title);
 		// (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 		//x.addEditNode(layout, R.string.title, titleText);
 
@@ -114,29 +114,21 @@ public class BudgetActivity extends AbstractEditorActivity {
 				R.id.type, R.string.budget_type_saving, R.drawable.account_type_asset,
 				R.string.budget_type_saving_summary, false);
 
-		Button bOK = (Button) findViewById(R.id.saveButton);
-		bOK.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				if (checkSelected(budget.currency != null ? budget.currency : budget.account, R.string.select_account)) {
-					updateBudgetFromUI();
-					long id = em.insertBudget(budget);
-					Intent intent = new Intent();
-					intent.putExtra(BUDGET_ID_EXTRA, id);
-					setResult(RESULT_OK, intent);
-					finish();
+		if (findViewById(R.id.saveButton)!=null) {
+			findViewById(R.id.saveButton).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (checkSelected(budget.currency != null ? budget.currency : budget.account, R.string.select_account)) {
+						updateBudgetFromUI();
+						long id = em.insertBudget(budget);
+						Intent intent = new Intent();
+						intent.putExtra(BUDGET_ID_EXTRA, id);
+						setResult(RESULT_OK, intent);
+						finish();
+					}
 				}
-			}
-		});
-
-		Button bCancel = (Button) findViewById(R.id.cancelButton);
-		bCancel.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				setResult(RESULT_CANCELED);
-				finish();
-			}
-		});
+			});
+		}
 
 		totalText = ( TextView ) findViewById(R.id.total);
 		totalText.setOnClickListener(new View.OnClickListener() {

@@ -26,11 +26,13 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -143,6 +145,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		u = new Utils(this);
 
 		df = DateUtils.getShortDateFormat(this);
@@ -333,11 +336,39 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		if (transactionId == -1) {
 			rateView.openFromAmountCalculator();
 		}
-		Log.i("TransactionActivity", "onCreate " + (t1 - t0) + "ms");
-	}
 
-	
-    protected void createPayeeNode(LinearLayout layout) {
+		findViewById(R.id.scroll)
+				.setOnTouchListener(new View.OnTouchListener() {
+					 @Override
+					 public boolean onTouch(View v, MotionEvent event) {
+						 FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.saveAddButton);
+						 FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.saveButton);
+						 switch (event.getAction()) {
+							 case MotionEvent.ACTION_SCROLL:
+							 case MotionEvent.ACTION_MOVE:
+								 //setScrollState(OnScrollListener.SCROLL_STATE_FLING);
+								 fab.hide();
+								 fab2.hide();
+								 break;
+							 case MotionEvent.ACTION_DOWN:
+								 //setScrollState(OnScrollListener.SCROLL_STATE_TOUCH_SCROLL);
+								 break;
+							 case MotionEvent.ACTION_CANCEL:
+							 case MotionEvent.ACTION_UP:
+								 fab.show();
+								 fab2.show();
+								 //setScrollState(OnScrollListener.SCROLL_STATE_IDLE);
+								 break;
+						 }
+						 return false;
+					 }
+				 });
+
+			Log.i("TransactionActivity","onCreate "+(t1-t0)+"ms");
+		}
+
+
+	protected void createPayeeNode(LinearLayout layout) {
         payeeAdapter = TransactionUtils.createPayeeAdapter(this, db);
         LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         payeeText = (AutoCompleteTextView) layoutInflater.inflate(R.layout.autocomplete, null);

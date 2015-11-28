@@ -23,11 +23,13 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 
@@ -50,11 +52,13 @@ public abstract class AbstractEditorActivity extends AppCompatActivity implement
 
     protected Utils u;
 
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         // Setup ActionBar		
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		//initToolbar();
 
 		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		NodeInflater nodeInflater = new NodeInflater(layoutInflater);
@@ -63,8 +67,20 @@ public abstract class AbstractEditorActivity extends AppCompatActivity implement
 		db = new DatabaseAdapter(this);
 		db.open();
 		em = db.em();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 	}
-	
+
+
+    protected void initToolbar() {
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -180,9 +196,5 @@ public abstract class AbstractEditorActivity extends AppCompatActivity implement
             PinProtection.unlock(this);
         }
     }
-    /**
-    protected boolean shouldLock() {
-        return true;
-    }	
-	**/
+
 }

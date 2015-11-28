@@ -14,20 +14,16 @@
       			android:id="@+id/layout" 
                 android:layout_width="fill_parent" android:layout_height="wrap_content">
 
-    <LinearLayout android:id="@+id/indicator2"
-        android:layout_height="80dp"
-        android:layout_width="80dp"
-	    android:layout_marginRight="0dp"
-        android:gravity="center">
+
 
     <LinearLayout
         android:id="@+id/indicator"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:elevation="6dp"
+        android:layout_margin="@dimen/space_small"
         android:layout_gravity="center_vertical"
         android:gravity="center"
-        android:layout_width="70dp"
-	    android:layout_marginLeft="-5dp"
-	    android:layout_marginRight="0dp"
         android:orientation="vertical"
         tools:background="@color/f_red">
 
@@ -35,13 +31,9 @@
             android:id="@+id/month_TV"
             style="@style/TextView"
             android:fontFamily="sans-serif-light"
-            android:textColor="@color/text_primary_inverted"
+            android:textColor="@color/text_primary"
             android:textSize="@dimen/text_xsmall"
 	        android:layout_height="wrap_content"
-	        android:layout_marginRight="2dp"
-	        android:layout_marginLeft="2dp"
-	        android:layout_marginBottom="0dp"
-            android:layout_marginTop="8dp"
             android:text="NOV,2014"/>
 
         <TextView
@@ -49,15 +41,12 @@
             style="@style/TextView"
             android:fontFamily="sans-serif-light"
             android:textSize="@dimen/text_xxlarge"
-            android:textColor="@color/text_primary_inverted"
-            android:layout_marginTop="0dp"
+            android:textColor="@color/text_primary"
 	        android:layout_height="wrap_content"
-
             android:text="15"/>
 
     </LinearLayout>
 
-    </LinearLayout>
 
     <ImageView android:id="@+id/right_top"
                android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -68,7 +57,7 @@
     <TextView android:layout_width="wrap_content"
             style="@style/TextView" android:textSize="@dimen/text_small"  
               android:layout_height="wrap_content" android:singleLine="true" android:id="@+id/top" 
-              android:text="top" android:layout_toRightOf="@id/indicator2"
+              android:text="top" android:layout_toRightOf="@id/indicator"
               android:layout_marginLeft="@dimen/space_small"/>
 
     <TextView android:layout_height="wrap_content" android:id="@+id/center"

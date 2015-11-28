@@ -4,7 +4,7 @@
   are made available under the terms of the GNU Public License v2.0
   which accompanies this distribution, and is available at
   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
--->
+
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="52dp" android:layout_width="fill_parent">
     <ToggleButton android:layout_width="wrap_content"
@@ -19,4 +19,26 @@
         android:layout_weight="1"
 		android:id="@+id/primary"/>
 </merge>
-<!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout/category_title.xml -->
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/title_layout"
+    android:elevation="4dp"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:background="@color/title_bg_color" android:paddingBottom="@dimen/space_xlarge">
+    <ToggleButton android:layout_width="wrap_content"
+        android:id="@+id/toggle"
+        android:textOn=""
+        android:textOff=""
+        android:background="@drawable/btn_toggle_income_expense_bg"
+        android:layout_height="fill_parent" />
+    <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:padding="@dimen/space_large" android:layout_marginLeft="@dimen/space_xlarge"
+        android:hint="@string/title"
+        android:id="@+id/title" style="@style/TextViewUserInput"
+        android:focusableInTouchMode="true"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/text_xxlarge">
+    </EditText>
+
+</LinearLayout><!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout/category_title.xml -->

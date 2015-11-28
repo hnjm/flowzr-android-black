@@ -38,7 +38,7 @@ public class WhereFilter {
     public static final String FILTER_CRITERIA_PREF = "filterCriteria";
     public static final String FILTER_SORT_ORDER_PREF = "filterSortOrder";
 
-	private final String title;
+	private String title;
 	private final LinkedList<Criteria> criterias = new LinkedList<Criteria>();
 	private final LinkedList<String> sorts = new LinkedList<String>();
 
@@ -159,7 +159,8 @@ public class WhereFilter {
 	
 	public void clear() {
 		criterias.clear();
-		sorts.clear(); 
+		sorts.clear();
+		title="";
 	}
 	
 	public static WhereFilter copyOf(WhereFilter filter) {

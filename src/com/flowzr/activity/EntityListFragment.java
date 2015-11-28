@@ -16,6 +16,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListAdapter;
 import com.flowzr.R;
@@ -78,7 +79,6 @@ public class EntityListFragment extends AbstractListFragment {
 	@Override
 	protected void viewItem(View v, int position, long id) {
 		EntityListActivity main=((EntityListActivity)getActivity());
-        main.getSupportActionBar().removeAllTabs();
         main.loadFragment(entities[position].getActivityClass());	
 	}
 
@@ -86,5 +86,9 @@ public class EntityListFragment extends AbstractListFragment {
 	protected String getMyTitle() {
 		return getString(R.string.entities);
 	}
-	
+
+
+
+
+
 }

@@ -3,6 +3,9 @@
     <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/design/23.1.1/res/values-v21/values-v21.xml -->
     <eat-comment/>
     <dimen name="design_navigation_padding_top_default">24dp</dimen>
+    <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-v21/styles.xml -->
+    <eat-comment/>
+    <dimen name="fab_compat_margin">16dp</dimen>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v21/values-v21.xml -->
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance.Material"/>
@@ -243,10 +246,17 @@
     <style name="Platform.ThemeOverlay.AppCompat.Light"/>
     <!-- From: file:/home/eflorent/project/flowzr-android-black/res/values-v21/styles.xml -->
     <eat-comment/>
-    <style name="Theme.Financisto" parent="@style/Theme.AppCompat">
+    <style name="Theme.Financisto" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="colorControlActivated">@color/pressed_card</item>
         <item name="colorAccent">@color/color_accent</item>
         <item name="alertDialogTheme">@style/dialog</item>
         <item name="android:navigationBarColor">@color/navigationBarColor</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:windowSharedElementEnterTransition">@android:transition/explode</item>
+        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 </resources>

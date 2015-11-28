@@ -50,7 +50,7 @@ public abstract class MyEntityActivity<T extends MyEntity> extends AbstractEdito
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.project);
-
+		initToolbar();
 		db = new DatabaseAdapter(this);
 		db.open();
 		

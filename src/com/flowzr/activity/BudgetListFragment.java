@@ -11,6 +11,7 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -74,7 +75,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 	
 	private ArrayList<Budget> budgets;
 	private Handler handler;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -106,7 +107,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 		case R.id.action_filter_budget:
 			Intent intent = new Intent(BudgetListFragment.this.getActivity(), DateFilterActivity.class);
 			filter.toIntent(intent);
-			startActivityForResult(intent, FILTER_BUDGET_REQUEST);
+			ActivityCompat.startActivityForResult(getActivity(), intent, FILTER_BUDGET_REQUEST, getScaleUpOption());
         default:
             return super.onOptionsItemSelected(item);
 		}
@@ -127,9 +128,11 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 		if (getView().findViewById(R.id.fragment_land_container)!=null) {
     		Fragment fragment=new BudgetListTotalsDetailsActivity();
     		Bundle bundle= new Bundle();
-    		fragment.setArguments(bundle);        	
-            getChildFragmentManager().beginTransaction().replace(R.id.fragment_land_container, fragment).commitAllowingStateLoss();
-            getChildFragmentManager().executePendingTransactions();            
+    		fragment.setArguments(bundle);
+			fragment.setRetainInstance(true);
+
+            getChildFragmentManager().beginTransaction().replace(R.id.fragment_land_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+            getChildFragmentManager().executePendingTransactions();
         }        
         
         TextView total_title = ( TextView ) getView().findViewById(R.id.total_title);       
@@ -154,8 +157,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 		Intent intent=new Intent(getActivity(),EntityListActivity.class);
 		intent.putExtra(EntityListActivity.REQUEST_BUDGET_TOTALS, true);
 		filter.toIntent(intent);
-		startActivity(intent);  
-    
+		ActivityCompat.startActivity(getActivity(), intent,  getScaleUpOption());
     }
 
 	private void saveFilter() {
@@ -228,7 +230,8 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 	@Override
 	protected void addItem() {
 		Intent intent = new Intent(this.getActivity(), BudgetActivity.class);
-		startActivityForResult(intent, NEW_BUDGET_REQUEST);
+		ActivityCompat.startActivityForResult(getActivity(), intent, NEW_BUDGET_REQUEST, getScaleUpOption());
+
 	}
 
 	@Override
@@ -279,13 +282,13 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 		}
 		Intent intent = new Intent(this.getActivity(), BudgetActivity.class);
 		intent.putExtra(BudgetActivity.BUDGET_ID_EXTRA, b.parentBudgetId > 0 ? b.parentBudgetId : id);
-		startActivityForResult(intent, EDIT_BUDGET_REQUEST);
+		ActivityCompat.startActivityForResult(getActivity(), intent, EDIT_BUDGET_REQUEST, getScaleUpOption());
 
 	}
 	//TODO check if used
-	protected String getContextMenuHeaderTitle(int position) {
-		return getString(R.string.budget);
-	}
+	//protected String getContextMenuHeaderTitle(int position) {
+	//	return getString(R.string.budget);
+	//}
 
 	@Override
 	protected void viewItem(View v, int position, long id) {
@@ -295,13 +298,8 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 		Criteria.eq(BlotterFilter.BUDGET_ID, String.valueOf(id))
 			.toIntent(b.title, intent);
 		intent.putExtra(MainActivity.REQUEST_BUDGET_BLOTTER, true);
-		startActivity(intent);
-		//getActivity().finish();
-		
-		
-		//Fragment f= new BudgetBlotterFragment();
-		//f.setArguments(bundle);
-		//((AbstractActionBarActivity) getActivity()).loadTabFragment(f,R.layout.blotter, bundle, 1);			
+		ActivityCompat.startActivity(getActivity(), intent, getScaleUpOption());
+
 	}	
 	
 	public class BudgetTotalsCalculationTask extends AsyncTask<Void, Total, Total> {
@@ -339,7 +337,6 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 						spannablecontent.setSpan(new AbsoluteSizeSpan(20,true), 0, spannablecontent.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 						// set Text here
 						totalText.setText(spannablecontent);
-
 	                	((BudgetListAdapter)adapter).notifyDataSetChanged();
 	                }
 				}

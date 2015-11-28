@@ -20,45 +20,46 @@
     android:id="@+id/main_layout"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="horizontal" >
+	android:orientation="horizontal"
+    android:weightSum="1">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingRight="@dimen/space_large"
-    android:orientation="vertical" android:layout_weight="1">
-    
-  	<ListView
-        android:id="@android:id/list"
-        style="@style/ListView"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/separator_V"/>
-
-	<TextView 	
-		android:id="@id/android:empty"
-		android:text="@string/no_transactions"
-        style="@style/TextView"
+    <LinearLayout
         android:layout_width="0dp"
-        
-        android:layout_weight="1"
-        android:textSize="@dimen/text_large"/>
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/space_normal"
+        android:orientation="vertical"
+        android:layout_weight="0.65">
+
+        <ListView
+            android:id="@android:id/list"
+            style="@style/ListView"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/separator_V"/>
+
+        <TextView
+            android:id="@id/android:empty"
+            android:text="@string/no_transactions"
+            style="@style/TextView"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/text_large"/>
 
 
-    <TextView android:id="@+id/integrity_error"
-		      android:text="@string/integrity_error"
-        	  style="@style/TextView"
-              android:textColor="#f26522" 
-              android:visibility="gone"/>
+        <TextView android:id="@+id/integrity_error"
+                  android:text="@string/integrity_error"
+                  style="@style/TextView"
+                  android:textColor="#f26522"
+                  android:visibility="gone"/>
 
+    </LinearLayout>
 
-</LinearLayout>
-
-    <FrameLayout  android:layout_weight="1.314"
+    <FrameLayout
+        android:layout_weight="0.35"
+        android:background="@color/total_bg_color"
         android:id="@+id/fragment_land_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:paddingRight="@dimen/space_large"
-        /> 
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:elevation="8dp"
+        android:paddingRight="@dimen/space_normal" />
 
 </LinearLayout>
 
@@ -76,7 +77,7 @@
 
     <View
         android:id="@+id/dummy"
-        android:layout_width="60dp"
+        android:layout_width="88dp"
         android:layout_height="120dp"
         app:layout_anchor="@id/bAdd"
         app:layout_anchorGravity="bottom|left" />

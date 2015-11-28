@@ -148,6 +148,7 @@ public class ActivityLayout {
 		Builder b = inflater.new Builder(layout, R.layout.select_entry);
 		View v = b.withId(id, listener).withLabel(labelId).withData(defaultValueResId).create();
         TextView data = (TextView)v.findViewById(R.id.data);
+		data.setHint(labelId);
         data.setTag(v);
 		return data;
 	}

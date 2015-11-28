@@ -62,23 +62,23 @@ public class ScheduledAlarmReceiver extends PackageReplaceReceiver {
     private void requestScheduleOne(Context context, Intent intent) {
         Intent serviceIntent = new Intent(FinancistoService.ACTION_SCHEDULE_ONE);
         serviceIntent.putExtra(RecurrenceScheduler.SCHEDULED_TRANSACTION_ID, intent.getLongExtra(RecurrenceScheduler.SCHEDULED_TRANSACTION_ID, -1));
-        WakefulIntentService.sendWakefulWork(context, serviceIntent);
+        WakefulIntentService.sendWakefulWork(context, MainActivity.createExplicitFromImplicitIntent(context,serviceIntent));
     }
 
     private void requestAutoBackup(Context context) {
         Intent serviceIntent = new Intent(FinancistoService.ACTION_AUTO_BACKUP);
-        WakefulIntentService.sendWakefulWork(context, serviceIntent);
+        WakefulIntentService.sendWakefulWork(context, MainActivity.createExplicitFromImplicitIntent(context,serviceIntent));
     }
 
     private void requestAutoSync(Context context) {
         Intent serviceIntent = new Intent(FinancistoService.ACTION_AUTO_SYNC);
-        WakefulIntentService.sendWakefulWork(context, serviceIntent);
+        WakefulIntentService.sendWakefulWork(context, MainActivity.createExplicitFromImplicitIntent(context,serviceIntent));
     }  
     
     protected void requestScheduleAutoSync(Context context) {
         try {
             Intent serviceIntent = new Intent(FinancistoService.ACTION_SCHEDULE_AUTO_SYNC);
-            WakefulIntentService.sendWakefulWork(context, serviceIntent);
+            WakefulIntentService.sendWakefulWork(context, MainActivity.createExplicitFromImplicitIntent(context,serviceIntent));
         } catch (Exception e) {
             e.printStackTrace();
         }

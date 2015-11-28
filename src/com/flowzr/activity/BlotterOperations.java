@@ -9,10 +9,12 @@
 package com.flowzr.activity;
 
 import android.app.Activity;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
@@ -39,6 +41,8 @@ public class BlotterOperations {
     public BlotterOperations(BlotterFragment activity, DatabaseAdapter db, long transactionId) {
         this.activity = activity;
         this.db = db;
+        Log.e("flowzr", db.toString());
+
         this.originalTransaction = db.getTransaction(transactionId);
         if (this.originalTransaction.isSplitChild()) {
             this.targetTransaction = db.getTransaction(this.originalTransaction.parentId);
@@ -65,7 +69,10 @@ public class BlotterOperations {
         intent.putExtra(AbstractTransactionActivity.TRAN_ID_EXTRA, targetTransaction.id);
         intent.putExtra(AbstractTransactionActivity.DUPLICATE_EXTRA, false);
         intent.putExtra(AbstractTransactionActivity.NEW_FROM_TEMPLATE_EXTRA, newFromTemplate);
-        activity.startActivityForResult(intent, requestCode);
+
+        ActivityCompat.startActivityForResult(activity.getActivity(), intent, requestCode, activity.getScaleUpOption());
+
+        //activity.startActivityForResult(intent, requestCode);
     }
 
     public void deleteTransaction() {

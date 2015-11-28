@@ -9,6 +9,7 @@ package com.flowzr.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
@@ -89,9 +90,11 @@ public class CsvImportActivity extends AbstractImportActivity {
         currencyPreferences.updateIntentFromUI(this, data);
         data.putExtra(CSV_IMPORT_SELECTED_ACCOUNT_2, getSelectedAccountId());
         Spinner dateFormats = (Spinner) findViewById(R.id.spinnerDateFormats);
+        Log.e("flowszr", dateFormats.getSelectedItem().toString());
         data.putExtra(CSV_IMPORT_DATE_FORMAT, dateFormats.getSelectedItem().toString());
         data.putExtra(CSV_IMPORT_FILENAME, edFilename.getText().toString());
         Spinner fieldSeparator = (Spinner) findViewById(R.id.spinnerFieldSeparator);
+        Log.e("flowszr", fieldSeparator.getSelectedItem().toString());
         data.putExtra(CSV_IMPORT_FIELD_SEPARATOR, fieldSeparator.getSelectedItem().toString().charAt(1));
         data.putExtra(CSV_IMPORT_USE_HEADER_FROM_FILE, useHeaderFromFile.isChecked());
     }

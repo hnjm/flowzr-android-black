@@ -29,10 +29,13 @@ android {
     }
     signingConfigs {
         config {
-            storeFile file('/home/eflorent/key_store')
-            storePassword System.getenv("KEYSTORE_PASSWORD")
-            keyAlias System.getenv("KEY_ALIAS")
-            keyPassword System.getenv("KEY_PASSWORD")
+            storeFile file('/home/eflorent/Téléchargements/key_store')
+            //storePassword System.getenv("KEYSTORE_PASSWORD")
+            //keyAlias System.getenv("KEY_ALIAS")
+            //keyPassword System.getenv("KEY_PASSWORD")
+            keyAlias 'direct raise'
+            keyPassword 'devaki'
+            storePassword 'devaki'
         }
     }
     compileSdkVersion 'Google Inc.:Google APIs:23'
@@ -72,6 +75,7 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            signingConfig signingConfigs.config
             proguardFile 'proguard-google-api-client.txt'
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard-rules.pro', 'proguard-rules.txt'
@@ -108,7 +112,9 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:8.3.0'
     compile 'com.google.android.gms:play-services-plus:8.3.0'
     compile 'com.google.android.gms:play-services-gcm:8.3.0'
+    compile 'com.github.ganfra:material-spinner:1.1.1'
 }
+
 
 
  

@@ -16,6 +16,7 @@ import com.flowzr.adapter.TemplateListAdapter;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -98,6 +99,7 @@ public class SelectTemplateActivity extends TemplatesListFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent=null;
+		Log.e("flowzr", "on option selected");
 		switch (item.getItemId()) {
 			case R.id.bEditTemplate:
 				getActivity().setResult(MainActivity.RESULT_CANCELED);

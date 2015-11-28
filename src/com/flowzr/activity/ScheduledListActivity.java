@@ -14,6 +14,7 @@ package com.flowzr.activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -97,11 +98,14 @@ public class ScheduledListActivity extends BlotterFragment {
 		internalOnCreateTemplates();
 		recreateCursor();
 		recreateAdapter();
-		if (getView().findViewById(R.id.total_text_layout)!=null) {
-			getView().findViewById(R.id.total_text_layout).setVisibility(View.GONE);
-		}
+		//if (getView().findViewById(R.id.total_text_layout)!=null) {
+		//	getView().findViewById(R.id.total_text_layout).setVisibility(View.GONE);
+		//}
 		if (getView().findViewById(R.id.bAddTransfer)!=null) {
 			getView().findViewById(R.id.bAddTransfer).setVisibility(View.GONE);
+		}
+		if (getView().findViewById(R.id.total_layout)!=null) {
+			getView().findViewById(R.id.total_layout).setVisibility(View.GONE);
 		}
 		if (getView().findViewById(R.id.fragment_land_container)!=null) {
 			getView().findViewById(R.id.fragment_land_container).setVisibility(View.GONE);
@@ -119,13 +123,11 @@ public class ScheduledListActivity extends BlotterFragment {
     }
     
 	protected void internalOnCreateTemplates() {
-		// change empty list message
-		//((TextView)getActivity().findViewById(android.R.id.empty)).setText(R.string.no_scheduled_transactions);
-		// fix filter
 		blotterFilter = new WhereFilter("schedules");
 		blotterFilter.eq(BlotterFilter.IS_TEMPLATE, String.valueOf(2));
         blotterFilter.eq(BlotterFilter.PARENT_ID, String.valueOf(0));
 	}
+
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

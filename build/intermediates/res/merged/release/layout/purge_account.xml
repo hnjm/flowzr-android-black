@@ -5,15 +5,28 @@
   ~ which accompanies this distribution, and is available at
   ~ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="fill_parent" android:layout_width="fill_parent"
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/content"
+	android:fitsSystemWindows="true"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
 	android:orientation="vertical">
-	<ScrollView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:layout_weight="1">
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:layout_width="fill_parent" android:layout_height="fill_parent"
-			android:orientation="vertical" android:id="@+id/layout" />			
-	</ScrollView>
-	<include layout="@layout/ok_cancel_buttons" />
-</LinearLayout>
+	<LinearLayout
+		android:paddingTop="?attr/actionBarSize"
+		android:layout_gravity="center_horizontal"
+		android:gravity="center_horizontal"
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		<ScrollView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:layout_weight="1">
+			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				android:layout_width="fill_parent" android:layout_height="fill_parent"
+				android:orientation="vertical" android:id="@+id/layout" />
+		</ScrollView>
+		<include layout="@layout/ok_cancel_buttons" />
+	</LinearLayout>
+	<include layout="@layout/toolbar"/>
+</android.support.design.widget.CoordinatorLayout>
 <!-- From: file:/home/eflorent/project/flowzr-android-black/res/layout/purge_account.xml -->

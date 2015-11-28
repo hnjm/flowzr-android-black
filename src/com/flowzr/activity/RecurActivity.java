@@ -35,7 +35,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,6 +45,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -70,18 +73,22 @@ public class RecurActivity extends ActionBarActivity {
 	
 	private DateFormat df;
 
+	protected void initToolbar() {
+		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		final ActionBar actionBar = getSupportActionBar();
+
+		if (actionBar != null) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-        // Setup ActionBar		
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //@see: http://stackoverflow.com/questions/16539251/get-rid-of-blue-line, 
-        //only way found to remove on various devices 2.3x, 3.0, ...
-		//getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
-		
 		setContentView(R.layout.recur);
-
+		initToolbar();
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		df = DateUtils.getLongDateFormat(this);
 		
 		stopsOnDate.add(Calendar.YEAR, 1);

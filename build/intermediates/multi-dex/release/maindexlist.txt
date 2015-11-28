@@ -54,7 +54,6 @@ com/flowzr/model/TransactionBase.class
 com/google/android/gms/common/api/GoogleApiClient$ConnectionCallbacks.class
 com/flowzr/activity/LocationActivity$SolveSaveLocationTask.class
 -keep class com.flowzr.activity.QifImportActivity { <init>(); }
-com/flowzr/export/ImportExportAsyncTaskListener.class
 com/google/api/client/googleapis/auth/oauth2/GoogleClientSecrets.class
 com/flowzr/activity/BudgetActivity$2.class
 com/google/api/client/googleapis/auth/clientlogin/ClientLogin.class
@@ -71,9 +70,9 @@ com/google/api/client/repackaged/com/google/common/base/Joiner$MapJoiner.class
 com/flowzr/activity/BackupPreferencesActivity.class
 com/flowzr/recur/RecurrenceViewFactory$SpecificDayPostfix.class
 com/flowzr/activity/AbstractTransactionActivity$5.class
+android/support/v4/app/ActivityOptionsCompat.class
 android/support/v7/widget/RecyclerView$ItemAnimator$AdapterChanges.class
 com/flowzr/report/PeriodReport.class
-com/flowzr/activity/AccountActivity$3.class
 javax/persistence/Embedded.class
 android/support/design/widget/TabLayout$OnTabSelectedListener.class
 com/google/ical/values/RRule.class
@@ -141,6 +140,7 @@ com/flowzr/datetime/PeriodType$8.class
 -keep class com.flowzr.activity.FlowzrSyncActivity { <init>(); }
 com/flowzr/db/BudgetsTotalCalculator.class
 -keep class com.flowzr.activity.PackageReplaceReceiver { <init>(); }
+com/flowzr/activity/BlotterFilterActivity$1.class
 android/support/v4/widget/MaterialProgressDrawable$1.class
 com/flowzr/adapter/CategoryListAdapter.class
 com/flowzr/recur/RecurrenceUntil.class
@@ -210,7 +210,6 @@ android/support/v4/media/session/PlaybackStateCompat$Builder.class
 com/flowzr/activity/AbstractTotalListFragment.class
 com/flowzr/activity/AccountWidget.class
 com/flowzr/activity/AbstractListFragment.class
-com/flowzr/model/NavDrawerItem.class
 com/flowzr/activity/QifExportActivity$1.class
 com/google/android/gms/common/api/Api$ApiOptions$HasOptions.class
 com/google/android/gms/common/api/PendingResult.class
@@ -227,6 +226,7 @@ com/flowzr/utils/ExecutableEntityEnum.class
 com/google/android/gms/dynamic/zzg$zza.class
 android/support/v4/media/session/MediaSessionCompat$MediaSessionImplBase.class
 com/google/android/gms/common/api/Api.class
+com/flowzr/activity/ZoomOutPageTransformer.class
 android/support/v7/app/AppCompatDialog.class
 com/google/android/gms/location/FusedLocationProviderApi.class
 android/support/design/widget/SwipeDismissBehavior.class
@@ -307,6 +307,7 @@ com/flowzr/recur/DateRecurrenceIterator.class
 android/support/design/widget/CoordinatorLayout$Behavior.class
 com/dropbox/client2/ProgressListener$ProgressHttpEntity.class
 android/support/v4/app/BackStackRecord$TransitionState.class
+com/flowzr/activity/MainActivity$1.class
 android/support/design/R$anim.class
 com/google/ical/values/AbstractIcalObject.class
 com/flowzr/datetime/PeriodType$4.class
@@ -314,14 +315,13 @@ com/commonsware/cwac/wakeful/WakefulIntentService.class
 android/support/annotation/MenuRes.class
 com/google/api/client/http/HttpRequest.class
 com/flowzr/activity/ScheduledListActivity.class
-com/flowzr/activity/BackupListActivity$9.class
 com/google/ical/values/TimeValue.class
 android/support/v7/widget/TintTypedArray.class
 com/flowzr/db/DatabaseHelper$TransactionColumns.class
 android/support/v4/view/NestedScrollingChild.class
 android/support/design/widget/Snackbar$Behavior.class
+android/support/design/internal/ScrimInsetsFrameLayout.class
 com/flowzr/activity/PreferencesActivity$3.class
-com/flowzr/activity/SplitsBlotterActivity.class
 com/google/android/gms/common/internal/zzx.class
 com/google/android/gms/internal/zzly.class
 com/flowzr/utils/PinProtection.class
@@ -384,7 +384,6 @@ com/dropbox/client2/DropboxAPI$DeltaEntry.class
 android/support/multidex/ZipUtil$CentralDirectory.class
 com/flowzr/export/flowzr/FlowzrSyncEngine.class
 android/support/design/R$dimen.class
-com/flowzr/activity/AbstractActionBarActivity$DrawerItemClickListener.class
 com/flowzr/activity/MonthlyViewActivity$MonthlyPreviewTask.class
 com/dropbox/client2/DropboxAPI$ThumbSize.class
 com/google/android/gms/location/internal/LocationRequestInternal.class
@@ -418,16 +417,16 @@ com/flowzr/activity/PurgeAccountActivity$PurgeAccountTask.class
 android/support/design/widget/TabLayout$TabView.class
 com/dropbox/client2/android/AuthActivity.class
 com/flowzr/utils/Utils.class
-android/support/v4/app/SuperNotCalledException.class
 android/support/annotation/AnimRes.class
+android/support/v4/app/SuperNotCalledException.class
 android/support/v4/view/ViewCompat$ViewCompatImpl.class
 com/flowzr/datetime/PeriodType$6.class
 com/flowzr/activity/BlotterActivity$TransactionQuickMenuEntities.class
-com/flowzr/activity/MainActivity$MyAdapter.class
 javax/persistence/Id.class
 com/flowzr/activity/BudgetActivity$1.class
 com/flowzr/activity/ReportActivity$3.class
 com/dropbox/client2/RESTUtility.class
+com/flowzr/activity/AbstractTransactionActivity$9.class
 com/flowzr/utils/RecurUtils$SemiMonthly.class
 com/google/android/gms/auth/api/signin/FacebookSignInOptions.class
 android/support/annotation/BinderThread.class
@@ -490,6 +489,7 @@ android/support/design/widget/CoordinatorLayout$ApplyInsetsListener.class
 com/google/android/gms/maps/model/LatLng.class
 com/flowzr/activity/FlowzrSyncActivity$6.class
 android/support/v4/view/ViewCompatJellybeanMr1.class
+fr/ganfra/materialspinner/MaterialSpinner.class
 com/flowzr/backup/BackupType$8.class
 android/support/v7/widget/RecyclerView$OnScrollListener.class
 com/flowzr/activity/FlowzrSyncActivity$4.class
@@ -536,8 +536,8 @@ android/support/v7/widget/RecyclerView$OnItemTouchListener.class
 android/support/design/widget/AppBarLayout$Behavior.class
 com/flowzr/activity/BlotterFragment$1.class
 com/google/api/client/http/BackOffPolicy.class
-android/support/v4/view/ViewCompat$BaseViewCompatImpl.class
 com/flowzr/activity/RecurrenceActivity$3.class
+android/support/v4/view/ViewCompat$BaseViewCompatImpl.class
 com/flowzr/activity/EntityListActivity.class
 android/support/annotation/MainThread.class
 com/flowzr/activity/CategorySelector.class
@@ -595,7 +595,6 @@ android/support/v4/view/ViewCompatGingerbread.class
 android/support/v7/app/AppCompatActivity.class
 com/flowzr/activity/AboutActivity$MyAdapter.class
 android/support/annotation/LayoutRes.class
-com/flowzr/adapter/NavDrawerListAdapter.class
 com/flowzr/utils/TransactionUtils.class
 android/support/v7/widget/RecyclerView$LayoutParams.class
 com/google/android/gms/common/GooglePlayServicesUtil.class
@@ -634,6 +633,7 @@ android/support/v7/widget/ViewInfoStore$ProcessCallback.class
 android/support/design/widget/SnackbarManager.class
 -keep public class * extends android.app.backup.BackupAgent {
 com/google/ical/values/DateTimeValue.class
+com/nineoldandroids/animation/ValueAnimator$AnimatorUpdateListener.class
 android/support/v4/media/MediaBrowserCompat.class
 com/dropbox/client2/DropboxAPI$1.class
 com/dropbox/client2/DropboxAPI$ChunkedUploader.class
@@ -708,6 +708,7 @@ android/support/v4/app/FragmentTabHost.class
 com/flowzr/activity/Report2DChartActivity$3.class
 com/flowzr/activity/BlotterFragment$3.class
 android/support/v4/app/Fragment.class
+com/flowzr/activity/AbstractActionBarActivity$2.class
 android/support/v4/widget/SlidingPaneLayout.class
 com/google/android/gms/internal/zzmq.class
 android/support/v4/media/MediaBrowserCompat$ConnectionCallback.class
@@ -716,6 +717,7 @@ android/support/v4/view/ViewPager$OnPageChangeListener.class
 com/flowzr/view/PinView.class
 android/support/design/widget/Snackbar$7.class
 com/flowzr/model/Project.class
+android/support/design/widget/NavigationView$OnNavigationItemSelectedListener.class
 android/support/v7/app/AlertDialog$Builder.class
 android/support/v4/media/session/PlaybackStateCompatApi22.class
 com/flowzr/activity/AbstractImportActivity$1.class
@@ -774,6 +776,7 @@ com/flowzr/widget/RateNodeOwner.class
 android/support/design/widget/AppBarLayout$LayoutParams.class
 android/support/v7/widget/RecyclerView$ItemAnimator.class
 com/flowzr/activity/MonthlyViewActivity$1.class
+android/support/design/widget/NavigationView.class
 -keep class com.flowzr.activity.CCardStatementClosingDayActivity { <init>(); }
 com/google/android/gms/location/places/internal/PlaceLocalization.class
 android/support/v7/app/ActionBarDrawerToggle$DelegateProvider.class
@@ -783,6 +786,7 @@ com/flowzr/model/Currency.class
 org/achartengine/GraphicalView.class
 com/flowzr/model/CardIssuer.class
 android/support/annotation/Keep.class
+android/support/v4/app/FragmentPagerAdapter.class
 com/google/android/gms/drive/DriveStatusCodes.class
 android/support/annotation/IntDef.class
 android/support/v4/view/AccessibilityDelegateCompat.class
@@ -805,8 +809,8 @@ android/support/v4/view/animation/LookupTableInterpolator.class
 -keep class com.flowzr.activity.EntityListActivity { <init>(); }
 com/flowzr/utils/RecurUtils$Weekly.class
 android/support/v7/app/NotificationCompat.class
-com/flowzr/activity/AbstractTransactionActivity$2.class
 com/flowzr/activity/ReportActivity$ReportAsyncTask.class
+com/flowzr/activity/AbstractTransactionActivity$2.class
 com/flowzr/export/csv/CsvExportTask.class
 android/support/annotation/TransitionRes.class
 android/support/v7/widget/RecyclerView$3.class
@@ -869,6 +873,7 @@ javax/persistence/Column.class
 com/flowzr/activity/PurgeAccountActivity.class
 android/support/annotation/IdRes.class
 -keep class com.flowzr.activity.BlotterTotalsDetailsActivity { <init>(); }
+com/flowzr/activity/AbstractActionBarActivity$MyAdapter.class
 android/support/v4/app/FragmentManagerImpl$5.class
 android/support/design/widget/AppBarLayout$OnOffsetChangedListener.class
 com/flowzr/utils/RecurUtils$RecurPeriod$2.class
@@ -885,6 +890,7 @@ com/flowzr/activity/ReportPreferencesActivity$1.class
 android/support/design/widget/SwipeDismissBehavior$OnDismissListener.class
 com/google/android/gms/gcm/PeriodicTask.class
 android/support/v4/media/session/MediaSessionCompat.class
+android/support/v4/view/ViewPager$PageTransformer.class
 android/support/annotation/FractionRes.class
 com/flowzr/activity/BackupListActivity$3.class
 -keep class com.flowzr.activity.NotificationOptionsActivity { <init>(); }
@@ -913,6 +919,7 @@ com/google/android/gms/common/api/Scope.class
 com/dropbox/client2/session/AbstractSession$IdleConnectionCloserThread.class
 com/flowzr/activity/CsvImportActivity$2.class
 android/support/v4/widget/CursorAdapter.class
+com/flowzr/activity/BlotterFragment$6.class
 com/flowzr/model/MyEntity.class
 com/google/api/client/googleapis/extensions/android/accounts/GoogleAccountManager.class
 com/google/android/gms/maps/GoogleMap.class
@@ -975,7 +982,6 @@ com/flowzr/model/TransactionStatus.class
 android/support/v4/media/VolumeProviderCompat.class
 com/flowzr/activity/CategorySelectorActivity$CategoryAdapter.class
 com/google/android/gms/measurement/AppMeasurementService$1.class
-com/flowzr/activity/BudgetActivity$3.class
 android/support/v4/app/FragmentStatePagerAdapter.class
 com/flowzr/activity/AbstractTotalListFragment$1.class
 com/flowzr/orb/EntityManager.class
@@ -996,6 +1002,7 @@ com/flowzr/activity/BudgetActivity.class
 com/google/android/gms/maps/SupportMapFragment.class
 android/support/v4/graphics/drawable/DrawableCompat.class
 android/support/v4/view/NestedScrollingParent.class
+com/flowzr/activity/BlotterFilterActivity$2.class
 android/support/design/widget/Snackbar$4.class
 com/flowzr/activity/AbstractTotalListFragment$2.class
 android/support/v4/media/MediaMetadataCompat$Builder.class

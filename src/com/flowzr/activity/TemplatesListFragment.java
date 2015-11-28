@@ -11,6 +11,7 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.util.Log;
 import android.view.*;
 import android.widget.ListAdapter;
 import com.flowzr.R;
@@ -89,6 +90,7 @@ public class TemplatesListFragment extends BlotterFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent=null;
+		Log.e("flowzr", "on option selected");
 		switch (item.getItemId()) {
 			case R.id.bCancel:
 				getActivity().setResult(MainActivity.RESULT_CANCELED);

@@ -10,23 +10,18 @@
       Denis Solonenko - initial API and implementation
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="?android:attr/listPreferredItemHeight"
-	android:paddingLeft="0dip" android:paddingRight="12dip">
+	android:layout_width="fill_parent"
+	android:layout_height="?android:attr/listPreferredItemHeight">
+
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    	style="@style/ListItem"
-    	android:paddingLeft="@dimen/space_large"
-    	android:paddingRight="@dimen/space_large">
-    		
-		
-	
+    	style="@style/ListItem">
 
 	<TextView android:id="@+id/line1" android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentTop="true" 
+		android:layout_height="fill_parent"
 		android:layout_alignWithParentIfMissing="true"
 		android:singleLine="true" android:gravity="center_vertical"
-		android:layout_marginLeft="11dip" android:ellipsize="marquee" android:text="line1"
-		style="@style/TextView" android:textSize="@dimen/text_xlarge" 
+		android:layout_marginLeft="@dimen/space_large" android:ellipsize="marquee" android:text="line1"
+		style="@style/TextView" android:textSize="@dimen/text_normal"
 		/>
 		
 	<TextView android:id="@+id/label" android:layout_width="wrap_content"

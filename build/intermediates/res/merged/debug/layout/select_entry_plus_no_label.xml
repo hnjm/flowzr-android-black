@@ -10,11 +10,9 @@
       Denis Solonenko - initial API and implementation
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/top_layout" android:layout_width="fill_parent"
-	android:layout_height="wrap_content" android:paddingRight="?android:attr/scrollbarSize"
-	android:minHeight="@dimen/select_entry_height_no_label" android:background="@drawable/activated_background"
-	android:orientation="horizontal" android:gravity="bottom"
-	android:focusable="true" android:clickable="true">
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	style="@style/ListItem">
 	<TextView android:id="@+id/data" android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginLeft="8dip" 

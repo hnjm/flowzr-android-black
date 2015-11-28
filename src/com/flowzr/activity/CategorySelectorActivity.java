@@ -17,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.flowzr.R;
-import com.flowzr.adapter.BlotterListAdapter;
 import com.flowzr.model.Category;
 import com.flowzr.model.CategoryTree;
 import com.flowzr.model.CategoryTreeNavigator;
@@ -31,7 +30,6 @@ import java.util.*;
  * User: denis.solonenko
  * Date: 3/14/12 10:40 PM
  */
-import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -208,7 +206,7 @@ public class CategorySelectorActivity extends AbstractListActivity {
             }
             v.topView.setVisibility(View.INVISIBLE);
             if (navigator.isSelected(c.id)) {
-                v.layout.setBackgroundResource(R.drawable.activated_background);
+                v.layout.setBackgroundResource(R.drawable.activated_background2);
             } else {
                 v.layout.setBackgroundResource(0);
             }

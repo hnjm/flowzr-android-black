@@ -17,6 +17,8 @@ import greendroid.widget.QuickActionWidget;
 import java.util.LinkedList;
 import java.util.List;
 import android.os.Parcelable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import com.flowzr.R;
@@ -59,7 +61,18 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
 	protected AbstractTotalListFragment(int contentId) {
 		this.contentId = contentId;				
 	}
-    
+
+
+
+	public Bundle getScaleUpOption() {
+		Bundle options = ActivityOptionsCompat.makeScaleUpAnimation(
+				getView(), 0, 0,
+				getActivity().findViewById(android.R.id.content).getWidth(),
+				getActivity().findViewById(android.R.id.content).getHeight()).toBundle();
+		return options;
+		//ActivityCompat.startActivityForResult(getActivity(), intent, NEW_ACCOUNT_REQUEST, options);
+	}
+
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -197,8 +210,5 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
 	}
 
 
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-
-	}
 
 }
