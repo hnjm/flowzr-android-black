@@ -1,5 +1,4 @@
 add_key.sh
-build
 *.class
 *.jar
 *.apk

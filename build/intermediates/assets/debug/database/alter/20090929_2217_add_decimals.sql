@@ -1,1 +1,0 @@
-ALTER TABLE currency ADD COLUMN decimals integer not null default 2;

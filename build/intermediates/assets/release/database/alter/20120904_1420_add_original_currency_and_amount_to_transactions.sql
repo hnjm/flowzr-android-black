@@ -1,1 +1,0 @@
-ALTER TABLE transactions ADD COLUMN original_currency_id long not null default 0;

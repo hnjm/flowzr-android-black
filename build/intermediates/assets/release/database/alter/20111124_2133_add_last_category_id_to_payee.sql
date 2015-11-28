@@ -1,1 +1,0 @@
-ALTER TABLE payee ADD COLUMN last_category_id long not null default 0;

@@ -1,1 +1,0 @@
-ALTER TABLE transactions ADD COLUMN last_recurrence long not null default 0;
