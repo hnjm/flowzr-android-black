@@ -1,8 +1,14 @@
 This is the Main New Repository for Flowzr's Android App.
+<center>
+<a href="https://play.google.com/store/apps/details?id=com.flowzr.budget.holo">
+<img src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" width="120" alt="Finance Software from Google Play">
+</a>
+</center>
 
-Flowzr is a fork of Financisto with a goal of evolution and contribution.
-
-Based on it's beautifull
+<center>
+<img class="" id="logo-flowzr" src="http://www.flowzr.com/static/img/logo-big2.png" width="160" alt="www.flowzr.com">
+A contributive fork of the beautifull Financisto.
+</center>
 
 Featuring:
 
