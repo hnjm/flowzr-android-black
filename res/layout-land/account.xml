@@ -1,0 +1,71 @@
+<!--
+  Copyright (c) 2010 Denis Solonenko.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  
+  Contributors:
+      Denis Solonenko - initial API and implementation
+      Emmanuel Florent - Add icon title, port to appcompat 21+
+-->
+
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/content"
+	android:fitsSystemWindows="true"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:paddingTop="?attr/actionBarSize"
+		android:layout_height="fill_parent"
+		android:orientation="horizontal"
+		android:weightSum="1">
+
+	<LinearLayout
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:layout_marginLeft="@dimen/space_large"
+		android:layout_weight="0.4">
+		<include layout="@layout/layout_title"/>
+	</LinearLayout>
+
+	<FrameLayout  android:layout_weight="0.6"
+		android:id="@+id/fragment_land_container"
+		android:layout_width="0dp"
+		android:layout_height="fill_parent">
+
+		<ScrollView
+			android:layout_marginTop="@dimen/space_normal"
+			android:layout_height="match_parent"
+			android:layout_width="fill_parent"
+			android:animateLayoutChanges="true"
+			android:scrollbars="none">
+
+			<LinearLayout
+				android:layout_width="fill_parent" android:layout_height="fill_parent"
+				android:orientation="vertical" android:id="@+id/layout">
+			</LinearLayout>
+		</ScrollView>
+
+	</FrameLayout>
+
+	</LinearLayout>
+
+	<include layout="@layout/toolbar"/>
+	<android.support.design.widget.FloatingActionButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:clickable="true"
+		android:src="@drawable/ic_action_done"
+		android:elevation="6dp"
+		android:id="@+id/saveButton"
+		android:layout_gravity="bottom|left"
+		xmlns:android="http://schemas.android.com/apk/res/android" />
+
+</android.support.design.widget.CoordinatorLayout>

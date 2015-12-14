@@ -297,10 +297,9 @@ and navigationBarColor.
 
     </style>
     <style name="ProgressBarBudget" parent="@android:style/Widget.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/ic_action_warning</item>
-        <item name="android:minHeight">12dip</item>
-        <item name="android:maxHeight">12dip</item>
+        <item name="android:layout_height">@dimen/space_small</item>
     </style>
+
 
     <style name="PadButtonStyle" >
         <item name="android:layout_width">fill_parent</item>

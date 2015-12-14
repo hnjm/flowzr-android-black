@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import com.flowzr.R;
+import com.flowzr.activity.AbstractTotalListFragment;
 import com.flowzr.activity.AccountActivity;
 import com.flowzr.activity.AccountListFragment;
 import com.flowzr.db.DatabaseAdapter;
@@ -120,7 +121,7 @@ public class AccountInfoDialog {
                 d.dismiss();
                 Intent intent = new Intent(parentActivity.getActivity(), AccountActivity.class);
                 intent.putExtra(AccountActivity.ACCOUNT_ID_EXTRA, accountId);
-                parentActivity.startActivityForResult(intent, AccountListFragment.EDIT_ACCOUNT_REQUEST);
+                parentActivity.startActivityForResult(intent, AbstractTotalListFragment.EDIT_ACCOUNT_REQUEST);
             }
         });
 

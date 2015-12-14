@@ -20,7 +20,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +39,7 @@ import com.flowzr.utils.Utils;
 import java.math.BigDecimal;
 import java.util.Stack;
 
-public class CalculatorInput extends ActionBarActivity implements OnClickListener {
+public class CalculatorInput extends AppCompatActivity implements OnClickListener {
 
     public static final int[] buttons = {R.id.b0, R.id.b1, R.id.b2, R.id.b3,
             R.id.b4, R.id.b5, R.id.b6, R.id.b7, R.id.b8, R.id.b9, R.id.bAdd,
@@ -58,8 +62,14 @@ public class CalculatorInput extends ActionBarActivity implements OnClickListene
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.calculator);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);  
-        getSupportActionBar().setTitle("");
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
@@ -85,20 +95,25 @@ public class CalculatorInput extends ActionBarActivity implements OnClickListene
         Intent intent = getIntent();
         if (intent != null) {
             String amount = intent.getStringExtra(AmountInput.EXTRA_AMOUNT);
+            String title = intent.getStringExtra(AmountInput.EXTRA_TITLE);
             if (amount != null) {
                 setDisplay(amount);
+
+            }
+            if (title!=null) {
+                getSupportActionBar().setTitle(title);
             }
         }
 
     }
-
+/**
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         //getMenuInflater().inflate(R.menu.ok_cancel, menu);
         return true;
     }
-    
+   **/
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -109,7 +124,6 @@ public class CalculatorInput extends ActionBarActivity implements OnClickListene
                     doEqualsChar();
                 }
                 close();
-			
         		return true;
 	    	case android.R.id.home:
 				setResult(RESULT_CANCELED);

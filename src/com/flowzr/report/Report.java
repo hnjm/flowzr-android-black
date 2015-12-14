@@ -171,11 +171,8 @@ public abstract class Report {
 		}
         filter.eq("from_account_is_include_into_totals", "1");
 		Intent intent = new Intent(context, MainActivity.class);
-		if (getBlotterActivityClass()==BlotterFragment.class) {
-			intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
-		} else {
-			intent.putExtra(MainActivity.REQUEST_SPLIT_BLOTTER, true);
-		}
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
 		filter.toIntent(intent);
 		return intent;
 	}

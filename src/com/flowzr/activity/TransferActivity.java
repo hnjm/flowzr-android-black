@@ -77,6 +77,12 @@ public class TransferActivity extends AbstractTransactionActivity {
         categorySelector.doNotShowSplitCategory();
     }
 
+
+	protected void fetchCategories(long[] cids) {
+		categorySelector.fetchCategories(cids);
+		categorySelector.doNotShowSplitCategory();
+	}
+
 	protected int getLayoutId() {
 		return R.layout.transfer_free;
 	}

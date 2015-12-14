@@ -17,6 +17,7 @@ import com.flowzr.view.PinView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 public class PinActivity extends Activity implements PinView.PinListener {
 	
@@ -25,6 +26,8 @@ public class PinActivity extends Activity implements PinView.PinListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		String pin = MyPreferences.getPin(this);
 		if (pin == null) {
 			onSuccess(null);

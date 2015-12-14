@@ -29,10 +29,14 @@
 			android:maxLines="1" android:duplicateParentState="true" />
 	</RelativeLayout>
 	<ImageView android:id="@+id/transfer"
-        android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/space_small"
+		android:layout_height="32dp"
+		android:layout_width="32dp"
         android:focusable="true" android:clickable="true"/>
-	<ImageView style="@style/PlusButton" android:layout_width="wrap_content"
-		android:id="@+id/plus_minus" android:layout_height="wrap_content" 
+	<ImageView style="@style/PlusButton"
+		android:layout_margin="@dimen/space_small"
+		android:layout_height="32dp"
+		android:layout_width="32dp"
+		android:id="@+id/plus_minus"
 		android:focusable="true" android:clickable="true"/>
 </LinearLayout>

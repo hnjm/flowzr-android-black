@@ -14,25 +14,16 @@ package com.flowzr.activity;
 
 import greendroid.widget.QuickActionWidget;
 
-import java.util.LinkedList;
-import java.util.List;
 import android.os.Parcelable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
-import com.flowzr.utils.Utils;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,9 +33,28 @@ import android.widget.ListView;
 import static com.flowzr.utils.AndroidUtils.isGreenDroidSupported;
 
 public abstract class AbstractTotalListFragment extends ListFragment implements RefreshSupportedActivity {
-	
 
-	protected static final int MENU_ADD = Menu.FIRST+4;
+	//protected static final int MENU_ADD = Menu.FIRST+4;
+	protected static final int NEW_ACCOUNT_REQUEST = 100;
+	public static final int EDIT_ACCOUNT_REQUEST = 101;
+	protected static final int VIEW_ACCOUNT_REQUEST = 102;
+	protected static final int PURGE_ACCOUNT_REQUEST = 103;
+
+	protected static final int NEW_TRANSACTION_REQUEST = 104;
+	protected static final int NEW_TRANSFER_REQUEST = 105;
+	protected static final int NEW_TRANSACTION_FROM_TEMPLATE_REQUEST = 106;
+	protected static final int MONTHLY_VIEW_REQUEST = 107;
+	protected static final int BILL_PREVIEW_REQUEST = 108;
+
+	protected static final int FILTER_REQUEST = 109;
+	protected static final int MENU_DUPLICATE = 110;
+	protected static final int MENU_SAVE_AS_TEMPLATE = 111;
+
+	protected static final int NEW_BUDGET_REQUEST = 112;
+	protected static final int EDIT_BUDGET_REQUEST = 113;
+	protected static final int FILTER_BUDGET_REQUEST = 114;
+	//protected static final int VIEW_BUDGET_REQUEST = 115;
+
 	protected static final String EXTRA_LAYOUT="EXTRA_LAYOUT";
 	public static final String EXTRA_REQUEST_TYPE="EXTRA_REQUEST_TYPE"; 
 	protected int contentId;
@@ -62,15 +72,12 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
 		this.contentId = contentId;				
 	}
 
-
-
 	public Bundle getScaleUpOption() {
 		Bundle options = ActivityOptionsCompat.makeScaleUpAnimation(
 				getView(), 0, 0,
 				getActivity().findViewById(android.R.id.content).getWidth(),
 				getActivity().findViewById(android.R.id.content).getHeight()).toBundle();
 		return options;
-		//ActivityCompat.startActivityForResult(getActivity(), intent, NEW_ACCOUNT_REQUEST, options);
 	}
 
     public void onCreate(Bundle savedInstanceState)
@@ -203,12 +210,9 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
 	}
 
 
-
 	protected String getMyTitle() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 }

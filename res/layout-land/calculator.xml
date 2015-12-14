@@ -15,6 +15,7 @@
 
 
 <LinearLayout
+	android:paddingTop="?attr/actionBarSize"
 	android:orientation="vertical"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
@@ -122,5 +123,7 @@
 		android:src="@drawable/ic_action_done"
 		app:layout_anchor="@id/pad_layout"
 		app:layout_anchorGravity="top|right|end"/>
+
+	<include layout="@layout/toolbar"/>
 
 </android.support.design.widget.CoordinatorLayout>

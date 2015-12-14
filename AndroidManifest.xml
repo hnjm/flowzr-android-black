@@ -12,14 +12,13 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flowzr" android:versionName="1.7.4" android:versionCode="211"
+    package="com.flowzr" android:versionName="1.7.6" android:versionCode="218"
     android:installLocation="internalOnly">
 
     <!-- Maps API needs OpenGL ES 2.0. -->
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true"/>
-
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
@@ -63,7 +62,8 @@
             android:icon="@drawable/icon" android:label="@string/app_name"
 		    android:description="@string/app_description"
             android:name="android.support.multidex.MultiDexApplication">
-		
+
+
 		<uses-library android:name="com.google.android.maps" />
 
 		 <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
@@ -96,9 +96,9 @@
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_4x1" />
         </receiver>
 
-		<receiver android:name="com.flowzr.activity.ScheduledAlarmReceiver">
+		<receiver android:name=".activity.ScheduledAlarmReceiver">
 		    <intent-filter>
-		        <action android:name="com.flowzr.SCHEDULED_ALARM" />
+		        <action android:name=".SCHEDULED_ALARM" />
                 <action android:name="com.flowzr.SCHEDULED_BACKUP" />
                 <action android:name="com.flowzr.SCHEDULED_SYNC" />
 		        <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -136,6 +136,7 @@
 
 		<activity android:name=".activity.MainActivity" android:label="@string/app_name"
             android:configChanges="orientation|keyboardHidden|screenSize">
+            <!-- android:launchMode="singleTop" -->
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
@@ -170,13 +171,13 @@
 
 		<activity android:name=".activity.BlotterActivity" android:label="@string/blotter"  >
 		</activity>
-
+<!--
         <activity android:name=".activity.PlannerActivity" android:label="@string/planner" >
         </activity>
 
         <activity android:name=".activity.MassOpActivity" android:label="@string/mass_operations" >
         </activity>
-				
+	-->
 		<activity android:name=".activity.LocationActivity" android:label="@string/location"/>
 
         <activity android:name=".activity.ExchangeRateActivity" android:label="@string/exchange_rate"
@@ -227,11 +228,8 @@
 			android:configChanges="orientation|keyboardHidden|screenSize">
 		</activity>
 		
-		<activity android:name=".widget.QuickAmountInput"
-			android:label="@string/amount" android:theme="@style/FinancistoDialog"/>
-		
-		<activity android:name=".widget.CalculatorInput"
-			android:label="@string/calculator" android:theme="@style/FinancistoDialog"/>
+
+		<activity android:name=".widget.CalculatorInput" android:label="@string/calculator" />
 		
 		<activity android:name=".activity.BudgetActivity" android:label="@string/budgets"
 			android:configChanges="orientation|keyboardHidden|screenSize"  >
@@ -256,11 +254,11 @@
 
 		<activity android:name=".activity.MonthlyViewActivity" android:label="@string/monthly_view"/>
 		<activity android:name=".activity.CCardStatementClosingDayActivity" android:label="@string/closing_day" />
-		
+		<!--
 		<activity 	android:name=".activity.Report2DChartActivity" 
 					android:label="@string/report" >
 		</activity>
-
+        -->
 
         <activity android:name=".activity.TransactionPreferencesActivity"
             android:theme="@android:style/Theme.Black"
@@ -283,31 +281,31 @@
         <activity android:name=".activity.CategorySelectorActivity" 
             android:label="@string/select_category">
         </activity>
-
+<!--
         <activity android:name=".activity.AccountListTotalsDetailsActivity" android:label="@string/totals"
                   android:theme="@style/FinancistoDialog"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activity.MainActivity">
 		    <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainActivity" />
+            android:value=".activity.MainActivity" />
         </activity>
 
         <activity android:name=".activity.BlotterTotalsDetailsActivity" android:label="@string/totals"
                   android:theme="@style/FinancistoDialog" android:configChanges="orientation|keyboardHidden|screenSize" android:parentActivityName=".MainActivity">
 		    <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainActivity" />
+            android:value=".activity.MainActivity" />
         </activity>
 
         <activity android:name=".activity.BudgetListTotalsDetailsActivity" android:label="@string/totals"
                   android:theme="@style/FinancistoDialog" android:configChanges="orientation|keyboardHidden|screenSize"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activity.MainActivity">
 		    <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainActivity" />
+            android:value=".activity.MainActivity" />
         </activity>
-
+-->
         <activity android:name=".activity.PurgeAccountActivity" android:label="@string/delete_old_transactions"/>
 
         <activity android:name=".activity.FlowzrSyncActivity" android:label="@string/flowzr_sync" 
@@ -342,10 +340,10 @@
 		<activity android:name=".activity.BackupListActivity" 
 			android:label="@string/backup" 			
 			android:theme="@style/Theme.Financisto"
-			android:parentActivityName=".MainActivity">
+			android:parentActivityName=".activity.MainActivity">
 		    <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainActivity" />
+            android:value=".activity.MainActivity" />
             <meta-data android:name="com.google.android.apps.drive.APP_ID" android:value="id=1047129956322" />
             <intent-filter>
                 <action android:name="com.google.android.apps.drive.DRIVE_OPEN" />
@@ -355,14 +353,15 @@
 
 
 		</activity>
+<!--             android:configChanges="keyboardHidden|screenSize" -->
+		<activity android:name=".activity.EntityListActivity"
 
-		<activity android:name=".activity.EntityListActivity" android:configChanges="keyboardHidden|screenSize"
 			android:label="@string/entities"
 			android:theme="@style/Theme.Financisto">			
 
 		    <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.flowzr.MainActivity" />			
+            android:value=".activity.MainActivity" />
 		</activity>		
 
 	</application>

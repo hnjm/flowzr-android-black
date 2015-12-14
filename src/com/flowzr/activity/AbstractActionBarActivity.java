@@ -11,17 +11,13 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
+
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
 import android.support.design.widget.NavigationView;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -32,49 +28,39 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
 import android.os.Bundle;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.flowzr.R;
 import com.flowzr.utils.*;
 
 public class AbstractActionBarActivity  extends AppCompatActivity {
 
-    private static final int CHANGE_PREFERENCES = 6;
-    private static final int ACTIVITY_BACKUP = 8;    
+    private static final int CHANGE_PREFERENCES = 600;
+    private static final int ACTIVITY_BACKUP = 800;
 
 	public Toolbar actionBar;
 	// Within which the entire activity is enclosed
 	protected DrawerLayout mDrawerLayout;
 	protected static ViewPager viewPager;
+    public static MyAdapter mAdapter;
 
-	public MyAdapter mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private boolean isDrawerLocked;
 
 
-
     public static class MyAdapter extends FragmentPagerAdapter {
         Bundle bundle;
-        private String tabtitles[] = new String[] { "Tab1", "Tab2", "Tab3" };
         public static BlotterFragment blotterFragment;
         public static AccountListFragment accountListFragment;
         public static BudgetListFragment budgetListFragment;
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return tabtitles[position];
-        }
 
         public MyAdapter(FragmentManager fm, Intent i) {
             super(fm);
@@ -85,19 +71,16 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
             bundle=b;
         }
 
-        public void setMyArguments(Bundle b) {
-            bundle=b;
-        }
 
         @Override
         public int getCount() {
             return 3;
         }
 
-        @Override
-        public int getItemPosition(Object object){
-            return POSITION_NONE; // clear cache
-        }
+        //@Override
+        //public int getItemPosition(Object object){
+        //    return POSITION_NONE; // clear cache
+        //}
 
         @Override
         public Fragment getItem(int position) {
@@ -127,7 +110,8 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        this.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     protected void initToolbar() {
@@ -169,7 +153,7 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
                         break;
                     case R.id.drawer_item_blotter:
                         menuItem.setChecked(true);
-                        loadTabFragment(R.layout.blotter, new Bundle(), 1);
+                        viewPager.setCurrentItem(1);
                         mAdapter.notifyDataSetChanged();
                         break;
                     case R.id.drawer_item_budget:
@@ -182,7 +166,8 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.drawer_item_entities:
-                        startActivity(new Intent(getApplicationContext(), EntityListActivity.class));
+                        intent = new Intent(getApplicationContext(), EntityListActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.drawer_item_preferences:
                         startActivityForResult(new Intent(getApplicationContext(), PreferencesActivity.class), CHANGE_PREFERENCES);
@@ -206,27 +191,6 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
 	}
 
 
-    public void loadTabFragment( int rId, Bundle bundle, final int tabId) {
-        Intent data=new Intent(this,BlotterFragment.class);
-        data.putExtras(bundle);
-        bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, rId);
-        mAdapter.blotterFragment.onActivityResult(BlotterFragment.FILTER_REQUEST, MainActivity.RESULT_OK, data);
-        viewPager.setCurrentItem(tabId);
-
-        //mAdapter.setMyArguments(bundle);
-        //mAdapter.notifyDataSetChanged();
-        //mAdapter.getItem(tabId);
-        //viewPager.getAdapter().notifyDataSetChanged();
-        //try {
-        //    viewPager.setCurrentItem(tabId,true);
-        //} catch (Exception e)  {
-        //    e.printStackTrace();
-        //}
-
-    }
-
-
-
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -238,6 +202,7 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        PinProtection.unlock(this);
         if (mDrawerLayout!=null ) {
             mDrawerToggle.onConfigurationChanged(newConfig);
             if (newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE) {
@@ -246,9 +211,6 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
                 mDrawerLayout.findViewById(R.id.drawer_header).setVisibility(View.VISIBLE);
             }
         }
-        PinProtection.unlock(this);
-        mAdapter.notifyDataSetChanged();
-
     }
 
     @Override
@@ -261,24 +223,35 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         super.onRestoreInstanceState(state);
     }
 
+    /**
     @Override
     protected void onResume() {
         super.onResume();
-        PinProtection.unlock(this);
+        try {
+            // check if any view exists on current view
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        } catch (Exception e) {
+            // Button was not found
+            // It means, your button doesn't exist on the "current" view
+            // It was freed from the memory, therefore stop of activity was performed
+            // In this case I restart my app
+            Intent i = new Intent();
+            i.setClass(getApplicationContext(), MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            // Show toast to the user
+            Toast.makeText(getApplicationContext(), "Data lost due to excess use of other apps", Toast.LENGTH_LONG).show();
+            //finish();
+        }
     }
+    **/
 
     @Override
     protected void onPause() {
         super.onPause();
-        PinProtection.lock(this);
+        Log.e("flowzr", "on pause A");
+        //PinProtection.lock(this);
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        PinProtection.immediateLock(this);
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)

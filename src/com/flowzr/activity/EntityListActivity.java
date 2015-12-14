@@ -17,23 +17,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
+import android.text.style.TypefaceSpan;;
 import android.util.Log;
 import android.view.MenuItem;
-
-import javax.persistence.Entity;
-
 
 public class EntityListActivity extends AppCompatActivity {
 
 	public final static String REQUEST_BLOTTER_TOTALS="REQUEST_BLOTTER_TOTALS";
-	public final static String REQUEST_BLOTTER="REQUEST_BLOTTER";
+	//public final static String REQUEST_BLOTTER="REQUEST_BLOTTER";
 	public final static String REQUEST_MASS_OP="REQUEST_MASSOP";
 	public final static String REQUEST_TEMPLATES="REQUEST_TEMPLATES";
 	public final static String REQUEST_EXCHANGE_RATES="REQUEST_EXCHANGE_RATES";
@@ -45,6 +41,7 @@ public class EntityListActivity extends AppCompatActivity {
 	public final static String REQUEST_NEW_TRANSACTION_FROM_TEMPLATE="REQUEST_NEW_TRANSACTION_FROM_TEMPLATE";
 	public final static String REQUEST_BUDGET_TOTALS="REQUEST_BUDGET_TOTALS";
 	public final static String REQUEST_ACCOUNT_TOTALS="REQUEST_ACCOUNT_TOTALS";
+
 
 	public void setMyTitle(String t) {
 		SpannableString s = new SpannableString(t);
@@ -58,13 +55,14 @@ public class EntityListActivity extends AppCompatActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 		fragment.onActivityResult(requestCode, resultCode, data);
+		setResult(RESULT_OK);
 	}
 
 
 	public void loadFragment(Fragment fragment) {
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.replace(R.id.fragment_container, fragment);
-		//transaction.addToBackStack(null);
+		transaction.addToBackStack(null);
 		transaction.commitAllowingStateLoss();
 	}
 
@@ -90,40 +88,41 @@ public class EntityListActivity extends AppCompatActivity {
 	    }
 		initToolbar();
 
-
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		if (intent.hasExtra(ReportsListFragment.EXTRA_REPORT_TYPE)) {
 				intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.report);
 				Fragment f= new ReportFragment();
 				f.setArguments(intent.getExtras());
-				transaction.replace(R.id.fragment_container,f);			
+				transaction.replace(R.id.fragment_container, f);
+			//transaction.addToBackStack(null);
 		} else if (intent.hasExtra(MainActivity.REQUEST_SPLIT_BLOTTER)) {
 			Fragment f= new BudgetBlotterFragment();
 			f.setArguments(intent.getExtras());
 			intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.blotter);
-			transaction.replace(R.id.fragment_container,f);          	
+			transaction.replace(R.id.fragment_container, f);
+			transaction.addToBackStack(null);
         } else 	if (intent.hasExtra(REQUEST_BUDGET_BLOTTER)) {
 			Fragment f= new BudgetBlotterFragment();
 			f.setArguments(intent.getExtras());
 			intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.blotter);
-			transaction.replace(R.id.fragment_container,f);
-		} else 	if (intent.hasExtra(REQUEST_BLOTTER)) {
-			Fragment f= new BlotterFragment();
-			f.setArguments(intent.getExtras());
-			intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.blotter);
-			transaction.replace(R.id.fragment_container,f);
+			transaction.replace(R.id.fragment_container, f);
+			//transaction.addToBackStack(null);
 		} else if (intent.hasExtra(REQUEST_REPORTS)) {
 			intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.reports_list);
-			transaction.replace(R.id.fragment_container,new ReportsListFragment());						
+			transaction.replace(R.id.fragment_container, new ReportsListFragment());
+			//transaction.addToBackStack(null);
 		} else if (intent.hasExtra(REQUEST_EXCHANGE_RATES)) {
 			intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.reports_list);
-			transaction.replace(R.id.fragment_container,new ExchangeRatesListFragment());			
+			transaction.replace(R.id.fragment_container,new ExchangeRatesListFragment());
+			transaction.addToBackStack(null);
 		} else if (intent.hasExtra(REQUEST_CATEGORY_SELECTOR)) {
-				intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.category_selector);
-				transaction.replace(R.id.fragment_container,new CategorySelectorFragment());
+			intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.category_selector);
+			transaction.replace(R.id.fragment_container,new CategorySelectorFragment());
+			//transaction.addToBackStack(null);
 			} else if (intent.hasExtra(REQUEST_SCHEDULED)) {
 				intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.scheduled_transactions);
-				transaction.replace(R.id.fragment_container, new ScheduledListActivity());
+			transaction.replace(R.id.fragment_container, new ScheduledListActivity());
+			//transaction.addToBackStack(null);
 			} else if (intent.hasExtra(REQUEST_PLANNER)) {
 				intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.planner);
 				if (findViewById(R.id.fragment_land_container)!=null) {
@@ -131,16 +130,20 @@ public class EntityListActivity extends AppCompatActivity {
 				} else {
 					transaction.replace(R.id.fragment_container,new PlannerActivity());		
 				}
+			//transaction.addToBackStack(null);
 			} else if (intent.hasExtra(REQUEST_MASS_OP)) {
 				intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.blotter_mass_op);
-				transaction.replace(R.id.fragment_container,new MassOpActivity());			
+			transaction.replace(R.id.fragment_container,new MassOpActivity());
+			transaction.addToBackStack(null);
 			}	else if (intent.hasExtra(REQUEST_TEMPLATES)) {	
 				intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.templates);
-				transaction.replace(R.id.fragment_container,new TemplatesListFragment());			
+			transaction.replace(R.id.fragment_container,new TemplatesListFragment());
+			transaction.addToBackStack(null);
 			}	else if (intent.hasExtra(REQUEST_NEW_TRANSACTION_FROM_TEMPLATE)) {
 				intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.templates);
-				transaction.replace(R.id.fragment_container,new SelectTemplateActivity());			
-			}	 else if (intent.hasExtra(REQUEST_BLOTTER_TOTALS)) {
+			transaction.replace(R.id.fragment_container,new SelectTemplateActivity());
+			transaction.addToBackStack(null);
+		}	 else if (intent.hasExtra(REQUEST_BLOTTER_TOTALS)) { //Total used for
 				Fragment f= new BlotterTotalsDetailsFragment();
 				f.setArguments(intent.getExtras());
 				transaction.replace(R.id.fragment_container,f);									
@@ -161,10 +164,14 @@ public class EntityListActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
 		switch (item.getItemId()) {
+
 			case android.R.id.home: {
+				Log.e("flowzr", "finishing");
+				//setResult(RESULT_OK);
+				//finish();
 				super.onBackPressed();
+				//return true;
 			}
 		}
 		return super.onOptionsItemSelected(item);

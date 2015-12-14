@@ -114,11 +114,3 @@ dependencies {
     compile 'com.google.android.gms:play-services-gcm:8.3.0'
     compile 'com.github.ganfra:material-spinner:1.1.1'
 }
-
-
-
- 
- 
- 
-
-

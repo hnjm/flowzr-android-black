@@ -110,10 +110,11 @@ public class LocationsListFragment extends AbstractListFragment {
 	@Override
 	protected void viewItem(View v, int position, long id) {
 		MyLocation e = em.load(MyLocation.class, id);
-		Intent intent = new Intent(this.getActivity(), EntityListActivity.class);
+		Intent intent = new Intent(this.getActivity(), MainActivity.class);
         Criteria blotterFilter = Criteria.eq(BlotterFilter.LOCATION_ID, String.valueOf(e.id));
         blotterFilter.toIntent(e.name, intent);
 		intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 	}
 

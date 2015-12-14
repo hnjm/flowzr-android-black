@@ -38,14 +38,16 @@ import com.flowzr.R;
 import com.flowzr.adapter.BlotterListAdapter;
 import com.flowzr.adapter.TransactionsListAdapter;
 import com.flowzr.blotter.AccountTotalCalculationTask;
+import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.blotter.BlotterTotalCalculationTask;
 import com.flowzr.blotter.TotalCalculationTask;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.filter.WhereFilter;
 import com.flowzr.dialog.TransactionInfoDialog;
 import com.flowzr.model.Account;
+import com.flowzr.model.Budget;
+import com.flowzr.model.MyEntity;
 import com.flowzr.model.Transaction;
-import com.flowzr.utils.PinProtection;
 import com.flowzr.view.NodeInflater;
 import static com.flowzr.utils.AndroidUtils.isGreenDroidSupported;
 
@@ -66,15 +68,6 @@ public class BlotterFragment extends AbstractTotalListFragment {
     }
 
     public static final String SAVE_FILTER = "saveFilter";
-    private static final int NEW_TRANSACTION_REQUEST = 1;
-    private static final int NEW_TRANSFER_REQUEST = 3;
-    public static final int NEW_TRANSACTION_FROM_TEMPLATE_REQUEST = 5;
-    private static final int MONTHLY_VIEW_REQUEST = 8;
-    private static final int BILL_PREVIEW_REQUEST = 7;
-
-    protected static final int FILTER_REQUEST = 6;
-    private static final int MENU_DUPLICATE = MENU_ADD+1;
-    private static final int MENU_SAVE_AS_TEMPLATE = MENU_ADD+2;
     protected ImageButton bFilter;
     private QuickActionWidget addButtonActionGrid;
     private TotalCalculationTask calculationTask;
@@ -132,6 +125,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
         if (getView().findViewById(R.id.fragment_land_container)!=null) {
             Fragment fragment=new BlotterTotalsDetailsFragment();
             Bundle bundle= new Bundle();
+
             blotterFilter.toBundle(bundle);
             fragment.setArguments(bundle);
             getChildFragmentManager().beginTransaction().replace(R.id.fragment_land_container, fragment).commitAllowingStateLoss();
@@ -383,11 +377,50 @@ public class BlotterFragment extends AbstractTotalListFragment {
     }
 
     protected void addItem(int requestId, Class<? extends AbstractTransactionActivity> clazz) {
+
         Intent intent = new Intent(BlotterFragment.this.getActivity(), clazz);
         long accountId = blotterFilter.getAccountId();
         if (accountId != -1) {
             intent.putExtra(TransactionActivity.ACCOUNT_ID_EXTRA, accountId);
         }
+
+        if ( blotterFilter.get(BlotterFilter.BUDGET_ID)!=null) {
+            Log.e("flowzr", "budgetid id:" + blotterFilter.getBudgetId());
+            intent.putExtra(TransactionActivity.BUDGET_ID_EXTRA, blotterFilter.getBudgetId());
+        }
+
+        if ( blotterFilter.get(BlotterFilter.PROJECT_ID)!=null) {
+            Log.e("flowzr", "project id:" + String.valueOf(blotterFilter.get(BlotterFilter.PROJECT_ID).getIntValue()));
+            intent.putExtra(TransactionActivity.PROJECT_ID_EXTRA, (long) blotterFilter.get(BlotterFilter.PROJECT_ID).getIntValue());
+        }
+
+
+        if ( blotterFilter.get(BlotterFilter.CATEGORY_LEFT)!=null) {
+            Log.e("flowzr", "category left:" + String.valueOf(blotterFilter.get(BlotterFilter.CATEGORY_LEFT).getIntValue()));
+            intent.putExtra(TransactionActivity.CATEGORY_ID_EXTRA, (long)blotterFilter.get(BlotterFilter.CATEGORY_LEFT).getIntValue());
+        }
+        //never happen ? category left instead
+        //if ( blotterFilter.get(BlotterFilter.CATEGORY_ID)!=null) {
+        //    Log.e("flowzr", "category id:" + String.valueOf(blotterFilter.get(BlotterFilter.CATEGORY_ID).getIntValue()));
+        //    intent.putExtra(TransactionActivity.CATEGORY_ID_EXTRA, blotterFilter.get(BlotterFilter.CATEGORY_ID).getIntValue());
+        //}
+
+
+        if ( blotterFilter.get(BlotterFilter.LOCATION_ID)!=null) {
+            Log.e("flowzr", "location id:" + String.valueOf(blotterFilter.get(BlotterFilter.LOCATION_ID).getLongValue1()));
+            intent.putExtra(TransactionActivity.LOCATION_ID_EXTRA, blotterFilter.get(BlotterFilter.LOCATION_ID).getLongValue1());
+        }
+
+        if ( blotterFilter.get(BlotterFilter.PAYEE_ID)!=null) {
+            Log.e("flowzr", "payee id:" + String.valueOf(blotterFilter.get(BlotterFilter.PAYEE_ID).getLongValue1()));
+            intent.putExtra(TransactionActivity.PAYEE_ID_EXTRA,blotterFilter.get(BlotterFilter.PAYEE_ID).getLongValue1());
+        }
+
+        if ( blotterFilter.get(BlotterFilter.STATUS)!=null) {
+            Log.e("flowzr", "status:" + blotterFilter.get(BlotterFilter.STATUS).getStringValue());
+            intent.putExtra(TransactionActivity.STATUS_EXTRA, blotterFilter.get(BlotterFilter.STATUS).getStringValue());
+        }
+
         intent.putExtra(TransactionActivity.TEMPLATE_EXTRA, blotterFilter.getIsTemplate());
         ActivityCompat.startActivityForResult(getActivity(), intent, requestId, getScaleUpOption());
     }
@@ -445,6 +478,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == FILTER_REQUEST) {
             if (resultCode == MainActivity.RESULT_FIRST_USER) {
                 blotterFilter.clear();
@@ -468,6 +502,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
             getActivity().supportInvalidateOptionsMenu();
             recreateCursor();
             calculateTotals();
+            //((MainActivity)getActivity()).mAdapter.budgetListFragment.onActivityResult(requestCode,resultCode,data);
         }
     }
 
@@ -506,6 +541,8 @@ public class BlotterFragment extends AbstractTotalListFragment {
         String title = blotterFilter.getTitle();
         if (title != null) {
             getActivity().setTitle(title);
+        } else {
+            getActivity().setTitle(R.string.blotter);
         }
 
     }

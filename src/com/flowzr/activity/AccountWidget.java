@@ -43,9 +43,9 @@ import static android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID;
 
 public class AccountWidget extends AppWidgetProvider {
 
-    private static final Uri CONTENT_URI = Uri.parse("content://com.flowzr/accountwidget");
+    private static final Uri CONTENT_URI = Uri.parse("content://com.flowzr.black/accountwidget");
 
-    private static final String WIDGET_UPDATE_ACTION = "com.flowzr.UPDATE_WIDGET";
+    private static final String WIDGET_UPDATE_ACTION = "com.flowzr.black.UPDATE_WIDGET";
     private static final String PREFS_NAME = "com.flowzr.activity.AccountWidget";
     private static final String PREF_PREFIX_KEY = "prefix_";
 
@@ -197,6 +197,7 @@ public class AccountWidget extends AppWidgetProvider {
         Criteria blotterFilter = Criteria.eq(BlotterFilter.FROM_ACCOUNT_ID, String.valueOf(a.id));
         blotterFilter.toIntent(a.title, intent);
         intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         pendingIntent = PendingIntent.getActivity(context, request++, intent, 0);
         updateViews.setOnClickPendingIntent(R.id.action_list_template, pendingIntent);
     }

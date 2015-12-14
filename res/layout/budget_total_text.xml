@@ -13,14 +13,14 @@
         android:background="#37474F"
         android:layout_width="fill_parent">
 
-    <ImageButton android:layout_width="@dimen/recommended_touch_size" android:layout_height="@dimen/recommended_touch_size"
+    <ImageButton android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_margin="@dimen/space_normal"
         android:gravity="center_vertical"
         android:layout_gravity="center_vertical"
         android:id="@+id/toggle"
         android:textOn=""
         android:textOff=""
-
         android:background="@drawable/ic_action_mail" />
 
         <TextView

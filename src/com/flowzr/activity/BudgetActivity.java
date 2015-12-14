@@ -151,6 +151,7 @@ public class BudgetActivity extends AbstractEditorActivity {
 				budget = em.load(Budget.class, id);
 				editBudget();
 			} else {
+				totalText.setText("0.00");
 				selectRecur(RecurUtils.createDefaultRecur().toString());
 			}
 		}
@@ -250,7 +251,9 @@ public class BudgetActivity extends AbstractEditorActivity {
 	protected void updateBudgetFromUI() {
 		budget.title = titleText.getText().toString();
         if (cbSavingBudget.isChecked()) {
-            budget.amount = -budget.amount;
+			if (budget.amount>0) {
+				budget.amount = -budget.amount;
+			}
         }
 		budget.includeSubcategories = cbIncludeSubCategories.isChecked();
 		budget.includeCredit = cbIncludeCredit.isChecked();

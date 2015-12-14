@@ -107,17 +107,14 @@ public abstract class MyEntityListActivity<T extends MyEntity> extends AbstractL
 	protected void viewItem(View v, int position, long id) {
 		Log.e("flowzr", "here i am");
 		T e = em.load(clazz, id);
-		//Intent intent = new Intent(this.getActivity(), MainActivity.class);
-		Intent intent = new Intent(this.getActivity(), EntityListActivity.class);
+		Intent intent = new Intent(this.getActivity(), MainActivity.class);
+		//Intent intent = new Intent(this.getActivity(), EntityListActivity.class);
 
 		Criteria blotterFilter = createBlotterCriteria(e);
         blotterFilter.toIntent(e.title, intent);
 		intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-		//intent.setAction(Intent.ACTION_MAIN);
-		//intent.addCategory(Intent.CATEGORY_LAUNCHER);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
-        //getActivity().finish();
 	}
 
     protected abstract Criteria createBlotterCriteria(T e);

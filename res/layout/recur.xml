@@ -18,8 +18,9 @@
 	android:orientation="vertical">
 
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:paddingTop="@dimen/dynamic_margin_narrow_vertical"
+		android:paddingTop="?attr/actionBarSize"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
 		android:paddingBottom="@dimen/dynamic_margin_narrow_vertical"
 		android:paddingLeft="@dimen/dynamic_margin_narrow_horizontal"
 		android:paddingRight="@dimen/dynamic_margin_narrow_horizontal"

@@ -182,7 +182,7 @@ public class DateFilterActivity extends AbstractEditorActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				try {
-					PeriodType period = periods[position-1];
+					PeriodType period = periods[position];
 					if (period == PeriodType.CUSTOM) {
 						selectCustom();
 					} else {

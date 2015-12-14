@@ -39,6 +39,7 @@ public class SplitTransferActivity extends AbstractSplitActivity {
                 setUnsplitAmount(split.unsplitAmount - newAmount);
             }
         });
+        initToolbar();
     }
 
     @Override

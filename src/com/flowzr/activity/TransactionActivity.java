@@ -11,6 +11,7 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.content.res.Configuration;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
@@ -38,13 +39,6 @@ import static com.flowzr.utils.AndroidUtils.isGreenDroidSupported;
 import static com.flowzr.utils.Utils.isNotEmpty;
 
 public class TransactionActivity extends AbstractTransactionActivity {
-
-	public static final String CURRENT_BALANCE_EXTRA = "accountCurrentBalance";
-	public static final String AMOUNT_EXTRA = "accountAmount";
-    public static final String ACTIVITY_STATE = "ACTIVITY_STATE";
-
-    private static final int SPLIT_REQUEST = 5001;
-    private static final int BLOTTER_PREFERENCES = 5002;
 
     private final Currency currencyAsAccount = new Currency();
 
@@ -78,7 +72,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
         return true;
     }
 
-    
+
     
 	@Override
 	protected void internalOnCreate() {
@@ -230,13 +224,13 @@ public class TransactionActivity extends AbstractTransactionActivity {
     }
 
     @Override
+    protected void fetchCategories(long[] cids) {
+        categorySelector.fetchCategories(cids);
+    }
+
+    @Override
 	protected void createListNodes(LinearLayout layout) {
         rateView.createTransactionUI();
-        //rateView.hideFromAmount();
-
-
-
-
         // difference
         if (isUpdateBalanceMode) {
             differenceText = x.addInfoNode(layout, -1, R.string.difference, "0");
@@ -775,6 +769,6 @@ public class TransactionActivity extends AbstractTransactionActivity {
         public long idSequence;
         public List<Transaction> splits;
     }
-    
+
 
 }

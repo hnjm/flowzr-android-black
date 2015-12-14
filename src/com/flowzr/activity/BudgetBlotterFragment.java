@@ -66,6 +66,8 @@ public class BudgetBlotterFragment extends BlotterFragment {
         item.setVisible(false);
         item = menu.findItem(R.id.opt_menu_month);
         item.setVisible(false);
+        item = menu.findItem(R.id.action_list_template);
+        item.setVisible(false);
     }
 
 	@Override

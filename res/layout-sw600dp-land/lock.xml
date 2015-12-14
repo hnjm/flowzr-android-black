@@ -56,9 +56,7 @@
 			<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="24sp" android:text="OK" android:id="@+id/bClear" android:textStyle="bold" android:textColor="#39b54a" android:minHeight="@dimen/pin_button_height" android:minWidth="@dimen/pin_button_width"></Button></TableRow>
 			<TableRow android:layout_height="wrap_content"
 				android:layout_width="wrap_content" android:layout_gravity="center">
-				
-				
-				
 			</TableRow>
-		</TableLayout><TextView android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1"></TextView>
+		</TableLayout>
+
 </LinearLayout>

@@ -64,10 +64,7 @@ import com.flowzr.view.NodeInflater;
 
 public class AccountListFragment extends AbstractTotalListFragment  {
 	
-	private static final int NEW_ACCOUNT_REQUEST = 1;
-    public static final int EDIT_ACCOUNT_REQUEST = 2;
-    private static final int VIEW_ACCOUNT_REQUEST = 3;
-    private static final int PURGE_ACCOUNT_REQUEST = 4;
+
 	protected TextView totalText;
 
     OnAccountSelectedListener mListener;
@@ -91,6 +88,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	setHasOptionsMenu(true);
+        getActivity().setTitle(getString(R.string.accounts));
     	return inflater.inflate(R.layout.account_list, container, false);
 	}
 
@@ -334,11 +332,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     private void showTotals() {
 		Intent intent=new Intent(getActivity(),EntityListActivity.class);
 		intent.putExtra(EntityListActivity.REQUEST_ACCOUNT_TOTALS, true);
-        Bundle options = ActivityOptionsCompat.makeScaleUpAnimation(
-                getView(), 0, 0,
-                getActivity().findViewById(android.R.id.content).getWidth(),
-                getActivity().findViewById(android.R.id.content).getHeight()).toBundle();
-        ActivityCompat.startActivity(getActivity(), intent,  options);
+        ActivityCompat.startActivity(getActivity(), intent,  getScaleUpOption());
     }
 	
 	public class AccountTotalsCalculationTask extends TotalCalculationTask {
@@ -450,15 +444,10 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
 		if (resultCode != MainActivity.RESULT_CANCELED ) {
+            Log.e("flowzr","account list fragment recalculate cursor from account result");
             recreateCursor();
-			((MainActivity)getActivity()).mAdapter.notifyDataSetChanged();
 		}
-
-/*        if (resultCode == MainActivity.RESULT_OK && requestCode == NEW_TRANSACTION_FROM_TEMPLATE_REQUEST) {
-            createTransactionFromTemplate(data);
-        }*/
 	}
 
     public void doIntegrityFix() {

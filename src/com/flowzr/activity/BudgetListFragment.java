@@ -59,11 +59,6 @@ import greendroid.widget.QuickActionWidget;
 import java.util.ArrayList;
 
 public class BudgetListFragment extends AbstractTotalListFragment {
-	
-	private static final int NEW_BUDGET_REQUEST = 1;
-	private static final int EDIT_BUDGET_REQUEST = 2;
-	private static final int VIEW_BUDGET_REQUEST = 3;
-	private static final int FILTER_BUDGET_REQUEST = 4;
 
 	protected TextView totalText;
 	
@@ -93,7 +88,8 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.clear();		
-		inflater.inflate(R.menu.budgets_actions, menu);    
+		inflater.inflate(R.menu.budgets_actions, menu);
+		getActivity().setTitle(getString(R.string.budgets));
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 	
@@ -121,6 +117,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
     @Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		Log.e("flowzr","budget: on activity created");
     	budgets = em.getAllBudgets(filter);
 		handler = new Handler();
 		recreateCursor();
@@ -168,7 +165,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {		
-
+		Log.e("flowzr", "budget on activity result");
 		if (requestCode == FILTER_BUDGET_REQUEST) {
 			if (resultCode == MainActivity.RESULT_FIRST_USER) {
 				filter.clear();				
@@ -185,11 +182,11 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 			}
 			saveFilter();
 		}
-		recreateAdapter();
-		recreateCursor();
+
 		if (resultCode != MainActivity.RESULT_CANCELED ) {
-			((MainActivity)getActivity()).mAdapter.notifyDataSetChanged();
-			//getActivity().supportInvalidateOptionsMenu();
+			Log.e("flowzr","budget recreate adapter from activityresult");
+			recreateAdapter();
+			recreateCursor();
 		}
 	}		
 
@@ -293,7 +290,6 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 	@Override
 	protected void viewItem(View v, int position, long id) {
         Budget b = em.load(Budget.class, id);
-        Bundle bundle = new Bundle();
 		Intent intent = new Intent(this.getActivity(), EntityListActivity.class);
 		Criteria.eq(BlotterFilter.BUDGET_ID, String.valueOf(id))
 			.toIntent(b.title, intent);

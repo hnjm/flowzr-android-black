@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -71,6 +72,12 @@ public class CategorySelector {
 
     public void doNotShowSplitCategory() {
         this.showSplitCategory = false;
+    }
+
+    public void fetchCategories(long[] cids) {
+        categoryCursor = db.getAllCategories(cids);
+        activity.startManagingCursor(categoryCursor);
+        categoryAdapter = TransactionUtils.createCategoryAdapter(db, activity, categoryCursor);
     }
 
     public void fetchCategories(boolean fetchAllCategories) {

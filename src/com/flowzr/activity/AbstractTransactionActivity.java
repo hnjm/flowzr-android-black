@@ -17,6 +17,7 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.location.Criteria;
@@ -27,15 +28,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.text.InputType;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.*;
 import com.flowzr.R;
 import com.flowzr.datetime.DateUtils;
@@ -71,8 +71,22 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 	protected static final int NEW_PROJECT_REQUEST = 4006;
 
 	private static final TransactionStatus[] statuses = TransactionStatus.values();
-	
-    protected RateLayoutView rateView;
+
+	public static final String CURRENT_BALANCE_EXTRA = "accountCurrentBalance";
+	public static final String AMOUNT_EXTRA = "accountAmount";
+	public static final String ACTIVITY_STATE = "ACTIVITY_STATE";
+
+	protected static final int SPLIT_REQUEST = 5001;
+	protected static final int BLOTTER_PREFERENCES = 5002;
+
+	public static final String STATUS_EXTRA = "statusExtra";
+	public static final String LOCATION_ID_EXTRA = "locationId";
+	public static final String PAYEE_ID_EXTRA = "payeeId";
+	public static final String CATEGORY_ID_EXTRA ="categoryId" ;
+	public static String PROJECT_ID_EXTRA="projectId";
+	public static String BUDGET_ID_EXTRA="budgetId";
+
+	protected RateLayoutView rateView;
 
     protected EditText templateName;
 	protected TextView accountText;	
@@ -137,10 +151,26 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 
 	private boolean locationShown=false;
 
-
 	public AbstractTransactionActivity() {}
 	
 	protected abstract int getLayoutId();
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		if (saveAndFinish()) {
+			Intent intent = getIntent();
+			intent.removeExtra(ACCOUNT_ID_EXTRA);
+			intent.removeExtra(TRAN_ID_EXTRA);
+			intent.putExtra(TRAN_ID_EXTRA, transaction.id);
+			Bundle options = ActivityOptionsCompat.makeScaleUpAnimation(
+					findViewById(android.R.id.content), 0, 0,
+					findViewById(android.R.id.content).getWidth(),
+					findViewById(android.R.id.content).getHeight()).toBundle();
+			ActivityCompat.startActivity(this, intent, options);
+		}
+	}
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -172,20 +202,17 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		projectSelector = new ProjectSelector(this, em, x);
 		projectSelector.fetchProjects();
 
-		//if (isShowLocation) {
-		locationCursor = em.getAllLocations(true);
-		startManagingCursor(locationCursor);
-		locationAdapter = TransactionUtils.createLocationAdapter(this, locationCursor);
-		//}
+		if (isShowLocation) {
+			locationCursor = em.getAllLocations(true);
+			startManagingCursor(locationCursor);
+			locationAdapter = TransactionUtils.createLocationAdapter(this, locationCursor);
+		}
 
 		long accountId = -1;
 		long transactionId = -1;
 		boolean isNewFromTemplate = false;
 		final Intent intent = getIntent();
 		if (intent != null) {
-			//
-
-			//
 			accountId = intent.getLongExtra(ACCOUNT_ID_EXTRA, -1);
 			transactionId = intent.getLongExtra(TRAN_ID_EXTRA, -1);
 			transaction.dateTime = intent.getLongExtra(DATETIME_EXTRA, System.currentTimeMillis());
@@ -283,7 +310,6 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			deleteAfterExpired.inflateView(layout, value != null ? value : sa.defaultValue);
 		}
 
-
 		//final boolean isEdit = transaction.id > 0;
 		if (transactionId != -1) {
 			isOpenCalculatorForTemplates &= isNewFromTemplate;
@@ -299,14 +325,67 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 					selectAccount(lastAccountId);
 				}
 			}
+
 			if (!isRememberLastProject) {
 				projectSelector.selectProject(0);
 			}
+
 			if (!isRememberLastLocation && isShowLocation) {
 				selectCurrentLocation(false);
 			}
 			if (transaction.isScheduled()) {
 				selectStatus(TransactionStatus.PN);
+			}
+
+			if (intent.hasExtra(BUDGET_ID_EXTRA)) {
+				Budget b=em.load(Budget.class,intent.getLongExtra(BUDGET_ID_EXTRA,-1));
+				if (b!=null && b.projects!=null) {
+					long[] pids = MyEntity.splitIds(b.projects);
+					if (pids!=null) {
+						projectSelector.fetchProjects(pids);
+						if (pids.length>0) {
+							projectSelector.selectProject(pids[0]);
+						}
+					}
+				}
+				if (b!=null && b.categories!=null) {
+					long[] cids = MyEntity.splitIds(b.categories);
+					if (cids!=null) {
+						fetchCategories(cids);
+						if (cids.length>0) {
+							categorySelector.selectCategory(cids[0]);
+						}
+					}
+				}
+			}
+
+			if (intent.hasExtra(PROJECT_ID_EXTRA)) {
+				Log.e("flowzr","project got " + intent.getLongExtra(PROJECT_ID_EXTRA, 0) );
+				projectSelector.selectProject(intent.getLongExtra(PROJECT_ID_EXTRA, 0));
+			}
+
+			if (intent.hasExtra(CATEGORY_ID_EXTRA)) {
+				Log.e("flowzr","category got " + intent.getLongExtra(CATEGORY_ID_EXTRA,0) );
+				transaction.categoryId=intent.getLongExtra(CATEGORY_ID_EXTRA,0);
+				categorySelector.selectCategory(intent.getLongExtra(CATEGORY_ID_EXTRA, 0), false);
+				Log.e("flowzr","XXXXXXXXXX selected category" + intent.getLongExtra(CATEGORY_ID_EXTRA,0));
+			}
+
+			if (intent.hasExtra(PAYEE_ID_EXTRA)) {
+				selectPayee(intent.getLongExtra(PAYEE_ID_EXTRA, -1));
+				Log.e("flowzr", "got payee : " + intent.getLongExtra(PAYEE_ID_EXTRA, -1));
+			}
+
+			if (intent.hasExtra(LOCATION_ID_EXTRA)) {
+				selectLocation(intent.getLongExtra(LOCATION_ID_EXTRA, -1));
+				Log.e("flowzr", "got location : " + String.valueOf(intent.getLongExtra(LOCATION_ID_EXTRA, -1)));
+				//selectedLocationId=intent.getIntExtra(LOCATION_ID_EXTRA,-1);
+			}
+
+
+			if (intent.hasExtra(STATUS_EXTRA)) {
+				Log.e("flowzr","status got : "  + TransactionStatus.valueOf(intent.getStringExtra(STATUS_EXTRA)));
+				selectStatus(TransactionStatus.valueOf(intent.getStringExtra(STATUS_EXTRA)));
 			}
 		}
 
@@ -318,13 +397,11 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			}
 		});
 
-
-
 		totalText = (TextView) findViewById(R.id.total);
 		totalText.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				rateView.openFromAmountCalculator();
+				rateView.openFromAmountCalculator(accountText.getText().toString());
 			}
 		});
 
@@ -334,7 +411,14 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 
 		long t1 = System.currentTimeMillis();
 		if (transactionId == -1) {
-			rateView.openFromAmountCalculator();
+			String title=(getResources().getString(R.string.add_transaction));
+			if (transaction.isTransfer()) {
+			title=getResources().getString(R.string.add_transfer);
+			}
+			if (transaction.isTemplate()) {
+				title=getResources().getString(R.string.template);
+			}
+			rateView.openFromAmountCalculator(title);
 		}
 
 		findViewById(R.id.scroll)
@@ -346,24 +430,18 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 						 switch (event.getAction()) {
 							 case MotionEvent.ACTION_SCROLL:
 							 case MotionEvent.ACTION_MOVE:
-								 //setScrollState(OnScrollListener.SCROLL_STATE_FLING);
 								 fab.hide();
 								 fab2.hide();
-								 break;
-							 case MotionEvent.ACTION_DOWN:
-								 //setScrollState(OnScrollListener.SCROLL_STATE_TOUCH_SCROLL);
 								 break;
 							 case MotionEvent.ACTION_CANCEL:
 							 case MotionEvent.ACTION_UP:
 								 fab.show();
 								 fab2.show();
-								 //setScrollState(OnScrollListener.SCROLL_STATE_IDLE);
 								 break;
 						 }
 						 return false;
 					 }
 				 });
-
 			Log.i("TransactionActivity","onCreate "+(t1-t0)+"ms");
 		}
 
@@ -389,6 +467,8 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
     }
 
     protected abstract void fetchCategories();
+
+	protected abstract void fetchCategories(long[] cids);
 
     protected boolean saveAndFinish() {
         long id = save();
@@ -896,12 +976,6 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		if (isShowIsCCardPayment) {
 			setIsCCardPayment(transaction.isCCardPayment);
 		}
-		/**
-        if (transaction.isCreatedFromTemlate()&& isOpenCalculatorForTemplates ){
-
-        }
-		*/
-
 	}
 
 	private void setIsCCardPayment(int isCCardPaymentValue) {

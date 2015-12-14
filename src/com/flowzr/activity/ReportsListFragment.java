@@ -31,6 +31,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -84,7 +85,7 @@ public class ReportsListFragment extends ListFragment {
 		if (getActivity().findViewById(R.id.fragment_land_container)!=null) {
 			FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 			transaction.replace(R.id.fragment_land_container,fragment);
-			transaction.addToBackStack(null);
+			//transaction.addToBackStack(null);
 			transaction.commit();			
 		} else {
 			((EntityListActivity) getActivity()).loadFragment(fragment);	
@@ -103,5 +104,7 @@ public class ReportsListFragment extends ListFragment {
           f.setArguments(bundle);
           return f;
 	}
+
+
 
 }

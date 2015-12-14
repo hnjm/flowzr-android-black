@@ -10,10 +10,15 @@
  ******************************************************************************/
 package com.flowzr.adapter;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.PorterDuff;
+import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ResourceCursorAdapter;
 import com.flowzr.R;
 import com.flowzr.model.Account;
@@ -21,11 +26,13 @@ import com.flowzr.model.AccountType;
 import com.flowzr.model.CardIssuer;
 import com.flowzr.datetime.DateUtils;
 import com.flowzr.utils.MyPreferences;
+import com.flowzr.utils.StringUtil;
 import com.flowzr.utils.Utils;
 import com.flowzr.orb.EntityManager;
 
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.util.Date;
 
 
@@ -100,9 +107,28 @@ public class AccountListAdapter2 extends ResourceCursorAdapter {
 			u.setAmountText(v.rightCenterView, a.currency, balance, false);
 			v.bottomView.setVisibility(View.VISIBLE);
 			v.rightView.setVisibility(View.VISIBLE);
+
 			v.progressBar.setMax(10000);
-			v.progressBar.setProgress((int)balancePercentage);
-			v.progressBar.setVisibility(View.VISIBLE);
+			if ((double) ((balance / (float) limitAmount))>1) {
+				v.progressBar.getProgressDrawable().setColorFilter(view.getResources().getColor(R.color.f_green), PorterDuff.Mode.MULTIPLY);
+			} else {
+				v.progressText.setVisibility(View.VISIBLE);
+				v.progressBar.setVisibility(View.VISIBLE);
+				v.progressBar.getProgressDrawable().setColorFilter(view.getResources().getColor(R.color.f_orange), PorterDuff.Mode.MULTIPLY);
+			}
+
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+				ObjectAnimator animation = ObjectAnimator.ofInt(v.progressBar, "progress",0, (int) balancePercentage);
+				animation.setDuration(Math.min(1200,Math.abs(balancePercentage)));
+				animation.setInterpolator(new DecelerateInterpolator());
+				animation.start();
+			} else {
+				v.progressBar.setProgress((int) balancePercentage);
+			}
+
+			NumberFormat percentFormat = NumberFormat.getPercentInstance();
+			percentFormat.setMinimumFractionDigits(1);
+			v.progressText.setText(percentFormat.format((double) ((balance / (float) limitAmount))));
 		} else {
 			u.setAmountText(v.rightCenterView, a.currency, amount, false);
 			v.rightView.setVisibility(View.VISIBLE);

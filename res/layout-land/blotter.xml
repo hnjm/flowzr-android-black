@@ -31,6 +31,7 @@
         android:layout_weight="0.65">
 
         <ListView
+            android:layout_marginTop="@dimen/space_normal"
             android:id="@android:id/list"
             style="@style/ListView"
             android:layout_height="fill_parent"
@@ -38,7 +39,6 @@
 
         <TextView
             android:id="@id/android:empty"
-            android:text="@string/no_transactions"
             style="@style/TextView"
             android:layout_width="wrap_content"
             android:textSize="@dimen/text_large"/>

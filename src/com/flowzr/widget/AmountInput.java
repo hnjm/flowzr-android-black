@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.*;
 import com.flowzr.R;
 import com.flowzr.model.Currency;
+import com.flowzr.utils.StringUtil;
 import com.flowzr.utils.Utils;
 
 import java.math.BigDecimal;
@@ -34,7 +35,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class AmountInput extends LinearLayout {
 
-    public static interface OnAmountChangedListener {
+	protected static final String EXTRA_TITLE = "title";
+
+	public static interface OnAmountChangedListener {
 		void onAmountChanged(long oldAmount, long newAmount);
 	}
 
@@ -124,26 +127,27 @@ public class AmountInput extends LinearLayout {
 		}
 	};
 
-	private void initialize(Context context, AttributeSet attrs) {
+	private void initialize(final Context context, AttributeSet attrs) {
 		requestId = EDIT_AMOUNT_REQUEST.incrementAndGet();
 		LayoutInflater layoutInflater = LayoutInflater.from(context);
 		layoutInflater.inflate(R.layout.amount_input, this, true);
-        findViewById(R.id.amount_input).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startInputActivity(QuickAmountInput.class);
-			}
-		});
+        //findViewById(R.id.amount_input).setOnClickListener(new OnClickListener() {
+		//	@Override
+		//	public void onClick(View v) {
+		//		startInputActivity(QuickAmountInput.class);
+		//	}
+		//});
+
 		findViewById(R.id.primary).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startInputActivity(CalculatorInput.class);
+				startInputActivity(CalculatorInput.class,((Activity) context).getTitle().toString());
 			}
 		});
 		findViewById(R.id.secondary).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startInputActivity(CalculatorInput.class);
+				startInputActivity(CalculatorInput.class,((Activity) context).getTitle().toString());
 			}
 		});
 		toggleView = (ToggleButton) findViewById(R.id.toggle);
@@ -245,12 +249,14 @@ public class AmountInput extends LinearLayout {
 		}
 	};
 
-	protected <T extends Activity> void startInputActivity(Class<T> clazz) {
+	protected <T extends Activity> void startInputActivity(Class<T> clazz,String title) {
 		Intent intent = new Intent(getContext(), clazz);
 		if (currency != null) {
 			intent.putExtra(EXTRA_CURRENCY, currency.id);
 		}
+		intent.putExtra(EXTRA_TITLE,title);
 		intent.putExtra(EXTRA_AMOUNT, getAbsAmountString());
+
 		owner.startActivityForResult(intent, requestId);
 	}
 
@@ -336,8 +342,8 @@ public class AmountInput extends LinearLayout {
 		secondary.setTextColor(color);
 	}
 
-    public void openCalculator() {
-        startInputActivity(CalculatorInput.class);
+    public void openCalculator(String title) {
+        startInputActivity(CalculatorInput.class,title);
     }
 
 }

@@ -102,7 +102,7 @@ public abstract class AbstractListFragment extends ListFragment implements Refre
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
-	    getActivity().setTitle(getMyTitle());
+	    //getActivity().setTitle(getMyTitle());
 		getListView().setEmptyView(getActivity().findViewById(R.id.emptyView));	    		
         recreateAdapter();	
         if (isGreenDroidSupported()) {	

@@ -786,11 +786,25 @@ public class DatabaseAdapter {
                 null, null, null, null, null);
     }
 
+    public Cursor getAllCategories(long[] ids) {
+        StringBuilder selection= new StringBuilder();
+        selection.append(CategoryViewColumns._id + " IN (");
+        for(int i = 0; i < ids.length; i++) {
+            selection.append(ids[i]);
+            if(i < ids.length -1) {
+                selection.append( "," ); //Add an "," after each selection (except the last)
+            }
+        }
+        selection.append(")");
+        return db().query(V_CATEGORY, CategoryViewColumns.NORMAL_PROJECTION,
+                selection.toString(),null, null, null, null);
+    }
+    /**
     public List<Category> getAllCategoriesList() {
         Cursor c = getAllCategories();
         return categoriesAsList(c);
     }
-
+    **/
     private List<Category> categoriesAsList(Cursor c) {
         ArrayList<Category> list = new ArrayList<Category>();
         try {

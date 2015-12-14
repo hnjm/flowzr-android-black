@@ -57,8 +57,6 @@ public abstract class AbstractEditorActivity extends AppCompatActivity implement
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        // Setup ActionBar		
-		//initToolbar();
 
 		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		NodeInflater nodeInflater = new NodeInflater(layoutInflater);
@@ -67,7 +65,9 @@ public abstract class AbstractEditorActivity extends AppCompatActivity implement
 		db = new DatabaseAdapter(this);
 		db.open();
 		em = db.em();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        this.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	}
 
 
