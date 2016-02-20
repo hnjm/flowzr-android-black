@@ -29,7 +29,7 @@ android {
     }
     signingConfigs {
         config {
-            storeFile file('/home/eflorent/Téléchargements/key_store')
+            storeFile file('/Users/emmanuelflorent/Documents/key_store')
             //storePassword System.getenv("KEYSTORE_PASSWORD")
             //keyAlias System.getenv("KEY_ALIAS")
             //keyPassword System.getenv("KEY_PASSWORD")
@@ -93,7 +93,6 @@ android {
 }
 
 dependencies {
-    compile files('libs/dropbox-android-sdk-1.5.4.jar')
     compile files('libs/dropbox-android-sdk-1.5.4.jar')
     compile files('libs/gson-2.2.4.jar')
     compile files('libs/rfc2445-no-joda.jar')

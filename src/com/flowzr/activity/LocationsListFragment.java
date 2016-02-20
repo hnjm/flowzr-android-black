@@ -12,24 +12,25 @@
 package com.flowzr.activity;
 
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
+import android.widget.Toast;
+
 import com.flowzr.R;
 import com.flowzr.adapter.LocationListAdapter;
 import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.filter.Criteria;
 import com.flowzr.model.MyLocation;
-import com.flowzr.utils.AddressGeocoder;
 import com.flowzr.orb.EntityManager;
-import android.content.Intent;
-import android.database.Cursor;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
-import android.widget.Toast;
+import com.flowzr.utils.AddressGeocoder;
 
 public class LocationsListFragment extends AbstractListFragment {
 	
@@ -110,12 +111,12 @@ public class LocationsListFragment extends AbstractListFragment {
 	@Override
 	protected void viewItem(View v, int position, long id) {
 		MyLocation e = em.load(MyLocation.class, id);
-		Intent intent = new Intent(this.getActivity(), MainActivity.class);
-        Criteria blotterFilter = Criteria.eq(BlotterFilter.LOCATION_ID, String.valueOf(e.id));
-        blotterFilter.toIntent(e.name, intent);
+		Intent intent = new Intent(this.getActivity(), EntityListActivity.class);
+		Criteria blotterFilter = Criteria.eq(BlotterFilter.LOCATION_ID, String.valueOf(e.id));
+		blotterFilter.toIntent(e.name, intent);
 		intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+		startActivity(intent);
 	}
 
 

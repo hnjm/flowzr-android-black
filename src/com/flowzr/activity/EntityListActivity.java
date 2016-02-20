@@ -12,26 +12,28 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import com.flowzr.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.TypefaceSpan;;
-import android.util.Log;
+import android.text.style.TypefaceSpan;
 import android.view.MenuItem;
+
+import com.flowzr.R;
 
 public class EntityListActivity extends AppCompatActivity {
 
 	public final static String REQUEST_BLOTTER_TOTALS="REQUEST_BLOTTER_TOTALS";
-	//public final static String REQUEST_BLOTTER="REQUEST_BLOTTER";
-	public final static String REQUEST_MASS_OP="REQUEST_MASSOP";
-	public final static String REQUEST_TEMPLATES="REQUEST_TEMPLATES";
+    public final static String REQUEST_BLOTTER = "REQUEST_BLOTTER"; // from reports
+    public final static String REQUEST_MASS_OP = "REQUEST_MASSOP";
+    public final static String REQUEST_TEMPLATES="REQUEST_TEMPLATES";
 	public final static String REQUEST_EXCHANGE_RATES="REQUEST_EXCHANGE_RATES";
 	public final static String REQUEST_BUDGET_BLOTTER="REQUEST_BUDGET_BLOTTER";
 	public final static String REQUEST_REPORTS="REQUEST_REPORTS";
@@ -94,11 +96,20 @@ public class EntityListActivity extends AppCompatActivity {
 				Fragment f= new ReportFragment();
 				f.setArguments(intent.getExtras());
 				transaction.replace(R.id.fragment_container, f);
-			//transaction.addToBackStack(null);
-		} else if (intent.hasExtra(MainActivity.REQUEST_SPLIT_BLOTTER)) {
-			Fragment f= new BudgetBlotterFragment();
-			f.setArguments(intent.getExtras());
-			intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.blotter);
+            transaction.addToBackStack(null);
+        } else if (intent.hasExtra(MainActivity.REQUEST_BLOTTER)) { // from reports
+            Fragment f = new BlotterFragment();
+            f.setArguments(intent.getExtras());
+            intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.blotter);
+            transaction.replace(R.id.fragment_container, f);
+            // that time add to backstack because
+            // another fragment follows
+            // // not that time : transaction.addToBackStack(null);
+        } else if (intent.hasExtra(MainActivity.REQUEST_SPLIT_BLOTTER)) {
+            // @TODO split blotter fragment
+            Fragment f = new BudgetBlotterFragment();
+            f.setArguments(intent.getExtras());
+            intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.blotter);
 			transaction.replace(R.id.fragment_container, f);
 			transaction.addToBackStack(null);
         } else 	if (intent.hasExtra(REQUEST_BUDGET_BLOTTER)) {
@@ -161,20 +172,45 @@ public class EntityListActivity extends AppCompatActivity {
 		}
 		transaction.commit();
 	}
-
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                TaskStackBuilder tsb = TaskStackBuilder.create(this);
+                final int intentCount = tsb.getIntentCount();
+                if (intentCount > 0) {
+                    Intent upIntent = tsb.getIntents()[intentCount - 1];
+                    if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                        // This activity is not part of the application's task, so create a new task with a synthesized back stack.
+                        tsb.startActivities();
+                        finish();
+                    } else {
+                        // This activity is part of the application's task, so simply navigate up to the hierarchical parent activity.
+                        NavUtils.navigateUpTo(this, upIntent);
+                    }
+                } else {
+                    onBackPressed();
+                }
+                return true;
+            }
 
-			case android.R.id.home: {
-				Log.e("flowzr", "finishing");
-				//setResult(RESULT_OK);
-				//finish();
-				super.onBackPressed();
-				//return true;
-			}
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+    @Override
+    public void onBackPressed() {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (f instanceof ReportFragment) {
+            if (((ReportFragment) f).viewingPieChart) {
+                ((ReportFragment) f).selectReport();
+            } else {
+                super.onBackPressed();
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 
 }

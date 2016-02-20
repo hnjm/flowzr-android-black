@@ -13,15 +13,19 @@ package com.flowzr.report;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.util.Log;
+
 import com.flowzr.activity.BlotterFragment;
+import com.flowzr.activity.EntityListActivity;
 import com.flowzr.activity.MainActivity;
-import com.flowzr.activity.SplitsBlotterActivity;
 import com.flowzr.blotter.BlotterFilter;
-import com.flowzr.filter.WhereFilter;
-import com.flowzr.filter.Criteria;
-import com.flowzr.db.*;
+import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.db.DatabaseHelper;
 import com.flowzr.db.DatabaseHelper.ReportColumns;
+import com.flowzr.db.MyEntityManager;
+import com.flowzr.db.TransactionsTotalCalculator;
+import com.flowzr.db.UnableToCalculateRateException;
+import com.flowzr.filter.Criteria;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.graph.Amount;
 import com.flowzr.graph.GraphStyle;
 import com.flowzr.graph.GraphUnit;
@@ -170,8 +174,7 @@ public abstract class Report {
 			filter.put(c);
 		}
         filter.eq("from_account_is_include_into_totals", "1");
-		Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent intent = new Intent(context, EntityListActivity.class);
         intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
 		filter.toIntent(intent);
 		return intent;
