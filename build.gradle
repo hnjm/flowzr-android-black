@@ -66,8 +66,8 @@ android {
         exclude 'META-INF/LGPL2.1'
     }
     defaultConfig {
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
         //noinspection GroovyAssignabilityCheck
         signingConfig signingConfigs.config
         minSdkVersion 9
@@ -77,17 +77,18 @@ android {
     buildTypes {
         debug {
             debuggable true
-            minifyEnabled true
-            //noinspection GroovyAssignabilityCheck
+            minifyEnabled false
             signingConfig signingConfigs.config
-            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            proguardFile 'proguard-google-api-client.txt'
-            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-google-api-client.txt',
+                    'proguard-google-api-client.txt', 'proguard-rules.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-google-api-client.txt',
                     'proguard-google-api-client.txt', 'proguard-rules.txt'
         }
+
         release {
             shrinkResources true
             debuggable false
+            jniDebuggable false
             jniDebuggable false
             //noinspection GroovyAssignabilityCheck
             signingConfig signingConfigs.config
@@ -136,9 +137,26 @@ dependencies {
     compile 'com.google.android.gms:play-services-plus:8.3.0'
     compile 'com.google.android.gms:play-services-gcm:8.3.0'
     compile 'com.github.ganfra:material-spinner:1.1.1'
+
     // Required -- JUnit 4 framework
     testCompile 'junit:junit:4.12'
     // Optional -- Mockito framework
     testCompile 'org.mockito:mockito-core:1.10.19'
+
+    androidTestCompile 'com.android.support.test:runner:0.3'
+    androidTestCompile 'com.android.support.test:rules:0.3'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2'
+
+    // add this for intent mocking   support
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2'
+
+    androidTestCompile 'com.android.support:support-annotations:23.1.1'
+
+    compile 'com.android.support.test.espresso:espresso-core:2.2'
+
+    androidTestCompile('com.android.support:multidex-instrumentation:1.0.1') {
+        exclude group: 'com.android.support', module: 'multidex'
+    }
+
 
 }
