@@ -10,10 +10,9 @@ package com.flowzr.db;
 
 import android.database.Cursor;
 import android.util.Log;
-import com.flowzr.datetime.DateUtils;
-import com.flowzr.filter.DateTimeCriteria;
-import com.flowzr.filter.WhereFilter;
+
 import com.flowzr.filter.Criteria;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Currency;
 import com.flowzr.model.Total;
 import com.flowzr.model.TotalError;
@@ -25,7 +24,6 @@ import com.flowzr.utils.CurrencyCache;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 import static com.flowzr.db.DatabaseAdapter.enhanceFilterForAccountBlotter;
@@ -62,6 +60,7 @@ public class TransactionsTotalCalculator {
         this.filter = filter;      
     }
 
+    @SuppressWarnings("TryFinallyCanBeTryWithResources")
     public Total[] getTransactionsBalance() {
         WhereFilter filter = this.filter;
         if (filter.getAccountId() == -1) {
@@ -72,7 +71,7 @@ public class TransactionsTotalCalculator {
                 BALANCE_GROUPBY, null, null);
         try {
             int count = c.getCount();
-            List<Total> totals = new ArrayList<Total>(count);
+            List<Total> totals = new ArrayList<>(count);
             while (c.moveToNext()) {
                 long currencyId = c.getLong(0);
                 long balance = c.getLong(1);
@@ -113,6 +112,7 @@ public class TransactionsTotalCalculator {
         return copy;
     }
 
+    @SuppressWarnings("TryFinallyCanBeTryWithResources")
     private Total getBalanceInHomeCurrency(String view, Currency toCurrency, WhereFilter filter) {
         Log.d("Financisto", "Query balance: "+filter.getSelection()+" => "+ Arrays.toString(filter.getSelectionArgs()));
         Cursor c = db.db().query(view, HOME_CURRENCY_PROJECTION,

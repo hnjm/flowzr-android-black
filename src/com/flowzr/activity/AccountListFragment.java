@@ -10,13 +10,6 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import java.util.Calendar;
-
-import android.app.Activity;
-import android.content.res.Configuration;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,7 +18,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -36,11 +31,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import greendroid.widget.QuickActionGrid;
-import greendroid.widget.QuickActionWidget;
+
 import com.flowzr.R;
 import com.flowzr.adapter.AccountListAdapter2;
 import com.flowzr.blotter.BlotterFilter;
@@ -49,18 +42,20 @@ import com.flowzr.datetime.Period;
 import com.flowzr.datetime.PeriodType;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.dialog.AccountInfoDialog;
-import com.flowzr.filter.Criteria;
 import com.flowzr.filter.DateTimeCriteria;
 import com.flowzr.filter.WhereFilter;
-import com.flowzr.graph.Report2DChart;
 import com.flowzr.model.Account;
 import com.flowzr.model.Total;
-import com.flowzr.report.ReportType;
 import com.flowzr.utils.IntegrityFix;
 import com.flowzr.utils.MyPreferences;
-import com.flowzr.utils.PinProtection;
 import com.flowzr.view.NodeInflater;
 
+import java.util.Calendar;
+
+import greendroid.widget.QuickActionGrid;
+import greendroid.widget.QuickActionWidget;
+
+import static com.flowzr.utils.AndroidUtils.isGreenDroidSupported;
 
 public class AccountListFragment extends AbstractTotalListFragment  {
 	
@@ -71,7 +66,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(Context activity) {
         super.onAttach(activity);
         try {
             mListener = (OnAccountSelectedListener) activity;
@@ -104,7 +99,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (getView().findViewById(R.id.fragment_land_container)!=null) {
+        if (getView()!=null && getView().findViewById(R.id.fragment_land_container)!=null) {
             Fragment fragment=new AccountListTotalsDetailsActivity();
             getChildFragmentManager().beginTransaction().replace(R.id.fragment_land_container, fragment).addToBackStack(null).commit();
             getChildFragmentManager().executePendingTransactions();
@@ -131,8 +126,9 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    DateTimeCriteria criteria;
-		Intent intent = null;
-        Bundle options= new Bundle();
+        Intent intent;
+        //intent = null;
+        //Bundle options= new Bundle();
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
 	        case R.id.action_add_account: 
@@ -148,8 +144,8 @@ public class AccountListFragment extends AbstractTotalListFragment  {
                 createFromTemplate();
                 return true;
 			case R.id.action_planner:
-				WhereFilter filter=new WhereFilter(getView().getResources().getString(R.string.planner));
-	            Calendar date = Calendar.getInstance();
+				@SuppressWarnings("ConstantConditions") WhereFilter filter = new WhereFilter(getView().getResources().getString(R.string.planner));
+                Calendar date = Calendar.getInstance();
 	            date.add(Calendar.MONTH, 1);
 	            criteria = new DateTimeCriteria(PeriodType.THIS_MONTH);
 		        long now = System.currentTimeMillis();
@@ -165,7 +161,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
                 ActivityCompat.startActivity(getActivity(), intent, getScaleUpOption());
             	return true;	            
 			case R.id.action_scheduled_transaction:
-				WhereFilter blotterFilter = new WhereFilter(getView().getResources().getString(R.string.scheduled));
+				@SuppressWarnings("ConstantConditions") WhereFilter blotterFilter = new WhereFilter(getView().getResources().getString(R.string.scheduled));
 				blotterFilter.eq(BlotterFilter.IS_TEMPLATE, String.valueOf(2));
 		        blotterFilter.eq(BlotterFilter.PARENT_ID, String.valueOf(0));
 		        //blotterFilter.toBundle(bundle);       
@@ -198,25 +194,29 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 	    super.onCreateContextMenu(menu, v, menuInfo);
 	    MenuInflater inflater = getActivity().getMenuInflater();
 	    inflater.inflate(R.menu.account_context, menu);
-	}    
-	
+	}
+
 
 	protected void prepareActionGrid() {
-        actionGrid = new QuickActionGrid(this.getActivity());
-        actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_discard , R.string.delete)); 	//0
-        actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_view_as_list, R.string.blotter));			//1
-        actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_edit, R.string.edit));			//2	
-        actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_new, R.string.transaction));		//3
-        actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_import_export, R.string.transfer));		//4     
-        actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.amount_input, R.string.update_balance));		//5
-        actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_cancel, R.string.delete_old_transactions)); //6
-        actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_secure, R.string.close_account));			//7        
-        actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_about, R.string.info));			//8
-        actionGrid.setOnQuickActionClickListener(accountActionListener);
+        if (isGreenDroidSupported()) {
+            actionGrid = new QuickActionGrid(this.getActivity());
+            actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_discard , R.string.delete)); 	//0
+            actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_view_as_list, R.string.blotter));			//1
+            actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_edit, R.string.edit));			//2
+            actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_new, R.string.transaction));		//3
+            actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_import_export_white_24dp, R.string.transfer));		//4
+            actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.amount_input, R.string.update_balance));		//5
+            actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_cancel, R.string.delete_old_transactions)); //6
+            actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_secure, R.string.close_account));			//7
+            actionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_about, R.string.info));			//8
+            actionGrid.setOnQuickActionClickListener(accountActionListener);
+
+        }
 	}	
     
 	private QuickActionWidget.OnQuickActionClickListener accountActionListener = new QuickActionWidget.OnQuickActionClickListener() {
         public void onQuickActionClicked(QuickActionWidget widget, int position) {
+            Log.e("flowzr",String.valueOf(position) +" selected");
             switch (position) {
             	case 0:
             		deleteItem(selectedId);
@@ -311,6 +311,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 
 
 	private void calculateTotals() {
+        //noinspection ConstantConditions,ConstantConditions
         totalText = ( TextView ) getView().findViewById(R.id.total);
         if (totalText!=null) {
 			if (totalCalculationTask != null) {
@@ -387,28 +388,30 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 
 
 	protected void deleteItem(final long id) {
-		new AlertDialog.Builder(this.getActivity())
-			.setMessage(R.string.delete_account_confirm)
-			.setPositiveButton(R.string.yes, new OnClickListener(){
-				@Override
-				public void onClick(DialogInterface arg0, int arg1) {
-					db.deleteAccount(id);
-					recreateCursor();
-					((MainActivity)getActivity()).mAdapter.notifyDataSetChanged();					
-				}
-			})
-			.setNegativeButton(R.string.no, null)
-			.show();
-	}
+        new AlertDialog.Builder(this.getActivity())
+                .setMessage(R.string.delete_account_confirm)
+                .setPositiveButton(R.string.yes, new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        db.deleteAccount(id);
+                        recreateCursor();
+                        ((MainActivity)getActivity()).mAdapter.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton(R.string.no, null)
+                .show();
+
+
+    }
     
 	@Override
-	protected void deleteItem(View v, int position, final long id) {
+	protected void deleteItem(int position, final long id) {
 		deleteItem(id);
 		
 	}
 
 	@Override
-	public void editItem(View v, int position, long id) {
+	public void editItem(long id) {
         editAccount(id);
 	}
 
@@ -431,7 +434,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 	}
 
     public interface OnAccountSelectedListener {
-        public void onAccountSelected(String title, long id);
+        void onAccountSelected(String title, long id);
     }
     
     private void showAccountTransactions(long id) {

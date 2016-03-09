@@ -20,11 +20,12 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
 import com.dropbox.client2.session.AccessTokenPair;
 import com.flowzr.export.Export;
 import com.flowzr.model.Currency;
-import com.flowzr.rates.ExchangeRateProviderFactory;
 import com.flowzr.rates.ExchangeRateProvider;
+import com.flowzr.rates.ExchangeRateProviderFactory;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -38,7 +39,7 @@ public class MyPreferences {
     public static final String DROPBOX_AUTH_SECRET = "dropbox_auth_secret";
     public static final String DROPBOX_AUTHORIZE = "dropbox_authorize";
 
-    public static enum AccountSortOrder {
+    public enum AccountSortOrder {
 		SORT_ORDER_ASC("sortOrder", true),
 		SORT_ORDER_DESC("sortOrder", false),
 		NAME("title", true),
@@ -48,26 +49,26 @@ public class MyPreferences {
 		public final String property;
 		public final boolean asc;
 
-		private AccountSortOrder(String property, boolean asc) {
+		AccountSortOrder(String property, boolean asc) {
 			this.property = property;
 			this.asc = asc;
 		}
 	}
 
-	public static enum LocationsSortOrder {
+	public enum LocationsSortOrder {
 		FREQUENCY("count", false),
 		NAME("name", true);
 
 		public final String property;
 		public final boolean asc;
 
-		private LocationsSortOrder(String property, boolean asc) {
+		LocationsSortOrder(String property, boolean asc) {
 			this.property = property;
 			this.asc = asc;
 		}
 	}
 
-    public static enum StartupScreen {
+    public enum StartupScreen {
         ACCOUNTS("accounts"),
         BLOTTER("blotter"),
         BUDGETS("budgets"),
@@ -75,7 +76,7 @@ public class MyPreferences {
 
         public final String tag;
 
-        private StartupScreen(String tag) {
+        StartupScreen(String tag) {
             this.tag = tag;
         }
     }

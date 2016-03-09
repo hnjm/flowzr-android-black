@@ -1,16 +1,10 @@
 package com.flowzr.activity;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import com.flowzr.R;
-import com.flowzr.db.DatabaseAdapter;
 import android.app.Activity;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,6 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import com.flowzr.R;
+import com.flowzr.db.DatabaseAdapter;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * @author Abdsandryk
@@ -237,14 +238,14 @@ public class CCardStatementClosingDayActivity extends AppCompatActivity {
 	
 	/**
 	 * 
-	 * @return
+	 * @return is new day valid
 	 */
 	private boolean isNewDayValid() {
 		// check if the value in form is valid
 		String text = newClosingDay.getText().toString();
 		String alertMsg = "";
 		
-		if (text!=null && text.length()>0) {
+		if (text.length()>0) {
 			// Max day of reference month
 			Calendar periodCal = new GregorianCalendar(year, month, 1);
 			int maxDay = periodCal.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -278,7 +279,7 @@ public class CCardStatementClosingDayActivity extends AppCompatActivity {
 	
 	/**
 	 * 
-	 * @param closingDay
+	 * @param closingDay closing day
 	 */
 	private void saveNewClosingDay(int closingDay) {
 		if (dbAdapter.getCustomClosingDay(accountId, periodKey)>0) {

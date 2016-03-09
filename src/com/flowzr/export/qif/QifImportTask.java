@@ -16,9 +16,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
+
 import com.flowzr.R;
 import com.flowzr.activity.BackupListActivity;
-import com.flowzr.activity.MainActivity;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.export.ImportExportAsyncTask;
 import com.flowzr.export.ImportExportAsyncTaskListener;

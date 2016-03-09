@@ -11,14 +11,13 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.DatabaseHelper;
@@ -29,7 +28,6 @@ public class ProjectActivity extends AbstractEditorActivity {
 
 
     public static final String ENTITY_ID_EXTRA = "entityId";
-    private DatabaseAdapter db;
     private MyEntityManager em;
 
     private Project project = new Project();
@@ -43,7 +41,7 @@ public class ProjectActivity extends AbstractEditorActivity {
         CheckBox activityCheckBox = (CheckBox) findViewById(R.id.isActive);
         activityCheckBox.setChecked(true);
 
-        db = new DatabaseAdapter(this);
+        DatabaseAdapter db = new DatabaseAdapter(this);
         db.open();
 
         em = db.em();

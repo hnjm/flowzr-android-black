@@ -17,31 +17,80 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
+
 import com.flowzr.R;
 import com.flowzr.blotter.BlotterFilter;
-import com.flowzr.filter.DateTimeCriteria;
-import com.flowzr.filter.WhereFilter;
+import com.flowzr.datetime.DateUtils;
+import com.flowzr.db.DatabaseHelper.CategoryColumns;
+import com.flowzr.db.DatabaseHelper.TransactionColumns;
+import com.flowzr.db.DatabaseHelper.deleteLogColumns;
 import com.flowzr.filter.Criteria;
-import com.flowzr.model.*;
+import com.flowzr.filter.WhereFilter;
+import com.flowzr.model.Account;
+import com.flowzr.model.Attribute;
+import com.flowzr.model.Budget;
+import com.flowzr.model.Category;
+import com.flowzr.model.CategoryTree;
 import com.flowzr.model.CategoryTree.NodeCreator;
 import com.flowzr.model.Currency;
-import com.flowzr.datetime.DateUtils;
-import com.flowzr.rates.*;
+import com.flowzr.model.MyEntity;
+import com.flowzr.model.Payee;
+import com.flowzr.model.Project;
+import com.flowzr.model.RestoredTransaction;
+import com.flowzr.model.SystemAttribute;
+import com.flowzr.model.Total;
+import com.flowzr.model.TotalError;
+import com.flowzr.model.Transaction;
+import com.flowzr.model.TransactionAttribute;
+import com.flowzr.model.TransactionStatus;
+import com.flowzr.orb.EntityManager;
+import com.flowzr.orb.Expressions;
+import com.flowzr.orb.Query;
+import com.flowzr.rates.ExchangeRate;
+import com.flowzr.rates.ExchangeRateProvider;
+import com.flowzr.rates.ExchangeRatesCollection;
+import com.flowzr.rates.HistoryExchangeRates;
+import com.flowzr.rates.LatestExchangeRates;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.Utils;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-import com.flowzr.db.DatabaseHelper.CategoryColumns;
-
-import com.flowzr.db.DatabaseHelper.TransactionColumns;
-import com.flowzr.model.TransactionStatus;
-
-import com.flowzr.db.DatabaseHelper.deleteLogColumns;
-import com.flowzr.model.Category;
-
-import static com.flowzr.db.DatabaseHelper.*;
+import static com.flowzr.db.DatabaseHelper.ACCOUNT_TABLE;
+import static com.flowzr.db.DatabaseHelper.ATTRIBUTES_TABLE;
+import static com.flowzr.db.DatabaseHelper.AccountColumns;
+import static com.flowzr.db.DatabaseHelper.AttributeColumns;
+import static com.flowzr.db.DatabaseHelper.AttributeViewColumns;
+import static com.flowzr.db.DatabaseHelper.BlotterColumns;
+import static com.flowzr.db.DatabaseHelper.CATEGORY_ATTRIBUTE_TABLE;
+import static com.flowzr.db.DatabaseHelper.CATEGORY_TABLE;
+import static com.flowzr.db.DatabaseHelper.CCARD_CLOSING_DATE_TABLE;
+import static com.flowzr.db.DatabaseHelper.CategoryAttributeColumns;
+import static com.flowzr.db.DatabaseHelper.CategoryViewColumns;
+import static com.flowzr.db.DatabaseHelper.CreditCardClosingDateColumns;
+import static com.flowzr.db.DatabaseHelper.DELETE_LOG_TABLE;
+import static com.flowzr.db.DatabaseHelper.EXCHANGE_RATES_TABLE;
+import static com.flowzr.db.DatabaseHelper.ExchangeRateColumns;
+import static com.flowzr.db.DatabaseHelper.LOCATIONS_TABLE;
+import static com.flowzr.db.DatabaseHelper.LocationColumns;
+import static com.flowzr.db.DatabaseHelper.PAYEE_TABLE;
+import static com.flowzr.db.DatabaseHelper.TRANSACTION_ATTRIBUTE_TABLE;
+import static com.flowzr.db.DatabaseHelper.TRANSACTION_TABLE;
+import static com.flowzr.db.DatabaseHelper.TransactionAttributeColumns;
+import static com.flowzr.db.DatabaseHelper.V_ALL_TRANSACTIONS;
+import static com.flowzr.db.DatabaseHelper.V_ATTRIBUTES;
+import static com.flowzr.db.DatabaseHelper.V_BLOTTER;
+import static com.flowzr.db.DatabaseHelper.V_BLOTTER_FOR_ACCOUNT_WITH_SPLITS;
+import static com.flowzr.db.DatabaseHelper.V_CATEGORY;
 
 public class DatabaseAdapter {
 
@@ -787,8 +836,7 @@ public class DatabaseAdapter {
     }
 
     public Cursor getAllCategories(long[] ids) {
-        StringBuilder selection= new StringBuilder();
-        selection.append(CategoryViewColumns._id + " IN (");
+        StringBuilder selection= new StringBuilder().append(CategoryViewColumns._id).append(" IN (");
         for(int i = 0; i < ids.length; i++) {
             selection.append(ids[i]);
             if(i < ids.length -1) {
@@ -983,7 +1031,7 @@ public class DatabaseAdapter {
         values.put(CategoryColumns.type.name(), type);
         values.remove("updated_on");     
         values.put(CategoryColumns.updated_on.name(), System.currentTimeMillis());        
-		db().update(CATEGORY_TABLE, values, CategoryColumns._id+"=?", new String[]{String.valueOf(id)});
+		db().update(CATEGORY_TABLE, values, CategoryColumns._id + "=?", new String[]{String.valueOf(id)});
 	}
 	
     public void insertCategoryTreeInTransaction(CategoryTree<Category> tree) {
@@ -1040,6 +1088,37 @@ public class DatabaseAdapter {
         db().update(CATEGORY_TABLE, values, WHERE_CATEGORY_ID, sid);
 	}
 
+/**
+ // used in test
+ public ArrayList<Category> getAllCategoriesList() {
+ return getAllEntitiesList(Category.class, false);
+ }
+
+    private <T extends MyEntity> ArrayList<T> getAllEntitiesList(Class<T> clazz, boolean include0) {
+        Query<T> q = EntityManager.createQuery(clazz,true);
+        q.where(include0 ? Expressions.gte("id", 0) : Expressions.gt("id", 0));
+        q.asc("title");
+        Cursor c = q.execute();
+        try {
+            T e0 = null;
+            ArrayList<T> list = new ArrayList<T>();
+            while (c.moveToNext()) {
+                T e = EntityManager.loadFromCursor(c, clazz);
+                if (e.id == 0) {
+                    e0 = e;
+                } else {
+                    list.add(e);
+                }
+            }
+            if (e0 != null) {
+                list.add(0, e0);
+            }
+            return list;
+        } finally {
+            c.close();
+        }
+    }
+**/
     // ===================================================================
 	// ATTRIBUTES
 	// ===================================================================
@@ -1760,13 +1839,14 @@ public class DatabaseAdapter {
     } 
 
     public void setDefaultHomeCurrency() {
-        Currency homeCurrency = em.getHomeCurrency();
-        long singleCurrencyId = getSingleCurrencyId();
-        if (homeCurrency == Currency.EMPTY && singleCurrencyId > 0) {
-            Currency c = em.get(Currency.class, singleCurrencyId);
-            c.isDefault = true;
-            em.saveOrUpdate(c);
-        }
+        return;
+        //Currency homeCurrency = em.getHomeCurrency();
+        //long singleCurrencyId = getSingleCurrencyId();
+        //if (homeCurrency == Currency.EMPTY && singleCurrencyId > 0) {
+        //    Currency c = em.get(Currency.class, singleCurrencyId);
+        //    c.isDefault = true;
+        //    em.saveOrUpdate(c);
+        //}
     }
 
     public void purgeAccountAtDate(Account account, long date) {
@@ -1878,7 +1958,7 @@ public class DatabaseAdapter {
     	if (remoteKey==null) {
     		return 0;
     	}
-    	if (remoteKey=="") {
+    	if (remoteKey.equals("")) {
     		return 0;
     	}     	
     	ContentValues row = new ContentValues();

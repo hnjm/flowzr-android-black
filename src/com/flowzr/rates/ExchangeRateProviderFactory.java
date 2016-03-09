@@ -9,8 +9,10 @@
 package com.flowzr.rates;
 
 import android.content.SharedPreferences;
-import org.apache.http.impl.client.DefaultHttpClient;
+
 import com.flowzr.http.HttpClientWrapper;
+
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  * Created with IntelliJ IDEA.

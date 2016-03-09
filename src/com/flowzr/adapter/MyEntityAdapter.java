@@ -1,10 +1,11 @@
 package com.flowzr.adapter;
 
-import java.util.List;
-
-import com.flowzr.model.MyEntity;
 import android.content.Context;
 import android.widget.ArrayAdapter;
+
+import com.flowzr.model.MyEntity;
+
+import java.util.List;
 
 public class MyEntityAdapter<T extends MyEntity> extends ArrayAdapter<T> {
 

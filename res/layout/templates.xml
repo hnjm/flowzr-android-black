@@ -28,7 +28,7 @@
 		<TextView android:layout_width="wrap_content"
 			style="@style/TextView" android:textSize="@dimen/text_normal" 
 			android:layout_height="wrap_content" android:id="@+id/multiplier"
-			android:text="x1" android:textStyle="bold" android:textColor="#ffffff"></TextView>
+			android:text="x1" android:textStyle="bold" android:textColor="#ffffff"/>
 		<ImageButton android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:src="@drawable/ic_action_collapse"
 			android:id="@+id/bPlus" android:layout_marginRight="10dp" />

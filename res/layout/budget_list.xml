@@ -8,10 +8,14 @@
   Contributors:
       Denis Solonenko - initial API and implementation
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<LinearLayout
+    android:id="@id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 
         <include layout="@layout/total_text"/>
@@ -24,33 +28,27 @@
     <TextView android:id="@+id/integrity_error"
 		      android:text="@string/integrity_error"
         	  style="@style/TextView"
-              android:textColor="#f26522" 
+              android:textColor="#f26522"
               android:visibility="gone"/>
 
-<LinearLayout
-    style="@style/ListItem"
-	 android:id="@+id/emptyView"
-    android:paddingLeft="@dimen/space_large"
-     android:visibility="gone">
+    <RelativeLayout
+         android:id="@+id/emptyView"
+         android:layout_height="?android:listPreferredItemHeight"
+         android:layout_width="match_parent"
+        android:layout_gravity="center"
+         android:visibility="gone">
 
+            <TextView
+                android:paddingLeft="80dp"
+                android:paddingTop="@dimen/space_normal"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:text="@string/no_budgets"
+                style="@style/TextView"
+                android:textSize="@dimen/text_xlarge" />
 
-    <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="12dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_action_shuffle"
-        android:layout_centerVertical="true" />
-
-    <TextView
-        android:text="@string/no_budgets" 
-        style="@style/TextView"
-        android:layout_width="fill_parent"
-        android:textSize="@dimen/text_xlarge" />
-
-</LinearLayout>
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/fragment_land_container"
@@ -58,3 +56,4 @@
         android:layout_height="0dp" />
 
 </LinearLayout>
+

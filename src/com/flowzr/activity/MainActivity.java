@@ -71,7 +71,6 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
-		Log.e("flowzr","save instance");
 		savedInstanceState.putInt(STATE_TABID,viewPager.getCurrentItem());
 		super.onSaveInstanceState(savedInstanceState);
 	}

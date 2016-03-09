@@ -8,21 +8,28 @@
 package com.flowzr.dialog;
 
 
-import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.flowzr.R;
 import com.flowzr.activity.AbstractTotalListFragment;
 import com.flowzr.activity.AccountActivity;
 import com.flowzr.activity.AccountListFragment;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
-import com.flowzr.model.*;
+import com.flowzr.model.Account;
+import com.flowzr.model.AccountType;
+import com.flowzr.model.CardIssuer;
 import com.flowzr.utils.Utils;
 import com.flowzr.view.NodeInflater;
 
@@ -32,7 +39,6 @@ public class AccountInfoDialog {
 
     private final AccountListFragment parentActivity;
     private final long accountId;
-    private final DatabaseAdapter db;
     private final MyEntityManager em;
     private final NodeInflater inflater;
     private final LayoutInflater layoutInflater;
@@ -42,7 +48,7 @@ public class AccountInfoDialog {
                              DatabaseAdapter db, NodeInflater inflater) {
         this.parentActivity = parentActivity;
         this.accountId = accountId;
-        this.db = db;
+        //DatabaseAdapter db1 = db;
         this.em = db.em();
         this.inflater = inflater;
         this.layoutInflater = (LayoutInflater) parentActivity.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -136,7 +142,7 @@ public class AccountInfoDialog {
         d.show();
     }
 
-    private void add(LinearLayout layout, int labelId, String data, CardIssuer cardIssuer) {
+    private void add(LinearLayout layout, @SuppressWarnings("SameParameterValue") int labelId, String data, CardIssuer cardIssuer) {
         inflater.new Builder(layout, R.layout.select_entry_simple_icon)
                 .withIcon(cardIssuer.iconId).withLabel(labelId).withData(data).create();
     }

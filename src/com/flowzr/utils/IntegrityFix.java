@@ -9,6 +9,7 @@
 package com.flowzr.utils;
 
 import android.util.Log;
+
 import com.flowzr.db.DatabaseAdapter;
 
 import java.util.concurrent.TimeUnit;

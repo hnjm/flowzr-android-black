@@ -12,16 +12,25 @@ package com.flowzr.report;
 
 import android.content.Context;
 import android.database.Cursor;
+
 import com.flowzr.activity.BlotterFragment;
 import com.flowzr.activity.SplitsBlotterActivity;
 import com.flowzr.blotter.BlotterFilter;
-import com.flowzr.filter.WhereFilter;
+import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.db.DatabaseHelper;
+import com.flowzr.db.MyEntityManager;
+import com.flowzr.db.TransactionsTotalCalculator;
+import com.flowzr.db.UnableToCalculateRateException;
 import com.flowzr.filter.Criteria;
-import com.flowzr.db.*;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.graph.GraphStyle;
 import com.flowzr.graph.GraphUnit;
-import com.flowzr.model.*;
+import com.flowzr.model.Category;
+import com.flowzr.model.CategoryEntity;
+import com.flowzr.model.CategoryTree;
 import com.flowzr.model.CategoryTree.NodeCreator;
+import com.flowzr.model.Currency;
+import com.flowzr.model.Total;
 import com.flowzr.rates.ExchangeRateProvider;
 
 import java.math.BigDecimal;
@@ -29,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
 
 import static com.flowzr.db.DatabaseHelper.V_REPORT_SUB_CATEGORY;
 
@@ -48,6 +56,7 @@ public class SubCategoryReport extends Report {
         styles[2] = new GraphStyle.Builder(context).dy(2).textDy(5).lineHeight(20).nameTextSize(12).amountTextSize(10).indent(30).build();
     }
 
+    @SuppressWarnings("TryFinallyCanBeTryWithResources")
     @Override
 	public ReportData getReport(DatabaseAdapter db, WhereFilter filter) {
 		filterTransfers(filter);
@@ -72,7 +81,7 @@ public class SubCategoryReport extends Report {
             });
 
             ArrayList<GraphUnitTree> roots = createTree(amounts, 0);
-            ArrayList<GraphUnit> units = new ArrayList<GraphUnit>();
+            ArrayList<GraphUnit> units = new ArrayList<>();
             flattenTree(roots, units);
             Total total = calculateTotal(roots);
             return new ReportData(units, total);
@@ -92,7 +101,7 @@ public class SubCategoryReport extends Report {
     }
 
     private ArrayList<GraphUnitTree> createTree(CategoryTree<CategoryAmount> amounts, int level) {
-		ArrayList<GraphUnitTree> roots = new ArrayList<GraphUnitTree>();
+		ArrayList<GraphUnitTree> roots = new ArrayList<>();
 		GraphUnitTree u = null;
 		long lastId = -1;
 		for (CategoryAmount a : amounts) {

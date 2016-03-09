@@ -8,13 +8,9 @@
 
 package com.flowzr.export.flowzr;
 
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import com.flowzr.R;
-
 import android.content.SharedPreferences;
-import android.view.Menu;
-import android.view.MenuInflater;
+
+import org.apache.http.impl.client.DefaultHttpClient;
 
 public class FlowzrSyncOptions {
 	
@@ -35,7 +31,7 @@ public class FlowzrSyncOptions {
 	public String appVersion="";
 	
     public FlowzrSyncOptions(String strUseCredential, long lastSyncLocalTimestamp, DefaultHttpClient pHttp_client,String pRootFolderId,String _appVersion) {
-        this.last_sync_ts = lastSyncLocalTimestamp;
+        last_sync_ts = lastSyncLocalTimestamp;
         this.useCredential=strUseCredential;
         this.http_client=pHttp_client;
         this.rootFolderId=pRootFolderId;

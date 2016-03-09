@@ -9,6 +9,7 @@
 package com.flowzr.rates;
 
 import android.util.Log;
+
 import com.flowzr.http.HttpClientWrapper;
 import com.flowzr.model.Currency;
 

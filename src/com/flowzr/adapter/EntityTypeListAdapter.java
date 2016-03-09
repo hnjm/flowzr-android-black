@@ -10,9 +10,6 @@
  ******************************************************************************/
 package com.flowzr.adapter;
 
-import com.flowzr.R;
-import com.flowzr.model.EntityType;
-import com.flowzr.backup.BackupType;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +17,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.flowzr.R;
+import com.flowzr.model.EntityType;
 
 public class EntityTypeListAdapter extends BaseAdapter {
 

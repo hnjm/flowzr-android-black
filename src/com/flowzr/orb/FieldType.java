@@ -170,7 +170,8 @@ public abstract class FieldType {
 		} else if (Date.class == clazz) {
 			return FieldType.DATE;
 		} else if (clazz.isEnum()) {
-            return new ENUM((Class<Enum>) clazz);
+			//noinspection unchecked
+			return new ENUM((Class<Enum>) clazz);
         }
 		throw new IllegalArgumentException("Field ["+field+"] has unsupported type.");
 	}

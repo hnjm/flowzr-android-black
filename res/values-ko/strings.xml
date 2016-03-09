@@ -220,9 +220,9 @@
   <string name="csv_export">CSV 내보내기</string>
   <string name="csv_export_inprogress">데이터베이스를 CSV로 내보내는 중..</string>
   <string name="restore_database">데이터베이스 복원</string>
-  <string name="restore_database_inprogress">데이터베이스 복원 중...</string>
+  <string name="restore_database_inprogress">데이터베이스 복원 중…</string>
   <string name="restore_database_gdocs">구글 문서에서 복원</string>
-  <string name="restore_database_inprogress_gdocs">데이터베이스 복원 중...</string>
+  <string name="restore_database_inprogress_gdocs">데이터베이스 복원 중…</string>
   <string name="restore_database_success">데이터베이스 복원에 성공했습니다.</string>
   <string name="gdocs_connection_failed">구글 문서에 연결할 수 없습니다.</string>
   <string name="gdocs_folder_not_found">구글문서에서 백업 폴더를 찾을 수 없습니다.</string>
@@ -329,7 +329,7 @@
   <string name="use_fixed_layout">고정 레이아웃 사용</string>
   <string name="use_fixed_layout_summary">레이아웃에서 확인/취소 단추 수정</string>
   <string name="no_data">데이터 없음</string>
-  <string name="calculating">계산하는 중... </string>
+  <string name="calculating">계산하는 중… </string>
   <string name="budget_mode">쉬운 조건</string>
   <string name="budget_mode_summary">거래를 필터링 할 때 제한적인 조건 사용</string>
   <string name="gdocs_backup">구글 문서 백업</string>
@@ -522,7 +522,7 @@
   <string name="mass_operations_delete">Delete all</string>
   <string name="proceed">Proceed</string>
   <string name="apply_mass_op" formatted="false">Apply \'%s\' on %d transaction(s)?</string>
-  <string name="apply_mass_op_zero_count">No transactions selected...</string>
+  <string name="apply_mass_op_zero_count">No transactions selected…</string>
   <string name="entities">Entities</string>
   <string name="transaction_status_restored">Restored</string>
   <string name="scheduled_transactions_restored">Scheduled transactions have been restored</string>
@@ -543,24 +543,24 @@
   <string name="donate_error">Android Market is not available on your device</string>
   <string name="type">Type</string>
   <string name="qif_export">QIF Export</string>
-  <string name="qif_export_inprogress">Exporting data to QIF...</string>
+  <string name="qif_export_inprogress">Exporting data to QIF…</string>
   <string name="all_accounts">All accounts</string>
-  <string name="filter_value_not_found">Not found...</string>
+  <string name="filter_value_not_found">Not found…</string>
   <string name="empty_report">Empty report</string>
   <string name="day_of_month">Day of month</string>
   <string name="show_running_balance">Show running balance</string>
   <string name="show_running_balance_summary">Show account running balance in the blotter (requires restart)</string>
-  <string name="new_currency">New currency...</string>
+  <string name="new_currency">New currency…</string>
   <string name="lock_time">Lock time</string>
   <string name="lock_time_summary">Time to keep main screen active before locking it off</string>
   <string name="date_format">Date format</string>
   <string name="pin_protection_lock_transaction">Lock New Transaction\\Transfer</string>
   <string name="pin_protection_lock_transaction_summary">Lock \'New transaction\' and \'New transfer\' screens by PIN</string>
-  <string name="split">[Split...]</string>
+  <string name="split">[Split…]</string>
   <string name="split_transaction">[Split-Transaction]</string>
   <string name="split_transfer">[Split-Transfer]</string>
   <string name="unsplit_amount">Unsplit amount</string>
-  <string name="unsplit_amount_greater_than_zero">There is still some amount left un-split...</string>
+  <string name="unsplit_amount_greater_than_zero">There is still some amount left un-split…</string>
   <string name="delete_transaction_parent_confirm">This transaction is a part of split. Do you want to delete the parent transaction?</string>
   <string name="downloading_rate" formatted="false">Fetching %s/%s conversion rate...</string>
   <string name="unsplit_adjust_amount">Amount</string>

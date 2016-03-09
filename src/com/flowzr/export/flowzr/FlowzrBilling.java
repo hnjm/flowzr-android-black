@@ -1,12 +1,15 @@
 package com.flowzr.export.flowzr;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
+
+import com.flowzr.activity.FlowzrSyncActivity;
+import com.flowzr.export.billing.IabHelper;
+import com.flowzr.export.billing.IabResult;
+import com.flowzr.export.billing.Inventory;
+import com.flowzr.export.billing.Purchase;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,16 +22,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
-import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.flowzr.activity.FlowzrSyncActivity;
-import com.flowzr.export.billing.IabHelper;
-import com.flowzr.export.billing.IabResult;
-import com.flowzr.export.billing.Inventory;
-import com.flowzr.export.billing.Purchase;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 public class FlowzrBilling {
 	
@@ -39,13 +37,12 @@ public class FlowzrBilling {
     IabHelper mHelper;
     private Context context;
 	public String FLOWZR_API_URL;
-    private DefaultHttpClient http_client;  
-    private String payload;
+    private DefaultHttpClient http_client;
     private String user;
     
     public FlowzrBilling(Context context,  DefaultHttpClient pHttp_client,String payload,String user) {
     	this.context=context;
-    	this.payload=payload;
+        //String payload1 = payload;
     	this.user=user;
     	this.http_client=pHttp_client;
     	this.FLOWZR_API_URL="https://flowzr-hrd.appspot.com/financisto3/";
@@ -66,7 +63,7 @@ public class FlowzrBilling {
                //if (true) {
                if (!mSubscribed) {
 
-            	if (!mHelper.subscriptionsSupported()) {
+            	if (mHelper.subscriptionsNotSupported()) {
                    	//Toast.makeText(context, , Toast.LENGTH_SHORT).show();                		
                     Log.e("flowzr","Subscriptions not supported on your device yet. Sorry!");
             		return;
@@ -125,7 +122,7 @@ public class FlowzrBilling {
       
       /** Verifies the developer payload of a purchase. */
       boolean verifyDeveloperPayload(Purchase p) {
-          String returnedPayload = p.getDeveloperPayload();
+          //String returnedPayload = p.getDeveloperPayload();
           return true;
       }
       
@@ -141,7 +138,7 @@ public class FlowzrBilling {
            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
                public void onIabSetupFinished(IabResult result) {
  
-                   if (!result.isSuccess()) {
+                   if (result.isFailure2()) {
                       // Oh noes, there was a problem.
                    	  //Toast.makeText(context, "Problem setting up in-app billing: " + result, Toast.LENGTH_SHORT).show();                    
                       return;
@@ -180,7 +177,7 @@ public class FlowzrBilling {
     	if (p==null) {
     		return false;
     	}
-  		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+  		ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
   		nameValuePairs.add(new BasicNameValuePair("action","gotSubscription"));
   		nameValuePairs.add(new BasicNameValuePair("payload",p.getDeveloperPayload()));
   		nameValuePairs.add(new BasicNameValuePair("purchase",p.getOriginalJson()));
@@ -194,13 +191,13 @@ public class FlowzrBilling {
 			return false;				
 		}
         HttpResponse response;
-        String strResponse;
+        //String strResponse;
 		try {
 			response = http_client.execute(httppost);
 	        HttpEntity entity = response.getEntity();
             int code = response.getStatusLine().getStatusCode();
 	        BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
-			strResponse = reader.readLine(); 				 			
+			reader.readLine();
 	        entity.consumeContent();			
 	        if (code!=200) {
 	        	return false;

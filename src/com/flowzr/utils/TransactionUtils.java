@@ -14,6 +14,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
+
 import com.flowzr.adapter.CategoryListAdapter;
 import com.flowzr.adapter.MyEntityAdapter;
 import com.flowzr.db.DatabaseAdapter;
@@ -51,15 +52,15 @@ public class TransactionUtils {
 	}
 
 	public static ListAdapter createProjectAdapter(Context context, List<Project> projects) {
-		return new MyEntityAdapter<Project>(context, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, projects);
+		return new MyEntityAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, projects);
 	}
 
     public static ListAdapter createPayeeAdapter(Context context, List<Payee> payees) {
-        return new MyEntityAdapter<Payee>(context, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, payees);
+        return new MyEntityAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, payees);
     }
 
     public static ListAdapter createCurrencyAdapter(Context context, List<Currency> currencies) {
-        return new MyEntityAdapter<Currency>(context, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, currencies);
+        return new MyEntityAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, currencies);
     }
 
     public static ListAdapter createLocationAdapter(Context context, Cursor cursor) {

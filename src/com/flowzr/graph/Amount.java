@@ -10,6 +10,8 @@
  ******************************************************************************/
 package com.flowzr.graph;
 
+import android.support.annotation.NonNull;
+
 import com.flowzr.model.Currency;
 import com.flowzr.utils.Utils;
 
@@ -32,7 +34,7 @@ public class Amount implements Comparable<Amount> {
 	}
 
     @Override
-    public int compareTo(Amount that) {
+    public int compareTo(@NonNull Amount that) {
         long thisAmount = Math.abs(this.amount);
         long thatAmount = Math.abs(that.amount);
         return thisAmount == thatAmount ? 0 : (thisAmount > thatAmount ? -1 : 1);

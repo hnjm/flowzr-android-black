@@ -19,20 +19,21 @@ import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.*;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import org.achartengine.ChartFactory;
-import org.achartengine.model.CategorySeries;
-import org.achartengine.renderer.DefaultRenderer;
-import org.achartengine.renderer.SimpleSeriesRenderer;
+
 import com.flowzr.R;
 import com.flowzr.adapter.ReportAdapter;
-import com.flowzr.filter.WhereFilter;
-import com.flowzr.filter.Criteria;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.DatabaseHelper.ReportColumns;
+import com.flowzr.filter.Criteria;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.graph.GraphUnit;
 import com.flowzr.model.Total;
 import com.flowzr.report.IncomeExpense;
@@ -40,6 +41,11 @@ import com.flowzr.report.PeriodReport;
 import com.flowzr.report.Report;
 import com.flowzr.report.ReportData;
 import com.flowzr.utils.Utils;
+
+import org.achartengine.ChartFactory;
+import org.achartengine.model.CategorySeries;
+import org.achartengine.renderer.DefaultRenderer;
+import org.achartengine.renderer.SimpleSeriesRenderer;
 
 import java.math.BigDecimal;
 

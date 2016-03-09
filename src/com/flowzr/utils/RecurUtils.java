@@ -10,18 +10,19 @@
  ******************************************************************************/
 package com.flowzr.utils;
 
+import android.content.Context;
+
+import com.flowzr.R;
+import com.flowzr.datetime.DateUtils;
+import com.flowzr.datetime.Period;
+import com.flowzr.datetime.PeriodType;
+
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.LinkedList;
-
-import com.flowzr.R;
-import com.flowzr.datetime.DateUtils;
-import com.flowzr.datetime.Period;
-import com.flowzr.datetime.PeriodType;
-import android.content.Context;
 
 public class RecurUtils {
 
@@ -64,7 +65,7 @@ public class RecurUtils {
 		private final int layoutId;
 		private final int titleId;
 		
-		private RecurInterval(int layoutId, int titleId) {
+		RecurInterval(int layoutId, int titleId) {
 			this.layoutId = layoutId;
 			this.titleId = titleId;
 		}
@@ -94,7 +95,7 @@ public class RecurUtils {
 			@Override
 			public Period[] repeat(RecurInterval interval, long startDate, long periodParam) {
 				long endDate = 0;
-				LinkedList<Period> periods = new LinkedList<Period>();
+				LinkedList<Period> periods = new LinkedList<>();
 				while (endDate < periodParam) {
 					Period p = interval.next(startDate);
 					startDate = p.end+1;
@@ -117,7 +118,7 @@ public class RecurUtils {
 			}
 			@Override
 			public Period[] repeat(RecurInterval interval, long startDate, long periodParam) {
-				LinkedList<Period> periods = new LinkedList<Period>();
+				LinkedList<Period> periods = new LinkedList<>();
 				while (periodParam-- > 0) {
 					Period p = interval.next(startDate);
 					startDate = p.end+1;
@@ -130,7 +131,7 @@ public class RecurUtils {
 		private final int layoutId;
 		private final int titleId;
 		
-		private RecurPeriod(int layoutId, int titleId) {
+		RecurPeriod(int layoutId, int titleId) {
 			this.layoutId = layoutId;
 			this.titleId = titleId;
 		}
@@ -198,12 +199,7 @@ public class RecurUtils {
 
 		public String toString(Context context) {
 			DateFormat df = DateUtils.getShortDateFormat(context);
-			StringBuilder sb = new StringBuilder();
-			sb.append(context.getString(R.string.recur_repeat_starts_on)).append(" ");
-			sb.append(df.format(new Date(startDate))).append(", ");
-			sb.append(context.getString(interval.titleId)).append(", ");
-			sb.append(period.toSummary(context, periodParam));
-			return sb.toString();
+			return context.getString(R.string.recur_repeat_starts_on) + " " + df.format(new Date(startDate)) + ", " + context.getString(interval.titleId) + ", " + period.toSummary(context, periodParam);
 		}
 		
 		//public abstract long getNextRecur(long currentDate);
@@ -269,7 +265,7 @@ public class RecurUtils {
 		}
 	}
 
-	public static enum DayOfWeek {
+	public enum DayOfWeek {
 		SUN(R.id.daySun), 
 		MON(R.id.dayMon), 
 		TUE(R.id.dayTue), 
@@ -280,7 +276,7 @@ public class RecurUtils {
 		
 		public final int checkboxId;
 		
-		private DayOfWeek(int checkboxId) {
+		DayOfWeek(int checkboxId) {
 			this.checkboxId = checkboxId;
 		}
 		
@@ -431,7 +427,7 @@ public class RecurUtils {
 	}
 
 	private static HashMap<String, String> toMap(String[] a) {
-		HashMap<String, String> map = new HashMap<String, String>();
+		HashMap<String, String> map = new HashMap<>();
 		for (String s : a) {
 			String[] kv = s.split("=");
 			if (kv.length > 1) {

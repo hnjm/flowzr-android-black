@@ -11,17 +11,26 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.*;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.model.MultiChoiceItem;
 import com.flowzr.utils.Utils;
 import com.flowzr.view.NodeInflater;
-import com.flowzr.view.NodeInflater.*;
+import com.flowzr.view.NodeInflater.Builder;
+import com.flowzr.view.NodeInflater.CheckBoxBuilder;
+import com.flowzr.view.NodeInflater.EditBuilder;
+import com.flowzr.view.NodeInflater.ListBuilder;
+import com.flowzr.view.NodeInflater.PictureBuilder;
 
 import java.util.List;
 
@@ -191,7 +200,7 @@ public class ActivityLayout {
         View v = b.withButtonId(R.id.add_split, listener).withId(R.id.unsplit_action, listener).withLabel(R.string.unsplit_amount).withData("0").create();
         ImageView transferImageView = (ImageView)v.findViewById(R.id.transfer);
         transferImageView.setId(R.id.add_split_transfer);
-        transferImageView.setImageResource(R.drawable.ic_action_import_export);
+        transferImageView.setImageResource(R.drawable.ic_import_export_white_24dp);
         transferImageView.setOnClickListener(listener);
         return v;
     }

@@ -10,10 +10,12 @@ package com.flowzr.rates;
 
 import android.text.TextUtils;
 import android.util.Log;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 import com.flowzr.http.HttpClientWrapper;
 import com.flowzr.model.Currency;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created with IntelliJ IDEA.

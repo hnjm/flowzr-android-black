@@ -94,7 +94,7 @@ public abstract class Report {
 		try {
             MyEntityManager em = db.em();
             ExchangeRateProvider rates = db.getHistoryRates();
-            ArrayList<GraphUnit> units = new ArrayList<GraphUnit>();
+            ArrayList<GraphUnit> units = new ArrayList<>();
             GraphUnit u = null;
             long lastId = -1;
             while (c.moveToNext()) {

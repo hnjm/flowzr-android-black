@@ -19,14 +19,17 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
-import android.view.*;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.PopupWindow;
 
+import com.flowzr.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.flowzr.R;
 
 /**
  * Abstraction of a {@link greendroid.widget.QuickAction} wrapper. A QuickActionWidget is
@@ -59,7 +62,7 @@ public abstract class QuickActionWidget extends PopupWindow {
     private boolean mIsDirty;
 
     private OnQuickActionClickListener mOnQuickActionClickListener;
-    private ArrayList<QuickAction> mQuickActions = new ArrayList<QuickAction>();
+    private ArrayList<QuickAction> mQuickActions = new ArrayList<>();
 
     /**
      * Interface that may be used to listen to clicks on quick actions.
@@ -67,7 +70,7 @@ public abstract class QuickActionWidget extends PopupWindow {
      * @author Benjamin Fellous
      * @author Cyril Mottier
      */
-    public static interface OnQuickActionClickListener {
+    public interface OnQuickActionClickListener {
         /**
          * Clients may implement this method to be notified of a click on a
          * particular quick action.
@@ -173,9 +176,7 @@ public abstract class QuickActionWidget extends PopupWindow {
         return mDismissOnClick;
     }
 
-    /**
-     * @param listener
-     */
+
     public void setOnQuickActionClickListener(OnQuickActionClickListener listener) {
         mOnQuickActionClickListener = listener;
     }
@@ -274,7 +275,7 @@ public abstract class QuickActionWidget extends PopupWindow {
         if (arrowId == R.id.gdi_arrow_up) {
             arrowUp.setVisibility(View.VISIBLE);
             arrowDown.setVisibility(View.INVISIBLE);
-        } else if (arrowId == R.id.gdi_arrow_down) {
+        } else {
             arrowUp.setVisibility(View.INVISIBLE);
             arrowDown.setVisibility(View.VISIBLE);
         }

@@ -212,7 +212,7 @@ public abstract class EntityManager {
 			List<T> list = new LinkedList<T>();
 			while (c.moveToNext()) {
 				try {
-					T t = (T)loadFromCursor("e", c, ed);
+					T t = loadFromCursor("e", c, ed);
 					list.add(t);
 				} catch (Exception e) {
 					throw new PersistenceException("Unable to list entites of type "+clazz, e);

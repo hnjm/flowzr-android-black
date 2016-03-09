@@ -13,32 +13,12 @@
 
 package com.flowzr.activity;
 
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.GregorianCalendar;
-
-import com.flowzr.R;
-import com.flowzr.db.DatabaseAdapter;
-import com.flowzr.db.MyEntityManager;
-import com.flowzr.filter.DateTimeCriteria;
-import com.flowzr.filter.WhereFilter;
-import com.flowzr.graph.Report2DChart;
-import com.flowzr.model.Currency;
-import com.flowzr.model.ReportDataByPeriod;
-import com.flowzr.report.*;
-import com.flowzr.utils.CurrencyCache;
-import com.flowzr.utils.MyPreferences;
-import com.flowzr.utils.PinProtection;
-import com.flowzr.utils.Utils;
-import com.flowzr.view.Report2DChartView;
-import android.app.Activity;
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -47,6 +27,26 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import com.flowzr.R;
+import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.db.MyEntityManager;
+import com.flowzr.graph.Report2DChart;
+import com.flowzr.model.Currency;
+import com.flowzr.model.ReportDataByPeriod;
+import com.flowzr.report.AccountByPeriodReport;
+import com.flowzr.report.CategoryByPeriodReport;
+import com.flowzr.report.LocationByPeriodReport;
+import com.flowzr.report.PayeeByPeriodReport;
+import com.flowzr.report.ProjectByPeriodReport;
+import com.flowzr.utils.CurrencyCache;
+import com.flowzr.utils.MyPreferences;
+import com.flowzr.utils.Utils;
+import com.flowzr.view.Report2DChartView;
+
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.GregorianCalendar;
 
 public class Report2DChartActivity extends AbstractListFragment {
 	
@@ -165,14 +165,14 @@ public class Report2DChartActivity extends AbstractListFragment {
 
 	
 		// period length
-		((TextView)getView().findViewById(R.id.report_period)).setOnClickListener(new OnClickListener() {
+		getView().findViewById(R.id.report_period).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// pop up options to choose the period
 				changePeriodLength(selectedPeriod);
 			}
 		});
-		((TextView)getView().findViewById(R.id.report_period)).setFocusable(true);
+		getView().findViewById(R.id.report_period).setFocusable(true);
 		
 	}
 	
@@ -304,13 +304,13 @@ public class Report2DChartActivity extends AbstractListFragment {
 							   reportData.getDataBuilder().getAbsoluteMinValue(), 
 							   reportData.getDataBuilder().getMeanExcludingNulls());
 			((Report2DChartView)getView().findViewById(R.id.report_2d_chart)).setCurrency(currency);
-			((Report2DChartView)getView().findViewById(R.id.report_2d_chart)).setVisibility(View.VISIBLE);
+			getView().findViewById(R.id.report_2d_chart).setVisibility(View.VISIBLE);
 			
 			// set labels
 			view.refresh();
 		} else {
-			((TextView)getView().findViewById(R.id.report_empty)).setVisibility(View.VISIBLE);
-			((Report2DChartView)getView().findViewById(R.id.report_2d_chart)).setVisibility(View.GONE);
+			getView().findViewById(R.id.report_empty).setVisibility(View.VISIBLE);
+			getView().findViewById(R.id.report_2d_chart).setVisibility(View.GONE);
 		}
 		// adjust report 2D user interface elements
 		adjustLabels();
@@ -329,32 +329,33 @@ public class Report2DChartActivity extends AbstractListFragment {
 	/**
 	 * Fill statistics panel based on report data
 	 */
+	@SuppressWarnings("UnusedAssignment")
 	private void fillStatistics() {
 		boolean considerNull = MyPreferences.considerNullResultsInReport(this.getActivity());
 		Double max;
 		Double min;
 		Double mean;
-		Double sum = new Double(reportData.getDataBuilder().getSum());
+		Double sum = reportData.getDataBuilder().getSum();
 		if (considerNull) {
-			max = new Double(reportData.getDataBuilder().getMaxValue());
-			min = new Double(reportData.getDataBuilder().getMinValue());
-			mean = new Double(reportData.getDataBuilder().getMean());
+			max = reportData.getDataBuilder().getMaxValue();
+			min = reportData.getDataBuilder().getMinValue();
+			mean = reportData.getDataBuilder().getMean();
 	    	if ((min*max>=0)) {
 	    		// absolute calculation (all points over the x axis)
-	    		max = new Double(reportData.getDataBuilder().getAbsoluteMaxValue());
-				min = new Double(reportData.getDataBuilder().getAbsoluteMinValue());
+	    		max = reportData.getDataBuilder().getAbsoluteMaxValue();
+				min = reportData.getDataBuilder().getAbsoluteMinValue();
 				mean = Math.abs(mean);
 				sum = Math.abs(sum);
 	    	}			
 		} else {
 			// exclude impact of null values in statistics
-			max = new Double(reportData.getDataBuilder().getMaxExcludingNulls());
-			min = new Double(reportData.getDataBuilder().getMinExcludingNulls());
-			mean = new Double(reportData.getDataBuilder().getMeanExcludingNulls());
+			max = reportData.getDataBuilder().getMaxExcludingNulls();
+			min = reportData.getDataBuilder().getMinExcludingNulls();
+			mean = reportData.getDataBuilder().getMeanExcludingNulls();
 			if ((min*max>=0)) {
 	    		// absolute calculation (all points over the x axis)
-	    		max = new Double(reportData.getDataBuilder().getAbsoluteMaxExcludingNulls());
-				min = new Double(reportData.getDataBuilder().getAbsoluteMinExcludingNulls());
+	    		max = reportData.getDataBuilder().getAbsoluteMaxExcludingNulls();
+				min = reportData.getDataBuilder().getAbsoluteMinExcludingNulls();
 				mean = Math.abs(mean);
 				sum = Math.abs(sum);
 	    	}	

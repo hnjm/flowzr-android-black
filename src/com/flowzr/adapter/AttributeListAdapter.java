@@ -10,12 +10,13 @@
  ******************************************************************************/
 package com.flowzr.adapter;
 
-import com.flowzr.R;
-import com.flowzr.db.DatabaseAdapter;
-import com.flowzr.model.Attribute;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.View;
+
+import com.flowzr.R;
+import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.model.Attribute;
 
 public class AttributeListAdapter extends AbstractGenericListAdapter {
 	

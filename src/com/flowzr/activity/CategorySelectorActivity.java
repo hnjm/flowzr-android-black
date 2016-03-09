@@ -23,7 +23,9 @@ import com.flowzr.model.CategoryTreeNavigator;
 import com.flowzr.utils.MenuItemInfo;
 import com.flowzr.utils.MyPreferences;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -79,7 +81,7 @@ public class CategorySelectorActivity extends AbstractListActivity {
             }
         });
         **/
-        Button bSelect = (Button)findViewById(R.id.bSelect);
+        //Button bSelect = (Button)findViewById(R.id.bSelect);
         /**
         bSelect.setOnClickListener(new View.OnClickListener() {
             @Override

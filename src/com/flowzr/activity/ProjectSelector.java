@@ -11,12 +11,12 @@ package com.flowzr.activity;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.content.res.TypedArrayUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseHelper;
 import com.flowzr.db.MyEntityManager;
@@ -25,11 +25,8 @@ import com.flowzr.model.Project;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.TransactionUtils;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import static android.content.Context.ACCESSIBILITY_SERVICE;
 import static com.flowzr.activity.AbstractEditorActivity.setVisibility;
 
 /**
@@ -65,11 +62,11 @@ public class ProjectSelector {
 
     public void fetchProjects(long[] ids) {
         projects = em.getActiveProjectsList(true);
-        ArrayList<Project> filtered= new ArrayList<Project>();
+        ArrayList<Project> filtered= new ArrayList<>();
         //ArrayList<T> list = new ArrayList<T>();
         for (int i=0; i<projects.size(); i++) {
-            for (int j=0; j<ids.length; j++) {
-                if (ids[j]==projects.get(i).id) {
+            for (long id : ids) {
+                if (id == projects.get(i).id) {
                     filtered.add(projects.get(i));
                     Log.e("flowzr", "keep " + String.valueOf(projects.get(i).id) + " " + projects.get(i).getTitle());
                 }

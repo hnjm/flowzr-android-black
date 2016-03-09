@@ -10,18 +10,28 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.TextView;
+
 import com.flowzr.R;
-import com.flowzr.graph.Amount;
-import com.flowzr.model.*;
+import com.flowzr.model.Account;
+import com.flowzr.model.Budget;
+import com.flowzr.model.Category;
+import com.flowzr.model.Currency;
+import com.flowzr.model.MultiChoiceItem;
+import com.flowzr.model.MyEntity;
+import com.flowzr.model.Project;
+import com.flowzr.model.Total;
 import com.flowzr.utils.RecurUtils;
 import com.flowzr.utils.RecurUtils.Recur;
 import com.flowzr.utils.Utils;
@@ -41,8 +51,6 @@ public class BudgetActivity extends AbstractEditorActivity {
 	private static final int NEW_PROJECT_REQUEST = 2;
 	private static final int RECUR_REQUEST = 3;
 	public static final int CALCULATOR_REQUEST = 4 ;
-
-	private AmountInput amountInput;
 
 	private EditText titleText;
 	private TextView categoryText;
@@ -77,19 +85,19 @@ public class BudgetActivity extends AbstractEditorActivity {
 		setContentView(R.layout.budget);
 		initToolbar();
         accountOptions = createAccountsList();
-        accountAdapter = new ArrayAdapter<AccountOption>(this, android.R.layout.simple_spinner_dropdown_item, accountOptions);
+        accountAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, accountOptions);
 
 		categories = db.getCategoriesList(true);
 		projects = em.getActiveProjectsList(true);
 		
 		LinearLayout layout = (LinearLayout) findViewById(R.id.list);
-		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		//LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		titleText = (EditText) findViewById(R.id.title);
 		// (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 		//x.addEditNode(layout, R.string.title, titleText);
 
-		amountInput = new AmountInput(this);
+		AmountInput amountInput = new AmountInput(this);
 		amountInput.setOwner(this);
 		amountInput.setIncome();
 		//amountInput.disableIncomeExpenseButton();
@@ -185,7 +193,7 @@ public class BudgetActivity extends AbstractEditorActivity {
     }
 	
     private List<AccountOption> createAccountsList() {
-        List<AccountOption> accounts = new ArrayList<AccountOption>();
+        List<AccountOption> accounts = new ArrayList<>();
         List<Currency> currenciesList = em.getAllCurrenciesList("name");
         for (Currency currency : currenciesList) {
             String title = getString(R.string.account_by_currency, currency.name);
@@ -382,7 +390,7 @@ public class BudgetActivity extends AbstractEditorActivity {
 		if (recur != null) {
 			budget.recur = recur;
 			Recur r = RecurUtils.createFromExtraString(recur);
-			periodRecurText.setText(r.toString(this));
+			periodRecurText.setText(r != null ? r.toString(this) : "");
 		}
 	}
 

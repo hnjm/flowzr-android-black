@@ -10,17 +10,19 @@
  ******************************************************************************/
 package com.flowzr.adapter;
 
-import java.util.Map;
+import android.content.Context;
+import android.database.Cursor;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ResourceCursorAdapter;
+import android.widget.TextView;
 
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.DatabaseHelper.CategoryViewColumns;
 import com.flowzr.model.Category;
-import android.content.Context;
-import android.database.Cursor;
-import android.view.View;
-import android.widget.ResourceCursorAdapter;
-import android.widget.TextView;
+
+import java.util.Map;
 
 public class CategoryListAdapter extends ResourceCursorAdapter {
 	
@@ -45,10 +47,12 @@ public class CategoryListAdapter extends ResourceCursorAdapter {
 		if (labelView != null) {
 			labelView.setText(Category.getTitle(title, level));
 		} else {
-			TextView spanView = (TextView)view.findViewById(R.id.span);
+
+			ImageView spanView = (ImageView)view.findViewById(R.id.span);
 			if (level > 1) {
 				spanView.setVisibility(View.VISIBLE);
-				spanView.setText(Category.getTitleSpan(level));
+				//@TODO check CategoryListAdapter
+				//spanView.setText(Category.getTitleSpan(level));
 			} else {
 				spanView.setVisibility(View.GONE);
 			}

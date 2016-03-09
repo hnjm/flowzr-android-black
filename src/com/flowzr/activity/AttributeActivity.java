@@ -11,22 +11,21 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import com.flowzr.R;
-import com.flowzr.db.DatabaseAdapter;
-import com.flowzr.db.DatabaseHelper.AttributeColumns;
-import com.flowzr.model.Attribute;
-import com.flowzr.rates.ExchangeRate;
-import com.flowzr.utils.PinProtection;
-import com.flowzr.utils.Utils;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
+
+import com.flowzr.R;
+import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.db.DatabaseHelper.AttributeColumns;
+import com.flowzr.model.Attribute;
+import com.flowzr.utils.Utils;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 

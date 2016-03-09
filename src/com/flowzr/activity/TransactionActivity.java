@@ -11,39 +11,65 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.content.res.Configuration;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.*;
-import greendroid.widget.QuickActionGrid;
-import greendroid.widget.QuickActionWidget;
+import android.widget.AdapterView;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseHelper;
-import com.flowzr.model.*;
+import com.flowzr.model.Account;
+import com.flowzr.model.Category;
 import com.flowzr.model.Currency;
-import com.flowzr.utils.*;
+import com.flowzr.model.MyEntity;
+import com.flowzr.model.Payee;
+import com.flowzr.model.Total;
+import com.flowzr.model.Transaction;
+import com.flowzr.utils.CurrencyCache;
+import com.flowzr.utils.MyPreferences;
+import com.flowzr.utils.SplitAdjuster;
+import com.flowzr.utils.TransactionUtils;
+import com.flowzr.view.FloatingActionButton;
+import com.flowzr.view.MyFloatingActionMenu;
 import com.flowzr.widget.AmountInput;
 
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import greendroid.widget.QuickActionGrid;
+import greendroid.widget.QuickActionWidget;
 
 import static com.flowzr.utils.AndroidUtils.isGreenDroidSupported;
 import static com.flowzr.utils.Utils.isNotEmpty;
 
 public class TransactionActivity extends AbstractTransactionActivity {
 
+    public static String IS_TRANSFER_EXTRA="IS_TRANSFER_EXTRASs";
     private final Currency currencyAsAccount = new Currency();
 
     private long idSequence = 0;
-    private final IdentityHashMap<View, Transaction> viewToSplitMap = new IdentityHashMap<View, Transaction>();
+    private final IdentityHashMap<View, Transaction> viewToSplitMap = new IdentityHashMap<>();
 
 	private TextView differenceText;
 	private boolean isUpdateBalanceMode = false;
@@ -117,6 +143,60 @@ public class TransactionActivity extends AbstractTransactionActivity {
             }
         });
 
+
+        final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) findViewById(R.id.menu1);
+
+        menu1.setOnMenuButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (menu1.isOpened()) {
+                    //Toast.makeText(getActivity(), menu1.getMenuButtonLabelText(), Toast.LENGTH_SHORT).show();
+                }
+                menu1.toggle(true);
+            }
+        });
+
+        Handler mUiHandler = new Handler();
+        List<MyFloatingActionMenu> menus = new ArrayList<>();
+        menus.add(menu1);
+        menu1.hideMenuButton(true);
+        int delay = 400;
+        for (final MyFloatingActionMenu menu : menus) {
+            mUiHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    menu.showMenuButton(true);
+                }
+            }, delay);
+            delay += 150;
+        }
+        menu1.setClosedOnTouchOutside(true);
+        FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.saveButton);
+        fab1.setLabelText(getString(R.string.add_transaction));
+        fab1.setLabelVisibility(View.VISIBLE);
+
+        //FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.saveAddButton);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                menu1.showMenuButton(true);
+            }
+        }, delay + 150);
+        menu1.setOnMenuToggleListener(new MyFloatingActionMenu.OnMenuToggleListener() {
+            @Override
+            public void onMenuToggle(boolean opened) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        menu1.close(true);
+                        menu1.close(true);
+                    }
+                },3500);
+            }
+        });
+
+
         findViewById(R.id.saveAddButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,7 +227,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
         if (isGreenDroidSupported()) {
             unsplitActionGrid = new QuickActionGrid(this);
             unsplitActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_action_new, R.string.transaction));
-            unsplitActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_action_import_export, R.string.transfer));
+            unsplitActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_import_export_white_24dp, R.string.transfer));
             unsplitActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_action_split, R.string.unsplit_adjust_amount));
             unsplitActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_action_split, R.string.unsplit_adjust_evenly));
             unsplitActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_action_split, R.string.unsplit_adjust_last));
@@ -187,7 +267,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
     private void unsplitAdjustEvenly() {
         long unsplitAmount = calculateUnsplitAmount();
         if (unsplitAmount != 0) {
-            List<Transaction> splits = new ArrayList<Transaction>(viewToSplitMap.values());
+            List<Transaction> splits = new ArrayList<>(viewToSplitMap.values());
             SplitAdjuster.adjustEvenly(splits, unsplitAmount);
             updateSplits();
         }
@@ -422,7 +502,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
 		transaction.fromAmount = amount;
         updateTransactionOriginalAmount();
         if (categorySelector.isSplitCategorySelected()) {
-            transaction.splits = new LinkedList<Transaction>(viewToSplitMap.values());
+            transaction.splits = new LinkedList<>(viewToSplitMap.values());
         } else {
             transaction.splits = null;
         }
@@ -486,9 +566,9 @@ public class TransactionActivity extends AbstractTransactionActivity {
                 setResult(RESULT_CANCELED);
                 finish();
                 return true;
-        	case R.id.action_location_found:
-        		selectCurrentLocation(true);
-                return true;
+        	//case R.id.action_location_found:
+        	//	selectCurrentLocation(true);
+            //    return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -623,8 +703,9 @@ public class TransactionActivity extends AbstractTransactionActivity {
                 ActivityState state = new ActivityState();
                 state.categoryId = categorySelector.getSelectedCategoryId();
                 state.idSequence = idSequence;
-                state.splits = new ArrayList<Transaction>(viewToSplitMap.values());
+                state.splits = new ArrayList<>(viewToSplitMap.values());
                 ByteArrayOutputStream s = new ByteArrayOutputStream();
+                //noinspection TryFinallyCanBeTryWithResources
                 try {
                     ObjectOutputStream out = new ObjectOutputStream(s);
                     out.writeObject(state);
@@ -638,6 +719,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
         }
     }
 
+    @SuppressWarnings("TryFinallyCanBeTryWithResources")
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);

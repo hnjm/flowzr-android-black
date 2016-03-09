@@ -10,8 +10,14 @@
  ******************************************************************************/
 package com.flowzr.backup;
 
-import static com.flowzr.backup.Backup.BACKUP_TABLES;
-import static com.flowzr.backup.Backup.tableHasSystemIds;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.flowzr.export.Export;
+import com.flowzr.utils.Utils;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,13 +27,8 @@ import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 
-import com.flowzr.export.Export;
-import com.flowzr.utils.Utils;
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import static com.flowzr.backup.Backup.BACKUP_TABLES;
+import static com.flowzr.backup.Backup.tableHasSystemIds;
 
 public class DatabaseExport extends Export {
 	
@@ -58,6 +59,7 @@ public class DatabaseExport extends Export {
 	public static void copy(File source, File dest) throws IOException {
 	     FileChannel in = null, out = null;
 	     try {          
+
 	          in = new FileInputStream(source).getChannel();
 	          out = new FileOutputStream(dest).getChannel();
 	 
@@ -65,7 +67,7 @@ public class DatabaseExport extends Export {
 	          MappedByteBuffer buf = in.map(FileChannel.MapMode.READ_ONLY, 0, size);
 	 
 	          out.write(buf);
-	 
+
 	     } finally {
 	          if (in != null)          in.close();
 	          if (out != null)     out.close();
@@ -84,6 +86,7 @@ public class DatabaseExport extends Export {
 		bw.write("#END");
 	}
 
+	@SuppressWarnings("TryFinallyCanBeTryWithResources")
 	private void exportTable(BufferedWriter bw, String tableName) throws IOException {
 		String sql = "select * from " + tableName + (tableHasSystemIds(tableName) ? " WHERE _id>=0" : "");
 		Cursor c = db.rawQuery(sql, null);

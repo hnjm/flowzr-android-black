@@ -13,6 +13,12 @@ package com.flowzr.export.docs;
  *                      - port to Google API V3
  ******************************************************************************/
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.export.ImportExportAsyncTask;
@@ -23,26 +29,16 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi;
-import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.DriveId;
-import com.google.android.gms.drive.DriveResource;
 import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataBuffer;
 import com.google.android.gms.drive.MetadataChangeSet;
 import com.google.android.gms.drive.query.Filters;
 import com.google.android.gms.drive.query.Query;
 import com.google.android.gms.drive.query.SearchableField;
-
-import android.support.v7.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
-
 
 import java.util.concurrent.CountDownLatch;
 
@@ -180,7 +176,7 @@ public abstract class ApiClientAsyncTask<Params, Progress, Result>
         }
         if (result instanceof Exception)
             return;
-        String message = getSuccessMessage(result);
+        //String message = getSuccessMessage(result);
         if (listener != null) {
             listener.onCompleted();
         }
@@ -193,7 +189,7 @@ public abstract class ApiClientAsyncTask<Params, Progress, Result>
         DriveFolder baseFolder=null;
         if (baseFolderId!=null) {
             baseFolder=Drive.DriveApi.getFolder(mGoogleApiClient, baseFolderId);
-            DriveResource.MetadataResult r = baseFolder.getMetadata(mGoogleApiClient).await();
+            //DriveResource.MetadataResult r = baseFolder.getMetadata(mGoogleApiClient).await();
         }
         if (baseFolder==null) {
             baseFolder=Drive.DriveApi.getRootFolder(mGoogleApiClient);

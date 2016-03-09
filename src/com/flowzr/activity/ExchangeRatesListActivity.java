@@ -12,7 +12,6 @@
 
 package com.flowzr.activity;
 
-import android.support.v7.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,8 +19,21 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.*;
-import android.widget.*;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.ListAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+
 import com.flowzr.R;
 import com.flowzr.adapter.GenericViewHolder;
 import com.flowzr.model.Currency;
@@ -150,7 +162,7 @@ public class ExchangeRatesListActivity extends AbstractListFragment {
     }
 
     private List<Currency> getCurrenciesButSelected(long id) {
-        List<Currency> list = new ArrayList<Currency>();
+        List<Currency> list = new ArrayList<>();
         for (Currency currency : currencies) {
             if (currency.id != id) {
                 list.add(currency);

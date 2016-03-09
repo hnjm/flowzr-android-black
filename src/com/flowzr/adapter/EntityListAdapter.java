@@ -10,15 +10,16 @@
  ******************************************************************************/
 package com.flowzr.adapter;
 
-import java.util.List;
-
-import com.flowzr.R;
-import com.flowzr.model.MyEntity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import com.flowzr.R;
+import com.flowzr.model.MyEntity;
+
+import java.util.List;
 
 public class EntityListAdapter<T extends MyEntity> extends BaseAdapter {
 	

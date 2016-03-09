@@ -53,6 +53,7 @@ public class Base64Coder {
 		for (char c = '0'; c <= '9'; c++)
 			map1[i++] = c;
 		map1[i++] = '+';
+		//noinspection UnusedAssignment
 		map1[i++] = '/';
 	}
 

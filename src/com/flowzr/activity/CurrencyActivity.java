@@ -11,24 +11,20 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
 import com.flowzr.model.Currency;
 import com.flowzr.model.SymbolFormat;
 import com.flowzr.utils.CurrencyCache;
-import com.flowzr.utils.PinProtection;
 
 import java.text.DecimalFormatSymbols;
 

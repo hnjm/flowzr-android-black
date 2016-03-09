@@ -11,20 +11,18 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import java.util.List;
-
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import com.flowzr.R;
-import com.flowzr.adapter.AttributeListAdapter;
-import com.flowzr.db.DatabaseHelper.AttributeColumns;
-import com.flowzr.utils.MenuItemInfo;
-import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
 import android.widget.ListAdapter;
+
+import com.flowzr.R;
+import com.flowzr.adapter.AttributeListAdapter;
+import com.flowzr.db.DatabaseHelper.AttributeColumns;
 
 public class AttributeListActivity extends AbstractListFragment {
 	

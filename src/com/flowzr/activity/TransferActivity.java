@@ -12,7 +12,6 @@
 package com.flowzr.activity;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,7 +53,7 @@ public class TransferActivity extends AbstractTransactionActivity {
 			}			
 		}
 		ToggleButton toggleView = (ToggleButton) findViewById(R.id.toggle);
-		toggleView.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_action_import_export));
+		toggleView.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_import_export_white_24dp));
 		findViewById(R.id.saveAddButton).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

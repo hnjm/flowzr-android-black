@@ -15,21 +15,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.os.Build;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ResourceCursorAdapter;
+
 import com.flowzr.R;
+import com.flowzr.datetime.DateUtils;
 import com.flowzr.model.Account;
 import com.flowzr.model.AccountType;
 import com.flowzr.model.CardIssuer;
-import com.flowzr.datetime.DateUtils;
-import com.flowzr.utils.MyPreferences;
-import com.flowzr.utils.StringUtil;
-import com.flowzr.utils.Utils;
 import com.flowzr.orb.EntityManager;
-
+import com.flowzr.utils.MyPreferences;
+import com.flowzr.utils.Utils;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;

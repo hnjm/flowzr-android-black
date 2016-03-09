@@ -221,9 +221,9 @@
   <string name="csv_export">Exportar em CSV</string>
   <string name="csv_export_inprogress">Exportando dados para formato CSV..</string>
   <string name="restore_database">Restaurar dados</string>
-  <string name="restore_database_inprogress">Restaurando dados...</string>
+  <string name="restore_database_inprogress">Restaurando dados…</string>
   <string name="restore_database_gdocs">Restaurar a partir de Google Drive</string>
-  <string name="restore_database_inprogress_gdocs">Restaurando base...</string>
+  <string name="restore_database_inprogress_gdocs">Restaurando base…</string>
   <string name="restore_database_success">Os dados foram restaurados com sucesso..</string>
   <string name="gdocs_connection_failed">Não é possível conectar ao Google Drive.</string>
   <string name="gdocs_folder_not_found">A pasta de backup não foi encontrada no Google Docs.</string>
@@ -523,7 +523,7 @@
   <string name="mass_operations_delete">Apagar tudo</string>
   <string name="proceed">Continuar</string>
   <string name="apply_mass_op" formatted="false">Aplicar \'%s\' em %d transação(ões)?</string>
-  <string name="apply_mass_op_zero_count">Nenhuma transação selecionada...</string>
+  <string name="apply_mass_op_zero_count">Nenhuma transação selecionada…</string>
   <string name="entities">Listas</string>
   <string name="transaction_status_restored">Restaurado</string>
   <string name="scheduled_transactions_restored">Transações agendadas foram restauradas</string>
@@ -544,20 +544,20 @@
   <string name="donate_error">Google Play não está disponível no seu dispositivo</string>
   <string name="type">Tipo</string>
   <string name="qif_export">Exportação QIF</string>
-  <string name="qif_export_inprogress">Exportar para QIF...</string>
+  <string name="qif_export_inprogress">Exportar para QIF…</string>
   <string name="all_accounts">Todas as contas</string>
-  <string name="filter_value_not_found">Não encontrado...</string>
+  <string name="filter_value_not_found">Não encontrado…</string>
   <string name="empty_report">Relatório vazio</string>
   <string name="day_of_month">Dia do mês</string>
   <string name="show_running_balance">Mostrar o saldo atual</string>
   <string name="show_running_balance_summary">Mostrar saldo da na lista de movimentos (requer reinicio)</string>
-  <string name="new_currency">Nova moeda...</string>
+  <string name="new_currency">Nova moeda…</string>
   <string name="lock_time">Tempo para bloqueio</string>
   <string name="lock_time_summary">Tempo para manter a tela ativa antes de bloquear [quando ocioso]</string>
   <string name="date_format">Formato da data</string>
   <string name="pin_protection_lock_transaction">Bloquear Nova Transação\\Tranferência</string>
   <string name="pin_protection_lock_transaction_summary">Bloquear \'Nova transação\' e \'Nova transferência\' com PIN</string>
-  <string name="split">[Dividir...]</string>
+  <string name="split">[Dividir…]</string>
   <string name="split_transaction">[Dividir-Transação]</string>
   <string name="split_transfer">[Dividir-Transferência]</string>
   <string name="unsplit_amount">Saldo não dividido</string>

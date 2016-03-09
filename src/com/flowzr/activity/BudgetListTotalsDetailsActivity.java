@@ -8,12 +8,12 @@
 
 package com.flowzr.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
 import com.flowzr.R;
-import com.flowzr.filter.WhereFilter;
 import com.flowzr.db.BudgetsTotalCalculator;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Budget;
 import com.flowzr.model.MultiChoiceItem;
 import com.flowzr.model.Total;

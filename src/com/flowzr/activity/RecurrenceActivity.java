@@ -10,44 +10,38 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.flowzr.R;
+import com.flowzr.datetime.DateUtils;
+import com.flowzr.recur.DateRecurrenceIterator;
 import com.flowzr.recur.Recurrence;
 import com.flowzr.recur.RecurrenceFrequency;
-import com.flowzr.recur.DateRecurrenceIterator;
 import com.flowzr.recur.RecurrencePattern;
 import com.flowzr.recur.RecurrencePeriod;
 import com.flowzr.recur.RecurrenceUntil;
 import com.flowzr.recur.RecurrenceView;
 import com.flowzr.recur.RecurrenceViewFactory;
-import com.flowzr.datetime.DateUtils;
-import com.flowzr.db.DatabaseHelper;
 import com.flowzr.utils.EnumUtils;
-import android.support.v7.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
-import android.app.TimePickerDialog.OnTimeSetListener;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class RecurrenceActivity extends AbstractEditorActivity {
 	

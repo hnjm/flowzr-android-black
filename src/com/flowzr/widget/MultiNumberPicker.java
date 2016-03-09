@@ -10,10 +10,11 @@
  ******************************************************************************/
 package com.flowzr.widget;
 
-import com.flowzr.R;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
+
+import com.flowzr.R;
 
 public class MultiNumberPicker extends LinearLayout implements NumberPicker.OnChangedListener {
         
@@ -63,10 +64,10 @@ public class MultiNumberPicker extends LinearLayout implements NumberPicker.OnCh
 	@Override
 	public void onChanged(NumberPicker picker, int oldVal, int newVal) {		
 		int m = maxMultiplier;
-		int len = pickers.length;
+		//int len = pickers.length;
 		int v = 0;
-		for (int i=0; i<len; i++) {
-			v += m*pickers[i].getCurrent();
+		for (NumberPicker picker1 : pickers) {
+			v += m * picker1.getCurrent();
 			m /= 10;
 		}
 		mPrevious = mCurrent;

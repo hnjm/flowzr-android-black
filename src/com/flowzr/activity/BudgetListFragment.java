@@ -11,8 +11,6 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -21,42 +19,43 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
-import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.flowzr.R;
 import com.flowzr.adapter.BudgetListAdapter;
 import com.flowzr.blotter.BlotterFilter;
-import com.flowzr.filter.WhereFilter;
-import com.flowzr.filter.DateTimeCriteria;
+import com.flowzr.datetime.PeriodType;
 import com.flowzr.db.BudgetsTotalCalculator;
 import com.flowzr.filter.Criteria;
-import com.flowzr.model.Account;
+import com.flowzr.filter.DateTimeCriteria;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Budget;
 import com.flowzr.model.Total;
-import com.flowzr.datetime.PeriodType;
 import com.flowzr.utils.RecurUtils;
 import com.flowzr.utils.RecurUtils.Recur;
 import com.flowzr.utils.RecurUtils.RecurInterval;
 import com.flowzr.utils.Utils;
 
+import java.util.ArrayList;
+
 import greendroid.widget.QuickActionGrid;
 import greendroid.widget.QuickActionWidget;
-
-import java.util.ArrayList;
 
 public class BudgetListFragment extends AbstractTotalListFragment {
 
@@ -97,13 +96,14 @@ public class BudgetListFragment extends AbstractTotalListFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.action_add:
+		case R.id.bAddBudget:
 			addItem();
 			return true;
 		case R.id.action_filter_budget:
 			Intent intent = new Intent(BudgetListFragment.this.getActivity(), DateFilterActivity.class);
 			filter.toIntent(intent);
 			ActivityCompat.startActivityForResult(getActivity(), intent, FILTER_BUDGET_REQUEST, getScaleUpOption());
+			return true;
         default:
             return super.onOptionsItemSelected(item);
 		}
@@ -117,11 +117,12 @@ public class BudgetListFragment extends AbstractTotalListFragment {
     @Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		Log.e("flowzr","budget: on activity created");
+
     	budgets = em.getAllBudgets(filter);
 		handler = new Handler();
 		recreateCursor();
-        totalText = ( TextView ) getView().findViewById(R.id.total);
+		//noinspection ConstantConditions
+		totalText = ( TextView ) getView().findViewById(R.id.total);
 		if (getView().findViewById(R.id.fragment_land_container)!=null) {
     		Fragment fragment=new BudgetListTotalsDetailsActivity();
     		Bundle bundle= new Bundle();
@@ -148,6 +149,39 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 			getView().findViewById(R.id.bAddTransfer).setVisibility(View.GONE);
 		}
 
+
+
+		if (getView().findViewById(R.id.bAddBudget)!=null) {
+			getView().findViewById(R.id.bAddBudget).setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					addItem();
+				}
+			});
+		}
+
+		getListView()
+				.setOnTouchListener(new View.OnTouchListener() {
+					@Override
+					public boolean onTouch(View v, MotionEvent event) {
+						FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.bAddBudget);
+						switch (event.getAction()) {
+							case MotionEvent.ACTION_SCROLL:
+							case MotionEvent.ACTION_MOVE:
+								if (fab != null)
+									fab.hide();
+								break;
+							case MotionEvent.ACTION_DOWN:
+								break;
+							case MotionEvent.ACTION_CANCEL:
+							case MotionEvent.ACTION_UP:
+								if (fab != null)
+									fab.show();
+								break;
+						}
+						return false;
+					}
+				});
     }
 
     private void showTotals() {
@@ -232,7 +266,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 	}
 
 	@Override
-	protected void deleteItem(View v, int position, final long id) {
+	protected void deleteItem(int position, final long id) {
 		final Budget b = em.load(Budget.class, id);
 		if (b.parentBudgetId > 0) {
 			new AlertDialog.Builder(this.getActivity())
@@ -255,22 +289,24 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 			.show();			
 		} else {
 			Recur recur = RecurUtils.createFromExtraString(b.recur);
-			new AlertDialog.Builder(this.getActivity())
-			.setMessage(recur.interval == RecurInterval.NO_RECUR ? R.string.delete_budget_confirm : R.string.delete_budget_recurring_confirm)
-			.setPositiveButton(R.string.yes, new OnClickListener(){
-				@Override
-				public void onClick(DialogInterface arg0, int arg1) {
-					em.deleteBudget(id);
-					recreateCursor();
-				}
-			})
-			.setNegativeButton(R.string.no, null)
-			.show();
+			if (recur!=null) {
+				new AlertDialog.Builder(this.getActivity())
+						.setMessage(recur.interval == RecurInterval.NO_RECUR ? R.string.delete_budget_confirm : R.string.delete_budget_recurring_confirm)
+						.setPositiveButton(R.string.yes, new OnClickListener() {
+							@Override
+							public void onClick(DialogInterface arg0, int arg1) {
+								em.deleteBudget(id);
+								recreateCursor();
+							}
+						})
+						.setNegativeButton(R.string.no, null)
+						.show();
+			}
 		}
 	}
 
 	@Override
-	public void editItem(View v, int position, long id) {
+	public void editItem(long id) {
 		Budget b = em.load(Budget.class, id);
 		Recur recur = b.getRecur();
 		if (recur.interval != RecurInterval.NO_RECUR) {
@@ -358,10 +394,10 @@ public class BudgetListFragment extends AbstractTotalListFragment {
         public void onQuickActionClicked(QuickActionWidget widget, int position) {
             switch (position) {
             	case 0:
-            		deleteItem(null, 0, selectedId);
+            		deleteItem(0, selectedId);
             		break;            
                 case 1:
-                    editItem(null, 0, selectedId);
+                    editItem(selectedId);
                     break;
             	case 2:
             		viewItem(null, 0, selectedId);
@@ -374,7 +410,8 @@ public class BudgetListFragment extends AbstractTotalListFragment {
    	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		super.onContextItemSelected(item);
-        AdapterView.AdapterContextMenuInfo mi = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        /**
+		AdapterView.AdapterContextMenuInfo mi = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         switch (item.getItemId()) {		
         	case R.id.context_budget_delete:
         		deleteItem(null, item.getItemId(),selectedId);
@@ -386,6 +423,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
                 editItem(null,item.getItemId(),selectedId);
                 break;  
         }
+		 **/
 		return false;
 	}  
     

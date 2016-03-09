@@ -12,20 +12,20 @@ package com.flowzr.activity;
  *     Rodrigo Sousa
  *******************************************************************************/
 
-import java.util.Collection;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
 
 import com.flowzr.R;
 import com.flowzr.model.Currency;
 import com.flowzr.utils.CurrencyCache;
 import com.flowzr.utils.MyPreferences;
 
-import android.app.Dialog;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
+import java.util.Collection;
 
 public class ReportPreferencesActivity extends PreferenceActivity {
 
@@ -52,11 +52,7 @@ public class ReportPreferencesActivity extends PreferenceActivity {
 				new Preference.OnPreferenceClickListener() {
 					@Override
 					public boolean onPreferenceClick(Preference arg0) {
-						if (pReportReferenceCurrency!=null) {
-							return showChoiceList(pReportReferenceCurrency);
-						} else {
-							return true;
-						}
+						return pReportReferenceCurrency == null || showChoiceList(pReportReferenceCurrency);
 					}
 				}				
 		);		
@@ -84,11 +80,7 @@ public class ReportPreferencesActivity extends PreferenceActivity {
 	}
 
 
-	/**
-	 * Popup currencies options.
-	 * @param pReportReferenceCurrency
-	 * @return
-	 */
+
 	private boolean showChoiceList(final EditTextPreference pReportReferenceCurrency) {
 		//AlertDialog.Builder builder = new AlertDialog.Builder(ReportPreferencesActivity.this);
 		//builder.setTitle(R.string.report_preferences_not_set);

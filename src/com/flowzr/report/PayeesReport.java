@@ -11,10 +11,11 @@
 package com.flowzr.report;
 
 import android.content.Context;
+
 import com.flowzr.blotter.BlotterFilter;
-import com.flowzr.filter.WhereFilter;
-import com.flowzr.filter.Criteria;
 import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.filter.Criteria;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Currency;
 
 import static com.flowzr.db.DatabaseHelper.V_REPORT_PAYEES;

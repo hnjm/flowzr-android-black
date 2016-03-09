@@ -1,16 +1,17 @@
 package com.flowzr.report;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import android.content.Context;
 
 import com.flowzr.R;
-import com.flowzr.db.MyEntityManager;
 import com.flowzr.db.DatabaseHelper.TransactionColumns;
+import com.flowzr.db.MyEntityManager;
 import com.flowzr.graph.Report2DChart;
 import com.flowzr.model.Account;
 import com.flowzr.model.Currency;
-import android.content.Context;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * 2D Chart Report to display monthly account results.
@@ -20,22 +21,15 @@ public class AccountByPeriodReport extends Report2DChart {
 	
 	/**
 	 * Default constructor.
-	 * @param dbAdapter
-	 * @param context
-	 * @param periodLength
-	 * @param currency
+	 * @param em Database Adapted
+	 * @param context Context
+	 * @param periodLength Period Length
+	 * @param currency Currency
 	 */
 	public AccountByPeriodReport(Context context, MyEntityManager em, int periodLength, Currency currency) {
 		super(context, em, periodLength, currency);
 	}
-	
-	/**
-	 * Default constructor.
-	 * @param dbAdapter
-	 * @param context
-	 * @param periodLength
-	 * @param currency
-	 */
+
 	public AccountByPeriodReport(Context context, MyEntityManager em, Calendar startPeriod, int periodLength, Currency currency) {
 		super(context, em, startPeriod, periodLength, currency);
 	}
@@ -72,7 +66,7 @@ public class AccountByPeriodReport extends Report2DChart {
 	 */
 	@Override
 	public void setFilterIds() {
-		filterIds = new ArrayList<Long>();
+		filterIds = new ArrayList<>();
 		currentFilterOrder = 0;
 		List<Account> accounts = em.getAllAccountsList();
 		if (accounts.size() > 0) {

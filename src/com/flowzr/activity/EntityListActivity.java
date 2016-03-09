@@ -49,7 +49,9 @@ public class EntityListActivity extends AppCompatActivity {
 		SpannableString s = new SpannableString(t);
 		s.setSpan(new TypefaceSpan("sans-serif"), 0, s.length(),
 				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		getSupportActionBar().setTitle(s);
+		if (getSupportActionBar()!=null) {
+			getSupportActionBar().setTitle(s);
+		}
 	}
 
 	@Override

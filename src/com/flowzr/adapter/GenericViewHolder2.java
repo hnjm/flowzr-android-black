@@ -10,11 +10,12 @@
  ******************************************************************************/
 package com.flowzr.adapter;
 
-import com.flowzr.R;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.flowzr.R;
 
 public class GenericViewHolder2 {
 	public ImageView iconView;

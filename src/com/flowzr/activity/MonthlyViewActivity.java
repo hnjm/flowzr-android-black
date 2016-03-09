@@ -2,7 +2,6 @@ package com.flowzr.activity;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,13 +11,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.adapter.CreditCardStatementAdapter;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
-import com.flowzr.model.*;
+import com.flowzr.model.Account;
+import com.flowzr.model.AccountType;
+import com.flowzr.model.Currency;
+import com.flowzr.model.TransactionInfo;
 import com.flowzr.utils.MonthlyViewPlanner;
-import com.flowzr.utils.PinProtection;
 import com.flowzr.utils.TransactionList;
 import com.flowzr.utils.Utils;
 
@@ -119,7 +121,7 @@ public class MonthlyViewActivity extends ListActivity {
 			
 			if (isCreditCard) {
 				if (isStatementPreview) { 
-					// assuming that expensesOnly is true only if payment and closing days > 0 [BlotterActivity]
+					// assuming that expensesOnly is true only if payment and closing days > 0 [BlotterFragment]
 					title = getString(R.string.ccard_statement_title);
 					String accountTitle = account.title;
 					if (account.title==null || account.title.length()==0) {

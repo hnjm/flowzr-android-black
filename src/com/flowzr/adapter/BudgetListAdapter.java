@@ -11,16 +11,6 @@
  ******************************************************************************/
 package com.flowzr.adapter;
 
-import java.text.NumberFormat;
-import java.util.List;
-
-import com.flowzr.R;
-import com.flowzr.model.Budget;
-import com.flowzr.model.Currency;
-import com.flowzr.utils.Utils;
-import com.flowzr.utils.RecurUtils.Recur;
-import com.flowzr.utils.RecurUtils.RecurInterval;
-
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -33,6 +23,16 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.flowzr.R;
+import com.flowzr.model.Budget;
+import com.flowzr.model.Currency;
+import com.flowzr.utils.RecurUtils.Recur;
+import com.flowzr.utils.RecurUtils.RecurInterval;
+import com.flowzr.utils.Utils;
+
+import java.text.NumberFormat;
+import java.util.List;
 
 public class BudgetListAdapter extends BaseAdapter {
 

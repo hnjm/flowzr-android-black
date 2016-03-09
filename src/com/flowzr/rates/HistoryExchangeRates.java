@@ -8,11 +8,14 @@
 
 package com.flowzr.rates;
 
-import gnu.trove.map.TLongObjectMap;
-import gnu.trove.map.hash.TLongObjectHashMap;
 import com.flowzr.model.Currency;
 
-import java.util.*;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import gnu.trove.map.TLongObjectMap;
+import gnu.trove.map.hash.TLongObjectHashMap;
 
 /**
  * Not thread safe
@@ -25,7 +28,7 @@ public class HistoryExchangeRates implements ExchangeRateProvider, ExchangeRates
 
     private static final ExchangeRate r = new ExchangeRate();
     
-    private final TLongObjectMap<TLongObjectMap<SortedSet<ExchangeRate>>> rates = new TLongObjectHashMap<TLongObjectMap<SortedSet<ExchangeRate>>>();
+    private final TLongObjectMap<TLongObjectMap<SortedSet<ExchangeRate>>> rates = new TLongObjectHashMap<>();
 
     @Override
     public void addRate(ExchangeRate r) {
@@ -66,7 +69,7 @@ public class HistoryExchangeRates implements ExchangeRateProvider, ExchangeRates
     private TLongObjectMap<SortedSet<ExchangeRate>> getMapFor(long fromCurrencyId) {
         TLongObjectMap<SortedSet<ExchangeRate>> m = rates.get(fromCurrencyId);
         if (m == null) {
-            m = new TLongObjectHashMap<SortedSet<ExchangeRate>>();
+            m = new TLongObjectHashMap<>();
             rates.put(fromCurrencyId, m);
         }
         return m;
@@ -75,7 +78,7 @@ public class HistoryExchangeRates implements ExchangeRateProvider, ExchangeRates
     private SortedSet<ExchangeRate> getSetFor(TLongObjectMap<SortedSet<ExchangeRate>> rates, long date) {
         SortedSet<ExchangeRate> s = rates.get(date);
         if (s == null) {
-            s = new TreeSet<ExchangeRate>();
+            s = new TreeSet<>();
             rates.put(date, s);
         }
         return s;

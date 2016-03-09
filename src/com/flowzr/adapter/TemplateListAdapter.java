@@ -10,10 +10,11 @@
  ******************************************************************************/
 package com.flowzr.adapter;
 
-import com.flowzr.R;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.View;
+
+import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 
 public class TemplateListAdapter extends BlotterListAdapter {

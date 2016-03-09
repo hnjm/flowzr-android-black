@@ -18,27 +18,25 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.adapter.ScheduledListAdapter;
 import com.flowzr.datetime.Period;
 import com.flowzr.datetime.PeriodType;
 import com.flowzr.db.DatabaseHelper;
 import com.flowzr.filter.Criteria;
-import com.flowzr.filter.WhereFilter;
 import com.flowzr.filter.DateTimeCriteria;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Total;
 import com.flowzr.utils.FuturePlanner;
 import com.flowzr.utils.TransactionList;
@@ -183,11 +181,11 @@ public class PlannerActivity extends BlotterFragment {
     }
 
     @Override
-    protected void deleteItem(View v, int position, long id) {
+    protected void deleteItem(int position, long id) {
     }
 
     @Override
-	public void editItem(View v, int position, long id) {
+	public void editItem(long id) {
     }
 
     @Override
@@ -252,7 +250,7 @@ public class PlannerActivity extends BlotterFragment {
                 setTotals(data.totals);
                 updateFilterText(filter);
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         }
 

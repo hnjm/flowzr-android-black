@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.model.Currency;
 import com.flowzr.model.TransactionInfo;
@@ -19,7 +20,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import static com.flowzr.utils.MonthlyViewPlanner.*;
+import static com.flowzr.utils.MonthlyViewPlanner.CREDITS_HEADER;
+import static com.flowzr.utils.MonthlyViewPlanner.EXPENSES_HEADER;
+import static com.flowzr.utils.MonthlyViewPlanner.PAYMENTS_HEADER;
 
 public class CreditCardStatementAdapter extends BaseAdapter implements Filterable {
 
@@ -31,7 +34,6 @@ public class CreditCardStatementAdapter extends BaseAdapter implements Filterabl
     private final Currency currency;
     private final long account;
 
-    private final int scheduledStyle = Typeface.ITALIC;
     private final int scheduledColor;
     private final int futureColor;
     private final int negativeColor;
@@ -127,7 +129,7 @@ public class CreditCardStatementAdapter extends BaseAdapter implements Filterabl
         // get columns values or needed parameters
         long date = t.dateTime;
         String note = t.note;
-        String desc = "";
+        String desc ;
         boolean future = date > Calendar.getInstance().getTimeInMillis();
 
         /*
@@ -162,6 +164,7 @@ public class CreditCardStatementAdapter extends BaseAdapter implements Filterabl
 
         // set style
         if (isScheduled) {
+            int scheduledStyle = Typeface.ITALIC;
             dateText.setTypeface(Typeface.defaultFromStyle(scheduledStyle), scheduledStyle);
             descText.setTypeface(Typeface.defaultFromStyle(scheduledStyle), scheduledStyle);
             valueText.setTypeface(Typeface.defaultFromStyle(scheduledStyle), scheduledStyle);

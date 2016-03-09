@@ -4,7 +4,7 @@
     <item android:id="@+id/action_filter_budget"
           android:icon="@drawable/ic_menu_filter_off"
           app:showAsAction="ifRoom"  />
-    <item android:id="@+id/action_add"
-          android:icon="@drawable/ic_action_new"
-          app:showAsAction="always"  />
+    <item android:id="@+id/bAddBudget"
+        android:icon="@drawable/ic_action_new"
+        app:showAsAction="ifRoom"  />
 </menu>

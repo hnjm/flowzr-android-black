@@ -10,12 +10,13 @@
  ******************************************************************************/
 package com.flowzr.widget;
 
-import com.flowzr.R;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.ImageButton;
+
+import com.flowzr.R;
 
 /**
  * This class exists purely to cancel long click events.

@@ -21,7 +21,7 @@ package com.flowzr.export.billing;
  * message (String). You can get those by calling
  * {@link #getResponse} and {@link #getMessage()}, respectively. You
  * can also inquire whether a result is a success or a failure by
- * calling {@link #isSuccess()} and {@link #isFailure()}.
+ * calling {@link #isFailure2()} and {@link #isFailure()}.
  */
 public class IabResult {
     int mResponse;
@@ -38,8 +38,10 @@ public class IabResult {
     }
     public int getResponse() { return mResponse; }
     public String getMessage() { return mMessage; }
-    public boolean isSuccess() { return mResponse == IabHelper.BILLING_RESPONSE_RESULT_OK; }
-    public boolean isFailure() { return !isSuccess(); }
+    public boolean isFailure2() {
+        return mResponse != IabHelper.BILLING_RESPONSE_RESULT_OK;
+    }
+    public boolean isFailure() { return isFailure2(); }
     public String toString() { return "IabResult: " + getMessage(); }
 }
 

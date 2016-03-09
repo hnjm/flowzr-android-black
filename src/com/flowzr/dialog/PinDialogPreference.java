@@ -10,14 +10,15 @@
  ******************************************************************************/
 package com.flowzr.dialog;
 
-import com.flowzr.R;
-import com.flowzr.view.PinView;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
+
+import com.flowzr.R;
+import com.flowzr.view.PinView;
 
 public class PinDialogPreference extends DialogPreference implements PinView.PinListener {
 

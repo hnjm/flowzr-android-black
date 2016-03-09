@@ -8,16 +8,19 @@
 
 package com.flowzr.activity;
 
-import java.util.List;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
 import com.flowzr.R;
-import com.flowzr.blotter.*;
+import com.flowzr.blotter.AccountTotalCalculationTask;
+import com.flowzr.blotter.BlotterFilter;
+import com.flowzr.blotter.BlotterTotalCalculationTask;
+import com.flowzr.blotter.TotalCalculationTask;
 import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.MultiChoiceItem;
 import com.flowzr.model.Total;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,7 +30,6 @@ import com.flowzr.model.Total;
 public class BlotterTotalsDetailsFragment extends AbstractTotalsDetailsFragment  {
 
     private volatile TotalCalculationTask totalCalculationTask;
-	private WhereFilter blotterFilter;
 
     public BlotterTotalsDetailsFragment() {
         super(R.string.blotter_total_in_currency);
@@ -36,7 +38,7 @@ public class BlotterTotalsDetailsFragment extends AbstractTotalsDetailsFragment 
     @Override
     protected void internalOnCreate() {
         Bundle b=getArguments();
-        blotterFilter = WhereFilter.fromBundle(b);
+        WhereFilter blotterFilter = WhereFilter.fromBundle(b);
         cleanupFilter(blotterFilter);
         totalCalculationTask = createTotalCalculationTask(blotterFilter);
     }

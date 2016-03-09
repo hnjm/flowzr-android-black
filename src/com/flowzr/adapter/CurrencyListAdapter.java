@@ -10,13 +10,14 @@
  ******************************************************************************/
 package com.flowzr.adapter;
 
+import android.content.Context;
+import android.database.Cursor;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.model.Currency;
-import com.flowzr.utils.Utils;
 import com.flowzr.orb.EntityManager;
-import android.content.Context;
-import android.database.Cursor;
+import com.flowzr.utils.Utils;
 
 public class CurrencyListAdapter extends AbstractGenericListAdapter {
 	

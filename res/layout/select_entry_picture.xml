@@ -31,7 +31,7 @@
 	</LinearLayout>
 
 	<RelativeLayout android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:layout_marginLeft="8dip"
+		android:layout_height="wrap_content"
 		android:layout_marginTop="3dip" android:layout_marginBottom="3dip"
 		android:layout_weight="1" >
 		<TextView android:id="@+id/label" android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
 			android:layout_height="@dimen/recommended_touch_size" android:layout_below="@+id/label"
 			android:layout_alignLeft="@+id/label"
 			android:textSize="@dimen/text_normal"
-			android:layout_marginLeft="@dimen/space_xxlarge" android:layout_marginTop="@dimen/space_large"
+			android:layout_marginLeft="@dimen/space_xlarge" android:layout_marginTop="@dimen/space_large"
 			android:maxLines="1"  />
 	</RelativeLayout>
 	<ImageView android:id="@+id/picture" android:layout_width="wrap_content"

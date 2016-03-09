@@ -8,16 +8,19 @@
 
 package com.flowzr.activity;
 
-import java.util.List;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
 import com.flowzr.R;
-import com.flowzr.blotter.*;
+import com.flowzr.blotter.AccountTotalCalculationTask;
+import com.flowzr.blotter.BlotterFilter;
+import com.flowzr.blotter.BlotterTotalCalculationTask;
+import com.flowzr.blotter.TotalCalculationTask;
 import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.MultiChoiceItem;
 import com.flowzr.model.Total;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

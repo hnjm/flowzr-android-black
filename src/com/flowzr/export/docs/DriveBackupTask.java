@@ -15,26 +15,14 @@ package com.flowzr.export.docs;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.GoogleAuthException;
 import com.flowzr.R;
-import com.flowzr.activity.BackupListActivity;
 import com.flowzr.backup.DatabaseExport;
 import com.flowzr.db.DatabaseAdapter;
-import com.flowzr.export.ImportExportAsyncTask;
 import com.flowzr.export.ImportExportException;
 import com.flowzr.utils.MyPreferences;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.Metadata;
-
-import java.io.IOException;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by IntelliJ IDEA.

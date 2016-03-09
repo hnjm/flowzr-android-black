@@ -10,24 +10,17 @@ package com.flowzr.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
@@ -35,7 +28,6 @@ import com.flowzr.model.Currency;
 import com.flowzr.model.Total;
 import com.flowzr.rates.ExchangeRate;
 import com.flowzr.rates.ExchangeRateProvider;
-import com.flowzr.utils.PinProtection;
 import com.flowzr.utils.Utils;
 import com.flowzr.view.NodeInflater;
 
@@ -109,7 +101,7 @@ public abstract class AbstractTotalsDetailsFragment extends Fragment implements 
             Total totalInHomeCurrency = getTotalInHomeCurrency();
             Currency homeCurrency = totalInHomeCurrency.currency;
             ExchangeRateProvider rates = db.getLatestRates();
-            List<TotalInfo> result = new ArrayList<TotalInfo>();
+            List<TotalInfo> result = new ArrayList<>();
             for (Total total : totals) {
             	if (total.currency!=null) {
             		ExchangeRate rate = rates.getRate(total.currency, homeCurrency);
@@ -156,7 +148,7 @@ public abstract class AbstractTotalsDetailsFragment extends Fragment implements 
         private void addAmountAndErrorNode(Total total) {
             TextView data = x.addInfoNode(layout, -1, R.string.not_available, "");
             Drawable dr = getResources().getDrawable(R.drawable.ic_action_warning);
-            dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
+            dr.setBounds(0, 0, dr != null ? dr.getIntrinsicWidth() : 0, dr.getIntrinsicHeight());
             if (total.currency == Currency.EMPTY) {
                 data.setText(R.string.currency_make_default_warning);
             } else {

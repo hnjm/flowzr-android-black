@@ -221,9 +221,9 @@
   <string name="csv_export">Экспорт в CSV</string>
   <string name="csv_export_inprogress">Экспортирование базы в CSV..</string>
   <string name="restore_database">Восстановить базу</string>
-  <string name="restore_database_inprogress">Восстановление базы...</string>
+  <string name="restore_database_inprogress">Восстановление базы…</string>
   <string name="restore_database_gdocs">Восстановить из Google Drive</string>
-  <string name="restore_database_inprogress_gdocs">Восстановление базы...</string>
+  <string name="restore_database_inprogress_gdocs">Восстановление базы…</string>
   <string name="restore_database_success">База была успешно восстановлена..</string>
   <string name="gdocs_connection_failed">Нет связи с Google Drive.</string>
   <string name="gdocs_folder_not_found">Папка резервной копии на Google Drive не найдена.</string>
@@ -330,7 +330,7 @@
   <string name="use_fixed_layout">Использовать фиксированый экран</string>
   <string name="use_fixed_layout_summary">Зафиксировать кнопки OK/Отмена на экране</string>
   <string name="no_data">Нет данных</string>
-  <string name="calculating">Рассчитываю...</string>
+  <string name="calculating">Рассчитываю…</string>
   <string name="budget_mode">Смягчить условия</string>
   <string name="budget_mode_summary">Использовать менее ограничительные условия (категория ИЛИ проект) для фильтрации транзакций</string>
   <string name="gdocs_backup">Резерв. копия на Google Drive</string>
@@ -551,13 +551,13 @@
   <string name="day_of_month">День месяца</string>
   <string name="show_running_balance">Показывать текущий баланс</string>
   <string name="show_running_balance_summary">Показывать текущий баланс в Журнале (требует перезапуска)</string>
-  <string name="new_currency">Новая валюта...</string>
+  <string name="new_currency">Новая валюта…</string>
   <string name="lock_time">Блокировка</string>
   <string name="lock_time_summary">Время после истечения которого приложение блокируется ПИНом</string>
   <string name="date_format">Формат даты</string>
   <string name="pin_protection_lock_transaction">Блокировать ярлыки</string>
   <string name="pin_protection_lock_transaction_summary">Блокировать ПИНом ярлыки \'Новая транзакция\' и \'Новый перевод\'</string>
-  <string name="split">[Сплит...]</string>
+  <string name="split">[Сплит…]</string>
   <string name="split_transaction">[Сплит-транзакция]</string>
   <string name="split_transfer">[Сплит-перевод]</string>
   <string name="unsplit_amount">Нераспределенная сумма</string>

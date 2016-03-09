@@ -17,8 +17,8 @@ public class AndroidUtils {
 
 
     public static boolean isGreenDroidSupported() {
-        // supports at least Donut
-        return isCompatible(4);
+        // supports at least 111 with theme ?
+        return isCompatible(11);
     }
 
     public static boolean isCompatible(int apiLevel) {

@@ -10,11 +10,6 @@
  ******************************************************************************/
 package com.flowzr.db;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Scanner;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -23,6 +18,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Scanner;
 
 /**
  * Schema evolution helper.
@@ -126,7 +126,7 @@ public class DatabaseSchemaEvolution extends SQLiteOpenHelper {
 			try  {
 			    runScript(db, script);
 			} catch (Exception e) {
-				
+				e.printStackTrace();
 			}
 			if (checkAlterlog) {
 				saveScriptToAlterlog(db, script);
@@ -166,6 +166,7 @@ public class DatabaseSchemaEvolution extends SQLiteOpenHelper {
 	
 	private static final String[] projection = {"1"};
 
+	@SuppressWarnings("TryFinallyCanBeTryWithResources")
 	private boolean alreadyRun(SQLiteDatabase db, String script) {
 		Cursor c = db.query(ALTERLOG, projection, "script=?", new String[]{script}, null, null, null);
 		try {
@@ -186,6 +187,7 @@ public class DatabaseSchemaEvolution extends SQLiteOpenHelper {
 		StringBuilder sb = new StringBuilder();
 		InputStream is = assetManager.open(scriptFile);
 		Scanner scanner = new Scanner(is);
+		//noinspection TryFinallyCanBeTryWithResources
 		try {
 			while (scanner.hasNextLine()) {
 				sb.append(scanner.nextLine().trim()).append(" ");

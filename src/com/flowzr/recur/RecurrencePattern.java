@@ -10,24 +10,23 @@
  ******************************************************************************/
 package com.flowzr.recur;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-
 import com.flowzr.recur.RecurrenceViewFactory.DayOfWeek;
 import com.flowzr.recur.RecurrenceViewFactory.MonthlyPattern;
 import com.flowzr.recur.RecurrenceViewFactory.SpecificDayPostfix;
 import com.flowzr.recur.RecurrenceViewFactory.SpecificDayPrefix;
-
 import com.google.ical.values.Frequency;
 import com.google.ical.values.RRule;
 import com.google.ical.values.Weekday;
 import com.google.ical.values.WeekdayNum;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+
 public class RecurrencePattern {
 	
-	private static final LinkedList<WeekdayNum> WEEKDAYS = new LinkedList<WeekdayNum>();
-	private static final LinkedList<WeekdayNum> WEEKENDS = new LinkedList<WeekdayNum>();
+	private static final LinkedList<WeekdayNum> WEEKDAYS = new LinkedList<>();
+	private static final LinkedList<WeekdayNum> WEEKENDS = new LinkedList<>();
 	
 	static {
 		WEEKDAYS.add(new WeekdayNum(0, Weekday.MO));
@@ -70,7 +69,7 @@ public class RecurrencePattern {
 			break;
 		case WEEKLY:
 			r.setFreq(Frequency.WEEKLY);
-			LinkedList<WeekdayNum> byDay = new LinkedList<WeekdayNum>();
+			LinkedList<WeekdayNum> byDay = new LinkedList<>();
 			String days = state.get(RecurrenceViewFactory.P_DAYS);
 			String[] a = days.split(",");
 			for (String s : a) {

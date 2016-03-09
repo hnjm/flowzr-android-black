@@ -9,6 +9,7 @@ package com.flowzr.backup;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
 import com.flowzr.service.RecurrenceScheduler;
@@ -19,7 +20,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static com.flowzr.backup.Backup.tableHasSystemIds;
 
@@ -68,7 +68,7 @@ public abstract class FullDatabaseImport {
     }
 
     protected List<String> tablesToClean() {
-        List<String> list = new ArrayList<String>(Arrays.asList(Backup.BACKUP_TABLES));
+        List<String> list = new ArrayList<>(Arrays.asList(Backup.BACKUP_TABLES));
         list.add("running_balance");
         return list;
     }

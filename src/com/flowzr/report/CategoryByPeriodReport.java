@@ -3,15 +3,15 @@
  */
 package com.flowzr.report;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.flowzr.R;
 import com.flowzr.db.DatabaseHelper;
-import com.flowzr.db.MyEntityManager;
 import com.flowzr.db.DatabaseHelper.CategoryColumns;
 import com.flowzr.db.DatabaseHelper.TransactionColumns;
+import com.flowzr.db.MyEntityManager;
 import com.flowzr.graph.Report2DChart;
 import com.flowzr.graph.Report2DPoint;
 import com.flowzr.model.Category;
@@ -19,9 +19,10 @@ import com.flowzr.model.Currency;
 import com.flowzr.model.PeriodValue;
 import com.flowzr.model.ReportDataByPeriod;
 import com.flowzr.utils.MyPreferences;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * 2D Chart Report to display monthly results by Categories.
@@ -63,11 +64,11 @@ public class CategoryByPeriodReport extends Report2DChart {
 	public void setFilterIds() {
 		boolean includeSubCategories = MyPreferences.includeSubCategoriesInReport(context);
 		boolean includeNoCategory = MyPreferences.includeNoFilterInReport(context);
-		filterIds = new ArrayList<Long>();
+		filterIds = new ArrayList<>();
 		currentFilterOrder = 0;
 		List<Category> categories = em.getAllCategoriesList(includeNoCategory);
 		if (categories.size()>0) {
-			Category c;
+			//Category c;
             for (Category category : categories) {
                 if (includeSubCategories) {
                     filterIds.add(category.getId());
@@ -105,7 +106,7 @@ public class CategoryByPeriodReport extends Report2DChart {
 				int[] categories = new int[cursor.getCount()+1];
 				int i=0;
 				while (cursor.moveToNext()) {
-					categories[i] = (int)cursor.getInt(0);
+					categories[i] = cursor.getInt(0);
 					i++;
 				}
 				categories[i] = filterIds.get(currentFilterOrder).intValue();
@@ -118,7 +119,7 @@ public class CategoryByPeriodReport extends Report2DChart {
 			data = new ReportDataByPeriod(context, startPeriod, periodLength, currency, columnFilter, filterIds.get(currentFilterOrder).intValue(), em);
 		}
 		
-		points = new ArrayList<Report2DPoint>();
+		points = new ArrayList<>();
 		List<PeriodValue> pvs = data.getPeriodValues();
 
         for (PeriodValue pv : pvs) {

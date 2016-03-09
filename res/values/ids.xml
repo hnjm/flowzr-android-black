@@ -9,6 +9,7 @@
       Denis Solonenko - initial API and implementation
 -->
 <resources>
+	<item name="fab_label" type="id"/>
 	<item type="id" name="account" />
 	<item type="id" name="account_clear" />
 	<item type="id" name="account_from" />

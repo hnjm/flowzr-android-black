@@ -10,14 +10,15 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import com.flowzr.R;
-import com.flowzr.utils.MyPreferences;
-import com.flowzr.utils.PinProtection;
-import com.flowzr.view.PinView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
+
+import com.flowzr.R;
+import com.flowzr.utils.MyPreferences;
+import com.flowzr.utils.PinProtection;
+import com.flowzr.view.PinView;
 
 public class PinActivity extends Activity implements PinView.PinListener {
 	

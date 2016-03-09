@@ -11,8 +11,9 @@
  ******************************************************************************/
 package com.flowzr.report;
 
-import com.flowzr.R;
 import android.content.Context;
+
+import com.flowzr.R;
 import com.flowzr.model.Currency;
 
 public enum ReportType {

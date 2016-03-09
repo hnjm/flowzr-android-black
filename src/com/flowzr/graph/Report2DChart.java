@@ -1,16 +1,17 @@
 package com.flowzr.graph;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import android.content.Context;
 
 import com.flowzr.R;
 import com.flowzr.db.MyEntityManager;
 import com.flowzr.model.Currency;
 import com.flowzr.model.PeriodValue;
 import com.flowzr.model.ReportDataByPeriod;
-import android.content.Context;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 public abstract class Report2DChart {
 	
@@ -122,12 +123,7 @@ public abstract class Report2DChart {
 		return dsp;
 	}
 	
-	/**
-	 * Initialize parameters.
-	 * @param startPeriod
-	 * @param periodLength The number of months to plot the chart
-	 * @param currency
-	 */
+
 	private void init(Context context, MyEntityManager em, Calendar startPeriod, int periodLength, Currency currency) {
 		this.context = context;
 		this.em = em;
@@ -162,8 +158,6 @@ public abstract class Report2DChart {
 	
 	/**
 	 * Required step (1) - set the resolution of the chart based on screen available space.
-	 * @param height
-	 * @param width
 	 */
 	public void setChartResolution(int height, int width) {
 		this.chartHeight = height;
@@ -191,24 +185,15 @@ public abstract class Report2DChart {
 		}
 		return null;
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
+
 	public abstract List<Report2DChart> getChildrenCharts();
 	
-	/**
-	 * 
-	 * @return 
-	 */
+
 	public boolean isRoot() {
 		return level==0;
 	}
 	
-	/**
-	 * @return
-	 */
+
 	public abstract String getFilterName();
 	
 	/**
@@ -237,10 +222,7 @@ public abstract class Report2DChart {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param periodLength
-	 */
+
 	public void changePeriodLength(int periodLength) {
 		this.periodLength = periodLength;
 		build();
@@ -252,25 +234,18 @@ public abstract class Report2DChart {
 	public int getPeriodLength() {
 		return periodLength;
 	}
-	
-	/**
-	 * @return 
-	 */
+
 	public String getPeriodLengthString(Context context) {
 		return getPeriodString(context, periodLength);
 	}
-	
-	/**
-	 * 
-	 * @param currency
-	 */
+
 	public void changeCurrency(Currency currency) {
 		this.currency = currency;
 		build();
 	}
 	
 	/**
-	 * 
+	 *
 	 * @return The chart currency
 	 */
 	public Currency getCurrency() {
@@ -306,7 +281,7 @@ public abstract class Report2DChart {
 	 */
 	protected void build() {
 		data = new ReportDataByPeriod(context, startPeriod, periodLength, currency, columnFilter, filterIds.get(currentFilterOrder).intValue(),em);
-		points = new ArrayList<Report2DPoint>();
+		points = new ArrayList<>();
 		List<PeriodValue> pvs = data.getPeriodValues();
 
 		for (int i=0; i<pvs.size(); i++) {
@@ -348,7 +323,7 @@ public abstract class Report2DChart {
 	 */
 	public boolean hasDataToPlot() {
 		if (data.getMaxValue()==data.getMinValue() && data.getMaxValue()==0) {
-			//return false;
+			return false;
 		}
 		//return true;
 		if (points!=null && points.size()>0) {
@@ -367,11 +342,7 @@ public abstract class Report2DChart {
 	 * @return True if the report data has a valid filter, false otherwise.
 	 */
 	public boolean hasFilter() {
-		if (filterIds!=null && filterIds.size()>0) {
-			return true;
-		} else {
-			return false;
-		}
+		return filterIds != null && filterIds.size() > 0;
 	}
 	
 	/**

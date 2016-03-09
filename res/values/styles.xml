@@ -23,9 +23,32 @@ and navigationBarColor.
         <item name="colorPrimaryDark">@color/f_dark_lighter1</item> 
         <item name="colorControlHighlight">@color/color_accent</item> 
         <item name="colorAccent">@color/color_accent</item>
-        <!--
-        <item name="selectableItemBackground">@drawable/activated_background2</item>
-        -->
+    </style>
+
+    <style name="FloatingActionButton">
+        <item name="fab_shadowColor">@color/f_dark_lighter3</item>
+        <item name="fab_colorNormal">@color/color_accent</item>
+        <item name="fab_colorPressed">@color/accent_26</item>
+        <item name="fab_colorRipple">@color/accent_26</item>
+
+    </style>
+
+    <style name="FloatingActionMenu">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="fab_shadowColor">@color/f_dark_lighter3</item>
+        <item name="fab_colorNormal">@color/color_accent</item>
+        <item name="fab_colorPressed">@color/accent_26</item>
+        <item name="fab_colorRipple">@color/accent_26</item>
+    </style>
+
+    <style name="MenuLabelsStyle">
+        <item name="android:textColor">@color/text_accent</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="dialog" parent="Base.Theme.AppCompat.Dialog.Alert">
@@ -92,9 +115,7 @@ and navigationBarColor.
     <!-- ======================================================================================================== -->
     <!-- Spinner theme (to add parent theme -->
     <style name="SpinnerAppTheme" parent="android:Widget.Spinner">
-
         <item name="android:background">@drawable/ic_arrow_drop_down_black_48dp</item>
-
     </style>
 
     <!-- ======================================================================================================== -->

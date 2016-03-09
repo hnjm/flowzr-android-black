@@ -2,20 +2,33 @@ package com.flowzr.export.csv;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
 import com.flowzr.export.CategoryCache;
 import com.flowzr.export.CategoryInfo;
 import com.flowzr.export.ProgressListener;
-import com.flowzr.model.*;
+import com.flowzr.model.Account;
+import com.flowzr.model.Category;
 import com.flowzr.model.Currency;
+import com.flowzr.model.MyEntity;
+import com.flowzr.model.Payee;
+import com.flowzr.model.Project;
+import com.flowzr.model.Transaction;
+import com.flowzr.model.TransactionAttribute;
 import com.flowzr.utils.Utils;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class CsvImport {
 
@@ -166,7 +179,7 @@ public class CsvImport {
             SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
             Csv.Reader reader = new Csv.Reader(new FileReader(csvFilename))
                     .delimiter(options.fieldSeparator).ignoreComments(true);
-            List<CsvTransaction> transactions = new LinkedList<CsvTransaction>();
+            List<CsvTransaction> transactions = new LinkedList<>();
             List<String> line;
             while ((line = reader.readLine()) != null) {
                 if (parseLine) {
@@ -179,33 +192,45 @@ public class CsvImport {
                             try {
                                 String fieldValue = line.get(i);
                                 if (!fieldValue.equals("")) {
-                                    if (transactionField.equals("date")) {
-                                        transaction.date = options.dateFormat.parse(fieldValue).getTime();
-                                    } else if (transactionField.equals("time")) {
-                                        transaction.time = format.parse(fieldValue).getTime();
-                                    } else if (transactionField.equals("amount")) {
-                                        Double fromAmountDouble = parseAmount(fieldValue);
-                                        transaction.fromAmount = fromAmountDouble.longValue();
-                                    } else if (transactionField.equals("original amount")) {
-                                        Double originalAmountDouble = parseAmount(fieldValue);
-                                        transaction.originalAmount = originalAmountDouble.longValue();
-                                    } else if (transactionField.equals("original currency")) {
-                                        transaction.originalCurrency = fieldValue;
-                                    } else if (transactionField.equals("payee")) {
-                                        transaction.payee = fieldValue;
-                                    } else if (transactionField.equals("category")) {
-                                        transaction.category = fieldValue;
-                                    } else if (transactionField.equals("parent")) {
-                                        transaction.categoryParent = fieldValue;
-                                    } else if (transactionField.equals("note")) {
-                                        transaction.note = fieldValue;
-                                    } else if (transactionField.equals("project")) {
-                                        transaction.project = fieldValue;
-                                    } else if (transactionField.equals("currency")) {
-                                        if (!account.currency.name.equals(fieldValue)) {
-                                            throw new Exception("Wrong currency "+fieldValue);
-                                        }
-                                        transaction.currency = fieldValue;
+                                    switch (transactionField) {
+                                        case "date":
+                                            transaction.date = options.dateFormat.parse(fieldValue).getTime();
+                                            break;
+                                        case "time":
+                                            transaction.time = format.parse(fieldValue).getTime();
+                                            break;
+                                        case "amount":
+                                            Double fromAmountDouble = parseAmount(fieldValue);
+                                            transaction.fromAmount = fromAmountDouble.longValue();
+                                            break;
+                                        case "original amount":
+                                            Double originalAmountDouble = parseAmount(fieldValue);
+                                            transaction.originalAmount = originalAmountDouble.longValue();
+                                            break;
+                                        case "original currency":
+                                            transaction.originalCurrency = fieldValue;
+                                            break;
+                                        case "payee":
+                                            transaction.payee = fieldValue;
+                                            break;
+                                        case "category":
+                                            transaction.category = fieldValue;
+                                            break;
+                                        case "parent":
+                                            transaction.categoryParent = fieldValue;
+                                            break;
+                                        case "note":
+                                            transaction.note = fieldValue;
+                                            break;
+                                        case "project":
+                                            transaction.project = fieldValue;
+                                            break;
+                                        case "currency":
+                                            if (!account.currency.name.equals(fieldValue)) {
+                                                throw new Exception("Wrong currency " + fieldValue);
+                                            }
+                                            transaction.currency = fieldValue;
+                                            break;
                                     }
                                 }
                             } catch (IllegalArgumentException e) {
@@ -242,7 +267,7 @@ public class CsvImport {
     }
 
     public Set<CategoryInfo> collectCategories(List<CsvTransaction> transactions) {
-        Set<CategoryInfo> categories = new HashSet<CategoryInfo>();
+        Set<CategoryInfo> categories = new HashSet<>();
         for (CsvTransaction transaction : transactions) {
             String category = transaction.category;
             if (Utils.isNotEmpty(transaction.categoryParent)) {

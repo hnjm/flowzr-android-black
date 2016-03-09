@@ -8,20 +8,18 @@
 package com.flowzr.utils;
 
 
-import java.util.concurrent.TimeUnit;
+import android.content.Context;
+import android.content.Intent;
 
 import com.flowzr.activity.PinActivity;
 
-
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
+import java.util.concurrent.TimeUnit;
 
 public class PinProtection {
 
     private static final int MIN_DELTA_TIME_MS = 3000;
 
-    private static interface LockState {
+    private interface LockState {
         LockState lock(Context c);
         LockState unlock(Context c);
     }

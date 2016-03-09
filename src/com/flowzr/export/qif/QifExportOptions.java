@@ -9,6 +9,7 @@
 package com.flowzr.export.qif;
 
 import android.content.Intent;
+
 import com.flowzr.activity.QifExportActivity;
 import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Currency;

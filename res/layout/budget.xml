@@ -38,7 +38,7 @@
 
 
 
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		<LinearLayout
 			android:layout_width="fill_parent" android:layout_height="fill_parent"
 			android:layout_marginTop="@dimen/space_large"
 			android:paddingBottom="@dimen/space_xxlarge"

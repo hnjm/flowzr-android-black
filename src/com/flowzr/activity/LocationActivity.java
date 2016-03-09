@@ -12,15 +12,9 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -35,12 +29,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
 import com.flowzr.model.MyLocation;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.Utils;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
@@ -51,12 +49,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class LocationActivity extends AppCompatActivity implements
         LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public static final String LOCATION_ID_EXTRA = "locationId";
-    private TextView txtViewLocation;
-    private DatabaseAdapter db;
     private MyEntityManager em;
     private MyLocation orbLocation = new MyLocation();
     private GoogleMap mMap;
@@ -90,10 +90,10 @@ public class LocationActivity extends AppCompatActivity implements
         setContentView(R.layout.location);
         setUpMapIfNeeded();
         buildGoogleApiClient();
-        db = new DatabaseAdapter(this);
+        DatabaseAdapter db = new DatabaseAdapter(this);
         db.open();
         em = db.em();
-        txtViewLocation = (TextView)findViewById(R.id.location);
+        TextView txtViewLocation = (TextView) findViewById(R.id.location);
         // These settings are the same as the settings for the map. They will in fact give you updates at
         // the maximal rates currently possible.
         mLocationRequest = LocationRequest.create()
@@ -190,7 +190,7 @@ public class LocationActivity extends AppCompatActivity implements
             Geocoder geocoder = new Geocoder(mContext,Locale.getDefault());
             double latitude = params[0].latitude;
             double longitude = params[0].longitude;
-            List<Address> addresses = null;
+            List<Address> addresses;
             String addressText="";
             try {
                 addresses = geocoder.getFromLocation(latitude, longitude,1);
@@ -227,9 +227,7 @@ public class LocationActivity extends AppCompatActivity implements
                             strCountry);
                 }
             }
-            catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
             publishProgress(R.string.resolving_address);
@@ -245,8 +243,8 @@ public class LocationActivity extends AppCompatActivity implements
                 if (Utils.checkEditText(t, "name", true, 100)) {
                     //store and save object
                     orbLocation.name=Utils.text(t);
-                    orbLocation.latitude = (double) mMarker.getPosition().latitude;
-                    orbLocation.longitude = (double)mMarker.getPosition().longitude;
+                    orbLocation.latitude = mMarker.getPosition().latitude;
+                    orbLocation.longitude = mMarker.getPosition().longitude;
                     orbLocation.isPayee = true;
                     orbLocation.dateTime = System.currentTimeMillis();
                     long id = em.saveLocation(orbLocation);

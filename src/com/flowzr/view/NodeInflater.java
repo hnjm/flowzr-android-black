@@ -18,8 +18,13 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.utils.ThumbnailUtil;
 
@@ -112,7 +117,7 @@ public class NodeInflater {
 		public EditBuilder(LinearLayout layout, View view) {			
 			super(layout, R.layout.select_entry_edit);
 			RelativeLayout relativeLayout = (RelativeLayout)v.findViewById(R.id.layout);
-			RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+			RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 			layoutParams.addRule(RelativeLayout.ALIGN_LEFT, R.id.label);
 			layoutParams.addRule(RelativeLayout.BELOW, R.id.label);
 			relativeLayout.addView(view, layoutParams);
@@ -163,7 +168,7 @@ public class NodeInflater {
 		@Override
 		public ListBuilder withButtonId(int buttonId, OnClickListener listener) {
 			ImageView plusImageView = (ImageView)v.findViewById(R.id.plus_minus);
-			//plusImageView.setVisibility(View.VISIBLE);
+			plusImageView.setVisibility(View.VISIBLE);
 			return super.withButtonId(buttonId, listener);
 		}
 

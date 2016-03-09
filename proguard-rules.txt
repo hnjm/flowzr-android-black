@@ -1,5 +1,24 @@
--keep class com.flowzr.** { *; }
+-keep,includedescriptorclasses class com.flowzr.** { *; }
 -keep class org.apache.** { *; }
 -keep class com.google.** { *; }
+-keep class javax.annotation.** { *; }
+-keep class org.joda.** { *; }
+-keep class greendroid.widget.** { *; }
+-dontwarn org.joda.**
+-dontwarn javax.annotation.**
+-keepattributes *Signature*
+-keepattributes *Annotation*
+-dontnote android.net.http.*
+-dontnote org.apache.**
+-dontnote com.google.**
+-dontnote com.android.**
+-dontnote android.support.**
 
 
+-dontwarn android.test.**
+-dontwarn com.squareup.**
+-dontwarn org.junit.**
+-dontwarn org.hamcrest.**
+-keep class org.hamcrest.**
+-keep class org.junit.**
+-keep class junit.**

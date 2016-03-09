@@ -12,22 +12,23 @@
 package com.flowzr.activity;
 
 
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import com.flowzr.R;
-import com.flowzr.adapter.LocationListAdapter;
-import com.flowzr.model.MyLocation;
-import com.flowzr.utils.AddressGeocoder;
-import com.flowzr.orb.EntityManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.Toast;
+
+import com.flowzr.R;
+import com.flowzr.adapter.LocationListAdapter;
+import com.flowzr.model.MyLocation;
+import com.flowzr.orb.EntityManager;
+import com.flowzr.utils.AddressGeocoder;
 
 public class LocationsListActivity extends AbstractListFragment {
 	

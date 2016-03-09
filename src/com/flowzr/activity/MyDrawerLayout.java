@@ -4,12 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.widget.DrawerLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
-
-import com.flowzr.R;
-import com.flowzr.model.Attribute;
 
 public class MyDrawerLayout extends DrawerLayout {
 

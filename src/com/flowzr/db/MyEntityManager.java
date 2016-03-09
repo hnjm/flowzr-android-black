@@ -15,27 +15,43 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import com.flowzr.blotter.BlotterFilter;
-import com.flowzr.filter.WhereFilter;
+import com.flowzr.datetime.Period;
 import com.flowzr.filter.Criteria;
-import com.flowzr.model.*;
+import com.flowzr.filter.WhereFilter;
+import com.flowzr.model.Account;
+import com.flowzr.model.Budget;
+import com.flowzr.model.Category;
 import com.flowzr.model.Currency;
+import com.flowzr.model.MyEntity;
+import com.flowzr.model.MyLocation;
+import com.flowzr.model.Payee;
+import com.flowzr.model.Project;
+import com.flowzr.model.SystemAttribute;
+import com.flowzr.model.Transaction;
 import com.flowzr.model.TransactionAttributeInfo;
 import com.flowzr.model.TransactionInfo;
-import com.flowzr.datetime.Period;
+import com.flowzr.orb.EntityManager;
+import com.flowzr.orb.Expression;
+import com.flowzr.orb.Expressions;
+import com.flowzr.orb.Query;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.MyPreferences.AccountSortOrder;
 import com.flowzr.utils.MyPreferences.LocationsSortOrder;
 import com.flowzr.utils.RecurUtils;
 import com.flowzr.utils.RecurUtils.Recur;
-import com.flowzr.orb.EntityManager;
-import com.flowzr.orb.Expression;
-import com.flowzr.orb.Expressions;
-import com.flowzr.orb.Query;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-import static com.flowzr.db.DatabaseHelper.*;
+import static com.flowzr.db.DatabaseHelper.ACCOUNT_TABLE;
+import static com.flowzr.db.DatabaseHelper.AccountColumns;
+import static com.flowzr.db.DatabaseHelper.BUDGET_TABLE;
+import static com.flowzr.db.DatabaseHelper.CURRENCY_TABLE;
 import static com.flowzr.utils.StringUtil.capitalize;
 
 public class MyEntityManager extends EntityManager {
@@ -47,6 +63,7 @@ public class MyEntityManager extends EntityManager {
 		this.context = context;
 	}
 	
+	@SuppressWarnings("TryFinallyCanBeTryWithResources")
 	private <T extends MyEntity> ArrayList<T> getAllEntitiesList(Class<T> clazz, boolean include0) {
 		Query<T> q = createQuery(clazz);
         q.where(include0 ? Expressions.gte("id", 0) : Expressions.gt("id", 0));
@@ -54,7 +71,7 @@ public class MyEntityManager extends EntityManager {
 		Cursor c = q.execute();
 		try {
 			T e0 = null;
-			ArrayList<T> list = new ArrayList<T>();
+			ArrayList<T> list = new ArrayList<>();
 			while (c.moveToNext()) {
 				T e = EntityManager.loadFromCursor(c, clazz);
 				if (e.id == 0) {
@@ -72,7 +89,8 @@ public class MyEntityManager extends EntityManager {
 		}
 	}
 
-    private <T extends MyEntity> ArrayList<T> getAllEntitiesList(Class<T> clazz, boolean include0, boolean onlyActive) {
+    @SuppressWarnings("TryFinallyCanBeTryWithResources")
+	private <T extends MyEntity> ArrayList<T> getAllEntitiesList(Class<T> clazz, boolean include0, boolean onlyActive) {
         Query<T> q = createQuery(clazz);
         Expression include0Ex = include0 ? Expressions.gte("id", 0) : Expressions.gt("id", 0);
         if (onlyActive) {
@@ -84,7 +102,7 @@ public class MyEntityManager extends EntityManager {
         Cursor c = q.execute();
         try {
             T e0 = null;
-            ArrayList<T> list = new ArrayList<T>();
+            ArrayList<T> list = new ArrayList<>();
             while (c.moveToNext()) {
                 T e = EntityManager.loadFromCursor(c, clazz);
                 if (e.id == 0) {
@@ -123,11 +141,12 @@ public class MyEntityManager extends EntityManager {
         return q.execute();
 	}
 
+	@SuppressWarnings("TryFinallyCanBeTryWithResources")
 	public List<MyLocation> getAllLocationsList(boolean includeNoLocation) {
 		Cursor c = getAllLocations(includeNoLocation);
 		try {
 			MyLocation e0 = null;
-			ArrayList<MyLocation> list = new ArrayList<MyLocation>();
+			ArrayList<MyLocation> list = new ArrayList<>();
 			while (c.moveToNext()) {
 				MyLocation e = EntityManager.loadFromCursor(c, MyLocation.class);
 				if (e.id == 0) {
@@ -147,7 +166,7 @@ public class MyEntityManager extends EntityManager {
 
     public Map<Long, MyLocation> getAllLocationsByIdMap(boolean includeNoLocation) {
         List<MyLocation> locations = getAllLocationsList(includeNoLocation);
-        Map<Long, MyLocation> map = new HashMap<Long, MyLocation>();
+        Map<Long, MyLocation> map = new HashMap<>();
         for (MyLocation location : locations) {
             map.put(location.id, location);
         }
@@ -187,8 +206,9 @@ public class MyEntityManager extends EntityManager {
 					Expressions.gte("attributeId", 0)
 				));
 		Cursor c = q.execute();
+		//noinspection TryFinallyCanBeTryWithResources
 		try {
-			List<TransactionAttributeInfo> list = new LinkedList<TransactionAttributeInfo>();
+			List<TransactionAttributeInfo> list = new LinkedList<>();
 			while (c.moveToNext()) {
 				TransactionAttributeInfo ti = loadFromCursor(c, TransactionAttributeInfo.class);
 				list.add(ti);
@@ -200,6 +220,7 @@ public class MyEntityManager extends EntityManager {
 	
 	}
 
+	@SuppressWarnings("TryFinallyCanBeTryWithResources")
 	public TransactionAttributeInfo getSystemAttributeForTransaction(SystemAttribute sa, long transactionId) {
 		Query<TransactionAttributeInfo> q = createQuery(TransactionAttributeInfo.class); 
 		q.where(Expressions.and(
@@ -266,8 +287,9 @@ public class MyEntityManager extends EntityManager {
 		return saveOrUpdate(account);
 	}
 
+	@SuppressWarnings("TryFinallyCanBeTryWithResources")
 	public List<Account> getAllAccountsList() {
-		List<Account> list = new ArrayList<Account>();
+		List<Account> list = new ArrayList<>();
 		Cursor c = getAllAccounts();
 		try {
 			while (c.moveToNext()) {
@@ -281,7 +303,7 @@ public class MyEntityManager extends EntityManager {
 	}
 
     public Map<Long, Account> getAllAccountsMap() {
-        Map<Long, Account> accountsMap = new HashMap<Long, Account>();
+        Map<Long, Account> accountsMap = new HashMap<>();
         List<Account> list = getAllAccountsList();
         for (Account account : list) {
             accountsMap.put(account.id, account);
@@ -464,6 +486,7 @@ public class MyEntityManager extends EntityManager {
 		db.delete(BUDGET_TABLE, "_id=?", new String[]{String.valueOf(id)});
 	}
 
+	@SuppressWarnings("TryFinallyCanBeTryWithResources")
 	public ArrayList<Budget> getAllBudgets(WhereFilter filter) {
 		Query<Budget> q = createQuery(Budget.class);
 		Criteria c = filter.get(BlotterFilter.DATETIME);
@@ -474,7 +497,7 @@ public class MyEntityManager extends EntityManager {
 		}
 		Cursor cursor = q.execute();
 		try {
-			ArrayList<Budget> list = new ArrayList<Budget>();
+			ArrayList<Budget> list = new ArrayList<>();
 			while (cursor.moveToNext()) {
 				Budget b = MyEntityManager.loadFromCursor(cursor, Budget.class);
 				list.add(b);				
@@ -605,7 +628,7 @@ public class MyEntityManager extends EntityManager {
     }
 
     private static <T extends MyEntity> Map<String, T> entitiesAsTitleMap(List<T> entities) {
-        Map<String, T> map = new HashMap<String, T>();
+        Map<String, T> map = new HashMap<>();
         for (T e: entities) {
             map.put(e.title, e);
         }
@@ -613,7 +636,7 @@ public class MyEntityManager extends EntityManager {
     }
 
     private static <T extends MyEntity> Map<Long, T> entitiesAsIdMap(List<T> entities) {
-        Map<Long, T> map = new HashMap<Long, T>();
+        Map<Long, T> map = new HashMap<>();
         for (T e: entities) {
             map.put(e.id, e);
         }

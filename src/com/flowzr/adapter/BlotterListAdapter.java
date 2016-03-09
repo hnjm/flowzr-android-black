@@ -16,11 +16,16 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ResourceCursorAdapter;
+import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.DatabaseHelper.BlotterColumns;
@@ -56,10 +61,9 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
     private final int colors[];
 
     private boolean allChecked = true;
-    private final HashMap<Long, Boolean> checkedItems = new HashMap<Long, Boolean>();
+    private final HashMap<Long, Boolean> checkedItems = new HashMap<>();
 
     private boolean showRunningBalance;
-    private int topPadding;
 
     public BlotterListAdapter(Context context, DatabaseAdapter db, Cursor c) {
         this(context, db, R.layout.blotter_list_item, c, false);
@@ -78,7 +82,7 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
         this.u = new Utils(context);
         this.colors = initializeColors(context);
         this.showRunningBalance = MyPreferences.isShowRunningBalance(context);
-        this.topPadding = context.getResources().getDimensionPixelSize(R.dimen.transaction_icon_padding);
+        //int topPadding = context.getResources().getDimensionPixelSize(R.dimen.transaction_icon_padding);
         this.db = db;
         this.em = db.em();
     }

@@ -16,6 +16,6 @@ package com.flowzr.utils;
  */
 public interface ExecutableEntityEnum<V> extends EntityEnum {
     
-    public void execute(V value);
+    void execute(V value);
     
 }

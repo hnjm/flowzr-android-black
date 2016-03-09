@@ -14,7 +14,7 @@ package com.flowzr.backup;
 
 import android.content.ContentValues;
 import android.content.Context;
-import com.google.android.gms.drive.DriveFile;
+
 import com.flowzr.db.Database;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.DatabaseSchemaEvolution;
@@ -22,7 +22,16 @@ import com.flowzr.export.Export;
 import com.flowzr.export.dropbox.Dropbox;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.DriveApi.DriveContentsResult;
-import java.io.*;
+import com.google.android.gms.drive.DriveFile;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PushbackInputStream;
 import java.util.zip.GZIPInputStream;
 
 import static com.flowzr.backup.Backup.RESTORE_SCRIPTS;
@@ -60,6 +69,7 @@ public class DatabaseImport extends FullDatabaseImport {
         this.backupStream = backupStream;
 	}
 
+    @SuppressWarnings("TryFinallyCanBeTryWithResources")
     @Override
     protected void restoreDatabase() throws IOException {
         InputStream s = decompressStream(backupStream);
@@ -73,9 +83,11 @@ public class DatabaseImport extends FullDatabaseImport {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private InputStream decompressStream(InputStream input) throws IOException {
         PushbackInputStream pb = new PushbackInputStream(input, 2);
         byte[] bytes = new byte[2];
+        //noinspection ResultOfMethodCallIgnored
         pb.read(bytes);
         pb.unread(bytes);
         int head = ((int) bytes[0] & 0xff) | ((bytes[1] << 8) & 0xff00);

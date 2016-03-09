@@ -8,11 +8,12 @@
 
 package com.flowzr.activity;
 
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.flowzr.R;
 import com.flowzr.db.MyEntityManager;
 import com.flowzr.export.csv.Csv;
@@ -32,7 +33,7 @@ import java.util.List;
  */
 public class CurrencySelector {
 
-    public static interface OnCurrencyCreatedListener {
+    public interface OnCurrencyCreatedListener {
         void onCreated(long currencyId);
     }
 
@@ -110,12 +111,13 @@ public class CurrencySelector {
         }
     }
 
+    @SuppressWarnings("TryFinallyCanBeTryWithResources")
     private List<List<String>> readCurrenciesFromAsset() {
         try {
             InputStreamReader r = new InputStreamReader(context.getAssets().open("currencies.csv"), "UTF-8");
             try {
                 Csv.Reader csv = new Csv.Reader(r).delimiter(',').ignoreComments(true).ignoreEmptyLines(true);
-                List<List<String>> allLines = new ArrayList<List<String>>();
+                List<List<String>> allLines = new ArrayList<>();
                 List<String> line;
                 while ((line = csv.readLine()) != null) {
                     if (line.size() == 6) {

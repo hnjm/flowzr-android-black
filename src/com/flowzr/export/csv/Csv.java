@@ -52,9 +52,7 @@ import java.util.List;
  * [a, b]
  *
  * @author Konstantin Chapyuk aka c0nst
- * @url http://www.javenue.info
  * @version 1.0
- * @see javenue.csv.CsvTestCase
  */
 public class Csv {
     public static class Writer {
@@ -159,7 +157,7 @@ public class Csv {
             if (ignoreComments && line.startsWith("#")) return readLine();
             if (ignoreEmptyLines && line.length() == 0) return readLine();
 
-            List<String> result = new ArrayList<String>();
+            List<String> result = new ArrayList<>();
 
             while (line != null) {
                 String token = "";

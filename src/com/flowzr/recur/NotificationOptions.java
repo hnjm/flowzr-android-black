@@ -10,9 +10,6 @@
  ******************************************************************************/
 package com.flowzr.recur;
 
-import com.flowzr.R;
-import com.flowzr.utils.LocalizableEnum;
-import com.flowzr.utils.Utils;
 import android.app.Notification;
 import android.content.Context;
 import android.graphics.Color;
@@ -22,11 +19,15 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.provider.Settings;
 
+import com.flowzr.R;
+import com.flowzr.utils.LocalizableEnum;
+import com.flowzr.utils.Utils;
+
 public class NotificationOptions {
 	
 	private static final String DEFAULT_SOUND =  Settings.System.DEFAULT_NOTIFICATION_URI.toString();
 	
-	public static enum VibrationPattern implements LocalizableEnum {
+	public enum VibrationPattern implements LocalizableEnum {
 		OFF(R.string.notification_options_off, null),
 		DEFAULT(R.string.notification_options_default, null),
 		SHORT(R.string.notification_options_short, new long[]{0,200}),
@@ -39,7 +40,7 @@ public class NotificationOptions {
 		public final int titleId;
 		public final long[] pattern;
 		
-		private VibrationPattern(int titleId, long[] pattern) {
+		VibrationPattern(int titleId, long[] pattern) {
 			this.titleId = titleId;
 			this.pattern = pattern;
 		}
@@ -50,7 +51,7 @@ public class NotificationOptions {
 		}
 	}
 	
-	public static enum LedColor implements LocalizableEnum  {
+	public enum LedColor implements LocalizableEnum  {
 		OFF(R.string.notification_options_off, Color.BLACK),
 		DEFAULT(R.string.notification_options_default, Color.BLACK),
 		GREEN(R.string.notification_options_led_green, Color.GREEN),
@@ -62,7 +63,7 @@ public class NotificationOptions {
 		public final int titleId;
 		public final int color;
 		
-		private LedColor(int titleId, int color) {
+		LedColor(int titleId, int color) {
 			this.titleId = titleId;
 			this.color = color;
 		}
@@ -106,9 +107,7 @@ public class NotificationOptions {
 	}
 	
 	public String stateToString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(sound != null ? sound : "").append(";").append(vibration).append(";").append(ledColor).append(";");
-		return sb.toString();
+		return (sound != null ? sound : "") + ";" + vibration + ";" + ledColor + ";";
 	}
 
 	public String toInfoString(Context context) {

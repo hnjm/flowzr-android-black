@@ -10,14 +10,14 @@
  ******************************************************************************/
 package com.flowzr.orb;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 public class Query<T> {
 	
@@ -25,7 +25,7 @@ public class Query<T> {
 	private final EntityDefinition ed;
 	private final SQLiteDatabase db;
 	
-	private final LinkedList<String> orderBy = new LinkedList<String>();
+	private final LinkedList<String> orderBy = new LinkedList<>();
 	private String where;
 	private String[] whereArgs;
 	
@@ -79,6 +79,7 @@ public class Query<T> {
 		return db.rawQuery(query, whereArgs);
 	}
 
+	@SuppressWarnings("TryFinallyCanBeTryWithResources")
 	public T uniqueResult() {
 		Cursor c = execute();
 		try {
@@ -91,10 +92,11 @@ public class Query<T> {
 		}
 	}
 
+	@SuppressWarnings("TryFinallyCanBeTryWithResources")
 	public List<T> list() {
 		Cursor c = execute();
 		try {
-			List<T> list = new ArrayList<T>();
+			List<T> list = new ArrayList<>();
 			while (c.moveToNext()) {
 				T e = EntityManager.loadFromCursor(c, clazz);
 				list.add(e);

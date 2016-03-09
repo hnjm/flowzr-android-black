@@ -13,6 +13,16 @@
 package com.flowzr.activity;
 
 
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+
 import com.flowzr.R;
 import com.flowzr.adapter.ReportListAdapter;
 import com.flowzr.db.MyEntityManager;
@@ -20,21 +30,6 @@ import com.flowzr.graph.Report2DChart;
 import com.flowzr.model.Currency;
 import com.flowzr.report.Report;
 import com.flowzr.report.ReportType;
-import com.flowzr.utils.PinProtection;
-
-import android.content.Context;
-import android.content.Intent;
-
-
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
 
 
 public class ReportsListFragment extends ListFragment {
@@ -72,7 +67,7 @@ public class ReportsListFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		Bundle bundle = new Bundle();
-		Fragment fragment=null;
+		Fragment fragment;
 		// Conventional Bars reports
 		if (reports[position].isConventionalBarReport()) {
 			bundle.putString(EXTRA_REPORT_TYPE, reports[position].name());

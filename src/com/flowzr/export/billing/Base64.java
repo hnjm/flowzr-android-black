@@ -31,11 +31,13 @@ package com.flowzr.export.billing;
  * @version 1.3
  */
 
+import android.annotation.SuppressLint;
+
 /**
  * Base64 converter class. This code is not a complete MIME encoder;
  * it simply converts binary data to base64 data and back.
  *
- * <p>Note {@link CharBase64} is a GWT-compatible implementation of this
+ * <p>Note CharBase64 is a GWT-compatible implementation of this
  * class.
  */
 public class Base64 {
@@ -276,7 +278,7 @@ public class Base64 {
 
         // If doPadding is false, set length to truncate '='
         // padding characters
-        while (doPadding == false && outLen > 0) {
+        while (!doPadding && outLen > 0) {
             if (outBuff[outLen - 1] != '=') {
                 break;
             }
@@ -296,6 +298,7 @@ public class Base64 {
      * @param maxLineLength maximum length of one line.
      * @return the BASE64-encoded byte array
      */
+    @SuppressLint("Assert")
     public static byte[] encode(byte[] source, int off, int len, byte[] alphabet,
             int maxLineLength) {
         int lenDiv3 = (len + 2) / 3; // ceil(len / 3)
@@ -499,6 +502,7 @@ public class Base64 {
      * @param decodabet the decodabet for decoding Base64 content
      * @return decoded data
      */
+    @SuppressWarnings("UnusedAssignment")
     public static byte[] decode(byte[] source, int off, int len, byte[] decodabet)
             throws Base64DecoderException {
         int len34 = len * 3 / 4;
@@ -507,9 +511,9 @@ public class Base64 {
 
         byte[] b4 = new byte[4];
         int b4Posn = 0;
-        int i = 0;
-        byte sbiCrop = 0;
-        byte sbiDecode = 0;
+        int i;
+        byte sbiCrop;
+        byte sbiDecode;
         for (i = 0; i < len; i++) {
             sbiCrop = (byte) (source[i + off] & 0x7f); // Only the low seven bits
             sbiDecode = decodabet[sbiCrop];
@@ -524,8 +528,7 @@ public class Base64 {
                         if (b4Posn == 0 || b4Posn == 1) {
                             throw new Base64DecoderException(
                                     "invalid padding byte '=' at byte offset " + i);
-                        } else if ((b4Posn == 3 && bytesLeft > 2)
-                                || (b4Posn == 4 && bytesLeft > 1)) {
+                        } else if ((b4Posn == 3 && bytesLeft > 2)) {
                             throw new Base64DecoderException(
                                     "padding byte '=' falsely signals end of encoded value "
                                             + "at offset " + i);

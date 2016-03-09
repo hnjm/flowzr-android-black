@@ -8,7 +8,12 @@
 
 package com.flowzr.export.csv;
 
-import com.flowzr.model.*;
+import com.flowzr.model.Category;
+import com.flowzr.model.Currency;
+import com.flowzr.model.MyEntity;
+import com.flowzr.model.Payee;
+import com.flowzr.model.Project;
+import com.flowzr.model.Transaction;
 
 import java.util.Map;
 

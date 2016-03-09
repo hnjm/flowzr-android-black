@@ -18,16 +18,24 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.flowzr.R;
 import com.flowzr.adapter.EntityEnumAdapter;
-import com.flowzr.model.*;
+import com.flowzr.model.Account;
+import com.flowzr.model.AccountType;
+import com.flowzr.model.CardIssuer;
+import com.flowzr.model.Currency;
+import com.flowzr.model.Transaction;
 import com.flowzr.utils.TransactionUtils;
 import com.flowzr.utils.Utils;
 import com.flowzr.widget.AmountInput;
@@ -68,11 +76,11 @@ public class AccountActivity extends AbstractEditorActivity {
 
 	private Account account = new Account();
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		return true;
-	}
+	//@Override
+	//public boolean onCreateOptionsMenu(Menu menu)
+	//{
+	//	return true;
+	//}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +94,10 @@ public class AccountActivity extends AbstractEditorActivity {
 		accountTitle= (EditText) findViewById(R.id.title);
 		accountTitle.setSingleLine();
 
-		accountTypeAdapter = new EntityEnumAdapter<AccountType>(this, AccountType.values());
+		accountTypeAdapter = new EntityEnumAdapter<>(this, AccountType.values());
 		accountTypeNode = x.addListNodeIcon(layout, R.id.account_type, R.string.account_type, R.string.account_type);
 
-		cardIssuerAdapter = new EntityEnumAdapter<CardIssuer>(this, CardIssuer.values());
+		cardIssuerAdapter = new EntityEnumAdapter<>(this, CardIssuer.values());
 		cardIssuerNode = x.addListNodeIcon(layout, R.id.card_issuer, R.string.card_issuer, R.string.card_issuer);
 		setVisibility(cardIssuerNode, View.GONE);
 
@@ -122,9 +130,10 @@ public class AccountActivity extends AbstractEditorActivity {
 		setVisibility(limitAmountView, View.GONE);
 
 		if (account.id == -1) {
-			x.addEditNode(layout, R.string.opening_amount, amountInput);
+			x.addEditNode2(layout, R.drawable.ic_action_select_all, R.string.opening_amount, amountInput);
 			amountInput.setIncome();
-			amountInput.setColor(R.color.f_blue_lighter1);
+			limitInput.setColor(getResources().getColor(R.color.positive_amount));
+			amountInput.setAmount(0);
 		}
 
 
@@ -179,12 +188,12 @@ public class AccountActivity extends AbstractEditorActivity {
 			accountTitle.requestFocus();
 		}
 
-		findViewById(R.id.saveButton).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				saveAndFinish();
-			}
-		});
+		//findViewById(R.id.action_done).setOnClickListener(new OnClickListener() {
+		//	@Override
+		//	public void onClick(View v) {
+		//		saveAndFinish();
+		//	}
+		//});
 
 
 	}

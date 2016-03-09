@@ -12,11 +12,6 @@
 
 package com.flowzr.adapter;
 
-import com.flowzr.R;
-import com.flowzr.model.NavDrawerItem;
-
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -25,6 +20,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.flowzr.R;
+import com.flowzr.model.NavDrawerItem;
+
+import java.util.ArrayList;
 
 public class NavDrawerListAdapter extends BaseAdapter {
 	

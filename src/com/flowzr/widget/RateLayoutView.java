@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.activity.AbstractEditorActivity;
 import com.flowzr.activity.ActivityLayout;

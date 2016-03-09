@@ -7,20 +7,9 @@
  */
 package com.flowzr.activity;
 
-import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Toast;
-import com.flowzr.R;
-import com.flowzr.utils.PinProtection;
-
-import java.io.File;
 
 public abstract class AbstractSyncActivity extends AppCompatActivity {
 

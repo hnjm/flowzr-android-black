@@ -14,24 +14,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.flowzr.R;
+import com.flowzr.datetime.DateUtils;
 import com.flowzr.model.Currency;
 import com.flowzr.rates.ExchangeRate;
-import com.flowzr.datetime.DateUtils;
-import com.flowzr.utils.CurrencyCache;
 import com.flowzr.widget.AmountInput;
 import com.flowzr.widget.RateNode;
 import com.flowzr.widget.RateNodeOwner;
 
 import java.util.Calendar;
 
-import static com.flowzr.utils.Utils.checkEditText;
 import static com.flowzr.utils.Utils.formatRateDate;
-import static com.flowzr.utils.Utils.text;
 
 /**
  * Created by IntelliJ IDEA.

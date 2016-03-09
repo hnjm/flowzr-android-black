@@ -15,15 +15,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListAdapter;
+
 import com.flowzr.R;
 import com.flowzr.adapter.TransactionsListAdapter;
 import com.flowzr.blotter.TotalCalculationTask;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.filter.WhereFilter;
-import com.flowzr.model.*;
-import com.flowzr.utils.CurrencyCache;
+import com.flowzr.model.Budget;
+import com.flowzr.model.Category;
+import com.flowzr.model.MyEntity;
+import com.flowzr.model.Project;
+import com.flowzr.model.Total;
 
 import java.util.Map;
 

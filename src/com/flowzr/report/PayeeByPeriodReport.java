@@ -1,6 +1,7 @@
 package com.flowzr.report;
 
 import android.content.Context;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseHelper.TransactionColumns;
 import com.flowzr.db.MyEntityManager;
@@ -45,7 +46,7 @@ public class PayeeByPeriodReport extends Report2DChart {
 
 	@Override
 	public void setFilterIds() {
-		filterIds = new ArrayList<Long>();
+		filterIds = new ArrayList<>();
 		currentFilterOrder = 0;
 		List<Payee> payees = em.getAllPayeeList();
 		if (payees.size() > 0) {

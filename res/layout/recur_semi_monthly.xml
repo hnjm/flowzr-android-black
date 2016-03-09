@@ -13,14 +13,14 @@
 	android:layout_height="wrap_content" android:layout_width="fill_parent">
 	<TextView android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:text="@string/recur_period_semi_monthly"
-		android:paddingRight="2dp"></TextView>
+		android:paddingRight="2dp"/>
 	<EditText android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:layout_weight="1"
-		android:inputType="number" android:id="@+id/edFirstDay"></EditText>
+		android:inputType="number" android:id="@+id/edFirstDay"/>
 	<TextView android:id="@+id/TextView01" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:text="&amp;"
-		android:paddingLeft="2dp" android:paddingRight="2dp"></TextView>
+		android:paddingLeft="2dp" android:paddingRight="2dp"/>
 	<EditText android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:layout_weight="1"
-		android:inputType="number" android:id="@+id/edSecondDay"></EditText>
+		android:inputType="number" android:id="@+id/edSecondDay"/>
 </LinearLayout>

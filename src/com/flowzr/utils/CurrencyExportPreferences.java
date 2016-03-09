@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.Spinner;
+
 import com.flowzr.R;
 import com.flowzr.model.Currency;
 

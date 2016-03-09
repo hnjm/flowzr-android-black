@@ -55,6 +55,35 @@
         <item name="android:background">@drawable/tab_indicator_ab_financisto</item>
     </style>
 
+    <style name="FloatingActionButton">
+        <item name="fab_shadowColor">@color/f_dark_lighter1</item>
+        <item name="fab_colorNormal">@color/color_accent</item>
+        <item name="fab_colorPressed">@color/accent_26</item>
+        <item name="fab_colorRipple">@color/accent_26</item>
+        <item name="menu_labels_textColor">@color/text_accent</item>
+    </style>
+
+    <style name="FloatingActionMenu">
+
+        <item name="android:textSize">14sp</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="menu_shadowColor">@color/f_dark_lighter1</item>
+        <item name="menu_colorNormal">@color/color_accent</item>
+        <item name="menu_colorPressed">@color/accent_26</item>
+        <item name="menu_colorRipple">@color/accent_26</item>
+
+    </style>
+
+    <style name="MenuLabelsStyle">
+        <!--
+        <item name="android:background">@drawable/fab_label_background</item>
+        -->
+        <item name="menu_labels_textColor">@color/text_accent</item>
+        <item name="android:textSize">@dimen/text_normal</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
 
     <!-- ======================================================================================================== -->
     <!-- Widget -->
@@ -115,7 +144,7 @@
 
     <!-- ======================================================================================================== -->
     <!-- Spinner theme (to add parent theme -->
-    <style name="SpinnerAppTheme" parent="android:Widget.Holo.Spinner"></style>
+    <style name="SpinnerAppTheme" parent="android:Widget.Holo.Spinner"/>
 
     <!-- ======================================================================================================== -->
     <!-- Drop down list view -->

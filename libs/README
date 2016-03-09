@@ -5,7 +5,6 @@ unzip  dropbox-android-sdk-1.6.3.zip dropbox-android-sd-1.6.3/lib/dropbox-androi
 
 rm dropbox-android-sdk-1.6.3.zip
 
-
 wget http://central.maven.org/maven2/com/google/api-client/google-api-client-android/1.20.0/google-api-client-android-1.20.0.jar
 
 wget http://central.maven.org/maven2/com/google/http-client/google-http-client/1.20.0/google-http-client-1.20.0.jar
@@ -13,3 +12,7 @@ wget http://central.maven.org/maven2/com/google/http-client/google-http-client/1
 wget http://central.maven.org/maven2/org/scala-saddle/google-rfc-2445/20110304/google-rfc-2445-20110304.jar
 
 wget http://central.maven.org/maven2/com/google/code/gson/gson/2.6.1/gson-2.6.1.jar
+
+# required from Dropbox
+
+wget http://central.maven.org/maven2/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar

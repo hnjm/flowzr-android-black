@@ -10,16 +10,17 @@
  ******************************************************************************/
 package com.flowzr.adapter;
 
-import com.flowzr.R;
-import com.flowzr.db.DatabaseAdapter;
-import com.flowzr.model.MyLocation;
-import com.flowzr.orb.EntityManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+
+import com.flowzr.R;
+import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.model.MyLocation;
+import com.flowzr.orb.EntityManager;
 
 public class LocationListAdapter  extends ResourceCursorAdapter {
 

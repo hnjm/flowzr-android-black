@@ -13,27 +13,31 @@
 package com.flowzr.activity;
 
 
-import android.content.res.Configuration;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.transition.Fade;
-import android.transition.TransitionManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.*;
+import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View.OnClickListener;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.*;
-import greendroid.widget.QuickActionGrid;
-import greendroid.widget.QuickActionWidget;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ListAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.flowzr.R;
 import com.flowzr.adapter.BlotterListAdapter;
 import com.flowzr.adapter.TransactionsListAdapter;
@@ -42,13 +46,21 @@ import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.blotter.BlotterTotalCalculationTask;
 import com.flowzr.blotter.TotalCalculationTask;
 import com.flowzr.db.DatabaseAdapter;
-import com.flowzr.filter.WhereFilter;
 import com.flowzr.dialog.TransactionInfoDialog;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Account;
-import com.flowzr.model.Budget;
-import com.flowzr.model.MyEntity;
 import com.flowzr.model.Transaction;
+import com.flowzr.view.FloatingActionButton;
+import com.flowzr.view.MyFloatingActionMenu;
 import com.flowzr.view.NodeInflater;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import greendroid.widget.QuickActionGrid;
+import greendroid.widget.QuickActionWidget;
+
+import static com.flowzr.utils.AndroidUtils.isCompatible;
 import static com.flowzr.utils.AndroidUtils.isGreenDroidSupported;
 
 public class BlotterFragment extends AbstractTotalListFragment {
@@ -62,6 +74,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
     }
 
 
+
     public void recreateAdapter(Bundle b) {
         blotterFilter = WhereFilter.fromBundle(b);
         super.recreateAdapter();
@@ -69,13 +82,13 @@ public class BlotterFragment extends AbstractTotalListFragment {
 
     public static final String SAVE_FILTER = "saveFilter";
     protected ImageButton bFilter;
-    private QuickActionWidget addButtonActionGrid;
     private TotalCalculationTask calculationTask;
 
     protected boolean saveFilter;
     protected static WhereFilter blotterFilter = WhereFilter.empty();
-
     protected TextView totalText;
+
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -154,53 +167,93 @@ public class BlotterFragment extends AbstractTotalListFragment {
         }
 
         calculateTotals();
-        if (getView().findViewById(R.id.bAdd)!=null) {
-            getView().findViewById(R.id.bAdd).setOnClickListener(new OnClickListener() {
+
+        //final MyFloatingActionButton programFab1 = new MyFloatingActionButton(getContext());
+        //programFab1.setButtonSize(MyFloatingActionButton.SIZE_MINI);
+        //programFab1.setMyFloatingLabelText("Programmatically added button");
+        //programFab1.setImageResource(R.drawable.ic_edit);
+        //menu1.addMenuButton(programFab1);
+        //View v = new com.flowzr.view.FloatingActionButton(getContext());
+        //View v2 = new com.flowzr.view.MyFloatingActionMenu(getContext());
+        if (isCompatible(14)) {
+
+
+            final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) getView().findViewById(R.id.menu1);
+
+            menu1.setOnMenuButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    if (menu1.isOpened()) {
+                    //Toast.makeText(getActivity(), menu1.getMenuButtonLabelText(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    menu1.toggle(true);
+                }
+        });
+
+
+            FloatingActionButton fab1;
+            FloatingActionButton fab2;
+            Handler mUiHandler = new Handler();
+            List<MyFloatingActionMenu> menus = new ArrayList<>();
+
+            menus.add(menu1);
+            menu1.hideMenuButton(true);
+            int delay = 400;
+            for (final MyFloatingActionMenu menu : menus) {
+                mUiHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        menu.showMenuButton(true);
+                    }
+                }, delay);
+                delay += 150;
+            }
+            menu1.setClosedOnTouchOutside(true);
+            fab1 = (FloatingActionButton) getView().findViewById(R.id.fab1);
+            fab1.setLabelText(getString(R.string.add_transaction));
+            fab1.setLabelVisibility(View.VISIBLE);
+
+            fab2 = (FloatingActionButton) getView().findViewById(R.id.fab2);
+
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    menu1.showMenuButton(true);
+                }
+            }, delay + 150);
+            menu1.setOnMenuToggleListener(new MyFloatingActionMenu.OnMenuToggleListener() {
+                @Override
+                public void onMenuToggle(boolean opened) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            menu1.close(true);
+                            menu1.close(true);
+                        }
+                    }, 3500);
+                }
+            });
+
+            fab1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     addItem(NEW_TRANSACTION_REQUEST, TransactionActivity.class);
                 }
             });
 
-            getView().findViewById(R.id.bAddTransfer).setOnClickListener(new OnClickListener() {
+            fab2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     addItem(NEW_TRANSFER_REQUEST, TransferActivity.class);
                 }
             });
         }
-        getListView()
-                .setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.bAdd);
-                        FloatingActionButton fab2 = (FloatingActionButton) getView().findViewById(R.id.bAddTransfer);
-                        switch (event.getAction()) {
-                            case MotionEvent.ACTION_SCROLL:
-                            case MotionEvent.ACTION_MOVE:
-                                if (fab != null)
-                                    fab.hide();
-                                if (fab2 != null)
-                                    fab2.hide();
-                                break;
-                            case MotionEvent.ACTION_DOWN:
-                                break;
-                            case MotionEvent.ACTION_CANCEL:
-                            case MotionEvent.ACTION_UP:
-                                if (fab != null)
-                                    fab.show();
-                                if (fab2 != null)
-                                    fab2.show();
-                                break;
-                        }
-                        return false;
-                    }
-                });
+
     }
 
-
     protected void calculateTotals() {
-
 
             if (totalText!=null) {
                 if (calculationTask != null) {
@@ -287,9 +340,9 @@ public class BlotterFragment extends AbstractTotalListFragment {
 
     private void prepareAddButtonActionGrid() {
         if (isGreenDroidSupported()) {
-            addButtonActionGrid = new QuickActionGrid(this.getActivity());
+            QuickActionWidget addButtonActionGrid = new QuickActionGrid(this.getActivity());
             addButtonActionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_new, R.string.transaction));
-            addButtonActionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_import_export, R.string.transfer));
+            addButtonActionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_import_export_white_24dp, R.string.transfer));
             addButtonActionGrid.addQuickAction(new MyQuickAction(this.getActivity(), R.drawable.ic_action_paste, R.string.template));
             addButtonActionGrid.setOnQuickActionClickListener(addButtonActionListener);
         }
@@ -334,13 +387,6 @@ public class BlotterFragment extends AbstractTotalListFragment {
         outState.putBoolean(BlotterFilterActivity.IS_ACCOUNT_FILTER, !saveFilter);
     }
 
-/**
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        //super.onRestoreInstanceState(savedInstanceState);
-        blotterFilter.fromBundle(savedInstanceState);
-    }
-**/
 
     protected void createFromTemplate() {
         Bundle bundle= new Bundle();
@@ -364,7 +410,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
             }
             Toast.makeText(this.getActivity(), toastText, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         recreateCursor();
         AccountWidget.updateWidgets(BlotterFragment.this.getActivity());
@@ -382,6 +428,9 @@ public class BlotterFragment extends AbstractTotalListFragment {
         long accountId = blotterFilter.getAccountId();
         if (accountId != -1) {
             intent.putExtra(TransactionActivity.ACCOUNT_ID_EXTRA, accountId);
+        }
+        if (requestId==NEW_TRANSFER_REQUEST) {
+            intent.putExtra(TransactionActivity.IS_TRANSFER_EXTRA,true);
         }
 
         if ( blotterFilter.get(BlotterFilter.BUDGET_ID)!=null) {
@@ -448,7 +497,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
     }
 
     @Override
-    protected void deleteItem(View v, int position, final long id) {
+    protected void deleteItem(int position, final long id) {
         deleteTransaction(id);
     }
 
@@ -460,14 +509,14 @@ public class BlotterFragment extends AbstractTotalListFragment {
         try {
             recreateCursor();
             AccountWidget.updateWidgets(this.getActivity());
-            ((MainActivity) getActivity()).mAdapter.notifyDataSetChanged();
+            AbstractActionBarActivity.mAdapter.notifyDataSetChanged();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void editItem(View v, int position, long id) {
+    public void editItem(long id) {
 
         //editTransaction(id);
     }
@@ -581,14 +630,11 @@ public class BlotterFragment extends AbstractTotalListFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         long accountId = blotterFilter.getAccountId();
-        Intent intent=null;
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.action_list_template:
                 createFromTemplate();
                 return true;
-//			case R.id.action_list_template:
-//		    	((MainActivity) getActivity()).loadTabFragment(new TemplatesListActivity(),R.layout.blotter, new Bundle(),MainActivity.TAB_BLOTTER);
-//				return true;
             case R.id.action_mass_op:
                 intent = new Intent(getActivity(),EntityListActivity.class);
                 intent.putExtra(EntityListActivity.REQUEST_MASS_OP, true);

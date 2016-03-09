@@ -12,21 +12,20 @@
 package com.flowzr.activity;
 
 
-import android.preference.PreferenceScreen;
-
-import com.flowzr.R;
-
-import com.flowzr.rates.ExchangeRateProviderFactory;
-import com.flowzr.utils.MyPreferences;
-import com.flowzr.utils.PinProtection;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.Intent.ShortcutIconResource;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceScreen;
+
+import com.flowzr.R;
+import com.flowzr.rates.ExchangeRateProviderFactory;
+import com.flowzr.utils.MyPreferences;
+import com.flowzr.utils.PinProtection;
 
 public class PreferencesActivity extends PreferenceActivity {
 
@@ -112,7 +111,7 @@ public class PreferencesActivity extends PreferenceActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-        PinProtection.unlock(this);;
+        PinProtection.unlock(this);
     }
 
     @Override

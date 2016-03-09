@@ -1,7 +1,5 @@
 package com.flowzr.activity;
 
-import com.flowzr.R;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.flowzr.R;
 
 public class WebViewFragment extends Fragment {
 	private String curURL;
@@ -51,7 +51,7 @@ public class WebViewFragment extends Fragment {
 
     public void updateUrl(String url) {
         curURL = url;
-        WebView webview = (WebView) getView().findViewById(R.id.webPage);
+        @SuppressWarnings("ConstantConditions") WebView webview = (WebView) getView().findViewById(R.id.webPage);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.loadUrl(url);
     }

@@ -11,29 +11,19 @@
  ******************************************************************************/
 package com.flowzr.widget;
 
-import static com.flowzr.utils.Utils.checkEditText;
-import static com.flowzr.utils.Utils.text;
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.flowzr.R;
-import com.flowzr.utils.CurrencyCache;
 import com.flowzr.utils.Utils;
 
 import java.math.BigDecimal;
@@ -51,7 +41,7 @@ public class CalculatorInput extends AppCompatActivity implements OnClickListene
 
     private Vibrator vibrator;
 
-    private final Stack<String> stack = new Stack<String>();
+    private final Stack<String> stack = new Stack<>();
     private String result = "0";
     private boolean isRestart = true;
     private boolean isInEquals = false;
@@ -106,14 +96,7 @@ public class CalculatorInput extends AppCompatActivity implements OnClickListene
         }
 
     }
-/**
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        //getMenuInflater().inflate(R.menu.ok_cancel, menu);
-        return true;
-    }
-   **/
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -276,7 +259,7 @@ public class CalculatorInput extends AppCompatActivity implements OnClickListene
     private void doPercentChar() {
         if (stack.size() == 0)
             return;
-        setDisplay(new BigDecimal(result).divide(Utils.HUNDRED).multiply(new BigDecimal(stack.peek())).toPlainString());
+        setDisplay(new BigDecimal(result).divide(Utils.HUNDRED,BigDecimal.ROUND_CEILING).multiply(new BigDecimal(stack.peek())).toPlainString());
         tvOp.setText("");
     }
 

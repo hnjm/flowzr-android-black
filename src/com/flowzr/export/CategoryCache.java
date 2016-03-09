@@ -9,6 +9,7 @@
 package com.flowzr.export;
 
 import android.database.sqlite.SQLiteDatabase;
+
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.model.Category;
 import com.flowzr.model.CategoryTree;
@@ -35,8 +36,8 @@ public class CategoryCache {
         return name;
     }
 
-    public Map<String, Category> categoryNameToCategory = new HashMap<String, Category>();
-    public CategoryTree<Category> categoryTree = new CategoryTree<Category>();
+    public Map<String, Category> categoryNameToCategory = new HashMap<>();
+    public CategoryTree<Category> categoryTree = new CategoryTree<>();
     private AtomicLong seq = new AtomicLong(1);
 
     private boolean freshStart = true;

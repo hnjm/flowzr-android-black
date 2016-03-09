@@ -15,12 +15,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ScrollView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import android.widget.ToggleButton;
+
 import com.flowzr.R;
 import com.flowzr.adapter.CategoryListAdapter;
 import com.flowzr.db.DatabaseHelper;
@@ -28,7 +34,6 @@ import com.flowzr.db.DatabaseHelper.AttributeColumns;
 import com.flowzr.db.DatabaseHelper.CategoryColumns;
 import com.flowzr.model.Attribute;
 import com.flowzr.model.Category;
-import com.flowzr.rates.ExchangeRate;
 
 import java.util.ArrayList;
 
@@ -92,7 +97,7 @@ public class CategoryActivity extends AbstractEditorActivity {
 		LinearLayout layout = (LinearLayout)findViewById(R.id.layout);
         LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		LinearLayout titleLayout = new LinearLayout(this);
+		//LinearLayout titleLayout = new LinearLayout(this);
 		layoutInflater.inflate(R.layout.category_title, layout, true);
 
 
@@ -133,7 +138,7 @@ public class CategoryActivity extends AbstractEditorActivity {
 					category.title = text(categoryTitle);
                     setCategoryType(category);
 					int count = attributesLayout.getChildCount();
-					ArrayList<Attribute> attributes = new ArrayList<Attribute>(count);
+					ArrayList<Attribute> attributes = new ArrayList<>(count);
 					for (int i=0; i<count; i++) {
 						View v = attributesLayout.getChildAt(i);
 						Object o = v.getTag();

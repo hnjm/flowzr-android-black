@@ -12,36 +12,28 @@ package com.flowzr.service;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+
 import com.commonsware.cwac.wakeful.WakefulIntentService;
-
-
-import com.flowzr.activity.BackupListActivity;
-import com.flowzr.activity.EntityListActivity;
-import com.flowzr.export.docs.DriveBackupTask;
-import com.flowzr.export.flowzr.FlowzrSyncEngine;
-import com.flowzr.export.flowzr.FlowzrSyncOptions;
-import com.flowzr.export.flowzr.FlowzrSyncTask;
-
 import com.flowzr.R;
 import com.flowzr.activity.AbstractTransactionActivity;
 import com.flowzr.activity.AccountWidget;
-import com.flowzr.activity.FlowzrSyncActivity;
+import com.flowzr.activity.EntityListActivity;
 import com.flowzr.backup.DatabaseExport;
 import com.flowzr.blotter.BlotterFilter;
-import com.flowzr.filter.WhereFilter;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.export.Export;
-import com.flowzr.model.TransactionStatus;
+import com.flowzr.export.docs.DriveBackupTask;
+import com.flowzr.export.flowzr.FlowzrSyncEngine;
+import com.flowzr.export.flowzr.FlowzrSyncTask;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.TransactionInfo;
+import com.flowzr.model.TransactionStatus;
 import com.flowzr.recur.NotificationOptions;
 import com.flowzr.utils.MyPreferences;
 
@@ -148,6 +140,7 @@ public class FinancistoService extends WakefulIntentService {
     	}
     }
     
+    @SuppressWarnings("TryFinallyCanBeTryWithResources")
     private boolean isPushSyncNeed(long lastSyncLocalTimestamp) {
         String sql = "select count(*) from transactions where updated_on > " + lastSyncLocalTimestamp;
         Cursor c = db.db().rawQuery(sql, null);
@@ -194,7 +187,7 @@ public class FinancistoService extends WakefulIntentService {
 	}
 
 	private Notification createRestoredNotification(int count) {
-		long when = System.currentTimeMillis();
+		//long when = System.currentTimeMillis();
 		String text = getString(R.string.scheduled_transactions_have_been_restored, count);
 		Notification notification = new NotificationCompat.Builder(this)
         .setSmallIcon(R.drawable.notification_icon_transaction)
@@ -208,9 +201,7 @@ public class FinancistoService extends WakefulIntentService {
 		filter.eq(BlotterFilter.STATUS, TransactionStatus.RS.name());
 		filter.toIntent(notificationIntent);
 
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-
-
+		//PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
         notification  = new NotificationCompat.Builder(this)
                 .setContentTitle(getString(R.string.scheduled_transactions_restored))
@@ -223,7 +214,7 @@ public class FinancistoService extends WakefulIntentService {
 	}
 
 	private Notification createNotification(TransactionInfo t) {
-		long when = System.currentTimeMillis();
+		//long when = System.currentTimeMillis();
         Context context = getApplicationContext();
 		Notification notification = new NotificationCompat.Builder(context)
         .setSmallIcon(t.getNotificationIcon())
@@ -235,7 +226,7 @@ public class FinancistoService extends WakefulIntentService {
 
 		Intent notificationIntent = new Intent(this, t.getActivity());
 		notificationIntent.putExtra(AbstractTransactionActivity.TRAN_ID_EXTRA, t.id);
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+		//PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
 
         notification = new NotificationCompat.Builder(context)

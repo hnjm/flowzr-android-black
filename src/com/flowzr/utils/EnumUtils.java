@@ -10,13 +10,14 @@
  ******************************************************************************/
 package com.flowzr.utils;
 
-import com.flowzr.R;
-import com.flowzr.adapter.EntityEnumAdapter;
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+
+import com.flowzr.R;
+import com.flowzr.adapter.EntityEnumAdapter;
 
 public abstract class EnumUtils {
 
@@ -32,16 +33,17 @@ public abstract class EnumUtils {
 	
 	public static ArrayAdapter<String> createDropDownAdapter(Context context, LocalizableEnum...values) {
 		String[] items = getLocalizedValues(context, values);
-		return new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);		
+		return new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, items);
 	}
 	
-	public static <T extends EntityEnum> EntityEnumAdapter<T> createEntityEnumAdapter(Context context, T...values) {
-		return new EntityEnumAdapter<T>(context, values);		
+	@SafeVarargs
+    public static <T extends EntityEnum> EntityEnumAdapter<T> createEntityEnumAdapter(Context context, T...values) {
+		return new EntityEnumAdapter<>(context, values);
 	}
 
 	public static ArrayAdapter<String> createSpinnerAdapter(Context context, LocalizableEnum...values) {
 		String[] items = getLocalizedValues(context, values);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.simple_spinner_item, items);
+		ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.simple_spinner_item, items);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		return adapter;
 	}

@@ -15,13 +15,17 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.appwidget.AppWidgetProviderInfo;
-import android.content.*;
+import android.content.ComponentName;
+import android.content.ContentUris;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
+
 import com.flowzr.R;
 import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.db.DatabaseAdapter;
@@ -30,10 +34,9 @@ import com.flowzr.filter.Criteria;
 import com.flowzr.model.Account;
 import com.flowzr.model.AccountType;
 import com.flowzr.model.CardIssuer;
+import com.flowzr.orb.EntityManager;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.Utils;
-import com.flowzr.orb.EntityManager;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,7 +58,7 @@ public class AccountWidget extends AppWidgetProvider {
 
     public static void updateWidgets(Context context) {
         Class[] allWidgetProviders = new Class[]{AccountWidget.class, AccountWidget3x1.class, AccountWidget4x1.class};
-        List<Integer> allWidgetIds = new ArrayList<Integer>();
+        List<Integer> allWidgetIds = new ArrayList<>();
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
         for (Class widgetProvider : allWidgetProviders) {
             ComponentName thisWidget = new ComponentName(context, widgetProvider);
@@ -116,7 +119,9 @@ public class AccountWidget extends AppWidgetProvider {
         Class widgetProviderClass = AccountWidget.class;
         try {
             widgetProviderClass = Class.forName(appWidgetInfo.provider.getClassName());
-        } catch (ClassNotFoundException e) { }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return widgetProviderClass;
     }
 
@@ -222,6 +227,7 @@ public class AccountWidget extends AppWidgetProvider {
         }
     }
 
+    @SuppressWarnings("TryFinallyCanBeTryWithResources")
     private static RemoteViews buildUpdateForNextAccount(Context context, int widgetId, int layoutId, Class providerClass, long accountId) {
         DatabaseAdapter db = new DatabaseAdapter(context);
         db.open();

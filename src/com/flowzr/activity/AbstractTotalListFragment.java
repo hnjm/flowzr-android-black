@@ -12,17 +12,12 @@
 package com.flowzr.activity;
 
 
-import greendroid.widget.QuickActionWidget;
-
-import android.os.Parcelable;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.ListFragment;
-import com.flowzr.R;
-import com.flowzr.db.DatabaseAdapter;
-import com.flowzr.db.MyEntityManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +25,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.flowzr.R;
+import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.db.MyEntityManager;
+
+import greendroid.widget.QuickActionWidget;
+
 import static com.flowzr.utils.AndroidUtils.isGreenDroidSupported;
 
 public abstract class AbstractTotalListFragment extends ListFragment implements RefreshSupportedActivity {
@@ -73,11 +75,10 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
 	}
 
 	public Bundle getScaleUpOption() {
-		Bundle options = ActivityOptionsCompat.makeScaleUpAnimation(
+		return ActivityOptionsCompat.makeScaleUpAnimation(
 				getView(), 0, 0,
 				getActivity().findViewById(android.R.id.content).getWidth(),
 				getActivity().findViewById(android.R.id.content).getHeight()).toBundle();
-		return options;
 	}
 
     public void onCreate(Bundle savedInstanceState)
@@ -133,7 +134,8 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
         actionGrid.show(view);
 		return true;
 	}
-		
+
+	//@TODO test layout have empty view
     public void recreateAdapter() {           		
 			getListView().setEmptyView(getView().findViewById(R.id.emptyView));	 	
 			adapter = createAdapter(cursor);
@@ -166,9 +168,9 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
     protected void addItem() {
 	}
 
-	protected abstract void deleteItem(View v, int position, long id);
+	protected abstract void deleteItem(int position, long id);
 
-	protected abstract void editItem(View v, int position, long id);
+	protected abstract void editItem(long id);
 
 	protected abstract void viewItem(View v, int position, long id);
 

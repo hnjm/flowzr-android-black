@@ -11,27 +11,35 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.*;
-import android.widget.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.adapter.CategoryListAdapter2;
 import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.filter.Criteria;
 import com.flowzr.model.Category;
 import com.flowzr.model.CategoryTree;
-import com.flowzr.model.MyLocation;
-
-import greendroid.widget.QuickActionGrid;
-import greendroid.widget.QuickActionWidget;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import greendroid.widget.QuickActionGrid;
+import greendroid.widget.QuickActionWidget;
 
 public class CategoryListActivity2 extends AbstractListFragment {
 	
@@ -117,12 +125,12 @@ public class CategoryListActivity2 extends AbstractListFragment {
 
 	@Override
 	protected void viewItem(View v, final int position, long id) {
-		Intent intent = new Intent(this.getActivity(), MainActivity.class);
+		Intent intent = new Intent(this.getActivity(), EntityListActivity.class);
 		Category cat = db.getCategory(id);
         Criteria blotterFilter = Criteria.btw(BlotterFilter.CATEGORY_LEFT, String.valueOf(cat.left), String.valueOf(cat.right));
         blotterFilter.toIntent(cat.getTitle(), intent);
 		intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
 	}	
 	

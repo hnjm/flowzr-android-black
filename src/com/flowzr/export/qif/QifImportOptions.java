@@ -10,11 +10,13 @@ package com.flowzr.export.qif;
 
 
 import android.content.Intent;
+
 import com.flowzr.activity.QifImportActivity;
 import com.flowzr.model.Currency;
 import com.flowzr.utils.CurrencyCache;
 
-import static com.flowzr.export.qif.QifDateFormat.*;
+import static com.flowzr.export.qif.QifDateFormat.EU_FORMAT;
+import static com.flowzr.export.qif.QifDateFormat.US_FORMAT;
 
 /**
  * Created by IntelliJ IDEA.

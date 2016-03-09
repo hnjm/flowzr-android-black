@@ -1,6 +1,7 @@
 package com.flowzr.export.qif;
 
 import android.database.Cursor;
+
 import com.flowzr.model.Account;
 import com.flowzr.model.Category;
 import com.flowzr.model.Transaction;
@@ -13,7 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 import static com.flowzr.db.DatabaseHelper.BlotterColumns;
-import static com.flowzr.export.qif.QifUtils.*;
+import static com.flowzr.export.qif.QifUtils.isTransferCategory;
+import static com.flowzr.export.qif.QifUtils.parseDate;
+import static com.flowzr.export.qif.QifUtils.parseMoney;
+import static com.flowzr.export.qif.QifUtils.trimFirstChar;
 
 /**
  * Created by IntelliJ IDEA.
@@ -179,7 +183,7 @@ public class QifTransaction {
             return;
         }
         if (splits == null) {
-            splits = new ArrayList<QifTransaction>();
+            splits = new ArrayList<>();
         }
         splits.add(split);
     }

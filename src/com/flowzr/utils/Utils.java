@@ -21,11 +21,10 @@ import android.location.Location;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.TextAppearanceSpan;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.model.Account;
 import com.flowzr.model.Currency;
@@ -101,7 +100,7 @@ public class Utils {
 		if (c == null) {
 			c = Currency.EMPTY;
 		}
-		String s = c.getFormat().format(amount.divide(HUNDRED));
+		String s = c.getFormat().format(amount.divide(HUNDRED,BigDecimal.ROUND_CEILING));
 		if (s.endsWith(".")) {
 			s = s.substring(0, s.length()-1);
 		}

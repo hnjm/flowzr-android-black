@@ -8,21 +8,7 @@
 package com.flowzr.activity;
 
 
-import static com.flowzr.service.FlowzrAutoSyncScheduler.scheduleNextAutoSync;
-import static com.flowzr.utils.NetworkUtils.isOnline;
-import java.io.IOException;
-import java.util.Date;
-import org.apache.http.impl.client.DefaultHttpClient;
-import com.flowzr.R;
-import com.flowzr.export.flowzr.FlowzrBillTask;
-import com.flowzr.export.flowzr.FlowzrSyncEngine;
-import com.flowzr.export.flowzr.FlowzrSyncOptions;
-import com.flowzr.export.flowzr.FlowzrSyncTask;
-import com.flowzr.utils.MyPreferences;
-import com.flowzr.utils.PinProtection;
 import android.accounts.Account;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +18,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -44,9 +32,25 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.flowzr.R;
+import com.flowzr.export.flowzr.FlowzrBillTask;
+import com.flowzr.export.flowzr.FlowzrSyncEngine;
+import com.flowzr.export.flowzr.FlowzrSyncOptions;
+import com.flowzr.export.flowzr.FlowzrSyncTask;
+import com.flowzr.utils.MyPreferences;
+import com.flowzr.utils.PinProtection;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.IOException;
+import java.util.Date;
+
+import static com.flowzr.service.FlowzrAutoSyncScheduler.scheduleNextAutoSync;
+import static com.flowzr.utils.NetworkUtils.isOnline;
 
 
 public class FlowzrSyncActivity extends AppCompatActivity {
@@ -135,7 +139,7 @@ public class FlowzrSyncActivity extends AppCompatActivity {
     	    @Override
     	    public void run()
     	    {
-    	    	Object o = new FlowzrSyncTask(FlowzrSyncActivity.this).execute();
+    	    	new FlowzrSyncTask(FlowzrSyncActivity.this).execute();
     	    }
     	});
     	myThread.start();
@@ -287,7 +291,7 @@ public class FlowzrSyncActivity extends AppCompatActivity {
 	private String getRegistrationId(Context context) {
 	    final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	    String registrationId = prefs.getString(PROPERTY_REG_ID, "");
-	    if (registrationId=="") {
+	    if (registrationId.equals("")) {
 	        Log.i(TAG, "GCM Registration not found in prefs.");
 	        return "";
 	    }
@@ -318,11 +322,11 @@ public class FlowzrSyncActivity extends AppCompatActivity {
 	 */
 	@SuppressWarnings("unchecked")
 	private void registerInBackground() {
-	    AsyncTask execute = new AsyncTask() {
+	    new AsyncTask() {
 
 			@Override
 			protected Object doInBackground(Object... params) {
-				 String msg = "";
+				 String msg;
 		            try {
 		                if (gcm == null) {
 		                    gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
@@ -381,8 +385,8 @@ public class FlowzrSyncActivity extends AppCompatActivity {
 		} catch (NameNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		};
-    }    
+		}
+	}
     
     
     private void visitFlowzr(String accountName) {
@@ -428,6 +432,6 @@ public class FlowzrSyncActivity extends AppCompatActivity {
     @Override
 	protected void onResume() {
 		super.onResume();
-        PinProtection.unlock(this);;    
+        PinProtection.unlock(this);
 	}
 }

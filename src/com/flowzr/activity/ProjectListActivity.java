@@ -12,6 +12,7 @@
 package com.flowzr.activity;
 
 import android.view.View;
+
 import com.flowzr.R;
 import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.filter.Criteria;
@@ -35,6 +36,7 @@ public class ProjectListActivity extends MyEntityListActivity<Project> {
         return getString(R.string.project);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected Class getEditActivityClass() {
         return ProjectActivity.class;

@@ -10,13 +10,25 @@ package com.flowzr.export.qif;
 
 import android.content.Context;
 import android.util.Log;
+
 import com.flowzr.backup.FullDatabaseImport;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.export.CategoryCache;
-import com.flowzr.model.*;
+import com.flowzr.model.Account;
+import com.flowzr.model.Category;
+import com.flowzr.model.Project;
+import com.flowzr.model.Transaction;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static com.flowzr.utils.Utils.isEmpty;
@@ -30,9 +42,9 @@ public class QifImport extends FullDatabaseImport {
 
     private final QifImportOptions options;
 
-    private final Map<String, QifAccount> accountTitleToAccount = new HashMap<String, QifAccount>();
-    private final Map<String, Long> payeeToId = new HashMap<String, Long>();
-    private final Map<String, Long> projectToId = new HashMap<String, Long>();
+    private final Map<String, QifAccount> accountTitleToAccount = new HashMap<>();
+    private final Map<String, Long> payeeToId = new HashMap<>();
+    private final Map<String, Long> projectToId = new HashMap<>();
     private final CategoryCache categoryCache = new CategoryCache();
 
     public QifImport(Context context, DatabaseAdapter db, QifImportOptions options) {
@@ -214,7 +226,7 @@ public class QifImport extends FullDatabaseImport {
             findToAccount(transaction, t);
             findCategory(transaction, t);
             if (transaction.splits != null) {
-                List<Transaction> splits = new ArrayList<Transaction>(transaction.splits.size());
+                List<Transaction> splits = new ArrayList<>(transaction.splits.size());
                 for (QifTransaction split : transaction.splits) {
                     Transaction s = split.toTransaction();
                     findToAccount(split, s);

@@ -12,11 +12,11 @@
 
 package com.flowzr.activity;
 
-import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,11 +24,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.flowzr.R;
 import com.flowzr.adapter.BlotterListAdapter;
-import com.flowzr.filter.WhereFilter;
 import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.utils.EnumUtils;
 import com.flowzr.utils.LocalizableEnum;
 
@@ -39,7 +43,7 @@ public class MassOpActivity extends BlotterFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-		long accountId = blotterFilter.getAccountId();
+		//long accountId = blotterFilter.getAccountId();
 		final MassOp[] operations = MassOp.values();
 		final Spinner spOperation = (Spinner)getView().findViewById(R.id.spOperation);
 		switch (item.getItemId()) {

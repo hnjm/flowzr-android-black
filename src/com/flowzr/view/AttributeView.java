@@ -10,14 +10,9 @@
  ******************************************************************************/
 package com.flowzr.view;
 
-import com.flowzr.R;
-import com.flowzr.model.Attribute;
-import com.flowzr.model.TransactionAttribute;
-import com.flowzr.view.NodeInflater.Builder;
-import com.flowzr.view.NodeInflater.CheckBoxBuilder;
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +22,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.flowzr.R;
+import com.flowzr.model.Attribute;
+import com.flowzr.model.TransactionAttribute;
+import com.flowzr.view.NodeInflater.Builder;
+import com.flowzr.view.NodeInflater.CheckBoxBuilder;
 
 public abstract class AttributeView implements OnClickListener {
 	public final Attribute attribute;
@@ -143,7 +144,7 @@ class ListAttributeView extends AttributeView {
 
 	@Override
 	public void onClick(final View view) {
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.select_dialog_singlechoice, items);
+		ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.select_dialog_singlechoice, items);
 		new AlertDialog.Builder(context)
 			.setSingleChoiceItems(adapter, selectedIndex, new DialogInterface.OnClickListener(){
 				@Override

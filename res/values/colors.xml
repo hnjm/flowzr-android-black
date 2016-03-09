@@ -10,8 +10,18 @@
     <color name="navigationBarColor">@color/f_dark</color>
     <color name="background_material_dark">@color/f_dark</color>
     <color name="color_accent">@color/accent_material_dark</color>
+    <!-- fab light effect -->
     <color name="accent_26">#261976d2</color>
 
+    <!-- My fab light
+
+     -->
+    <color name="fab_colorNormal">@color/accent_material_dark</color>
+    <color name="fab_colorPressed">#261976d2</color>
+    <color name="fab_colorDisabled">#261976d2</color>
+    <color name="fab_colorRipple">#261976d2</color>
+    <color name="fab_colorShadow">#261976d2</color>
+    <color name="fab_shadowColor">#261976d2</color>
 
 
     <color name="f_blue">#1976D2</color>

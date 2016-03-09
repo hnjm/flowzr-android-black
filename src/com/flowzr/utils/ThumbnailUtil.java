@@ -16,12 +16,6 @@
 
 package com.flowzr.utils;
 
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,9 +27,15 @@ import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+
 /**
  * Thumbnail generation routines for media provider. This class should only be used internaly.
- * {@hide} THIS IS NOT FOR PUBLIC API.
+ * THIS IS NOT FOR PUBLIC API.
  */
 
 public class ThumbnailUtil {
@@ -62,14 +62,12 @@ public class ThumbnailUtil {
 
     // Returns Options that set the native alloc flag for Bitmap decode.
     public static BitmapFactory.Options createNativeAllocOptions() {
-        BitmapFactory.Options options = new BitmapFactory.Options();
         //options.inNativeAlloc = true;
-        return options;
+        return new BitmapFactory.Options();
     }
     /**
      * Make a bitmap from a given Uri.
      *
-     * @param uri
      */
     public static Bitmap makeBitmap(int minSideLength, int maxNumOfPixels,
             Uri uri, ContentResolver cr) {
@@ -231,11 +229,7 @@ public class ThumbnailUtil {
         return b;
     }
 
-    /**
-     * Creates a centered bitmap of the desired size.
-     * @param source
-     * @param recycle whether we want to recycle the input
-     */
+
     public static Bitmap extractMiniThumb(
             Bitmap source, int width, int height, boolean recycle) {
         if (source == null) {
@@ -250,15 +244,14 @@ public class ThumbnailUtil {
         }
         Matrix matrix = new Matrix();
         matrix.setScale(scale, scale);
-        Bitmap miniThumbnail = transform(matrix, source, width, height, true, recycle);
-        return miniThumbnail;
+        return transform(matrix, source, width, height, true, recycle);
     }
 
     /**
      * This method always returns a "square thumbnail" for MICRO_KIND thumbnail.
      *
      * @param cr ContentResolver
-     * @param file original image
+     * @param originalFile original image
      * @return Bitmap
      */
     public static Bitmap createImageThumbnail(ContentResolver cr, File originalFile) {

@@ -81,6 +81,8 @@
 -keep class org.joda.** { *; }
 -keep class greendroid.widget.** { *; }
 -keep android.**
+-keep org.hamcrest.**
+-keep org.junit.**
 
 -dontwarn org.joda.**
 -dontwarn javax.annotation.**
@@ -91,3 +93,6 @@
 -dontnote com.google.**
 -dontnote com.android.**
 -dontnote android.support.**
+
+-dontobfuscate
+-dontwarn

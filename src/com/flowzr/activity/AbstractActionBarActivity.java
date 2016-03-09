@@ -13,33 +13,31 @@ package com.flowzr.activity;
 
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.design.widget.NavigationView;
-import android.support.multidex.MultiDex;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.os.Bundle;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.multidex.MultiDex;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.flowzr.R;
-import com.flowzr.utils.*;
+import com.flowzr.utils.PinProtection;
 
 public class AbstractActionBarActivity  extends AppCompatActivity {
 
@@ -223,28 +221,6 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         super.onRestoreInstanceState(state);
     }
 
-    /**
-    @Override
-    protected void onResume() {
-        super.onResume();
-        try {
-            // check if any view exists on current view
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        } catch (Exception e) {
-            // Button was not found
-            // It means, your button doesn't exist on the "current" view
-            // It was freed from the memory, therefore stop of activity was performed
-            // In this case I restart my app
-            Intent i = new Intent();
-            i.setClass(getApplicationContext(), MainActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
-            // Show toast to the user
-            Toast.makeText(getApplicationContext(), "Data lost due to excess use of other apps", Toast.LENGTH_LONG).show();
-            //finish();
-        }
-    }
-    **/
 
     @Override
     protected void onPause() {

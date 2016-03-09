@@ -1,17 +1,18 @@
 package com.flowzr.report;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import android.content.Context;
 
 import com.flowzr.R;
-import com.flowzr.db.MyEntityManager;
 import com.flowzr.db.DatabaseHelper.TransactionColumns;
+import com.flowzr.db.MyEntityManager;
 import com.flowzr.graph.Report2DChart;
 import com.flowzr.model.Currency;
 import com.flowzr.model.MyLocation;
 import com.flowzr.utils.MyPreferences;
-import android.content.Context;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * 2D Chart Report to display monthly results by Locations.
@@ -19,40 +20,23 @@ import android.content.Context;
  */
 public class LocationByPeriodReport extends Report2DChart {
 	
-	/**
-	 * Default constructor.
-	 * @param dbAdapter
-	 * @param context
-	 * @param periodLength
-	 * @param currency
-	 */
+
 	public LocationByPeriodReport(Context context, MyEntityManager em, int periodLength, Currency currency) {
 		super(context, em, periodLength, currency);
 	}
 	
-	/**
-	 * Default constructor.
-	 * @param context
-	 * @param dbAdapter
-	 * @param startPeriod
-	 * @param periodLength
-	 * @param currency
-	 */
+
 	public LocationByPeriodReport(Context context, MyEntityManager em, Calendar startPeriod, int periodLength, Currency currency) {
 		super(context, em, startPeriod, periodLength, currency);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.flowzr.graph.ReportGraphic2D#getChildrenGraphics()
-	 */
+
 	@Override
 	public List<Report2DChart> getChildrenCharts() {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.flowzr.graph.ReportGraphic2D#getFilterName()
-	 */
+
 	@Override
 	public String getFilterName() {
 		if (filterIds.size()>0) {
@@ -69,13 +53,10 @@ public class LocationByPeriodReport extends Report2DChart {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.flowzr.graph.ReportGraphic2D#setFilterIds()
-	 */
 	@Override
 	public void setFilterIds() {
 		boolean includeNoLocation = MyPreferences.includeNoFilterInReport(context);
-		filterIds = new ArrayList<Long>();
+		filterIds = new ArrayList<>();
 		currentFilterOrder = 0;
 		List<MyLocation> locations = em.getAllLocationsList(includeNoLocation);
 		if (locations.size()>0) {

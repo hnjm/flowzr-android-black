@@ -11,10 +11,31 @@
  *     Emmanuel Florent - port to Android API 11+
  *                      - port to Google API V3
  ******************************************************************************/
-package com.flowzr.activity;	
+package com.flowzr.activity;
 
-import static com.flowzr.service.DailyAutoBackupScheduler.scheduleNextAutoBackup;
-import java.io.File;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.Toast;
+
 import com.flowzr.R;
 import com.flowzr.adapter.BackupListAdapter;
 import com.flowzr.backup.Backup;
@@ -22,7 +43,6 @@ import com.flowzr.backup.BackupType;
 import com.flowzr.export.BackupExportTask;
 import com.flowzr.export.BackupImportTask;
 import com.flowzr.export.Export;
-import com.flowzr.export.ImportExportAsyncTaskListener;
 import com.flowzr.export.csv.CsvExportOptions;
 import com.flowzr.export.csv.CsvExportTask;
 import com.flowzr.export.csv.CsvImportOptions;
@@ -43,36 +63,12 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi;
-import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.MetadataBuffer;
 import com.google.android.gms.plus.Plus;
 
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentSender;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-import android.widget.Toast;
+import java.io.File;
+
+import static com.flowzr.service.DailyAutoBackupScheduler.scheduleNextAutoBackup;
 
 public class BackupListActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener {
 
@@ -138,7 +134,7 @@ public class BackupListActivity extends AppCompatActivity implements GoogleApiCl
                         doImport();
                         break;
                     case 2:
-                        if (!isConnectionAvailable()) {
+                        if (isConnectionUnAvailable()) {
                             showErrorPopup(BackupListActivity.this, R.string.flowzr_sync_error_no_network);
                             return;
                         }
@@ -148,7 +144,7 @@ public class BackupListActivity extends AppCompatActivity implements GoogleApiCl
                         mClient.connect();
                         break;
                     case 3:
-                        if (!isConnectionAvailable()) {
+                        if (isConnectionUnAvailable()) {
                             showErrorPopup(BackupListActivity.this, R.string.flowzr_sync_error_no_network);
                             return;
                         }
@@ -156,14 +152,14 @@ public class BackupListActivity extends AppCompatActivity implements GoogleApiCl
                         mClient.connect();
                         break;
                     case 4:
-                        if (!isConnectionAvailable()) {
+                        if (isConnectionUnAvailable()) {
                             showErrorPopup(BackupListActivity.this, R.string.flowzr_sync_error_no_network);
                             return;
                         }
                         doBackupOnDropbox();
                         break;
                     case 5:
-                        if (!isConnectionAvailable()) {
+                        if (isConnectionUnAvailable()) {
                             showErrorPopup(BackupListActivity.this, R.string.flowzr_sync_error_no_network);
                             return;
                         }
@@ -248,13 +244,13 @@ public class BackupListActivity extends AppCompatActivity implements GoogleApiCl
         ProgressDialog d = ProgressDialog.show(this, null, getString(R.string.backup_database_inprogress), true);
         new BackupExportTask(this, d, true).execute();
     }
-    /**
+    /*
     private void doBackupTo() {
         ProgressDialog d = ProgressDialog.show(this, null, getString(R.string.backup_database_inprogress), true);
         final BackupExportTask t = new BackupExportTask(this, d, false);
         t.setShowResultDialog(false);
         t.setListener(new ImportExportAsyncTaskListener() {
-            @Override
+            Override
             public void onCompleted() {
                 String backupFileName = t.backupFileName;
                 startBackupToChooser(backupFileName);
@@ -262,7 +258,7 @@ public class BackupListActivity extends AppCompatActivity implements GoogleApiCl
         });
         t.execute((String[]) null);
     }
-    **/
+    */
 
     private void startBackupToChooser(String backupFileName) {
         File file = Export.getBackupFile(this, backupFileName);
@@ -500,12 +496,12 @@ public class BackupListActivity extends AppCompatActivity implements GoogleApiCl
         PinProtection.unlock(this);
     }
 
-    public boolean isConnectionAvailable() {
+    public boolean isConnectionUnAvailable() {
         ConnectivityManager cm= (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info=cm.getActiveNetworkInfo();
-        if (info==null) return false;
+        if (info==null) return true;
         NetworkInfo.State network= info.getState();
-        return network==NetworkInfo.State.CONNECTED;
+        return network != NetworkInfo.State.CONNECTED;
     }
 
     @Override

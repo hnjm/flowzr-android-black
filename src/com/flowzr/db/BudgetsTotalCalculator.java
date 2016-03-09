@@ -10,7 +10,14 @@ package com.flowzr.db;
 
 import android.os.Handler;
 import android.util.Log;
-import com.flowzr.model.*;
+
+import com.flowzr.model.Budget;
+import com.flowzr.model.Category;
+import com.flowzr.model.Currency;
+import com.flowzr.model.MyEntity;
+import com.flowzr.model.Project;
+import com.flowzr.model.Total;
+import com.flowzr.model.TotalError;
 import com.flowzr.rates.ExchangeRate;
 import com.flowzr.rates.ExchangeRateProvider;
 
@@ -67,7 +74,7 @@ public class BudgetsTotalCalculator {
     }
     
     public Total[] calculateTotals() {
-        Map<Currency, Total> totals = new HashMap<Currency, Total>();
+        Map<Currency, Total> totals = new HashMap<>();
         for (Budget b : budgets) {
             Currency c = b.getBudgetCurrency();
             Total total = totals.get(c);

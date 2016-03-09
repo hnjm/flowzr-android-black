@@ -10,31 +10,27 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.*;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.Spinner;
+import android.widget.TimePicker;
+
 import com.flowzr.R;
 import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.datetime.DateUtils;
 import com.flowzr.datetime.Period;
 import com.flowzr.datetime.PeriodType;
-import com.flowzr.export.csv.Csv;
 import com.flowzr.filter.DateTimeCriteria;
 import com.flowzr.filter.WhereFilter;
-import com.flowzr.utils.RecurUtils;
-import com.flowzr.utils.RecurUtils.Recur;
-import com.flowzr.utils.RecurUtils.RecurInterval;
-import com.flowzr.utils.RecurUtils.RecurPeriod;
 
 import java.text.DateFormat;
 import java.util.Calendar;

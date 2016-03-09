@@ -68,7 +68,7 @@ public class DatabaseHelper extends DatabaseSchemaEvolution {
 	public static final String V_REPORT_PROJECTS = "v_report_project";
     public static final String V_REPORT_PAYEES = "v_report_payee";
 	
-	public static enum TransactionColumns {
+	public enum TransactionColumns {
         _id,
         parent_id,
         from_account_id,
@@ -103,7 +103,7 @@ public class DatabaseHelper extends DatabaseSchemaEvolution {
 
 	}
 	
-	public static enum BlotterColumns {
+	public enum BlotterColumns {
         _id,
         parent_id,
         from_account_id,
@@ -173,7 +173,7 @@ public class DatabaseHelper extends DatabaseSchemaEvolution {
 
 	}
 	
-	public static enum CategoryColumns {
+	public enum CategoryColumns {
 		_id,
 		title,
 		left,
@@ -186,7 +186,7 @@ public class DatabaseHelper extends DatabaseSchemaEvolution {
 		sort_order
 	}
 
-	public static enum CategoryViewColumns {
+	public enum CategoryViewColumns {
         _id,
         title,
         level,
@@ -200,7 +200,7 @@ public class DatabaseHelper extends DatabaseSchemaEvolution {
 		public static String[] NORMAL_PROJECTION = asStringArray(CategoryViewColumns.values());
 	}
 
-    public static enum ExchangeRateColumns {
+    public enum ExchangeRateColumns {
         from_currency_id,
         to_currency_id,
         rate_date,

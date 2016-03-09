@@ -12,21 +12,29 @@ package com.flowzr.report;
 
 import android.content.Context;
 import android.database.Cursor;
-import com.flowzr.filter.WhereFilter;
+
 import com.flowzr.datetime.Period;
 import com.flowzr.datetime.PeriodType;
-import com.flowzr.filter.Criteria;
-import com.flowzr.filter.DateTimeCriteria;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.DatabaseHelper.ReportColumns;
+import com.flowzr.filter.Criteria;
+import com.flowzr.filter.DateTimeCriteria;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.graph.GraphUnit;
 import com.flowzr.model.Currency;
 import com.flowzr.model.Total;
 
 import java.util.ArrayList;
 
+import static com.flowzr.datetime.PeriodType.LAST_MONTH;
+import static com.flowzr.datetime.PeriodType.LAST_WEEK;
+import static com.flowzr.datetime.PeriodType.THIS_AND_LAST_MONTH;
+import static com.flowzr.datetime.PeriodType.THIS_AND_LAST_WEEK;
+import static com.flowzr.datetime.PeriodType.THIS_MONTH;
+import static com.flowzr.datetime.PeriodType.THIS_WEEK;
+import static com.flowzr.datetime.PeriodType.TODAY;
+import static com.flowzr.datetime.PeriodType.YESTERDAY;
 import static com.flowzr.db.DatabaseHelper.V_REPORT_PERIOD;
-import static com.flowzr.datetime.PeriodType.*;
 
 public class PeriodReport extends Report {
 
@@ -50,7 +58,7 @@ public class PeriodReport extends Report {
 			newFilter.put(criteria);
 		}
 		filterTransfers(newFilter);
-		ArrayList<GraphUnit> units = new ArrayList<GraphUnit>();
+		ArrayList<GraphUnit> units = new ArrayList<>();
         for (Period p : periods) {
             currentPeriod = p;
             newFilter.put(Criteria.btw(ReportColumns.DATETIME, String.valueOf(p.start), String.valueOf(p.end)));

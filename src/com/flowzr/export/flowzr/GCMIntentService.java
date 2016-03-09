@@ -9,12 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.flowzr.activity.FlowzrSyncActivity;
-import com.flowzr.export.flowzr.FlowzrSyncEngine;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-
-import java.util.logging.Logger;
-import java.util.prefs.Preferences;
 
 /**
 * IntentService responsible for handling GCM messages.

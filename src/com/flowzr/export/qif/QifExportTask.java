@@ -2,6 +2,7 @@ package com.flowzr.export.qif;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.export.ImportExportAsyncTask;
 

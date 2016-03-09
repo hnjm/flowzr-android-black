@@ -15,6 +15,7 @@ import android.graphics.Rect;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
 import com.flowzr.graph.Amount;
 import com.flowzr.graph.GraphUnit;
 import com.flowzr.graph.GraphWidget;

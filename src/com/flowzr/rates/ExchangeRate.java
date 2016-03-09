@@ -10,6 +10,8 @@ package com.flowzr.rates;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
+
 import com.flowzr.db.DatabaseHelper;
 
 /**
@@ -44,7 +46,7 @@ public class ExchangeRate implements Comparable<ExchangeRate> {
         values.put(DatabaseHelper.ExchangeRateColumns.to_currency_id.name(), toCurrencyId);
         values.put(DatabaseHelper.ExchangeRateColumns.rate_date.name(), date);
         values.put(DatabaseHelper.ExchangeRateColumns.rate.name(), rate);
-        values.put(DatabaseHelper.ExchangeRateColumns.rate.remote_key.name(), remote_key);
+        values.put(DatabaseHelper.ExchangeRateColumns.remote_key.name(), remote_key);
         return values;
     }
 
@@ -65,7 +67,7 @@ public class ExchangeRate implements Comparable<ExchangeRate> {
     }
 
     @Override
-    public int compareTo(ExchangeRate that) {
+    public int compareTo(@NonNull ExchangeRate that) {
         long d0 = this.date;
         long d1 = that.date;
         return d0 > d1 ? -1 : (d0 < d1 ? 1 : 0);

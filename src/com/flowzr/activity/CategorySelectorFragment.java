@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,26 +21,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.flowzr.R;
-import com.flowzr.adapter.BlotterListAdapter;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.DatabaseHelper;
-import com.flowzr.filter.DateTimeCriteria;
 import com.flowzr.model.Category;
 import com.flowzr.model.CategoryTree;
 import com.flowzr.model.CategoryTreeNavigator;
-import com.flowzr.utils.MenuItemInfo;
 import com.flowzr.utils.MyPreferences;
 
-import greendroid.widget.QuickActionGrid;
-
-import java.util.*;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
  * User: denis.solonenko
  * Date: 3/14/12 10:40 PM
  */
-import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.

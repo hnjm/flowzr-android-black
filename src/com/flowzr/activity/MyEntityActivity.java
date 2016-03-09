@@ -11,20 +11,16 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.DatabaseHelper;
 import com.flowzr.db.MyEntityManager;
 import com.flowzr.model.MyEntity;
-import com.flowzr.utils.PinProtection;
 
 public abstract class MyEntityActivity<T extends MyEntity> extends AbstractEditorActivity {
 	

@@ -17,9 +17,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListAdapter;
+
 import com.flowzr.R;
 import com.flowzr.adapter.EntityListAdapter;
 import com.flowzr.filter.Criteria;
@@ -66,7 +66,7 @@ public abstract class MyEntityListActivity<T extends MyEntity> extends AbstractL
 
     @Override
 	protected ListAdapter createAdapter(Cursor cursor) {
-		return new EntityListAdapter<T>(this.getActivity(), entities);
+		return new EntityListAdapter<>(this.getActivity(), entities);
 	}
 
 	@Override
@@ -107,13 +107,13 @@ public abstract class MyEntityListActivity<T extends MyEntity> extends AbstractL
 	protected void viewItem(View v, int position, long id) {
 		Log.e("flowzr", "here i am");
 		T e = em.load(clazz, id);
-		Intent intent = new Intent(this.getActivity(), MainActivity.class);
-		//Intent intent = new Intent(this.getActivity(), EntityListActivity.class);
+		//Intent intent = new Intent(this.getActivity(), MainActivity.class);
+		Intent intent = new Intent(this.getActivity(), EntityListActivity.class);
 
 		Criteria blotterFilter = createBlotterCriteria(e);
         blotterFilter.toIntent(e.title, intent);
 		intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		startActivity(intent);
 	}
 

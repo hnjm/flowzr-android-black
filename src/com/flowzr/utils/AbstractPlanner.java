@@ -9,13 +9,19 @@
 package com.flowzr.utils;
 
 import android.database.Cursor;
-import com.flowzr.filter.WhereFilter;
+
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
-import com.flowzr.model.*;
+import com.flowzr.filter.WhereFilter;
+import com.flowzr.model.Total;
+import com.flowzr.model.TransactionInfo;
 import com.flowzr.recur.Recurrence;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,7 +55,7 @@ public abstract class AbstractPlanner {
         if (scheduledTransactions.isEmpty()) {
             return regularTransactions;
         } else {
-            List<TransactionInfo> allTransactions = new ArrayList<TransactionInfo>();
+            List<TransactionInfo> allTransactions = new ArrayList<>();
             allTransactions.addAll(regularTransactions);
             allTransactions.addAll(planSchedules(scheduledTransactions));
             sortTransactions(allTransactions);
@@ -66,7 +72,7 @@ public abstract class AbstractPlanner {
     }
 
     private List<TransactionInfo> planSchedules(List<TransactionInfo> scheduledTransactions) {
-        List<TransactionInfo> plannedTransactions = new ArrayList<TransactionInfo>();
+        List<TransactionInfo> plannedTransactions = new ArrayList<>();
         for (TransactionInfo scheduledTransaction : scheduledTransactions) {
             TransactionInfo transaction = prepareScheduledTransaction(scheduledTransaction);
             if (includeScheduledTransaction(transaction)) {
@@ -154,7 +160,7 @@ public abstract class AbstractPlanner {
 
     private List<TransactionInfo> asTransactionList(Cursor cursor) {
         try {
-            List<TransactionInfo> transactions = new ArrayList<TransactionInfo>(cursor.getCount());
+            List<TransactionInfo> transactions = new ArrayList<>(cursor.getCount());
             while (cursor.moveToNext()) {
                 transactions.add(TransactionInfo.fromBlotterCursor(cursor));
             }

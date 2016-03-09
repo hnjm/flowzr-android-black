@@ -10,12 +10,15 @@
  ******************************************************************************/
 package com.flowzr.graph;
 
-import java.math.BigDecimal;
-import java.util.*;
-
 import com.flowzr.model.Currency;
 import com.flowzr.model.TotalError;
 import com.flowzr.report.IncomeExpense;
+
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class GraphUnit implements Comparable<GraphUnit>, Iterable<Amount> {
 
@@ -25,7 +28,7 @@ public class GraphUnit implements Comparable<GraphUnit>, Iterable<Amount> {
     public final Currency currency;
 
     private final IncomeExpenseAmount incomeExpenseAmount = new IncomeExpenseAmount();
-    private final List<Amount> amounts = new LinkedList<Amount>();
+    private final List<Amount> amounts = new LinkedList<>();
 
     public long maxAmount;
     public TotalError error;

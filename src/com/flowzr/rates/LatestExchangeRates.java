@@ -8,11 +8,12 @@
 
 package com.flowzr.rates;
 
-import gnu.trove.map.TLongObjectMap;
-import gnu.trove.map.hash.TLongObjectHashMap;
 import com.flowzr.model.Currency;
 
 import java.util.List;
+
+import gnu.trove.map.TLongObjectMap;
+import gnu.trove.map.hash.TLongObjectHashMap;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class LatestExchangeRates implements ExchangeRateProvider, ExchangeRatesCollection {
 
-    private final TLongObjectMap<TLongObjectMap<ExchangeRate>> rates = new TLongObjectHashMap<TLongObjectMap<ExchangeRate>>();
+    private final TLongObjectMap<TLongObjectMap<ExchangeRate>> rates = new TLongObjectHashMap<>();
 
     @Override
     public ExchangeRate getRate(Currency fromCurrency, Currency toCurrency) {
@@ -56,7 +57,7 @@ public class LatestExchangeRates implements ExchangeRateProvider, ExchangeRatesC
     private TLongObjectMap<ExchangeRate> getMapFor(long fromCurrencyId) {
         TLongObjectMap<ExchangeRate> m = rates.get(fromCurrencyId);
         if (m == null) {
-            m = new TLongObjectHashMap<ExchangeRate>();
+            m = new TLongObjectHashMap<>();
             rates.put(fromCurrencyId, m);
         }
         return m;

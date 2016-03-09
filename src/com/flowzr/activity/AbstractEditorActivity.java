@@ -11,27 +11,20 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
-
 
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
@@ -77,7 +70,10 @@ public abstract class AbstractEditorActivity extends AppCompatActivity implement
         final ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
+
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
+            //actionBar.setIcon();
         }
     }
 
@@ -150,7 +146,7 @@ public abstract class AbstractEditorActivity extends AppCompatActivity implement
 	public void onSelectedPos(int id, int selectedPos) {
 	}
 
-    protected boolean checkSelected(Object value, int messageResId) {
+    protected boolean checkSelected(Object value, @SuppressWarnings("SameParameterValue") int messageResId) {
         if (value == null) {
             Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
             return false;
@@ -158,7 +154,7 @@ public abstract class AbstractEditorActivity extends AppCompatActivity implement
         return true;
     }
 
-    protected boolean checkSelectedId(long value, int messageResId) {
+    protected boolean checkSelectedId(long value, @SuppressWarnings("SameParameterValue") int messageResId) {
 		if (value <= 0) {
 			Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
 			return false;

@@ -15,6 +15,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
 import com.flowzr.model.RestoredTransaction;
@@ -25,7 +26,11 @@ import com.flowzr.recur.DateRecurrenceIterator;
 import com.flowzr.recur.Recurrence;
 import com.flowzr.utils.MyPreferences;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 public class RecurrenceScheduler {
 
@@ -110,7 +115,7 @@ public class RecurrenceScheduler {
 		long t0 = System.currentTimeMillis();
 		try {
 			Date endDate = new Date(now);
-			List<RestoredTransaction> restored = new ArrayList<RestoredTransaction>();
+			List<RestoredTransaction> restored = new ArrayList<>();
 			ArrayList<TransactionInfo> list = em.getAllScheduledTransactions();
 			for (TransactionInfo t : list) {
 				if (t.recurrence != null) {

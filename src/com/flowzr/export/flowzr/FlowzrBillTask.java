@@ -9,24 +9,6 @@
 package com.flowzr.export.flowzr;
 
 
-import java.io.IOException;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-
-
-
-import com.flowzr.R;
-import com.flowzr.export.ImportExportException;
-import com.flowzr.export.flowzr.FlowzrSyncEngine;
-import com.flowzr.activity.FlowzrSyncActivity;
-import com.flowzr.db.DatabaseAdapter;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
@@ -34,7 +16,6 @@ import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.Activity;
-import android.support.v7.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -43,8 +24,23 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+
+import com.flowzr.R;
+import com.flowzr.activity.FlowzrSyncActivity;
+import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.export.ImportExportException;
 import com.flowzr.utils.MyPreferences;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.params.ClientPNames;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.IOException;
 
 public class FlowzrBillTask extends AsyncTask<String, String, Object> {
 
@@ -55,7 +51,7 @@ public class FlowzrBillTask extends AsyncTask<String, String, Object> {
 	
     public FlowzrBillTask(Context context) {
     	this.context=context;
-    	this.http_client=new DefaultHttpClient();
+    	http_client=new DefaultHttpClient();
     }
     
     protected Object work(Context context, DatabaseAdapter dba, String... params) throws ImportExportException {    	
@@ -87,11 +83,11 @@ public class FlowzrBillTask extends AsyncTask<String, String, Object> {
             throw new ImportExportException(R.string.flowzr_choose_account);
         }
 		Account useCredential = null;
-		for (int i = 0; i < accounts.length; i++) {
-	    	 if (accountName.equals(((android.accounts.Account) accounts[i]).name)) {
-	    		 useCredential=accounts[i];
-	    	 }
-	     }	    	
+		for (Account account : accounts) {
+			if (accountName.equals((account).name)) {
+				useCredential = account;
+			}
+		}
     	AccountManager.get(context).getAuthToken(useCredential, "ah" , null, 
    	    		(Activity) context, new GetAuthTokenCallback(), null);   	
     	
@@ -126,10 +122,7 @@ public class FlowzrBillTask extends AsyncTask<String, String, Object> {
     
 	@Override
 	protected void onPostExecute(Object result) {		
-			if (!(result instanceof Exception)) {
-				
-				
-			}
+
 	}
 
 
@@ -147,18 +140,10 @@ public class GetAuthTokenCallback implements AccountManagerCallback<Bundle> {
 	            	AccountManager.get(context).invalidateAuthToken("ah", bundle.getString(AccountManager.KEY_AUTHTOKEN));
 	            	onGetAuthToken(bundle);
 				}
-			} catch (OperationCanceledException e) {
+			} catch (OperationCanceledException | AuthenticatorException | IOException e) {
 				//notifyUser(context.getString(R.string.flowzr_sync_error_no_network), 100);
 				//showErrorPopup(FlowzrSyncActivity.this, R.string.flowzr_sync_error_no_network);
 				//context.setReady();
-				e.printStackTrace();
-			} catch (AuthenticatorException e) {
-				//notifyUser(context.getString(R.string.flowzr_sync_error_no_network), 100);			
-				//flowzrSyncActivity.setReady();				
-				e.printStackTrace();
-			} catch (IOException e) {
-				//notifyUser(flowzrSyncActivity.getString(R.string.flowzr_sync_error_no_network), 100);		
-				//flowzrSyncActivity.setReady();				
 				e.printStackTrace();
 			}
 		}

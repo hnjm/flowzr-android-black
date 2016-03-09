@@ -10,9 +10,13 @@
  ******************************************************************************/
 package com.flowzr.recur;
 
-import com.google.ical.util.TimeUtils;
-import com.google.ical.values.*;
 import com.flowzr.datetime.DateUtils;
+import com.google.ical.util.TimeUtils;
+import com.google.ical.values.DateTimeValueImpl;
+import com.google.ical.values.DateValue;
+import com.google.ical.values.DateValueImpl;
+import com.google.ical.values.RRule;
+import com.google.ical.values.TimeValue;
 
 import java.text.ParseException;
 import java.util.Calendar;

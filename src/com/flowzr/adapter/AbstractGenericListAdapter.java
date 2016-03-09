@@ -10,13 +10,14 @@
  ******************************************************************************/
 package com.flowzr.adapter;
 
-import com.flowzr.R;
-import com.flowzr.db.DatabaseAdapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ResourceCursorAdapter;
+
+import com.flowzr.R;
+import com.flowzr.db.DatabaseAdapter;
 
 public abstract class AbstractGenericListAdapter extends ResourceCursorAdapter {
 

@@ -11,30 +11,21 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.support.v7.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListAdapter;
+
 import com.flowzr.R;
 import com.flowzr.adapter.CurrencyListAdapter;
 import com.flowzr.model.Currency;
-import com.flowzr.model.EntityType;
-import com.flowzr.utils.MenuItemInfo;
 
-import java.util.List;
-
-/**
- * @TODO: contextual menus (set default currency)
- * @author eflorent
- *
- */
+//@TODO: contextual menus (set default currency)
 public class CurrencyListActivity extends AbstractListFragment {
 	
 	private static final int NEW_CURRENCY_REQUEST = 1;

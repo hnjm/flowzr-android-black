@@ -12,10 +12,17 @@ package com.flowzr.export.csv;
 
 import android.content.Context;
 import android.database.Cursor;
+
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
 import com.flowzr.export.Export;
-import com.flowzr.model.*;
+import com.flowzr.model.Account;
+import com.flowzr.model.Category;
+import com.flowzr.model.Currency;
+import com.flowzr.model.MyLocation;
+import com.flowzr.model.Payee;
+import com.flowzr.model.Project;
+import com.flowzr.model.Transaction;
 import com.flowzr.utils.CurrencyCache;
 import com.flowzr.utils.Utils;
 
@@ -90,7 +97,8 @@ public class CsvExport extends Export {
             projectMap = em.getAllProjectsByIdMap(true);
             locationMap = em.getAllLocationsByIdMap(false);
             Cursor c = db.getBlotter(options.filter);
-			try {			
+            //noinspection TryFinallyCanBeTryWithResources,TryFinallyCanBeTryWithResources,TryFinallyCanBeTryWithResources,TryFinallyCanBeTryWithResources,TryFinallyCanBeTryWithResources
+            try {
 				while (c.moveToNext()) {
                     Transaction t = Transaction.fromBlotterCursor(c);
 					writeLine(w, t);
@@ -139,12 +147,12 @@ public class CsvExport extends Export {
             w.value("");
         }
 		w.value(account);
-        String amountFormatted = options.amountFormat.format(new BigDecimal(amount).divide(Utils.HUNDRED));
+        String amountFormatted = options.amountFormat.format(new BigDecimal(amount).divide(Utils.HUNDRED,BigDecimal.ROUND_CEILING));
         w.value(amountFormatted);
 		Currency c = CurrencyCache.getCurrency(db.em(), currencyId);
 		w.value(c.name);
         if (originalCurrencyId > 0) {
-            w.value(options.amountFormat.format(new BigDecimal(originalAmount).divide(Utils.HUNDRED)));
+            w.value(options.amountFormat.format(new BigDecimal(originalAmount).divide(Utils.HUNDRED,BigDecimal.ROUND_CEILING)));
             Currency originalCurrency = CurrencyCache.getCurrency(db.em(), originalCurrencyId);
             w.value(originalCurrency.name);
         } else {

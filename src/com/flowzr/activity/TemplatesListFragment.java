@@ -11,18 +11,23 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListAdapter;
+
 import com.flowzr.R;
-import com.flowzr.adapter.BlotterListAdapter;
 import com.flowzr.adapter.TemplateListAdapter;
 import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.db.DatabaseHelper;
 import com.flowzr.filter.WhereFilter;
-import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
 
 
 public class TemplatesListFragment extends BlotterFragment {

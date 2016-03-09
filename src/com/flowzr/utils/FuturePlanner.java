@@ -9,9 +9,10 @@
 package com.flowzr.utils;
 
 import android.database.Cursor;
+
+import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.TransactionsTotalCalculator;
 import com.flowzr.filter.WhereFilter;
-import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.model.Total;
 import com.flowzr.model.TransactionInfo;
 

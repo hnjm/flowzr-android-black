@@ -1,10 +1,11 @@
 package com.flowzr.graph;
 
-import java.util.Calendar;
+import android.content.Context;
 
 import com.flowzr.R;
 import com.flowzr.model.PeriodValue;
-import android.content.Context;
+
+import java.util.Calendar;
 
 /**
  * Point data to plot in Report 2D charts.
@@ -100,10 +101,7 @@ public class Report2DPoint {
 		return x;
 	}
 
-	/**
-	 * Sets the horizontal position of the point in the screen
-	 * @param x
-	 */
+
 	public void setX(int x) {
 		this.x = x;
 	}
@@ -115,10 +113,7 @@ public class Report2DPoint {
 		return y;
 	}
 
-	/**
-	 * Sets the vertical position of the point in the screen.
-	 * @param y
-	 */
+
 	public void setY(int y) {
 		this.y = y;
 	}
@@ -127,11 +122,7 @@ public class Report2DPoint {
 	 * @return True if the number is negative, false otherwise.
 	 */
 	public boolean isNegative() {
-		if (pointData.getValue()<0) {
-			return true;
-		} else {
-			return false;
-		}
+		return pointData.getValue() < 0;
 	}
 	
 	/**

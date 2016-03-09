@@ -9,11 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.model.Account;
 import com.flowzr.model.Currency;
@@ -22,7 +21,6 @@ import com.flowzr.utils.CurrencyCache;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.Utils;
 
-import static com.flowzr.utils.Utils.checkEditText;
 import static com.flowzr.utils.Utils.text;
 
 /**

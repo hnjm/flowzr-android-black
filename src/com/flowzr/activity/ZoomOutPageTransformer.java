@@ -1,12 +1,15 @@
 package com.flowzr.activity;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.support.v4.view.ViewPager.PageTransformer;
 import android.view.View;
 
 public class ZoomOutPageTransformer implements PageTransformer {
-    private static float MIN_SCALE = 0.85f;
-    private static float MIN_ALPHA = 0.5f;
+    protected static float MIN_SCALE = 0.85f;
+    protected static float MIN_ALPHA = 0.5f;
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void transformPage(View view, float position) {
         int pageWidth = view.getWidth();
         int pageHeight = view.getHeight();

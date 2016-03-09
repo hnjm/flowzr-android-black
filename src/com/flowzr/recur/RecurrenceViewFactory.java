@@ -17,20 +17,31 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.flowzr.R;
-import com.flowzr.model.MultiChoiceItem;
 import com.flowzr.activity.ActivityLayout;
 import com.flowzr.activity.ActivityLayoutListener;
 import com.flowzr.activity.RecurrenceActivity;
 import com.flowzr.datetime.DateUtils;
+import com.flowzr.model.MultiChoiceItem;
 import com.flowzr.utils.EnumUtils;
 import com.flowzr.utils.LocalizableEnum;
 import com.flowzr.utils.Utils;
 import com.flowzr.view.NodeInflater;
 
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class RecurrenceViewFactory {
@@ -71,9 +82,9 @@ public class RecurrenceViewFactory {
 
 	public static HashMap<String, String> parseState(String state) {
 		if (state == null) {
-			return new HashMap<String, String>();
+			return new HashMap<>();
 		}
-		HashMap<String, String> map = new HashMap<String, String>();
+		HashMap<String, String> map = new HashMap<>();
 		String[] a = state.split("#");
 		for (String s : a) {
 			String[] p = s.split("@");
@@ -100,7 +111,7 @@ public class RecurrenceViewFactory {
 		public String stateToString() {
 			StringBuilder sb = new StringBuilder();
 			sb.append(r.name()).append(":");
-			HashMap<String, String> state = new HashMap<String, String>();
+			HashMap<String, String> state = new HashMap<>();
 			stateToMap(state);
 			for (Map.Entry<String, String> e : state.entrySet()) {
 				sb.append(e.getKey()).append("@").append(e.getValue()).append("#");
@@ -255,7 +266,7 @@ public class RecurrenceViewFactory {
 		public final int titleId;
 		public final String rfcName;
 		
-		private DayOfWeek(int checkboxId, int titleId, String rfcName) {
+		DayOfWeek(int checkboxId, int titleId, String rfcName) {
 			this.checkboxId = checkboxId;
 			this.titleId = titleId;
 			this.rfcName = rfcName;
@@ -346,7 +357,7 @@ public class RecurrenceViewFactory {
 		@Override
 		protected void onClick(View v, int id) {
 			if (id == R.id.recurrence_pattern) {
-				ArrayList<MultiChoiceItem> items = new ArrayList<MultiChoiceItem>();
+				ArrayList<MultiChoiceItem> items = new ArrayList<>();
 				for (DayOfWeek d : DayOfWeek.values()) {
 					DayOfWeekItem i = new DayOfWeekItem(d);
 					i.setChecked(days.contains(d));
@@ -550,7 +561,7 @@ public class RecurrenceViewFactory {
 						items[i*postfixesLength+j] = prefixes[i]+" "+postfixes[j];
 					}
 				}
-				ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_dropdown_item, items);
+				ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_dropdown_item, items);
 				int selected = prefix[k].ordinal()*postfixesLength+postfix[k].ordinal();
 				x.selectPosition(activity, id, R.string.recurrence_period, adapter, selected);				
 			} else {

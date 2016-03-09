@@ -12,6 +12,7 @@
 <android.support.design.widget.CoordinatorLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-tools"
     android:fitsSystemWindows="true"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
@@ -19,9 +20,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:orientation="vertical"
         android:paddingTop="?attr/actionBarSize"
         android:id="@+id/main_layout">
@@ -36,7 +34,8 @@
             android:layout_width="fill_parent">
             <ImageButton android:id="@+id/status"
                 android:elevation="4dp"
-                android:layout_marginLeft="@dimen/space_normal" android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space_normal"
+                android:layout_gravity="center"
                 android:layout_marginRight="@dimen/space_large"
                 android:layout_width="@dimen/recommended_touch_size"
                 android:layout_height="@dimen/recommended_touch_size"
@@ -73,42 +72,53 @@
 
     <include layout="@layout/toolbar"/>
 
-    <View
-        android:id="@+id/dummy2"
-        android:layout_width="1dp"
-        android:layout_height="44dp"
-        android:layout_gravity="bottom|right|end" />
-
-
-    <android.support.design.widget.FloatingActionButton
+    <com.flowzr.view.FloatingActionButton
+        app:layout_anchorGravity="bottom|right|end"
+        android:id="@+id/fab_edit"
+        app:layout_anchor="@id/main_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:src="@drawable/ic_action_done"
-        android:elevation="6dp"
-        android:id="@+id/saveButton"
-        app:layout_anchor="@id/dummy2"
-        android:layout_gravity="bottom|left"
-        xmlns:android="http://schemas.android.com/apk/res/android" />
+        android:layout_marginBottom="@dimen/space_large"
+        android:layout_marginRight="@dimen/space_large"
+        android:src="@drawable/ic_edit"
+        fab:fab_size="normal"
+        style="@style/FloatingActionButton" />
 
-    <View
-        android:id="@+id/dummy"
-        android:layout_width="1dp"
-        android:layout_height="44dp"
-        app:layout_anchor="@id/saveButton"
-        app:layout_anchorGravity="bottom|left" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.flowzr.view.MyFloatingActionMenu
+        android:id="@+id/menu1"
+        app:layout_anchor="@id/main_layout"
+        app:layout_anchorGravity="bottom|right|end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:src="@drawable/ic_action_new"
-        android:elevation="6dp"
-        android:id="@+id/saveAddButton"
-        app:layout_anchor="@id/dummy"
-        android:layout_gravity="bottom|left"
-        xmlns:android="http://schemas.android.com/apk/res/android" />
+        android:layout_marginBottom="@dimen/space_large"
+        android:layout_marginRight="@dimen/space_large"
+        fab:fab_label="@string/create"
+        style="@style/FloatingActionMenu">
+
+        <com.flowzr.view.FloatingActionButton
+            app:layout_anchor="@id/menu1"
+            app:layout_anchorGravity="top"
+            android:id="@+id/saveAddButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_label="@string/create"
+            android:src="@drawable/ic_action_new"
+            fab:fab_size="normal"
+            style="@style/FloatingActionButton" />
+
+        <com.flowzr.view.FloatingActionButton
+            android:id="@+id/saveButton"
+            app:layout_anchor="@id/saveAddButton"
+            app:layout_anchorGravity="top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_done"
+            fab:fab_size="normal"
+            fab:menu_labels_style="@style/MenuLabelsStyle"
+            fab:fab_label="@string/save"
+            style="@style/FloatingActionButton" />
+
+    </com.flowzr.view.MyFloatingActionMenu>
 
 </android.support.design.widget.CoordinatorLayout>

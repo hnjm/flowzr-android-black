@@ -14,27 +14,20 @@ package com.flowzr.activity;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.flowzr.R;
+import com.flowzr.utils.MyPreferences;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
 import com.google.api.client.googleapis.extensions.android.accounts.GoogleAccountManager;
-import com.flowzr.R;
-import com.flowzr.dialog.FolderBrowser;
-import com.flowzr.export.Export;
-import com.flowzr.export.dropbox.Dropbox;
-import com.flowzr.rates.ExchangeRateProviderFactory;
-import com.flowzr.utils.MyPreferences;
-import com.flowzr.utils.PinProtection;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.Intent.ShortcutIconResource;
-import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
 
 public class FlowzrPreferencesActivity extends PreferenceActivity {
 

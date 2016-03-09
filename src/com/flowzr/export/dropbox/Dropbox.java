@@ -10,6 +10,7 @@ package com.flowzr.export.dropbox;
 
 import android.content.Context;
 import android.util.Log;
+
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.session.AccessTokenPair;
@@ -22,7 +23,10 @@ import com.flowzr.utils.MyPreferences;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -31,8 +35,8 @@ import java.util.*;
  */
 public class Dropbox {
 
-    public static final String APP_KEY = "your_drop_box_account_id";
-    public static final String APP_SECRET = "your_drop_box_account_key";
+    public static final String APP_KEY = "n4li1bbi9l4rn49";
+    public static final String APP_SECRET = "nn94nymigkkbhgk";
 
     public static final Session.AccessType ACCESS_TYPE = Session.AccessType.APP_FOLDER;
 
@@ -75,7 +79,7 @@ public class Dropbox {
     private DropboxAPI<AndroidAuthSession> createApi() {
         AppKeyPair appKeys = new AppKeyPair(APP_KEY, APP_SECRET);
         AndroidAuthSession session = new AndroidAuthSession(appKeys, ACCESS_TYPE);
-        return new DropboxAPI<AndroidAuthSession>(session);
+        return new DropboxAPI<>(session);
     }
 
     public boolean authSession() {
@@ -105,7 +109,7 @@ public class Dropbox {
     public List<String> listFiles() throws Exception {
         if (authSession()) {
             try {
-                List<String> files = new ArrayList<String>();
+                List<String> files = new ArrayList<>();
                 List<DropboxAPI.Entry> entries = dropboxApi.search("/", ".backup", 1000, false);
                 for (DropboxAPI.Entry entry : entries) {
                     if (entry.fileName() != null) {

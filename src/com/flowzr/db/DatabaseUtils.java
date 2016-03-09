@@ -25,6 +25,7 @@ public class DatabaseUtils {
         return rawFetchLong(db, query, selectionArgs, 0);
     }
 
+    @SuppressWarnings("TryFinallyCanBeTryWithResources")
     private static long rawFetchLong(DatabaseAdapter db, String query, String[] selectionArgs, long defaultValue) {
         Cursor c = db.db().rawQuery(query, selectionArgs);
         try {

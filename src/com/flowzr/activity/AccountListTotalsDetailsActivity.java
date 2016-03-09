@@ -8,13 +8,14 @@
 
 package com.flowzr.activity;
 
-import java.util.List;
-
 import android.os.Bundle;
 import android.view.View;
+
 import com.flowzr.R;
 import com.flowzr.model.MultiChoiceItem;
 import com.flowzr.model.Total;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

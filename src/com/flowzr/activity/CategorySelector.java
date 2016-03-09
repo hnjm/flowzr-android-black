@@ -9,16 +9,14 @@
 package com.flowzr.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.DatabaseHelper;
@@ -31,7 +29,10 @@ import com.flowzr.utils.TransactionUtils;
 import com.flowzr.view.AttributeView;
 import com.flowzr.view.AttributeViewFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -153,7 +154,7 @@ public class CategorySelector {
     }
 
     protected List<TransactionAttribute> getAttributes() {
-        List<TransactionAttribute> list = new LinkedList<TransactionAttribute>();
+        List<TransactionAttribute> list = new LinkedList<>();
         long count = attributesLayout.getChildCount();
         for (int i=0; i<count; i++) {
             View v = attributesLayout.getChildAt(i);
@@ -210,7 +211,7 @@ public class CategorySelector {
         return Category.isSplit(selectedCategoryId);
     }
 
-    public static interface CategorySelectorListener {
+    public interface CategorySelectorListener {
         void onCategorySelected(Category category, boolean selectLast);
     }
 

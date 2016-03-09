@@ -15,7 +15,7 @@
 
     <ImageButton android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_margin="@dimen/space_normal"
+        android:layout_marginLeft="@dimen/space_xlarge"
         android:gravity="center_vertical"
         android:layout_gravity="center_vertical"
         android:id="@+id/toggle"

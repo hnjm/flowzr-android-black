@@ -12,10 +12,9 @@
  ******************************************************************************/
 package com.flowzr.model;
 
-import java.lang.reflect.Constructor;
+
 
 import com.flowzr.R;
-import android.content.Context;
 import android.support.v4.app.Fragment;
 
 import com.flowzr.activity.CategoryListActivity2;
@@ -24,7 +23,6 @@ import com.flowzr.activity.ExchangeRatesListFragment;
 import com.flowzr.activity.LocationsListFragment;
 import com.flowzr.activity.PayeeListActivity;
 import com.flowzr.activity.ProjectListActivity;
-import com.flowzr.model.Currency;
 import com.flowzr.utils.EntityEnum;
 
 

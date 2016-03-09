@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.model.Category;
 import com.flowzr.model.Currency;
@@ -73,7 +74,7 @@ public class SplitTransactionActivity extends AbstractSplitActivity implements C
 
     private Map<Long, String> getAttributes() {
         List<TransactionAttribute> attributeList = categorySelector.getAttributes();
-        Map<Long, String> attributes = new HashMap<Long, String>();
+        Map<Long, String> attributes = new HashMap<>();
         for (TransactionAttribute ta : attributeList) {
             attributes.put(ta.attributeId, ta.value);
         }

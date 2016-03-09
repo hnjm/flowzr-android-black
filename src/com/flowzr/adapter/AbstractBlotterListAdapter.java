@@ -10,11 +10,12 @@
  ******************************************************************************/
 package com.flowzr.adapter;
 
-import com.flowzr.R;
-import com.flowzr.db.DatabaseAdapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+
+import com.flowzr.R;
+import com.flowzr.db.DatabaseAdapter;
 
 public abstract class AbstractBlotterListAdapter extends AbstractGenericListAdapter {
 

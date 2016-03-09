@@ -17,7 +17,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-import static com.flowzr.export.qif.QifDateFormat.*;
+import static com.flowzr.export.qif.QifDateFormat.EU_FORMAT;
+import static com.flowzr.export.qif.QifDateFormat.US_FORMAT;
 import static com.flowzr.utils.Utils.isNotEmpty;
 
 /**

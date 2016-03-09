@@ -12,7 +12,13 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.flowzr.R;
 import com.flowzr.adapter.MyEntityAdapter;
 import com.flowzr.db.DatabaseAdapter;
@@ -47,7 +53,7 @@ public class CsvImportActivity extends AbstractImportActivity {
         db.open();
 
         accounts = db.em().getAllAccountsList();
-        ArrayAdapter<Account> accountsAdapter = new MyEntityAdapter<Account>(this, android.R.layout.simple_spinner_item, android.R.id.text1, accounts);
+        ArrayAdapter<Account> accountsAdapter = new MyEntityAdapter<>(this, android.R.layout.simple_spinner_item, android.R.id.text1, accounts);
         accountsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         accountSpinner = (Spinner) findViewById(R.id.spinnerAccount);
         accountSpinner.setAdapter(accountsAdapter);

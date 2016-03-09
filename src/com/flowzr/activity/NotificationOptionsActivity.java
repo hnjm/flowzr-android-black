@@ -10,21 +10,19 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import com.flowzr.R;
-import com.flowzr.recur.NotificationOptions;
-import com.flowzr.utils.EnumUtils;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.flowzr.R;
+import com.flowzr.recur.NotificationOptions;
+import com.flowzr.utils.EnumUtils;
 
 public class NotificationOptionsActivity extends AbstractEditorActivity {
 

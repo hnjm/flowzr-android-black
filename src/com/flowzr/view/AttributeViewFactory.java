@@ -10,8 +10,9 @@
  ******************************************************************************/
 package com.flowzr.view;
 
-import com.flowzr.model.Attribute;
 import android.content.Context;
+
+import com.flowzr.model.Attribute;
 
 public class AttributeViewFactory {
 	private AttributeViewFactory(){}

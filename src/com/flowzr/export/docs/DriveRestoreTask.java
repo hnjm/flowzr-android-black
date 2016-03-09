@@ -25,6 +25,7 @@ import com.flowzr.export.ImportExportAsyncTaskListener;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveId;
+
 import java.io.IOException;
 
 
@@ -36,7 +37,6 @@ import java.io.IOException;
 public class DriveRestoreTask  extends  ApiClientAsyncTask<Void, Void, Object> {
 
     private final String strDriveId;
-    private DatabaseAdapter db;
 
     public DriveRestoreTask(final BackupListActivity backupListActivity, ProgressDialog dialog, String pStrDriveId) {
         super(backupListActivity, dialog);
@@ -53,7 +53,6 @@ public class DriveRestoreTask  extends  ApiClientAsyncTask<Void, Void, Object> {
 
     @Override
     protected Object work(Context context, DatabaseAdapter db, String... params) throws Exception {
-        this.db=db;
         return true;
     }
 

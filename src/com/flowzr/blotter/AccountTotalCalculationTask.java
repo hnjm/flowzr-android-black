@@ -8,10 +8,9 @@
 
 package com.flowzr.blotter;
 
-import java.util.Calendar;
-
 import android.content.Context;
 import android.widget.TextView;
+
 import com.flowzr.datetime.DateUtils;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.TransactionsTotalCalculator;
@@ -19,6 +18,8 @@ import com.flowzr.filter.DateTimeCriteria;
 import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Total;
 import com.flowzr.utils.MyPreferences;
+
+import java.util.Calendar;
 
 import static com.flowzr.db.DatabaseAdapter.enhanceFilterForAccountBlotter;
 

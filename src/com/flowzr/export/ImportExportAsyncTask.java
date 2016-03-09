@@ -10,15 +10,14 @@
  ******************************************************************************/
 package com.flowzr.export;
 
-import com.flowzr.R;
-import com.flowzr.db.DatabaseAdapter;
-import android.support.v7.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.flowzr.R;
+import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.utils.MyPreferences;
 
 import static com.flowzr.export.Export.uploadBackupFileToDropbox;
@@ -27,7 +26,6 @@ public abstract class ImportExportAsyncTask extends AsyncTask<String, String, Ob
 	
 	protected final Context context;
 	protected final ProgressDialog dialog;
-    private boolean showResultDialog = true;
 
     private ImportExportAsyncTaskListener listener;
 	
@@ -40,9 +38,8 @@ public abstract class ImportExportAsyncTask extends AsyncTask<String, String, Ob
         this.listener = listener;
     }
 
-    public void setShowResultDialog(boolean showResultDialog) {
-        this.showResultDialog = showResultDialog;
-    }
+    //public void setShowResultDialog(boolean showResultDialog) {
+    //}
 
     @Override
 	protected Object doInBackground(String... params) {
@@ -104,7 +101,7 @@ public abstract class ImportExportAsyncTask extends AsyncTask<String, String, Ob
 		if (result instanceof Exception) 
 			return;
 
-		String message = getSuccessMessage(result);
+		//String message = getSuccessMessage(result);
 
         if (listener != null) {
             listener.onCompleted();

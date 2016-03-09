@@ -5,7 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
-import com.flowzr.export.flowzr.GCMIntentService;
+
 import com.flowzr.utils.MyPreferences;
 
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {

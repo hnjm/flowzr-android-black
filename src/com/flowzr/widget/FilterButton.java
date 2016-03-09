@@ -10,7 +10,6 @@
  ******************************************************************************/
 package com.flowzr.widget;
 
-import com.flowzr.activity.DateFilterActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,9 +18,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
+import com.flowzr.activity.DateFilterActivity;
+
 public class FilterButton extends ImageButton implements OnClickListener {
 	
-	public static interface FilterListener {
+	public interface FilterListener {
 		void onFilterChanged(int type, long from, long to);
 	}
 	

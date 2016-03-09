@@ -185,7 +185,7 @@ public class IabHelper {
          *
          * @param result The result of the setup process.
          */
-        public void onIabSetupFinished(IabResult result);
+        void onIabSetupFinished(IabResult result);
     }
 
     /**
@@ -290,8 +290,8 @@ public class IabHelper {
     }
     
     /** Returns whether subscriptions are supported. */
-    public boolean subscriptionsSupported() {
-        return mSubscriptionsSupported;
+    public boolean subscriptionsNotSupported() {
+        return !mSubscriptionsSupported;
     }
 
 
@@ -308,7 +308,7 @@ public class IabHelper {
          * @param result The result of the purchase.
          * @param info The purchase information (null if purchase failed)
          */
-        public void onIabPurchaseFinished(IabResult result, Purchase info);
+        void onIabPurchaseFinished(IabResult result, Purchase info);
     }
 
     // The listener registered on launchPurchaseFlow, which we have to call back when
@@ -382,10 +382,11 @@ public class IabHelper {
             mRequestCode = requestCode;
             mPurchaseListener = listener;
             mPurchasingItemType = itemType;
+            assert pendingIntent != null;
             act.startIntentSenderForResult(pendingIntent.getIntentSender(),
                                            requestCode, new Intent(),
-                                           Integer.valueOf(0), Integer.valueOf(0),
-                                           Integer.valueOf(0));
+                    0, 0,
+                    0);
         }
         catch (SendIntentException e) {
             logError("SendIntentException while launching purchase flow for sku " + sku);
@@ -451,7 +452,7 @@ public class IabHelper {
                 return true;
             }
 
-            Purchase purchase = null;
+            Purchase purchase; // = null;
             try {
                 purchase = new Purchase(mPurchasingItemType, purchaseData, dataSignature);
                 String sku = purchase.getSku();
@@ -506,7 +507,7 @@ public class IabHelper {
     /**
      * Queries the inventory. This will query all owned items from the server, as well as
      * information on additional skus, if specified. This method may block or take long to execute.
-     * Do not call from a UI thread. For that, use the non-blocking version {@link #refreshInventoryAsync}.
+     * Do not call from a UI thread. For that, use the non-blocking version refreshInventoryAsync.
      *
      * @param querySkuDetails if true, SKU details (price, description, etc) will be queried as well
      *     as purchase information.
@@ -568,7 +569,7 @@ public class IabHelper {
          * @param result The result of the operation.
          * @param inv The inventory.
          */
-        public void onQueryInventoryFinished(IabResult result, Inventory inv);
+        void onQueryInventoryFinished(IabResult result, Inventory inv);
     }
 
 
@@ -672,7 +673,7 @@ public class IabHelper {
          * @param purchase The purchase that was (or was to be) consumed.
          * @param result The result of the consumption operation.
          */
-        public void onConsumeFinished(Purchase purchase, IabResult result);
+        void onConsumeFinished(Purchase purchase, IabResult result);
     }
 
     /**
@@ -686,7 +687,7 @@ public class IabHelper {
          * @param results The results of each consumption operation, corresponding to each
          *     sku.
          */
-        public void onConsumeMultiFinished(List<Purchase> purchases, List<IabResult> results);
+        void onConsumeMultiFinished(List<Purchase> purchases, List<IabResult> results);
     }
 
     /**
@@ -699,13 +700,13 @@ public class IabHelper {
      */
     public void consumeAsync(Purchase purchase, OnConsumeFinishedListener listener) {
         checkSetupDone("consume");
-        List<Purchase> purchases = new ArrayList<Purchase>();
+        List<Purchase> purchases = new ArrayList<>();
         purchases.add(purchase);
         consumeAsyncInternal(purchases, listener, null);
     }
 
     /**
-     * Same as {@link consumeAsync}, but for multiple items at once.
+     * Same as consumeAsync, but for multiple items at once.
      * @param purchases The list of PurchaseInfo objects representing the purchases to consume.
      * @param listener The listener to notify when the consumption operation finishes.
      */
@@ -764,7 +765,7 @@ public class IabHelper {
             logDebug("Bundle with null response code, assuming OK (known issue)");
             return BILLING_RESPONSE_RESULT_OK;
         }
-        else if (o instanceof Integer) return ((Integer)o).intValue();
+        else if (o instanceof Integer) return (Integer) o;
         else if (o instanceof Long) return (int)((Long)o).longValue();
         else {
             logError("Unexpected type for bundle response code.");
@@ -780,7 +781,7 @@ public class IabHelper {
             logError("Intent with no response code, assuming OK (known issue)");
             return BILLING_RESPONSE_RESULT_OK;
         }
-        else if (o instanceof Integer) return ((Integer)o).intValue();
+        else if (o instanceof Integer) return (Integer) o;
         else if (o instanceof Long) return (int)((Long)o).longValue();
         else {
             logError("Unexpected type for intent response code.");
@@ -838,6 +839,7 @@ public class IabHelper {
 
             for (int i = 0; i < purchaseDataList.size(); ++i) {
                 String purchaseData = purchaseDataList.get(i);
+                assert signatureList != null;
                 String signature = signatureList.get(i);
                 String sku = ownedSkus.get(i);
                 if (Security.verifyPurchase(mSignatureBase64, purchaseData, signature)) {
@@ -870,7 +872,7 @@ public class IabHelper {
     int querySkuDetails(String itemType, Inventory inv, List<String> moreSkus) 
                                 throws RemoteException, JSONException {
         logDebug("Querying SKU details.");
-        ArrayList<String> skuList = new ArrayList<String>();
+        ArrayList<String> skuList = new ArrayList<>();
         skuList.addAll(inv.getAllOwnedSkus(itemType));
         if (moreSkus != null) skuList.addAll(moreSkus);
 
@@ -899,6 +901,7 @@ public class IabHelper {
         ArrayList<String> responseList = skuDetails.getStringArrayList(
                 RESPONSE_GET_SKU_DETAILS_LIST);
 
+        assert responseList != null;
         for (String thisResponse : responseList) {
             SkuDetails d = new SkuDetails(itemType, thisResponse);
             logDebug("Got sku details: " + d);
@@ -915,7 +918,7 @@ public class IabHelper {
         flagStartAsync("consume");
         (new Thread(new Runnable() {
             public void run() {
-                final List<IabResult> results = new ArrayList<IabResult>();
+                final List<IabResult> results = new ArrayList<>();
                 for (Purchase purchase : purchases) {
                     try {
                         consume(purchase);

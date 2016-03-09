@@ -26,7 +26,6 @@ package com.flowzr.widget;
  * limitations under the License.
  */
 
-import com.flowzr.R;
 import android.content.Context;
 import android.os.Handler;
 import android.text.InputFilter;
@@ -42,6 +41,8 @@ import android.view.View.OnLongClickListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.flowzr.R;
 
 public class NumberPicker extends LinearLayout implements OnClickListener,
         OnFocusChangeListener, OnLongClickListener {
@@ -65,9 +66,11 @@ public class NumberPicker extends LinearLayout implements OnClickListener,
                 final StringBuilder mBuilder = new StringBuilder();
                 final java.util.Formatter mFmt = new java.util.Formatter(mBuilder);
                 final Object[] mArgs = new Object[1];
+                @SuppressWarnings("MalformedFormatString")
                 public String toString(int value) {
                     mArgs[0] = value;
                     mBuilder.delete(0, mBuilder.length());
+                    //noinspection MalformedFormatString
                     mFmt.format("%02d", mArgs);
                     return mFmt.toString();
                 }

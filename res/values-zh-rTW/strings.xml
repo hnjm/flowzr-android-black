@@ -523,7 +523,7 @@
   <string name="mass_operations_delete">全部刪除</string>
   <string name="proceed">繼續</string>
   <string name="apply_mass_op" formatted="false">以 \'%s\' 處理 %d 筆交易?</string>
-  <string name="apply_mass_op_zero_count">未選擇任何交易...</string>
+  <string name="apply_mass_op_zero_count">未選擇任何交易…</string>
   <string name="entities">實體</string>
   <string name="transaction_status_restored">復原</string>
   <string name="scheduled_transactions_restored">已復原定期交易</string>
@@ -544,20 +544,20 @@
   <string name="donate_error">您的裝置無法使用 Android Market</string>
   <string name="type">類型</string>
   <string name="qif_export">匯出 QIF</string>
-  <string name="qif_export_inprogress">將資料存成 QIF...</string>
+  <string name="qif_export_inprogress">將資料存成 QIF…</string>
   <string name="all_accounts">所有帳戶</string>
-  <string name="filter_value_not_found">找不到...</string>
+  <string name="filter_value_not_found">找不到…</string>
   <string name="empty_report">空報告</string>
   <string name="day_of_month">日期</string>
   <string name="show_running_balance">逐筆顯示餘額</string>
   <string name="show_running_balance_summary">每筆交易都顯示交易後的餘額 (需要重新啟動)</string>
-  <string name="new_currency">新幣值 ...</string>
+  <string name="new_currency">新幣值 …</string>
   <string name="lock_time">鎖定時間</string>
   <string name="lock_time_summary">主畫面在自動鎖定前的顯示時間</string>
   <string name="date_format">日期格式</string>
   <string name="pin_protection_lock_transaction">鎖定新交易\\轉帳</string>
   <string name="pin_protection_lock_transaction_summary">以密碼鎖定「新交易」與「轉帳」畫面</string>
-  <string name="split">[分割...]</string>
+  <string name="split">[分割…]</string>
   <string name="split_transaction">[分割交易]</string>
   <string name="split_transfer">[分割轉帳]</string>
   <string name="unsplit_amount">未分割額度</string>

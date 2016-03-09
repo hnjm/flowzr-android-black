@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListAdapter;
+
 import com.flowzr.adapter.TransactionsListAdapter;
 import com.flowzr.blotter.BlotterTotalCalculationTask;
 import com.flowzr.blotter.TotalCalculationTask;

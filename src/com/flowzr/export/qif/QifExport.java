@@ -13,12 +13,13 @@ package com.flowzr.export.qif;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+
 import com.flowzr.blotter.BlotterFilter;
-import com.flowzr.filter.WhereFilter;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
 import com.flowzr.export.Export;
 import com.flowzr.filter.Criteria;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Account;
 import com.flowzr.model.Category;
 import com.flowzr.model.CategoryTree;
@@ -109,6 +110,7 @@ public class QifExport extends Export {
         return qifAccount;
     }
 
+    @SuppressWarnings("TryFinallyCanBeTryWithResources")
     private void writeTransactionsForAccount(QifBufferedWriter qifWriter, QifAccount qifAccount, Account account) throws IOException {
         Cursor c = getBlotterForAccount(account);
         try {
@@ -132,7 +134,7 @@ public class QifExport extends Export {
     }
 
     private List<QifTransaction> fromTransactions(List<Transaction> transactions, Map<Long, Category> categoriesMap, Map<Long, Account> accountsMap) {
-        List<QifTransaction> qifTransactions = new ArrayList<QifTransaction>(transactions.size());
+        List<QifTransaction> qifTransactions = new ArrayList<>(transactions.size());
         for (Transaction transaction : transactions) {
             QifTransaction qifTransaction = QifTransaction.fromTransaction(transaction, categoriesMap, accountsMap);
             qifTransactions.add(qifTransaction);

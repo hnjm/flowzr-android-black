@@ -10,22 +10,34 @@
  ******************************************************************************/
 package com.flowzr.dialog;
 
-import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v7.app.AlertDialog;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.flowzr.R;
 import com.flowzr.activity.BlotterFragment;
 import com.flowzr.activity.BlotterOperations;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
-import com.flowzr.model.*;
+import com.flowzr.model.Account;
+import com.flowzr.model.AccountType;
+import com.flowzr.model.Category;
+import com.flowzr.model.MyLocation;
+import com.flowzr.model.Project;
+import com.flowzr.model.Transaction;
+import com.flowzr.model.TransactionAttributeInfo;
+import com.flowzr.model.TransactionInfo;
+import com.flowzr.model.TransactionStatus;
 import com.flowzr.recur.Recurrence;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.ThumbnailUtil;
@@ -33,7 +45,6 @@ import com.flowzr.utils.Utils;
 import com.flowzr.view.NodeInflater;
 
 import java.util.List;
-
 
 import static com.flowzr.utils.Utils.isNotEmpty;
 
@@ -241,11 +252,6 @@ public class TransactionInfoDialog {
 
     private void add(LinearLayout layout, int labelId, String data, String pictureFileName) {
         Bitmap thumb = ThumbnailUtil.loadThumbnail(pictureFileName);
-        Log.i("flowzr",layout.toString());
-        Log.i("flowzr",context.toString());
-        Log.i("flowzr",String.valueOf(labelId));        
-        Log.i("flowzr",data.toString());
-        Log.i("flowzr",inflater.toString());
         View v = inflater.new PictureBuilder(layout)
                 .withPicture(context, thumb)
                 .withLabel(labelId)

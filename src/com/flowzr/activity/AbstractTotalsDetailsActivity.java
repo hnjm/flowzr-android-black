@@ -12,10 +12,10 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.model.Currency;
 import com.flowzr.model.Total;
@@ -89,7 +89,7 @@ public abstract class AbstractTotalsDetailsActivity extends AbstractActivity {
             Total totalInHomeCurrency = getTotalInHomeCurrency();
             Currency homeCurrency = totalInHomeCurrency.currency;
             ExchangeRateProvider rates = db.getLatestRates();
-            List<TotalInfo> result = new ArrayList<TotalInfo>();
+            List<TotalInfo> result = new ArrayList<>();
             for (Total total : totals) {
                 ExchangeRate rate = rates.getRate(total.currency, homeCurrency);
                 TotalInfo info = new TotalInfo(total, rate);
@@ -130,7 +130,7 @@ public abstract class AbstractTotalsDetailsActivity extends AbstractActivity {
         private void addAmountAndErrorNode(Total total) {
             TextView data = x.addInfoNode(layout, -1, R.string.not_available, "");
             Drawable dr = getResources().getDrawable(R.drawable.ic_action_warning);
-            dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
+            dr.setBounds(0, 0, dr != null ? dr.getIntrinsicWidth() : 0, dr.getIntrinsicHeight());
             if (total.currency == Currency.EMPTY) {
                 data.setText(R.string.currency_make_default_warning);
             } else {

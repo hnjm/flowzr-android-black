@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.flowzr.R;
 import com.flowzr.model.Currency;
 import com.flowzr.model.TransactionInfo;

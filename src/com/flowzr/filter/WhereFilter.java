@@ -10,22 +10,22 @@
  ******************************************************************************/
 package com.flowzr.filter;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
-
-import com.flowzr.activity.DateFilterActivity;
-import com.flowzr.blotter.BlotterFilter;
-import com.flowzr.utils.Utils;
-import com.flowzr.datetime.PeriodType;
-import com.flowzr.orb.Expression;
-import com.flowzr.orb.Expressions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+
+import com.flowzr.activity.DateFilterActivity;
+import com.flowzr.blotter.BlotterFilter;
+import com.flowzr.datetime.PeriodType;
+import com.flowzr.orb.Expression;
+import com.flowzr.orb.Expressions;
+import com.flowzr.utils.Utils;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class WhereFilter {
 	
@@ -39,8 +39,8 @@ public class WhereFilter {
     public static final String FILTER_SORT_ORDER_PREF = "filterSortOrder";
 
 	private String title;
-	private final LinkedList<Criteria> criterias = new LinkedList<Criteria>();
-	private final LinkedList<String> sorts = new LinkedList<String>();
+	private final LinkedList<Criteria> criterias = new LinkedList<>();
+	private final LinkedList<String> sorts = new LinkedList<>();
 
 	public WhereFilter(String title) {
 		this.title = title;
@@ -313,12 +313,12 @@ public class WhereFilter {
 		return criterias.isEmpty();
 	}
 	
-	public static enum Operation {
+	public enum Operation {
 		NOPE(""), EQ("=?"), NEQ("!=?"), GT(">?"), GTE(">=?"), LT("<?"), LTE("<=?"), BTW("BETWEEN ? AND ?"), ISNULL("is NULL");
 		
 		public final String op;
 		
-		private Operation(String op) {
+		Operation(String op) {
 			this.op = op;
 		}		
 	}

@@ -13,10 +13,10 @@ package com.flowzr.graph;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 
 public class GraphStyle {
 
@@ -71,7 +71,9 @@ public class GraphStyle {
 			return this;
 		}
 
+		@SuppressWarnings("SuspiciousNameCombination")
 		public Builder lineHeight(int x) {
+			//noinspection SuspiciousNameCombination
 			this.lineHeight = x;
 			return this;
 		}

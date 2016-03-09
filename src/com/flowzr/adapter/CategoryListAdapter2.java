@@ -10,24 +10,25 @@
  ******************************************************************************/
 package com.flowzr.adapter;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
-
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import com.flowzr.R;
-import com.flowzr.model.Category;
-import com.flowzr.model.CategoryTree;
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.flowzr.R;
+import com.flowzr.model.Category;
+import com.flowzr.model.CategoryTree;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Map;
 
 public class CategoryListAdapter2 extends BaseAdapter {
 
@@ -35,8 +36,8 @@ public class CategoryListAdapter2 extends BaseAdapter {
 	private CategoryTree<Category> categories;
 	private Map<Long, String> attributes;
 
-	private final ArrayList<Category> list = new ArrayList<Category>();
-	private final HashSet<Long> state = new HashSet<Long>();
+	private final ArrayList<Category> list = new ArrayList<>();
+	private final HashSet<Long> state = new HashSet<>();
 	
 	private final Drawable expandedDrawable;
 	private final Drawable collapsedDrawable;

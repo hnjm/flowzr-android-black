@@ -9,11 +9,12 @@
 package com.flowzr.utils;
 
 import android.database.Cursor;
-import com.flowzr.filter.WhereFilter;
+
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.DatabaseHelper;
 import com.flowzr.filter.Criteria;
 import com.flowzr.filter.DateTimeCriteria;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Account;
 import com.flowzr.model.Total;
 import com.flowzr.model.TransactionInfo;
@@ -94,7 +95,7 @@ public class MonthlyViewPlanner extends AbstractPlanner {
     public TransactionList getCreditCardStatement() {
         TransactionList withTotals = getPlannedTransactionsWithTotals();
         List<TransactionInfo> transactions = withTotals.transactions;
-        List<TransactionInfo> statement = new ArrayList<TransactionInfo>(transactions.size()+3);
+        List<TransactionInfo> statement = new ArrayList<>(transactions.size() + 3);
         // add payments
         statement.add(PAYMENTS_HEADER);
         for (TransactionInfo transaction : transactions) {

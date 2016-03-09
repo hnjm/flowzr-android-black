@@ -11,34 +11,45 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.TextView;
+
+import com.flowzr.R;
+import com.flowzr.blotter.BlotterFilter;
+import com.flowzr.datetime.DateUtils;
+import com.flowzr.datetime.Period;
+import com.flowzr.db.DatabaseHelper.CategoryViewColumns;
+import com.flowzr.filter.Criteria;
+import com.flowzr.filter.DateTimeCriteria;
+import com.flowzr.filter.SingleCategoryCriteria;
+import com.flowzr.filter.WhereFilter;
+import com.flowzr.model.Account;
+import com.flowzr.model.Category;
+import com.flowzr.model.Currency;
+import com.flowzr.model.MyEntity;
+import com.flowzr.model.MyLocation;
+import com.flowzr.model.Payee;
+import com.flowzr.model.Project;
+import com.flowzr.model.TransactionStatus;
+import com.flowzr.utils.EnumUtils;
+import com.flowzr.utils.TransactionUtils;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import android.support.design.widget.FloatingActionButton;
-import android.view.MotionEvent;
-import android.widget.*;
-import com.flowzr.R;
-import com.flowzr.blotter.BlotterFilter;
-import com.flowzr.filter.SingleCategoryCriteria;
-import com.flowzr.filter.WhereFilter;
-import com.flowzr.filter.Criteria;
-import com.flowzr.filter.DateTimeCriteria;
-import com.flowzr.db.DatabaseHelper.CategoryViewColumns;
-import com.flowzr.model.*;
-import com.flowzr.datetime.DateUtils;
-import com.flowzr.utils.EnumUtils;
-import com.flowzr.utils.TransactionUtils;
-import com.flowzr.datetime.Period;
-import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.view.View.OnClickListener;
 
 
 public class BlotterFilterActivity extends AbstractEditorActivity {	
@@ -416,7 +427,7 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
 			clear(BlotterFilter.LOCATION_ID, location);
 			break;
 		case R.id.sort_order: {
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, sortBlotterEntries);
+			ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortBlotterEntries);
 			int selectedId = BlotterFilter.SORT_OLDER_TO_NEWER.equals(filter.getSortOrder()) ? 1 : 0;
 			x.selectPosition(this, R.id.sort_order, R.string.sort_order, adapter, selectedId);
 		} break;

@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/title_layout"
     android:elevation="4dp"
     android:layout_width="fill_parent" android:layout_height="wrap_content"
-    android:background="@color/title_bg_color" android:paddingBottom="@dimen/space_xlarge">
+    android:background="@color/title_bg_color" android:paddingBottom="@dimen/space_xlarge"
+    tools:ignore="UnusedAttribute">
 
-    <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:padding="@dimen/space_large" android:layout_marginLeft="@dimen/space_xlarge"
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/space_large"
+        android:layout_marginLeft="@dimen/space_large"
         android:hint="@string/title"
         android:id="@+id/title" style="@style/TextViewUserInput"
         android:focusableInTouchMode="true"
-        android:layout_gravity="center_horizontal"
         android:textSize="@dimen/text_xxlarge">
     </EditText>
 

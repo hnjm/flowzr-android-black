@@ -27,32 +27,64 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import android.widget.TimePicker;
+
 import com.flowzr.R;
 import com.flowzr.datetime.DateUtils;
-import com.flowzr.db.DatabaseHelper.*;
-import com.flowzr.model.*;
+import com.flowzr.db.DatabaseHelper.AccountColumns;
+import com.flowzr.db.DatabaseHelper.TransactionColumns;
+import com.flowzr.model.Account;
+import com.flowzr.model.Attribute;
+import com.flowzr.model.Budget;
+import com.flowzr.model.Category;
+import com.flowzr.model.MyEntity;
+import com.flowzr.model.MyLocation;
+import com.flowzr.model.Payee;
+import com.flowzr.model.SystemAttribute;
+import com.flowzr.model.Total;
+import com.flowzr.model.Transaction;
+import com.flowzr.model.TransactionAttribute;
+import com.flowzr.model.TransactionStatus;
 import com.flowzr.recur.NotificationOptions;
 import com.flowzr.recur.Recurrence;
-import com.flowzr.utils.*;
+import com.flowzr.utils.EnumUtils;
+import com.flowzr.utils.MyPreferences;
+import com.flowzr.utils.TransactionUtils;
+import com.flowzr.utils.Utils;
 import com.flowzr.view.AttributeView;
 import com.flowzr.view.AttributeViewFactory;
 import com.flowzr.widget.RateLayoutView;
 
 import java.io.File;
 import java.text.DateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
-import static com.flowzr.utils.ThumbnailUtil.*;
+
+import static com.flowzr.utils.ThumbnailUtil.PICTURES_DIR;
+import static com.flowzr.utils.ThumbnailUtil.PICTURES_THUMB_DIR;
+import static com.flowzr.utils.ThumbnailUtil.PICTURE_FILE_NAME_FORMAT;
+import static com.flowzr.utils.ThumbnailUtil.createAndStoreImageThumbnail;
 import static com.flowzr.utils.Utils.text;
 
 public abstract class AbstractTransactionActivity extends AbstractEditorActivity implements CategorySelector.CategorySelectorListener {
@@ -412,15 +444,15 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		long t1 = System.currentTimeMillis();
 		if (transactionId == -1) {
 			String title=(getResources().getString(R.string.add_transaction));
-			if (transaction.isTransfer()) {
-			title=getResources().getString(R.string.add_transfer);
+			if (transaction.isTransfer()|| intent.hasExtra(TransactionActivity.IS_TRANSFER_EXTRA)) {
+				title=getResources().getString(R.string.add_transfer);
 			}
 			if (transaction.isTemplate()) {
 				title=getResources().getString(R.string.template);
 			}
 			rateView.openFromAmountCalculator(title);
 		}
-
+/**
 		findViewById(R.id.scroll)
 				.setOnTouchListener(new View.OnTouchListener() {
 					 @Override
@@ -442,6 +474,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 						 return false;
 					 }
 				 });
+ **/
 			Log.i("TransactionActivity","onCreate "+(t1-t0)+"ms");
 		}
 
@@ -901,7 +934,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
         if (pictureFileName == null) {
             return;
         }
-        if (true) {
+
             pictureView.setImageResource(R.drawable.ic_action_drive);
             pictureView.setTag(pictureFileName);
             pictureView.setOnClickListener(new OnClickListener() {
@@ -911,7 +944,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
                     startActivity(browserIntent);
                 }
             });
-        }
+
 
     }
 
@@ -969,7 +1002,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		if (isShowTakePicture) {
             if (transaction.attachedPicture!=null ) {
                 selectPicture(transaction.attachedPicture);
-            } else if (transaction.blobKey!=null && transaction.blobKey!= "") {
+            } else if (transaction.blobKey!=null && !"".equals(transaction.blobKey)) {
 				selectPicture2(transaction.blobKey);
             }
 		}

@@ -24,7 +24,7 @@ class EntityDefinition {
 		private Constructor<?> constructor;
 		private String tableName; 
 		private FieldInfo idField;
-		private final List<FieldInfo> fields = new LinkedList<FieldInfo>();
+		private final List<FieldInfo> fields = new LinkedList<>();
 		
 		Builder(Class<?> clazz) {
 			this.clazz = clazz;
@@ -68,7 +68,7 @@ class EntityDefinition {
 //	final String[] primitiveColumns;
 //	final JoinEntity[] joinEntities;
 	final String sqlQuery;
-	final HashMap<String, FieldInfo> fieldToInfoMap = new HashMap<String, FieldInfo>();
+	final HashMap<String, FieldInfo> fieldToInfoMap = new HashMap<>();
 	
 	private EntityDefinition(Constructor<?> constructor, String tableName, FieldInfo idField, FieldInfo[] fields) {
 		this.constructor = constructor;
@@ -133,9 +133,8 @@ class EntityDefinition {
 			StringBuilder e = new StringBuilder("e");
 			int count = path.length;
 			EntityDefinition ed = this;
-			for (int i=0; i<count; i++) {
-				String f = path[i];
-				FieldInfo fi = ed.getFieldInfo(f);				
+			for (String f : path) {
+				FieldInfo fi = ed.getFieldInfo(f);
 				if (fi.type.isPrimitive()) {
 					e.append("_").append(fi.columnName);
 					break;

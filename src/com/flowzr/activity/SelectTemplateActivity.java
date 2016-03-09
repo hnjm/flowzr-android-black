@@ -11,28 +11,26 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import com.flowzr.R;
-import com.flowzr.adapter.TemplateListAdapter;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemLongClickListener;
-import com.flowzr.blotter.BlotterFilter;
-import com.flowzr.filter.WhereFilter;
+
+import com.flowzr.R;
+import com.flowzr.adapter.TemplateListAdapter;
 
 public class SelectTemplateActivity extends TemplatesListFragment {
 	
@@ -98,8 +96,7 @@ public class SelectTemplateActivity extends TemplatesListFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-		Intent intent=null;
-		Log.e("flowzr", "on option selected");
+		Intent intent;
 		switch (item.getItemId()) {
 			case R.id.bEditTemplate:
 				getActivity().setResult(MainActivity.RESULT_CANCELED);
@@ -151,7 +148,7 @@ public class SelectTemplateActivity extends TemplatesListFragment {
 	}
 
 	@Override
-	public void editItem(View v, int position, long id) {
+	public void editItem(long id) {
 	}
 
 	@Override

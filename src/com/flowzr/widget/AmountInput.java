@@ -21,13 +21,18 @@ import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.text.method.NumberKeyListener;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.*;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.ToggleButton;
+
 import com.flowzr.R;
 import com.flowzr.model.Currency;
-import com.flowzr.utils.StringUtil;
 import com.flowzr.utils.Utils;
 
 import java.math.BigDecimal;
@@ -37,7 +42,7 @@ public class AmountInput extends LinearLayout {
 
 	protected static final String EXTRA_TITLE = "title";
 
-	public static interface OnAmountChangedListener {
+	public interface OnAmountChangedListener {
 		void onAmountChanged(long oldAmount, long newAmount);
 	}
 
@@ -256,7 +261,6 @@ public class AmountInput extends LinearLayout {
 		}
 		intent.putExtra(EXTRA_TITLE,title);
 		intent.putExtra(EXTRA_AMOUNT, getAbsAmountString());
-
 		owner.startActivityForResult(intent, requestId);
 	}
 
@@ -281,23 +285,25 @@ public class AmountInput extends LinearLayout {
 	}
 
 	public boolean processActivityResult(int requestCode, Intent data) {
-		if (requestCode == requestId) {
-			String amount = data.getStringExtra(EXTRA_AMOUNT);
-			if (amount != null) {
-				try {
-					BigDecimal d = new BigDecimal(amount).setScale(2,
-							BigDecimal.ROUND_HALF_UP);
-                    boolean isExpense = isExpense();
-					setAmount(d.unscaledValue().longValue());
-                    if (isExpense) {
-                        setExpense();
-                    }
-					return true;
-				} catch (NumberFormatException ex) {
-					return false;
-				}
-			}
-		}
+
+		String amount = data.getStringExtra(EXTRA_AMOUNT);
+
+		if (amount != null) {
+            try {
+                BigDecimal d = new BigDecimal(amount).setScale(2,
+                        BigDecimal.ROUND_HALF_UP);
+boolean isExpense = isExpense();
+                this.setAmount(d.unscaledValue().longValue());
+                Log.e("flowzr",String.valueOf(d.unscaledValue().longValue()));
+if (isExpense) {
+setExpense();
+}
+                return true;
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+                return false;
+            }
+        }
 		return false;
 	}
 
@@ -307,6 +313,7 @@ public class AmountInput extends LinearLayout {
 		long y = absAmount - 100 * x;
 		primary.setText(String.valueOf(x));
 		secondary.setText(String.format("%02d", y));
+
         if (isIncomeExpenseEnabled() && amount != 0) {
             if (amount > 0) {
                 setIncome();

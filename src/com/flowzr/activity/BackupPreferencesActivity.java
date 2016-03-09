@@ -11,13 +11,16 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.content.Intent;
 import android.content.IntentSender;
+import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.flowzr.utils.StringUtil;
-import com.google.android.gms.auth.GoogleAuthUtil;
 import com.flowzr.R;
 import com.flowzr.dialog.FolderBrowser;
 import com.flowzr.export.Export;
@@ -27,21 +30,13 @@ import com.flowzr.utils.PinProtection;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.Result;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.plus.Plus;
-import android.content.Intent;
-import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.preference.Preference.OnPreferenceClickListener;
 
 public class BackupPreferencesActivity extends PreferenceActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
-    private static final String[] ACCOUNT_TYPE = new String[] {GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE};
+    //private static final String[] ACCOUNT_TYPE = new String[] {GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE};
 
     private static final int REQUEST_CODE_RESOLUTION = 3;
     private static final int SELECT_DATABASE_FOLDER = 100;

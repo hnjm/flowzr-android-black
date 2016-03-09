@@ -12,12 +12,13 @@ package com.flowzr.report;
 
 
 import android.content.Context;
+
 import com.flowzr.activity.BlotterFragment;
 import com.flowzr.activity.SplitsBlotterActivity;
 import com.flowzr.blotter.BlotterFilter;
-import com.flowzr.filter.WhereFilter;
-import com.flowzr.filter.Criteria;
 import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.filter.Criteria;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Category;
 import com.flowzr.model.Currency;
 

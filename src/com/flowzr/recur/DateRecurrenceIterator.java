@@ -7,7 +7,6 @@ import com.google.ical.values.RRule;
 
 import java.text.ParseException;
 import java.util.Date;
-import java.util.TimeZone;
 
 import static com.flowzr.recur.RecurrencePeriod.dateToDateValue;
 import static com.flowzr.recur.RecurrencePeriod.dateValueToDate;
@@ -34,10 +33,12 @@ public class DateRecurrenceIterator {
 		return dateValueToDate(ri.next());
 	}
 
-	public static DateRecurrenceIterator create(RRule rrule, Date nowDate, Date startDate) throws ParseException {
+	@SuppressWarnings("StatementWithEmptyBody")
+    public static DateRecurrenceIterator create(RRule rrule, Date nowDate, Date startDate) throws ParseException {
         RecurrenceIterator ri = RecurrenceIteratorFactory.createRecurrenceIterator(rrule,
                 dateToDateValue(startDate), TimeUtils.utcTimezone());
         Date date = null;
+        //noinspection StatementWithEmptyBody
         while (ri.hasNext() && (date = dateValueToDate(ri.next())).before(nowDate));
         //ri.advanceTo(dateToDateValue(nowDate));
         DateRecurrenceIterator iterator = new DateRecurrenceIterator(ri);

@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+
 import greendroid.widget.QuickAction;
 
 /**
@@ -21,7 +23,7 @@ public class MyQuickAction extends QuickAction {
     }
 
     private static Drawable buildDrawable(Context ctx, int drawableId) {
-        Drawable d = ctx.getResources().getDrawable(drawableId).mutate();
+        Drawable d = ContextCompat.getDrawable(ctx, drawableId);
         d.setColorFilter(BLACK_CF);
         return d;
     }

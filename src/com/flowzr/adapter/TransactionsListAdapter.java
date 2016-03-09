@@ -10,18 +10,19 @@
  ******************************************************************************/
 package com.flowzr.adapter;
 
-import java.util.Calendar;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.text.format.DateUtils;
+
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.DatabaseHelper.BlotterColumns;
 import com.flowzr.model.Currency;
 import com.flowzr.utils.CurrencyCache;
 import com.flowzr.utils.Utils;
+
+import java.util.Calendar;
 
 import static com.flowzr.utils.TransactionTitleUtils.generateTransactionTitle;
 

@@ -11,7 +11,9 @@ package com.flowzr.datetime;
 import com.flowzr.R;
 import com.flowzr.utils.LocalizableEnum;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -191,7 +193,7 @@ public enum PeriodType implements LocalizableEnum {
     };
 
     public static PeriodType[] allRegular() {
-        List<PeriodType> types = new ArrayList<PeriodType>();
+        List<PeriodType> types = new ArrayList<>();
         for (PeriodType periodType : PeriodType.values()) {
             if (periodType.inPast) {
                 types.add(periodType);
@@ -201,7 +203,7 @@ public enum PeriodType implements LocalizableEnum {
     }
 
     public static PeriodType[] allPlanner() {
-        List<PeriodType> types = new ArrayList<PeriodType>();
+        List<PeriodType> types = new ArrayList<>();
         for (PeriodType periodType : PeriodType.values()) {
             if (periodType.inFuture) {
                 types.add(periodType);

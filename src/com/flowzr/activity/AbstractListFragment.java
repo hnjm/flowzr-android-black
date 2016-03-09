@@ -12,18 +12,12 @@
 package com.flowzr.activity;
 
 
-import greendroid.widget.QuickActionGrid;
-import greendroid.widget.QuickActionWidget;
-import android.os.Parcelable;
-import android.support.v4.app.ListFragment;
-import com.flowzr.R;
-import com.flowzr.db.DatabaseAdapter;
-import com.flowzr.db.MyEntityManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Parcelable;
+import android.support.v4.app.ListFragment;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -37,6 +31,14 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.flowzr.R;
+import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.db.MyEntityManager;
+
+import greendroid.widget.QuickActionGrid;
+import greendroid.widget.QuickActionWidget;
+
 import static com.flowzr.utils.AndroidUtils.isGreenDroidSupported;
 
 public abstract class AbstractListFragment extends ListFragment implements RefreshSupportedActivity {

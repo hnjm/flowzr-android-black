@@ -10,13 +10,8 @@
  ******************************************************************************/
 package com.flowzr.view;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import android.os.Vibrator;
-import com.flowzr.R;
-import com.flowzr.utils.Base64Coder;
 import android.content.Context;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,7 +22,13 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
+
+import com.flowzr.R;
+import com.flowzr.utils.Base64Coder;
 import com.flowzr.utils.MyPreferences;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class PinView implements OnClickListener {
 	
@@ -35,7 +36,7 @@ public class PinView implements OnClickListener {
 		R.id.b4, R.id.b5, R.id.b6, R.id.b7, R.id.b8, R.id.b9, R.id.bHelp,
 		R.id.bClear};
 
-	public static interface PinListener {
+	public interface PinListener {
 		void onConfirm(String pinBase64);
 		void onSuccess(String pinBase64);
 	}
@@ -49,7 +50,6 @@ public class PinView implements OnClickListener {
 	
 	private TextView result;
 	private String pin1;
-	private String pin2;
 	private boolean confirmPin;
 
 	public PinView(Context context, PinListener listener, int layoutId) {
@@ -113,7 +113,7 @@ public class PinView implements OnClickListener {
 			switcher.showNext();		
 			listener.onConfirm(pin1);			
 		} else {
-			pin2 = pinBase64(result.getText().toString());
+			String pin2 = pinBase64(result.getText().toString());
 			if (pin1.equals(pin2)) {
 				listener.onSuccess(pin2);				
 			} else {

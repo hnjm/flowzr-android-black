@@ -30,6 +30,7 @@
 	<ScrollView
 		android:layout_weight="1"
 		android:layout_height="0dp"
+		android:layout_marginTop="@dimen/space_large"
 		android:layout_width="fill_parent"
 		android:animateLayoutChanges="true"
 		android:scrollbars="none">
@@ -42,6 +43,6 @@
 	</LinearLayout>
 
 	<include layout="@layout/toolbar"/>
-	<include layout="@layout/save_fab"/>
+
 
 </android.support.design.widget.CoordinatorLayout>

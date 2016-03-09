@@ -13,9 +13,9 @@ package com.flowzr.export.dropbox;
 
 import android.app.Dialog;
 import android.os.AsyncTask;
+
 import com.flowzr.R;
 import com.flowzr.activity.BackupListActivity;
-import com.flowzr.activity.MainActivity;
 import com.flowzr.export.ImportExportException;
 
 import java.util.List;

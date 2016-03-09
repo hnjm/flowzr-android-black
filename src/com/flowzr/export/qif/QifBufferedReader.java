@@ -10,7 +10,6 @@ package com.flowzr.export.qif;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.

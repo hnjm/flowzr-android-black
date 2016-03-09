@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.flowzr.R;
 import com.flowzr.model.Currency;
 import com.flowzr.model.Total;

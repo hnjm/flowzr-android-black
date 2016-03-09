@@ -10,28 +10,8 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import java.text.DateFormat;
-import java.util.Calendar;
-
-import com.flowzr.R;
-import com.flowzr.datetime.DateUtils;
-import com.flowzr.utils.LocalizableEnum;
-import com.flowzr.utils.PinProtection;
-import com.flowzr.utils.RecurUtils;
-import com.flowzr.utils.Utils;
-import com.flowzr.utils.RecurUtils.DayOfWeek;
-import com.flowzr.utils.RecurUtils.EveryXDay;
-import com.flowzr.utils.RecurUtils.Layoutable;
-import com.flowzr.utils.RecurUtils.Recur;
-import com.flowzr.utils.RecurUtils.RecurInterval;
-import com.flowzr.utils.RecurUtils.RecurPeriod;
-import com.flowzr.utils.RecurUtils.SemiMonthly;
-import com.flowzr.utils.RecurUtils.Weekly;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
@@ -42,11 +22,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -54,7 +34,23 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.AdapterView.OnItemSelectedListener;
+
+import com.flowzr.R;
+import com.flowzr.datetime.DateUtils;
+import com.flowzr.utils.LocalizableEnum;
+import com.flowzr.utils.RecurUtils;
+import com.flowzr.utils.RecurUtils.DayOfWeek;
+import com.flowzr.utils.RecurUtils.EveryXDay;
+import com.flowzr.utils.RecurUtils.Layoutable;
+import com.flowzr.utils.RecurUtils.Recur;
+import com.flowzr.utils.RecurUtils.RecurInterval;
+import com.flowzr.utils.RecurUtils.RecurPeriod;
+import com.flowzr.utils.RecurUtils.SemiMonthly;
+import com.flowzr.utils.RecurUtils.Weekly;
+import com.flowzr.utils.Utils;
+
+import java.text.DateFormat;
+import java.util.Calendar;
 
 public class RecurActivity extends ActionBarActivity {
 	
@@ -247,7 +243,7 @@ public class RecurActivity extends ActionBarActivity {
 			String value = x.name();
 			items[i] = new SpinnerItem(title, value);
 		}
-		ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<SpinnerItem>(this, android.R.layout.simple_spinner_item, items);
+		ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 	}
@@ -359,7 +355,7 @@ public class RecurActivity extends ActionBarActivity {
 	}
 
 	private void editWeekly(View v, Recur recur) {
-		return;
+		//return;
 	}
 
 	private void editSemiMonthly(View v, Recur recur) {

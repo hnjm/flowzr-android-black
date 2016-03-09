@@ -1,28 +1,31 @@
 package com.flowzr.activity;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import android.content.Context;
-import android.os.Parcelable;
-import android.util.Log;
-import android.view.*;
-import com.flowzr.R;
-import com.flowzr.db.DatabaseAdapter;
-import com.flowzr.db.MyEntityManager;
-import com.flowzr.utils.MenuItemInfo;
-import com.flowzr.utils.PinProtection;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View.OnClickListener;
-import android.widget.AbsListView;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.flowzr.R;
+import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.db.MyEntityManager;
+import com.flowzr.utils.MenuItemInfo;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public abstract class AbstractListActivity extends ListActivity implements RefreshSupportedActivity {
 	
@@ -123,7 +126,7 @@ public abstract class AbstractListActivity extends ListActivity implements Refre
 	}
 
 	protected List<MenuItemInfo> createContextMenus(long id) {
-		List<MenuItemInfo> menus = new LinkedList<MenuItemInfo>();
+		List<MenuItemInfo> menus = new LinkedList<>();
 		menus.add(new MenuItemInfo(MENU_VIEW, R.string.view));
 		menus.add(new MenuItemInfo(MENU_EDIT, R.string.edit));
 		menus.add(new MenuItemInfo(MENU_DELETE, R.string.delete));

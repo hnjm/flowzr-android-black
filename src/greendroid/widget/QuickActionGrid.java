@@ -27,10 +27,9 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.flowzr.R;
 
 import java.util.List;
-
-import com.flowzr.R;
 
 /**
  * A {@link QuickActionGrid} is an implementation of a {@link QuickActionWidget}

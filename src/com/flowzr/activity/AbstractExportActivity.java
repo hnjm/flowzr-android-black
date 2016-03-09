@@ -10,7 +10,6 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -20,13 +19,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
 import com.flowzr.R;
-import com.flowzr.filter.WhereFilter;
-import com.flowzr.filter.DateTimeCriteria;
 import com.flowzr.datetime.DateUtils;
-import com.flowzr.utils.PinProtection;
 import com.flowzr.datetime.Period;
 import com.flowzr.datetime.PeriodType;
+import com.flowzr.filter.DateTimeCriteria;
+import com.flowzr.filter.WhereFilter;
 
 import java.text.DateFormat;
 import java.util.Date;

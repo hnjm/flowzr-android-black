@@ -13,29 +13,32 @@ package com.flowzr.export;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Environment;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-
 import android.util.Log;
 
 import com.flowzr.R;
 import com.flowzr.export.docs.ApiClientAsyncTask;
+import com.flowzr.export.dropbox.Dropbox;
+import com.flowzr.utils.MyPreferences;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi.DriveContentsResult;
 import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.MetadataChangeSet;
-import com.flowzr.export.dropbox.Dropbox;
-import com.flowzr.utils.MyPreferences;
-//import com.google.api.client.http.InputStreamContent;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.zip.GZIPOutputStream;
+
+//import com.google.api.client.http.InputStreamContent;
 
 public abstract class Export {
 	
@@ -44,8 +47,6 @@ public abstract class Export {
 
     private final Context context;
     private final boolean useGzip;
-
-    private GoogleApiClient mGoogleApiClient;
 
 
     protected Export(Context context, boolean useGzip) {
@@ -78,28 +79,27 @@ public abstract class Export {
 	/**
 	 * Backup database to google docs
 	 * 
-	 * @param drive Google docs connection
+	 * @param  pGoogleApiClient Google docs connection
 	 * @param targetFolder Google docs folder name
 	 * */
 
 
 	public String exportOnline(final String targetFolder,final GoogleApiClient pGoogleApiClient) throws Exception {
-        this.mGoogleApiClient=pGoogleApiClient;
-        if (!mGoogleApiClient.isConnected()) {
+        if (!pGoogleApiClient.isConnected()) {
             Log.e("flowzr",context.getResources().getString(R.string.gdocs_connection_failed));
             return context.getResources().getString(R.string.gdocs_connection_failed);
         } else {
             Log.e("flowzr","connected");
         }
 
-        DriveId folderId = ApiClientAsyncTask.getOrCreateDriveFolder(mGoogleApiClient, targetFolder);
+        DriveId folderId = ApiClientAsyncTask.getOrCreateDriveFolder(pGoogleApiClient, targetFolder);
         Log.i("flowzr", "Drive folder id is " + folderId.encodeToString());
-        final DriveFolder folder = Drive.DriveApi.getFolder(mGoogleApiClient, folderId);
+        final DriveFolder folder = Drive.DriveApi.getFolder(pGoogleApiClient, folderId);
 
         // generation backup file
         final String fileName = generateFilename();
         Log.i("flowzr", "creating new drive content for " + fileName);
-        DriveContentsResult result = Drive.DriveApi.newDriveContents(mGoogleApiClient).await();
+        DriveContentsResult result = Drive.DriveApi.newDriveContents(pGoogleApiClient).await();
         if (!result.getStatus().isSuccess()) {
             Log.i("flowzr", "Failed to create new contents.");
             return "failed to create new content";
@@ -123,9 +123,8 @@ public abstract class Export {
                 .setMimeType(BACKUP_MIME_TYPE)
                 .build();
 
-        DriveFolder.DriveFileResult rslt = folder.createFile(mGoogleApiClient,
-                changeSet, result.getDriveContents()).await();
-
+        //DriveFolder.DriveFileResult rslt =
+        folder.createFile(pGoogleApiClient, changeSet, result.getDriveContents()).await();
         return fileName;
     }
 
@@ -135,7 +134,8 @@ public abstract class Export {
 		return df.format(new Date())+getExtension();
 	}
 	
-	private void generateBackup(OutputStream outputStream) throws Exception {
+	@SuppressWarnings("TryFinallyCanBeTryWithResources")
+    private void generateBackup(OutputStream outputStream) throws Exception {
 		OutputStreamWriter osw = new OutputStreamWriter(outputStream, "UTF-8");
 		BufferedWriter bw = new BufferedWriter(osw, 65536);
 		try {

@@ -10,7 +10,6 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -24,7 +23,6 @@ import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
 import com.flowzr.model.MultiChoiceItem;
-import com.flowzr.utils.PinProtection;
 import com.flowzr.view.NodeInflater;
 
 import java.util.List;

@@ -10,13 +10,14 @@
  ******************************************************************************/
 package com.flowzr.widget;
 
-import java.math.BigDecimal;
-
-import com.flowzr.R;
 import android.content.Context;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.flowzr.R;
+
+import java.math.BigDecimal;
 
 public class AmountPicker extends LinearLayout implements NumberPicker.OnChangedListener {
 	
@@ -83,14 +84,14 @@ public class AmountPicker extends LinearLayout implements NumberPicker.OnChanged
 		appendPickers(sb, fractions);
 		BigDecimal v = new BigDecimal(sb.toString()); 
 		mPrevious = mCurrent;
-		mCurrent = v.setScale(2);		
+		mCurrent = v.setScale(2,BigDecimal.ROUND_CEILING);
 		notifyChange();
 	}
 	
 	private void appendPickers(StringBuilder sb, NumberPicker[] pickers) {
-		int len = pickers.length;
-		for (int i=0; i<len; i++) {
-			sb.append(pickers[i].getCurrent());
+		//int len = pickers.length;
+		for (NumberPicker picker : pickers) {
+			sb.append(picker.getCurrent());
 		}
 	}
 

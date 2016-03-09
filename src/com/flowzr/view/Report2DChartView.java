@@ -1,6 +1,17 @@
 package com.flowzr.view;
 
-import java.util.List;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.graphics.Rect;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.graphics.drawable.shapes.RectShape;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.flowzr.R;
 import com.flowzr.graph.Report2DPoint;
@@ -8,18 +19,8 @@ import com.flowzr.model.Currency;
 import com.flowzr.model.PeriodValue;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.Utils;
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Paint.Align;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
-import android.graphics.drawable.shapes.RectShape;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
+
+import java.util.List;
 
 /**
  * Report 2D chart view. View to draw dynamic 2D reports.
@@ -34,9 +35,7 @@ public class Report2DChartView extends View {
     
     // graphics configuration
     private int padding = 10;
-    private int graphPadding = 10;
-    private int txtHeight = 12;
-    private int selected = -1;
+	private int selected = -1;
     
     // List of points to be drawn
     List<Report2DPoint> points;
@@ -71,15 +70,8 @@ public class Report2DChartView extends View {
 	private int xSpace = 16;
 	// space to draw labels and information bellow the chart
     private int ySpace = 72;
-    
-    // Colors
-    private int bgColor = 0xFF010101;
-    private int bgChartColor = Color.BLACK;
-    private int axisColor = 0xFFDEDEDE;
-    private int pathColor = Color.YELLOW;
-    private int txtColor = 0xFFBBBBBB;
-    private int pointColor = Color.YELLOW;
-    private int selectedPointPosColor = Color.GREEN;
+
+	private int selectedPointPosColor = Color.GREEN;
     private int selectedPointNegColor = Color.RED;
     private int gridColor = 0xFF222222;
     public static final int meanColor = 0xFF206DED;
@@ -106,12 +98,7 @@ public class Report2DChartView extends View {
     	init();
     }
     
-    /**
-     * Default view constructor.
-     * @param context The activity context.
-     * @param attrs Attributes
-     * @param defStyle 
-     */
+
     public Report2DChartView(Context context, AttributeSet attrs, int defStyle) {
     	super(context, attrs, defStyle);
     	init();
@@ -123,7 +110,8 @@ public class Report2DChartView extends View {
     private void init() {
    	
     	labelPaint = new Paint();
-    	labelPaint.setColor(txtColor);
+		int txtColor = 0xFFBBBBBB;
+		labelPaint.setColor(txtColor);
     	labelPaint.setTextSize(getResources().getDimension(R.dimen.report_labels_text_size));
     	labelPaint.setStyle(Paint.Style.FILL);
     	labelPaint.setTextAlign(Align.CENTER);
@@ -147,6 +135,7 @@ public class Report2DChartView extends View {
     	valuesPaint.setTextSize(getResources().getDimension(R.dimen.report_legend_text_size));
 		
 		pathPaint = new Paint();
+		int pathColor = Color.YELLOW;
 		pathPaint.setColor(pathColor);
 		pathPaint.setStrokeWidth(1);
 		pathPaint.setAntiAlias(true);
@@ -157,14 +146,17 @@ public class Report2DChartView extends View {
 		// plot chart background
     	background = new ShapeDrawable(new RectShape());
         background = new ShapeDrawable(new RectShape());
-    	background.getPaint().setColor(bgColor);
+		int bgColor = 0xFF010101;
+		background.getPaint().setColor(bgColor);
     	
         axis = new ShapeDrawable[3];
         // 0 = background
         axis[0] = new ShapeDrawable(new RectShape());
-        axis[0].getPaint().setColor(axisColor);
+		int axisColor = 0xFFDEDEDE;
+		axis[0].getPaint().setColor(axisColor);
     	axis[1] = new ShapeDrawable(new RectShape());
-    	axis[1].getPaint().setColor(bgChartColor);
+		int bgChartColor = Color.BLACK;
+		axis[1].getPaint().setColor(bgChartColor);
 
     }
     
@@ -196,13 +188,9 @@ public class Report2DChartView extends View {
     	this.meanNonNull = meanNonNull;
     	selected = -1;
     	// decide if the path will be represented in modulus or not.
-    	if ((min*max>=0)) {
-    		// all points negative or positive
-    		absoluteCalculation = true;
-    	} else {
-    		// negative and positive points will be represented.
-    		absoluteCalculation = false;
-    	}
+		// all points negative or positive
+// negative and positive points will be represented.
+		absoluteCalculation = (min * max >= 0);
     	
         // call onDraw to refresh view chart
     	this.invalidate();
@@ -251,24 +239,25 @@ public class Report2DChartView extends View {
     		}
     		
     		// draw month labels
-    		if (points.size()<=12) {
+			int txtHeight = 12;
+			if (points.size()<=12) {
 	    		for (int i=0; i<points.size(); i++) {
 	    			labelPaint.setTextSize(getResources().getDimension(R.dimen.report_labels_text_size));
-	    			canvas.drawText(points.get(i).getMonthShortString(this.getContext()), points.get(i).getX(), getHeight()-ySpace+padding+txtHeight, labelPaint);
+	    			canvas.drawText(points.get(i).getMonthShortString(this.getContext()), points.get(i).getX(), getHeight()-ySpace+padding+ txtHeight, labelPaint);
 	    			labelPaint.setTextSize(getResources().getDimension(R.dimen.report_labels_text_size));
-	    			canvas.drawText(points.get(i).getYearString(), points.get(i).getX(), getHeight()-ySpace+padding+2*txtHeight+6, labelPaint);
+	    			canvas.drawText(points.get(i).getYearString(), points.get(i).getX(), getHeight()-ySpace+padding+2* txtHeight +6, labelPaint);
 	    		}
     		} else {
     			labelPaint.setTextSize(getResources().getDimension(R.dimen.report_labels_text_size));
-    			canvas.drawText(points.get(0).getMonthShortString(this.getContext()), points.get(0).getX(), getHeight()-ySpace-padding+txtHeight, labelPaint);
-    			canvas.drawText(points.get(points.size()-1).getMonthShortString(this.getContext()), points.get(points.size()-1).getX(), getHeight()-ySpace-padding+txtHeight, labelPaint);
+    			canvas.drawText(points.get(0).getMonthShortString(this.getContext()), points.get(0).getX(), getHeight()-ySpace-padding+ txtHeight, labelPaint);
+    			canvas.drawText(points.get(points.size()-1).getMonthShortString(this.getContext()), points.get(points.size()-1).getX(), getHeight()-ySpace-padding+ txtHeight, labelPaint);
     			
     			labelPaint.setTextSize(getResources().getDimension(R.dimen.report_labels_text_size));
-    			canvas.drawText(points.get(0).getYearString(), points.get(0).getX(), getHeight()-ySpace-padding+2*txtHeight-1, labelPaint);
-    			canvas.drawText(points.get(points.size()-1).getYearString(), points.get(points.size()-1).getX(), getHeight()-ySpace-padding+2*txtHeight-1, labelPaint);
+    			canvas.drawText(points.get(0).getYearString(), points.get(0).getX(), getHeight()-ySpace-padding+2* txtHeight -1, labelPaint);
+    			canvas.drawText(points.get(points.size()-1).getYearString(), points.get(points.size()-1).getX(), getHeight()-ySpace-padding+2* txtHeight -1, labelPaint);
     			
     			labelPaint.setTextSize(getResources().getDimension(R.dimen.report_chart_text_size));
-    			canvas.drawText(getResources().getString(R.string.period), padding+xSpace+(getWidth()-xSpace-2*padding)/2, getHeight()-ySpace-padding/2+txtHeight, labelPaint);
+    			canvas.drawText(getResources().getString(R.string.period), padding+xSpace+(getWidth()-xSpace-2*padding)/2, getHeight()-ySpace-padding/2+ txtHeight, labelPaint);
     		}
     	}
     	canvas.drawLine(padding+xSpace+1, padding, getWidth()-padding, padding, gridPaint);
@@ -347,9 +336,9 @@ public class Report2DChartView extends View {
      * @param canvas Canvas to draw the chart.
      */
     private void drawPoints(Canvas canvas) {
-    	for (int i=0; i<pointsShapes.length; i++) {
-    		pointsShapes[i].draw(canvas);
-    	}
+		for (ShapeDrawable pointsShape : pointsShapes) {
+			pointsShape.draw(canvas);
+		}
     }
     
     /**
@@ -366,7 +355,7 @@ public class Report2DChartView extends View {
     	
     	canvas.drawText(x, 30 + (getWidth()/2-30)/2, getHeight()-padding, valuesPaint);
     	
-    	String value = "";
+    	String value;
     	if (absoluteCalculation) {
     		long v = (long)points.get(selected).getPointData().getValue();
     		value = Utils.amountToString(currency, v>0?v:-v);
@@ -390,13 +379,14 @@ public class Report2DChartView extends View {
     	double value;
     	
     	double mean = 0;
-    	for (int i=0; i<points.size(); i++) {
+		int graphPadding = 10;
+		for (int i=0; i<points.size(); i++) {
     		if (absoluteCalculation) {
     			value = Math.abs(points.get(i).getPointData().getValue());
-        		y = h - ySpace - padding - graphPadding - (value-absMin)*(h-ySpace-2*padding-2*graphPadding)/(absMax-absMin);
+        		y = h - ySpace - padding - graphPadding - (value-absMin)*(h-ySpace-2*padding-2* graphPadding)/(absMax-absMin);
     		} else {
     			value = points.get(i).getPointData().getValue();
-        		y = h - ySpace - padding - graphPadding - (value-min)*(h-ySpace-2*padding-2*graphPadding)/(max-min);
+        		y = h - ySpace - padding - graphPadding - (value-min)*(h-ySpace-2*padding-2* graphPadding)/(max-min);
     		}
     		x = xSpace+padding+(w-xSpace-2*padding)/(points.size()-1)*i;
     		
@@ -413,7 +403,8 @@ public class Report2DChartView extends View {
     				pointsShapes[i].getPaint().setColor(selectedPointPosColor);
     			}
     		} else {
-    			pointsShapes[i].getPaint().setColor(pointColor);
+				int pointColor = Color.YELLOW;
+				pointsShapes[i].getPaint().setColor(pointColor);
     		}
     		
     		pointsShapes[i].setBounds((int)points.get(i).getX()-4, (int)points.get(i).getY()-4, (int)points.get(i).getX()+4, (int)points.get(i).getY()+4);
@@ -433,18 +424,18 @@ public class Report2DChartView extends View {
     	meanPoint = new Report2DPoint(new PeriodValue(null, 0));
     	if (absoluteCalculation) {
     		mean = Math.abs(mean);
-    		meanPoint.setY((int)(h - ySpace - padding - graphPadding - (mean-absMin)*(h-ySpace-2*padding-2*graphPadding)/(absMax-absMin)));
+    		meanPoint.setY((int)(h - ySpace - padding - graphPadding - (mean-absMin)*(h-ySpace-2*padding-2* graphPadding)/(absMax-absMin)));
     		if (absMin<=0 && absMax>=0) {
     			zeroPoint = new Report2DPoint(new PeriodValue(null, 0));
-    			zeroPoint.setY((int)(h - ySpace - padding - graphPadding - (-absMin)*(h-ySpace-2*padding-2*graphPadding)/(absMax-absMin)));
+    			zeroPoint.setY((int)(h - ySpace - padding - graphPadding - (-absMin)*(h-ySpace-2*padding-2* graphPadding)/(absMax-absMin)));
     		} else {
     			zeroPoint = null;
     		}
     	} else {
-    		meanPoint.setY((int)(h - ySpace - padding - graphPadding - (mean-min)*(h-ySpace-2*padding-2*graphPadding)/(max-min)));
+    		meanPoint.setY((int)(h - ySpace - padding - graphPadding - (mean-min)*(h-ySpace-2*padding-2* graphPadding)/(max-min)));
     		if (absMin<=0 && absMax>=0) {
     			zeroPoint = new Report2DPoint(new PeriodValue(null, 0));
-    			zeroPoint.setY((int)(h - ySpace - padding - graphPadding - (-min)*(h-ySpace-2*padding-2*graphPadding)/(max-min)));
+    			zeroPoint.setY((int)(h - ySpace - padding - graphPadding - (-min)*(h-ySpace-2*padding-2* graphPadding)/(max-min)));
     		} else {
     			zeroPoint = null;
     		}
@@ -461,7 +452,7 @@ public class Report2DChartView extends View {
 
     /**
      * Set flag to indicate if the char is plot with values in modulus or not.
-     * @param absoluteCalculation
+     * @param absoluteCalculation absoluteCalculation
      */
 	public void setAbsoluteCalculation(boolean absoluteCalculation) {
 		this.absoluteCalculation = absoluteCalculation;
@@ -483,7 +474,7 @@ public class Report2DChartView extends View {
 	                    || action == MotionEvent.ACTION_MOVE) {
 	    	if (event.getY()>padding && event.getY()<getHeight()-padding-ySpace) {
 	    		float dmin = getWidth();
-	    		float d = 0;
+	    		float d;
 	    		int sel = -1;
                 if (points!=null) {
                     for (int i = 0; i < points.size(); i++) {

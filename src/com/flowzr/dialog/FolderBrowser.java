@@ -8,16 +8,22 @@
 
 package com.flowzr.dialog;
 
-import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
 import com.flowzr.R;
 
 import java.io.File;
@@ -37,7 +43,7 @@ public class FolderBrowser extends ListActivity {
 
     public static final String PATH = "PATH";
     
-    private final List<FileItem> files = new ArrayList<FileItem>();
+    private final List<FileItem> files = new ArrayList<>();
 
     private Button selectButton;
     private Button createButton;
@@ -165,7 +171,7 @@ public class FolderBrowser extends ListActivity {
     }
 
     private void setAdapter() {
-        ListAdapter adapter = new ArrayAdapter<FileItem>(this, android.R.layout.simple_list_item_1, files);
+        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, files);
         setListAdapter(adapter);
     }
 

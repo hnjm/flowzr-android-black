@@ -13,46 +13,39 @@
 
 package com.flowzr.export.flowzr;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.net.URLEncoder;
-import java.util.Calendar;
-import java.util.Date;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import com.flowzr.R;
-import com.flowzr.export.ImportExportException;
-import com.flowzr.export.docs.ApiClientAsyncTask;
-import com.flowzr.db.DatabaseAdapter;
-import com.flowzr.db.DatabaseHelper;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
+
+import com.flowzr.R;
+import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.db.DatabaseHelper;
+import com.flowzr.export.ImportExportException;
+import com.flowzr.export.docs.ApiClientAsyncTask;
 import com.flowzr.utils.MyPreferences;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveApi.DriveContentsResult;
 import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.DriveResource;
-import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataChangeSet;
-import com.google.api.client.http.InputStreamContent;
+
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.util.Calendar;
+import java.util.Date;
 
 public class PictureDriveTask extends ApiClientAsyncTask<String, String, Object> {
 
-    private DriveId prefFolderID;
-	private Uri fileUri;
+    private Uri fileUri;
 	private long trDate;
 	private String remote_key;
 	private Context context;
@@ -86,17 +79,17 @@ public class PictureDriveTask extends ApiClientAsyncTask<String, String, Object>
 
 
     protected boolean runUpload() throws Exception {
-        DriveId targetFolderId = null;
+        //DriveId targetFolderId = null;
         // File's binary content
         final java.io.File fileContent = new java.io.File(fileUri.getPath());
 
-        prefFolderID =getOrCreateDriveFolder(getGoogleApiClient(),null, MyPreferences.getGoogleDriveFolder(context));
+        DriveId prefFolderID = getOrCreateDriveFolder(getGoogleApiClient(), null, MyPreferences.getGoogleDriveFolder(context));
         //search for the target folder (depending of the date)
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date(trDate));
         int month = cal.get(Calendar.MONTH) + 1;
         String targetFolder = String.valueOf(cal.get(Calendar.YEAR)) + "-" + (month < 10 ? ("0" + month) : (month));
-        targetFolderId=getOrCreateDriveFolder(getGoogleApiClient(),prefFolderID,targetFolder);
+        DriveId targetFolderId = getOrCreateDriveFolder(getGoogleApiClient(), prefFolderID, targetFolder);
         final DriveFolder pFldr=Drive.DriveApi.getFolder(getGoogleApiClient(), targetFolderId);
         if (pFldr == null) throw new Exception("no target folder " + MyPreferences.getGoogleDriveFolder(context) +"/"+ targetFolder);
         //----------------->>
@@ -130,8 +123,7 @@ public class PictureDriveTask extends ApiClientAsyncTask<String, String, Object>
             baos.write(buf, 0, n);
         byte[] photoBytes = baos.toByteArray();
         outputStream.write(photoBytes);
-        com.google.android.gms.common.api.Status status =
-                driveContents.commit(getGoogleApiClient(), null).await();
+        driveContents.commit(getGoogleApiClient(), null).await();
         Thread.sleep(10000); // wait for google to flush ...
         DriveResource.MetadataResult s = dFil.getMetadata(mClient).await();
         Log.e("flowzr", "alt url is :" + s.getMetadata().getAlternateLink());
