@@ -1,3 +1,5 @@
+
+
 buildscript {
     repositories {
         //jcenter() // or
@@ -5,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.android.tools.build:gradle:2.0.0-beta6'
     }
 }
 
@@ -17,7 +19,24 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    testLocal {
+        java.srcDir file('src/androidTest/java')
+        resources.srcDir file('src/androidTest/res')
+    }
+}
+
 android {
+
+
+    sourceSets {
+        instrumentTest.setRoot('src/androidTest/')
+        testLocal {
+            java.srcDir file('src/androidTest/java')
+            resources.srcDir file('src/androidTest/res')
+        }
+    }
+
     lintOptions {
         // set to true to turn off analysis progress reporting by lint
         quiet true
@@ -55,9 +74,10 @@ android {
     }
     defaultConfig {
         signingConfig signingConfigs.config
-        minSdkVersion 9
-        targetSdkVersion 21
+        minSdkVersion 10
+        targetSdkVersion 23
         multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     productFlavors {
     }
@@ -78,6 +98,22 @@ android {
         }
     }
 }
+
+task localTest(type: Test, dependsOn: assemble) {
+    testClassesDir = sourceSets.testLocal.output.classesDir
+
+    android.sourceSets.main.java.srcDirs.each { dir ->
+        def buildDir = dir.getAbsolutePath().split('/')
+        buildDir = (buildDir[0..(buildDir.length - 4)] + ['build', 'classes', 'debug']).join('/')
+
+        sourceSets.testLocal.compileClasspath += files(buildDir)
+        sourceSets.testLocal.runtimeClasspath += files(buildDir)
+    }
+
+    classpath = sourceSets.testLocal.runtimeClasspath
+}
+
+check.dependsOn localTest
 
 //compile files('libs/dropbox-android-sdk-1.6.3.jar')
 //compile files('libs/gson-2.6.1.jar')
@@ -102,6 +138,9 @@ dependencies {
     compile 'com.github.ganfra:material-spinner:1.1.1'
     androidTestCompile 'com.android.support:support-annotations:23.1.1'
     testCompile 'junit:junit:4.12'
+    androidTestCompile 'com.android.support.test:runner:0.4.1'
+    androidTestCompile 'com.android.support.test:rules:0.4.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
 
+    compile files('/Users/emmanuelflorent/Library/Application Support/AndroidStudioPreview2.0/AndroidTestsRecorder/lib/AndroidTestsRecorder.jar')
 }
