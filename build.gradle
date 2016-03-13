@@ -29,13 +29,13 @@ sourceSets {
 android {
 
 
-    sourceSets {
-        instrumentTest.setRoot('src/androidTest/')
-        testLocal {
-            java.srcDir file('src/androidTest/java')
-            resources.srcDir file('src/androidTest/res')
-        }
-    }
+//    sourceSets {
+//        instrumentTest.setRoot('src/androidTest/')
+//        testLocal {
+//            java.srcDir file('src/androidTest/java')
+//            resources.srcDir file('src/androidTest/res')
+//        }
+//    }
 
     lintOptions {
         // set to true to turn off analysis progress reporting by lint
@@ -78,8 +78,6 @@ android {
         targetSdkVersion 23
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    productFlavors {
     }
     buildTypes {
         debug {

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+    <item android:id="@+id/bFilter"
+        android:icon="@drawable/ic_filter_list"
+		android:title="@string/filter"  
+		app:showAsAction="ifRoom"
+		/>
+    <item android:id="@+id/bToggle"
+        android:icon="@drawable/ic_filter_list"
+		android:title="@string/hierarchical_category_selector_income_expense"  
+		app:showAsAction="ifRoom"
+		/>
+    <item android:id="@+id/bPieChart"
+          android:icon="@drawable/ic_pie_chart"
+		android:title="@string/pie_chart"
+		app:showAsAction="ifRoom"
+		/>
+    <item android:id="@+id/settings"
+          android:icon="@drawable/ic_settings" 
+		android:title="@string/preferences" 
+		  app:showAsAction="ifRoom"
+		/>
+    <item android:id="@+id/zoomin"
+          android:icon="@drawable/ic_fullscreen"
+		  app:showAsAction="ifRoom"
+		android:title="@string/zoom_in" 		  
+		  android:visible="false"
+		/>
+
+    <item android:id="@+id/zoomout"
+          android:icon="@drawable/ic_fullscreen_exit"
+		  app:showAsAction="ifRoom"
+		android:title="@string/zoom_out" 
+		  android:visible="false"
+		/>		
+
+
+</menu>
