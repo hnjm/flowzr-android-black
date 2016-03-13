@@ -1,1 +1,0 @@
-ALTER TABLE locations ADD COLUMN count integer not null default 0;

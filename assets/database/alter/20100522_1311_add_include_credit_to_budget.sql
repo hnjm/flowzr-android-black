@@ -1,1 +1,0 @@
-ALTER TABLE budget ADD COLUMN include_credit integer not null default 1;

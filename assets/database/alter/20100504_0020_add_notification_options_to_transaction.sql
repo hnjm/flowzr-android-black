@@ -1,1 +1,0 @@
-ALTER TABLE transactions ADD COLUMN notification_options text;

@@ -15,10 +15,12 @@
 -dontnote android.support.**
 
 
--dontwarn android.test.**
+-keep class android.test.**
 -dontwarn com.squareup.**
 -dontwarn org.junit.**
 -dontwarn org.hamcrest.**
 -keep class org.hamcrest.**
 -keep class org.junit.**
 -keep class junit.**
+-dontnote android.test.**
+-dontnote org.junit.**

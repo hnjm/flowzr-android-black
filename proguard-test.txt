@@ -1,0 +1,5 @@
+-dontwarn org.hamcrest.**
+-dontwarn org.junit.**
+-dontwarn org.mockito.**
+-ignorewarnings
+-dontwarn test.android.**
