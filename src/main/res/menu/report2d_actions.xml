@@ -3,16 +3,18 @@
       xmlns:app="http://schemas.android.com/apk/res-auto" >
        
     <item android:id="@+id/settings"
+		android:title="@string/preferences"
           android:icon="@drawable/ic_settings" 
-		  app:showAsAction="always"
+		  app:showAsAction="ifRoom"
 		/>
 
     <item android:id="@+id/bt_filter_previous"
           android:icon="@drawable/ic_navigate_before"
-		  app:showAsAction="always"
+		  app:showAsAction="ifRoom"
 		/>
 
     <item android:id="@+id/bt_filter_next"
+		android:title="@string/filter"
           android:icon="@drawable/ic_navigate_next"
 		  app:showAsAction="always"
 		/>		

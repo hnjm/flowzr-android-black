@@ -8,12 +8,12 @@
         app:showAsAction="ifRoom"  />
 
     <item android:id="@+id/bAdd"
-          android:icon="@drawable/ic_add"
+          android:icon="@drawable/ic_edit"
 		android:title="@string/add_transaction"           
         app:showAsAction="ifRoom"  />
 
 	<item android:id="@+id/bTransfer"
-		android:icon="@drawable/ic_import_export"
+		android:icon="@drawable/ic_swap_vert"
 		android:title="@string/add_transfer" 
 		app:showAsAction="ifRoom" />
 

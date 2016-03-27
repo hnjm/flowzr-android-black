@@ -1,7 +1,6 @@
 build/
 *.iml
 add_key.sh
-*.class
 *.jar
 *.apk
 local.properties
@@ -10,7 +9,7 @@ local.properties
 .gradle/
 ## Directory-based project format:
 .idea/
-local.properties
+keystore.properties
 # if you remove the above rule, at least ignore the following:
 # User-specific stuff:
 # .idea/workspace.xml
