@@ -1,0 +1,4 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+
+    <dimen name="actionBarSize">82dp</dimen>
+</resources>

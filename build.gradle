@@ -1,26 +1,5 @@
-allprojects {
-    afterEvaluate { project ->
-        def propsFile = rootProject.file('keystore.properties')
-        def configName = 'release'
-        def configName2 = 'debug'
-        if (propsFile.exists() && android.signingConfigs.hasProperty(configName)) {
-            def props = new Properties()
-            props.load(new FileInputStream(propsFile))
-            android.signingConfigs[configName].storeFile = file(props['storeFile'])
-            android.signingConfigs[configName].storePassword = props['storePassword']
-            android.signingConfigs[configName].keyAlias = props['keyAlias']
-            android.signingConfigs[configName].keyPassword = props['keyPassword']
-            android.signingConfigs[configName2].storeFile = file(props['storeFile'])
-            android.signingConfigs[configName2].storePassword = props['storePassword']
-            android.signingConfigs[configName2].keyAlias = props['keyAlias']
-            android.signingConfigs[configName2].keyPassword = props['keyPassword']
-        }
-    }
-}
-
 buildscript {
     repositories {
-        //jcenter() // or
         mavenCentral()
     }
 
@@ -46,17 +25,14 @@ sourceSets {
 }
 
 android {
-    //defaultConfig {
-    //    vectorDrawables.useSupportLibrary = true
-    //}
+
     defaultConfig {
         generatedDensities = []
     }
-
-    // This is handled for you by the 2.0+ Gradle Plugin
-    aaptOptions {
-        additionalParameters "--no-version-vectors"
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
+
     sourceSets {
         instrumentTest.setRoot('src/androidTest/')
         testLocal {
@@ -73,17 +49,18 @@ android {
         // if true, only report errors
         ignoreWarnings true
     }
+
+
     signingConfigs {
-        //config {
-            //storeFile file('/Users/emmanuelflorent/Documents/key_store')
-            //storePassword System.getenv("KEYSTORE_PASSWORD")
-            //keyAlias System.getenv("KEY_ALIAS")
-            //keyPassword System.getenv("KEY_PASSWORD")
-            //keyAlias 'direct raise'
-            //keyPassword 'devaki'
-            //storePassword 'devaki'
-        //}
+        release {
+            readKeystoreProperties()
+        }
     }
+
+    //signingConfigs {
+    //    config {
+    //    }
+    //}
     compileSdkVersion 'Google Inc.:Google APIs:23'
     buildToolsVersion "23.0.2"
     useLibrary 'org.apache.http.legacy'
@@ -100,32 +77,44 @@ android {
         exclude 'META-INF/dependencies.txt'
         exclude 'META-INF/LGPL2.1'
     }
+
     defaultConfig {
-        //vectorDrawables.useSupportLibrary = true
         //signingConfig signingConfigs.config
-        minSdkVersion 10
-        targetSdkVersion 23
+        minSdkVersion 9
+        targetSdkVersion 22
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
+
         debug {
+            // Shrink to test Multidex on API 10 and limit Memory Alloc
             minifyEnabled false
             shrinkResources false
-            //signingConfig signingConfigs.config
-            //proguardFile 'proguard-google-api-client.txt'
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'),
-            //        'proguard-rules.txt'
+        }
+
+        debugv9 {
+            multiDexEnabled true
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
+            proguardFile 'proguard-google-api-client.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.txt'
 
         }
+
         release {
             multiDexEnabled true
             shrinkResources true
             minifyEnabled true
             shrinkResources true
+            signingConfig signingConfigs.release
+            //signingConfig signingConfigs.config
+            renderscriptDebuggable false
             debuggable false
             jniDebuggable false
-            //signingConfig signingConfigs.config
             renderscriptDebuggable false
             proguardFile 'proguard-google-api-client.txt'
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
@@ -155,7 +144,9 @@ check.dependsOn localTest
 
 //@TODO http://stackoverflow.com/questions/34365369/googleservice-failed-to-initialize
 dependencies {
-    //Find in ./lib/*
+    // ============================================================
+    // Find in ./lib/* have to  be downloaded info on lib/Readme //
+    //  ===========================================================
     //compile files('libs/dropbox-android-sdk-1.6.3.jar')
     //compile files('libs/gson-2.6.1.jar')
     //compile files('libs/google-rfc2445-20110304.jar')
@@ -163,6 +154,12 @@ dependencies {
     //compile files('libs/google-api-client-android-1.20.0.jar')
     //compile files('libs/google-http-client-1.20.0.jar')
     compile fileTree(dir: 'libs', include: ['**/*.jar'])
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.9.5'
+    androidTestCompile 'com.android.support:support-annotations:23.2.1'
+    androidTestCompile 'com.android.support.test:runner:0.4.1'
+    androidTestCompile 'com.android.support.test:rules:0.4.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
     compile 'com.commonsware.cwac:wakeful:1.0.1'
     compile 'org.achartengine:achartengine:1.2.0'
     compile 'net.sf.trove4j:trove4j:3.0.3'
@@ -175,9 +172,24 @@ dependencies {
     compile 'com.google.android.gms:play-services-plus:8.4.0'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.github.ganfra:material-spinner:1.1.1'
-    testCompile 'junit:junit:4.12'
-    androidTestCompile 'com.android.support:support-annotations:23.2.1'
-    androidTestCompile 'com.android.support.test:runner:0.4.1'
-    androidTestCompile 'com.android.support.test:rules:0.4.1'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
 }
+
+
+def readKeystoreProperties() {
+    def propsFile = rootProject.file('keystore.properties')
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        android.signingConfigs["release"].storeFile = file(props['storeFile'])
+        android.signingConfigs["release"].storePassword = props['storePassword']
+        android.signingConfigs["release"].keyAlias = props['keyAlias']
+        android.signingConfigs["release"].keyPassword = props['keyPassword']
+        println "===== read keystore properties success ====="
+    }
+}
+
+
+
+
+
+

@@ -4,7 +4,7 @@
     
     <item android:id="@+id/context_budget_info"
           android:icon="@drawable/ic_info_outline"
-			android:title="@string/about"
+			android:title="@string/blotter"
           app:showAsAction="ifRoom" />
 
     <item android:id="@+id/context_budget_edit"
