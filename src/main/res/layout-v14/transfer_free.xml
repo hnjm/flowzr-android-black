@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="@dimen/actionBarSize"
+        android:paddingTop="?android:attr/actionBarSize"
         android:id="@+id/main_layout">
 
         <include layout="@layout/transaction_total_text"/>
