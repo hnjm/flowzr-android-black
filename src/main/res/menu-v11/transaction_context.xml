@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+    
+    <item android:id="@+id/context_transaction_info"
+          android:icon="@drawable/ic_info_outline"
+			android:title="@string/info"           
+          app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/context_transaction_clear"
+        android:icon="@drawable/transaction_status_cleared_2"
+        android:title="@string/transaction_status_cleared"
+        app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/context_transaction_reconcile"
+        android:icon="@drawable/transaction_status_cleared_2"
+        android:title="@string/transaction_status_reconciled"
+        app:showAsAction="ifRoom"  />
+
+
+    <item android:id="@+id/context_transaction_edit"
+          android:icon="@drawable/ic_edit"
+			android:title="@string/edit"           
+          app:showAsAction="ifRoom"  />
+
+
+    <item android:id="@+id/context_transaction_duplicate"
+        android:icon="@drawable/ic_content_copy"
+        android:title="@string/duplicate"
+        app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/context_transaction_template"
+        android:icon="@drawable/ic_content_copy"
+        android:title="@string/save_as_template"
+        app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/context_transaction_delete"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/delete"
+        app:showAsAction="ifRoom"  />
+
+
+
+</menu>

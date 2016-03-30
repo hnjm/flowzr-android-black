@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   Copyright (c) 2010 Denis Solonenko.
   All rights reserved. This program and the accompanying materials
@@ -12,12 +13,8 @@
 <android.support.design.widget.CoordinatorLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:fab="http://schemas.android.com/apk/res-auto"
-	android:fitsSystemWindows="true"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
-
-    <include layout="@layout/toolbar"/>
-
 
     <LinearLayout
         android:layout_margin="0dp"
@@ -64,7 +61,6 @@
 		<LinearLayout
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/space_large"
 			android:paddingBottom="?listPreferredItemHeight"
 			android:orientation="vertical"
 			android:id="@+id/list">
@@ -107,5 +103,7 @@
 			style="@style/FloatingActionButton" />
 
 	</com.flowzr.view.MyFloatingActionMenu>
+
+	<include layout="@layout/toolbar"/>
 
 </android.support.design.widget.CoordinatorLayout>

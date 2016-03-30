@@ -1,0 +1,134 @@
+<!--
+  ~ Copyright (c) 2012 Emmanuel Florent.
+  ~ All rights reserved. This program and the accompanying materials
+  ~ are made available under the terms of the GNU Public License v2.0
+  ~ which accompanies this distribution, and is available at
+  ~ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  -->
+
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_V"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:paddingLeft="@dimen/space_small"
+            android:paddingRight="@dimen/space_small">
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/space_xlarge"
+                android:paddingRight="@dimen/space_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/space_normal"
+                android:paddingLeft="@dimen/space_normal"
+                android:orientation="vertical" >
+
+                <Button
+                    android:textSize="@dimen/text_large"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sync"
+                    android:drawableLeft="@drawable/ic_action_cloud"
+                    android:background="@color/f_blue"
+                    android:drawablePadding="5dp"
+                    android:layout_gravity="center"
+                    android:text="@string/flowzr_sync"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"/>
+
+                <CheckBox
+                    android:textSize="@dimen/text_large"
+                    android:id="@+id/chk_sync_from_zero"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sync_from_zero"
+                    style="@style/CheckBox"
+                    />
+
+                <TextView
+                    android:textSize="@dimen/text_large"
+                    style="@style/TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sync_was"
+                    android:layout_weight="1"
+                    android:paddingBottom="@dimen/space_large" />
+
+                <Button
+                    android:textSize="@dimen/text_large"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/visitFlowzr"
+                    android:drawableLeft="@drawable/ic_web_asset"
+                    android:background="@color/f_blue"
+                    android:drawablePadding="5dp"
+                    android:layout_gravity="center"
+                    android:text="@string/visit_flowzr"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+
+                    />
+
+                <TextView
+                    style="@style/TextView"
+                    android:textSize="@dimen/text_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/flowzr_terms_of_use"
+                    android:id="@+id/flowzrPleaseNote"
+                    android:layout_gravity="center"
+                    android:linksClickable="true"
+                    android:clickable="false"
+                    android:paddingBottom="@dimen/space_large"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="5dp"/>
+
+                <Button
+                    android:textSize="@dimen/text_large"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buySubscription"
+                    android:drawableLeft="@drawable/ic_favorite"
+                    android:drawablePadding="5dp"
+                    android:layout_gravity="center"
+                    android:background="@color/f_blue"
+                    android:text="@string/buy_subscription"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <include layout="@layout/toolbar"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/drawer_header"
+        app:menu="@menu/drawer"/>
+
+</android.support.v4.widget.DrawerLayout>
+
+
+
+
+  
+
+

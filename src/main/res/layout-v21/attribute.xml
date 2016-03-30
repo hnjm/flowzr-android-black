@@ -1,0 +1,99 @@
+<!--
+  Copyright (c) 2010 Denis Solonenko.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  
+  Contributors:
+      Denis Solonenko - initial API and implementation
+	  Emmanuel Florent - port to Android API 11+
+-->
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<LinearLayout android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/space_large"
+		android:layout_marginEnd="@dimen/space_large"
+		android:layout_width="match_parent"
+		android:orientation="vertical"
+		android:layout_marginTop="?android:attr/actionBarSize"
+		android:paddingTop="?android:attr/actionBarSize">
+
+		<include layout="@layout/layout_title"/>
+
+		<LinearLayout
+			android:layout_marginTop="@dimen/space_xlarge"
+            android:minHeight="?listPreferredItemHeight"
+            android:layout_marginLeft="@dimen/space_large"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+			<fr.ganfra.materialspinner.MaterialSpinner
+				app:ms_enableFloatingLabel="true"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				app:ms_floatingLabelText="@string/attribute_type"
+				android:id="@+id/type"
+				android:entries="@array/attribute_types"
+				android:prompt="@string/attribute_type" />
+		</LinearLayout>
+
+
+		<LinearLayout android:layout_width="match_parent"
+            android:minHeight="?listPreferredItemHeight"
+				android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_small"
+	    		android:orientation="vertical"
+				android:id="@+id/values_layout">
+
+				<TextView android:layout_height="wrap_content"
+                    style="@style/TextView"
+					android:layout_width="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="@string/attribute_values"/>
+
+				<EditText android:layout_height="@dimen/recommended_touch_size"
+                    style="@style/TextView"
+					android:layout_width="wrap_content"
+                    android:id="@+id/values"
+                    android:hint="@string/attribute_values_hint"/>
+
+		</LinearLayout>
+
+		<LinearLayout android:layout_width="match_parent"
+            android:minHeight="?listPreferredItemHeight"
+            android:layout_marginLeft="@dimen/space_small"
+            android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:padding="@dimen/space_normal"
+            android:id="@+id/default_value_layout1">
+
+				<TextView android:layout_height="wrap_content"
+                    style="@style/TextView"
+					android:layout_width="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="@string/attribute_default_value"/>
+
+				<EditText android:layout_height="@dimen/recommended_touch_size"
+                    style="@style/TextView"
+					android:layout_width="wrap_content"
+                    android:id="@+id/default_value_text" />
+
+            <CheckBox android:layout_height="@dimen/recommended_touch_size"
+                android:padding="@dimen/space_normal"
+                android:layout_width="match_parent"
+                android:id="@+id/default_value_check"
+                android:text="@string/attribute_default_value"/>
+
+		</LinearLayout>
+
+
+
+		</LinearLayout>
+
+	<include layout="@layout/toolbar"/>
+
+</android.support.design.widget.CoordinatorLayout>

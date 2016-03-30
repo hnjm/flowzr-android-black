@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <style name="Theme.Financisto" parent="Theme.AppCompat.NoActionBar">
+                <item name="actionMenuTextColor">@color/f_blue</item>
+                <item name="colorPrimary">@color/f_dark_lighter2</item> 
+                <item name="colorPrimaryDark">@color/f_dark</item> 
+                <item name="colorControlHighlight">@color/f_blue_lighter1</item> 
+                <item name="colorControlNormal">@color/f_blue_lighter2</item> 
+                <item name="colorAccent">@color/f_blue</item>
+
+                <!-- drawer navigationicon  edit tooltips -->
+                <item name="android:textColorSecondary">@color/f_light_darker1</item> 
+                <!-- toobar -->
+                <item name="titleTextColor">@color/f_blue_lighter3</item>
+                <item name="subtitleTextColor">@color/f_blue_lighter2</item>
+
+                <item name="android:fitsSystemWindows">true</item>
+                <item name="android:windowTranslucentStatus">true</item>
+                <item name="android:dialogTheme">@style/dialog</item>
+
+
+        </style>
+
+        <style name="dialog" parent="Base.Theme.AppCompat.Dialog.Alert">
+                <item name="colorAccent">@color/text_accent</item>
+        </style>
+
+</resources>

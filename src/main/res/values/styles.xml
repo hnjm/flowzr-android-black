@@ -32,16 +32,9 @@
         <item name="titleTextColor">@color/f_blue_lighter3</item>
         <item name="subtitleTextColor">@color/f_blue_lighter2</item>
 
-        <item name="android:fitsSystemWindows">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:dialogTheme">@style/dialog</item>
-
-
     </style>
 
-    <style name="dialog" parent="Base.Theme.AppCompat.Dialog.Alert">
-        <item name="colorAccent">@color/text_accent</item>
-    </style>
+
 
     <!-- ======================================================================================================== -->
     <!-- Widget -->
@@ -297,7 +290,6 @@
     <style name="PadButtonStyle" >
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/pad_button_background</item>
         <item name="android:gravity">center</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:minWidth">@dimen/recommended_touch_size</item>
@@ -306,6 +298,7 @@
         <item name="android:textColor">@color/pad_button_text_color</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">@dimen/space_large</item>
     </style>
 
 

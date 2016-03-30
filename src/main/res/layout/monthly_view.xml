@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  
+  Contributors:
+      Abdsandryk - initial API and implementation
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_height="wrap_content"
+	android:layout_width="match_parent"
+	android:paddingTop="@dimen/dynamic_margin_narrow_vertical"
+	android:paddingBottom="@dimen/dynamic_margin_narrow_vertical"
+    android:paddingLeft="@dimen/dynamic_margin_narrow_horizontal"
+    android:paddingRight="@dimen/dynamic_margin_narrow_horizontal"	
+	android:orientation="vertical">
+	
+	<LinearLayout 
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:paddingTop="2dp">
+		
+		<ImageButton android:id="@+id/bt_month_previous"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:src="@drawable/ic_navigate_before" />
+			
+		<TextView android:id="@+id/monthly_view_title"
+			android:layout_width="240dp"
+			android:text="plop"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:textStyle="bold" 
+			android:gravity="center"
+			android:textColor="#FFF"
+			tools:ignore="HardcodedText" />
+			
+		<ImageButton android:id="@+id/bt_month_next"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:src="@drawable/ic_navigate_next" />
+			
+	</LinearLayout>
+	
+	<ListView android:id="@android:id/list" 
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" 
+		android:layout_weight="1"
+		android:visibility="gone" />
+	
+	<TextView android:id="@id/android:empty" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:layout_weight="1"
+		android:gravity="center" 
+		android:text="@string/no_transactions" />
+	
+	<LinearLayout 
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:paddingTop="2dp">
+	
+		<TextView android:id="@+id/monthly_result_label"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="left|center"
+			style="@style/TextView"
+			android:text="@string/bill_on" />
+			
+		<TextView android:id="@+id/monthly_result"
+			android:layout_height="wrap_content"
+			android:layout_width="0dp"
+			android:layout_weight="1"
+			android:gravity="right|center"
+			android:textStyle="bold"
+			style="@style/TextView"
+            android:text=""/>
+	</LinearLayout>
+
+</LinearLayout>

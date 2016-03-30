@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item android:id="@+id/action_add"
+        android:title="@string/add_category"
+          android:icon="@drawable/ic_add"
+          app:showAsAction="always"  />
+
+    <item android:id="@+id/action_attributes"
+        android:title="@string/attributes"
+          android:icon="@drawable/ic_label"
+          app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/action_expand"
+        android:title="@string/more_products"
+          android:icon="@drawable/ic_expand_more"
+          app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/action_collapse"
+    	  android:title="@string/collapse_blotter_buttons"    
+          android:icon="@drawable/ic_expand_less"
+          app:showAsAction="ifRoom"  />          
+
+    <item android:id="@+id/action_sort_by_title"
+          android:title="@string/sort_by_title"        
+          app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/action_re_index"
+          android:title="@string/re_index_categories"        
+          app:showAsAction="ifRoom"  />
+
+   
+</menu>
+

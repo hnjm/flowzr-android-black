@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright (c) 2015 Emmanuel Florent.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
+  Contributors:
+      Emmanuel Florent - Port to AppCompat 21,  add icon title
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/space_large">
+
+    <LinearLayout
+        android:layout_width="72dp" android:layout_gravity="center" android:gravity="center"
+        android:layout_height="@dimen/recommended_touch_size">
+
+        <ImageView android:layout_height="16dp"
+            android:layout_width="16dp"
+            android:layout_marginLeft="@dimen/dynamic_margin_narrow_vertical"
+            android:layout_gravity="center" android:id="@+id/icon"
+            android:focusable="true" android:clickable="true" />
+
+    </LinearLayout>
+
+
+    <TextView android:id="@+id/data" android:layout_width="0dp"
+        android:layout_marginLeft="@dimen/space_xlarge"
+        android:layout_height="@dimen/recommended_touch_size"  android:layout_marginTop="@dimen/space_normal"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/text_large" style="@style/TextViewUserInput"
+        android:maxLines="1" android:duplicateParentState="true"
+        android:layout_weight="1" />
+
+    <ImageView android:layout_height="24dp" android:layout_width="24dp" android:layout_marginTop="@dimen/space_normal"
+        android:background="@drawable/ic_expand_more"  android:layout_marginLeft="@dimen/space_xlarge"
+        android:focusable="true" android:clickable="true" />
+
+</LinearLayout>

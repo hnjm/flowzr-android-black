@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+
+    <item android:id="@+id/action_integrity_fix"
+        android:title="@string/filter"
+        android:icon="@drawable/ic_functions"
+        app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/action_filter_budget"
+        android:title="@string/filter"
+        android:icon="@drawable/ic_filter_list"
+        app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/bAddBudget"
+        android:icon="@drawable/ic_add"
+        app:showAsAction="always"  />
+
+</menu>

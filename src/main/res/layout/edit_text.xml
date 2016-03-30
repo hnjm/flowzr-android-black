@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<EditText
+    style="@style/EditTextUserInput"
+    android:layout_alignLeft="@+id/edit"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+</EditText>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright (c) 2010 Denis Solonenko.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  
+  Contributors:
+      Denis Solonenko - initial API and implementation
+      Emmanuel Florent - Port to AppCompat 21,  add icon title
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+		<TextView android:id="@+id/label"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:singleLine="true"
+			android:textSize="@dimen/text_small"
+			android:layout_marginLeft="@dimen/space_xxlarge"
+			android:layout_marginRight="@dimen/space_xxlarge"
+			android:layout_gravity="center"
+			android:ellipsize="marquee" android:fadingEdge="horizontal"
+			android:duplicateParentState="true" style="@style/TextView" />
+
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+        android:layout_marginRight="@dimen/space_normal"
+		android:layout_gravity="right|center_horizontal"
+		android:layout_height="wrap_content">
+
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="0dp"
+			android:layout_gravity="right"
+			android:gravity="right"
+			android:layout_weight="1"
+			android:layout_height="wrap_content">
+
+			<EditText android:id="@+id/rate"
+                android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:inputType="number|numberDecimal"
+                android:digits="0123456789.,"
+                style="@style/EditText"/>
+
+			<TextView android:id="@+id/data" android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				style="@style/TextView" android:textSize="@dimen/text_xsmall"
+				android:maxLines="2" android:duplicateParentState="true"
+				/>
+
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_gravity="center"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+
+			<ImageButton android:layout_width="@dimen/recommended_touch_size"
+				android:layout_height="@dimen/recommended_touch_size"
+				android:layout_marginLeft="@dimen/space_xxlarge"
+				android:id="@+id/rateDownload"
+				android:src="@drawable/ic_file_download"/>
+
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</LinearLayout>

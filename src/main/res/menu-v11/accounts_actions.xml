@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item android:id="@+id/action_scheduled_transaction"
+          android:icon="@drawable/ic_alarm"
+          android:title="@string/scheduled_transactions"
+          app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_add_account"
+        android:icon="@drawable/ic_add"
+        android:title="@string/add_account"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/action_planner"
+        android:icon="@drawable/ic_event"
+        android:title="@string/planner"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_integrity_fix"
+        android:title="@string/integrity_fix"
+        android:icon="@drawable/ic_functions"
+        app:showAsAction="ifRoom"/>
+
+</menu>

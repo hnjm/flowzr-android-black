@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item android:id="@+id/action_filter"
+          android:icon="@drawable/ic_filter_list"
+		android:title="@string/filter"  
+		app:showAsAction="ifRoom" />
+
+	<item android:id="@+id/action_list_template"
+		android:icon="@drawable/ic_content_copy"
+		android:title="@string/template" 
+		app:showAsAction="ifRoom" />
+
+	<item android:id="@+id/action_mass_op"
+		android:icon="@drawable/ic_select_all"
+		android:title="@string/mass_operations" 
+		app:showAsAction="ifRoom" />
+
+	<item android:id="@+id/opt_menu_month"
+		android:icon="@drawable/ic_video_library"
+		android:title="@string/monthly_view"
+		app:showAsAction="ifRoom"  />
+		
+	<item android:id="@+id/opt_menu_bill"
+		android:icon="@drawable/ic_airplanemode_active"
+		android:title="@string/ccard_statement_title" 
+		app:showAsAction="ifRoom" />
+
+</menu>

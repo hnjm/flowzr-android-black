@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Layout for 2D report chart view.
+  Contributors:
+      Abdsandryk - initial API and implementation
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="wrap_content"
+	android:orientation="vertical">
+							
+
+
+    <LinearLayout
+	    xmlns:android="http://schemas.android.com/apk/res/android"    
+        android:id="@+id/container_V"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/recommended_touch_size"     
+        android:orientation="horizontal"
+    	style="@style/ButtonBar">
+  
+        <TextView
+ 	       android:id="@+id/total_title"
+            style="@style/TextView"              
+            android:textSize="@dimen/text_large" />
+
+        <TextView
+            android:id="@+id/report_period"
+            style="@style/TextView"
+            android:textSize="@dimen/text_large" />
+            
+        <ImageView style="@style/MoreButton" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+            
+    </LinearLayout>
+
+
+	
+
+
+	<com.flowzr.view.Report2DChartView
+		android:id="@+id/report_2d_chart" 
+		android:layout_width="wrap_content"
+		android:layout_height="0dp"
+		android:layout_weight="1"/>
+
+
+	<TableLayout
+        android:layout_height="@dimen/recommended_touch_size"	
+        android:gravity="center"
+	    android:layout_width="wrap_content">
+	    	    
+	    <TableRow>
+
+	    	<TextView
+                android:ellipsize="marquee"	    	
+	            android:singleLine="true" 	    	
+		    	android:textSize="@dimen/text_normal"
+	            android:paddingTop="1dip"
+	            android:paddingBottom="1dip"
+	            android:paddingLeft="6dip" 
+	            android:paddingRight="6dip"  
+	            android:gravity="center|left" 
+	            android:layout_weight="1"
+	            android:layout_width="wrap_content"
+	            android:text="@string/max_result_label" />
+	            
+	        <TextView 
+                android:ellipsize="marquee"	    	
+	            android:singleLine="true" 	        
+	        	android:id="@+id/report_max_result"
+				android:textSize="@dimen/text_normal"	        
+	            android:gravity="center|right"
+	            android:paddingTop="1dip"
+	            android:paddingBottom="1dip"
+	            android:paddingLeft="6dip" 
+	            android:paddingRight="10dip" 
+	            android:layout_weight="5"
+	            android:layout_width="wrap_content"
+	            android:text="@string/report_init_res" />
+
+	    	<TextView
+                android:ellipsize="marquee"	    	
+	            android:singleLine="true" 	    	
+				android:textSize="@dimen/text_normal"	    	
+	            android:paddingTop="1dip"
+	            android:paddingBottom="1dip"
+	            android:paddingLeft="6dip" 
+	            android:paddingRight="6dip" 
+	            android:gravity="center|left" 
+	            android:layout_weight="1"
+	            android:layout_width="wrap_content"
+	            android:text="@string/min_result_label" />
+	            
+	        <TextView android:id="@+id/report_min_result"
+                android:ellipsize="marquee"	    	
+	            android:singleLine="true" 	        
+				android:textSize="@dimen/text_normal"	        
+	            android:gravity="center|right"
+	            android:paddingTop="1dip"
+	            android:paddingBottom="1dip"
+	            android:paddingLeft="6dip" 
+	            android:paddingRight="10dip" 
+	            android:layout_weight="5"
+	            android:layout_width="wrap_content"
+	            android:text="@string/report_init_res"/>
+	            
+	        <TextView
+                android:ellipsize="marquee"	    	
+	            android:singleLine="true" 
+				android:textSize="@dimen/text_normal"	            
+	            android:paddingTop="1dip"
+	            android:paddingBottom="1dip"
+	            android:paddingLeft="10dip" 
+	            android:paddingRight="6dip" 
+	            android:gravity="center|left" 
+	            android:layout_weight="1"
+	            android:layout_width="wrap_content"
+	            android:text="@string/mean_result_label" />
+	            
+	        <TextView  android:id="@+id/report_mean_result"
+                android:ellipsize="marquee"	    	
+	            android:singleLine="true" 	        
+				android:textSize="@dimen/text_normal"	        
+	            android:gravity="center|right"
+	            android:paddingTop="1dip"
+	            android:paddingBottom="1dip"
+	            android:paddingLeft="6dip" 
+	            android:paddingRight="6dip"  
+	            android:layout_weight="5"
+	            android:layout_width="wrap_content"
+	            android:text="@string/report_init_res"/>
+	    </TableRow>
+	
+	</TableLayout>
+	
+	<TextView android:id="@+id/report_empty" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:gravity="center" 
+		android:text="@string/no_data_to_report" />	
+
+    <ListView
+        android:layout_height="wrap_content"
+        android:id="@android:id/list"
+        style="@style/ListView"/>
+
+</LinearLayout>

@@ -85,12 +85,13 @@ android {
     buildTypes {
 
         debug {
-            // Shrink to test Multidex on API 10 and limit Memory Alloc
             minifyEnabled false
             shrinkResources false
+            debuggable true
         }
 
         debugv9 {
+            debuggable true
             multiDexEnabled true
             minifyEnabled true
             shrinkResources true
@@ -145,7 +146,6 @@ task localTest(type: Test, dependsOn: assemble) {
 //noinspection GroovyAssignabilityCheck
 check.dependsOn localTest
 
-//@TODO http://stackoverflow.com/questions/34365369/googleservice-failed-to-initialize
 dependencies {
 
     testCompile 'junit:junit:4.12'

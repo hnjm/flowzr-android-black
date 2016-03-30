@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+	<item android:id="@+id/proceed"
+		android:icon="@drawable/ic_play_arrow"
+		android:title="@string/proceed"
+		app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/action_filter"
+          android:icon="@drawable/ic_filter_list"
+		android:title="@string/filter"  
+		app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/bCheckAll"
+          android:icon="@drawable/ic_select_all"
+		android:title="@string/select"
+		app:showAsAction="ifRoom"/>
+
+
+    <item android:id="@+id/bUnCheckAll"
+		android:title="@string/unlink"
+          android:icon="@drawable/ic_select_all"
+		app:showAsAction="ifRoom" />
+
+
+
+    <item android:id="@+id/action_cancel"
+          android:icon="@drawable/ic_cancel"
+			android:title="@string/cancel"           
+          app:showAsAction="ifRoom"  />
+
+</menu>

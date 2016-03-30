@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright (c) 2010 Denis Solonenko.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  
+  Contributors:
+      Denis Solonenko - initial API and implementation
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	style="@style/ListItem">
+	<TextView android:id="@+id/data" android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="8dip" 
+		style="@style/TextView" android:textSize="@dimen/text_normal" 
+		android:maxLines="1" android:duplicateParentState="true"
+		android:layout_weight="1" />
+	<ImageView style="@style/MoreButton" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+	<ImageView style="@style/PlusButton" android:layout_width="wrap_content"
+		android:id="@+id/plus_minus" android:layout_height="wrap_content"
+		android:focusable="true" android:clickable="true" />
+</LinearLayout>

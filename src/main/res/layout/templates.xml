@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!--
+		Copyright (c) 2010 Denis Solonenko. All rights reserved. This program
+		and the accompanying materials are made available under the terms of
+		the GNU Public License v2.0 which accompanies this distribution, and
+		is available at http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
+		Contributors: Denis Solonenko - initial API and implementation
+		Emmanuel Florent - port to Android API 11+
+	-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_height="wrap_content"
+	android:layout_width="match_parent"
+	android:orientation="vertical">
+	
+	<ListView android:id="@android:id/list"
+        android:padding="@dimen/space_normal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+	</ListView>
+
+    <LinearLayout android:id="@+id/container_V"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:gravity="center"
+        android:orientation="horizontal"
+    	style="@style/ButtonBar">
+
+        <ImageButton android:id="@+id/bMinus"
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+            android:src="@drawable/ic_expand_more"
+            android:layout_marginLeft="10dp" />
+
+        <TextView android:id="@+id/multiplier"
+            android:layout_width="wrap_content"
+            android:layout_margin="@dimen/space_xxlarge"
+			style="@style/TextView"
+            android:text=" x 1 "
+            android:textSize="@dimen/text_normal"
+			android:layout_height="wrap_content"
+			tools:ignore="HardcodedText" />
+
+		<ImageButton android:id="@+id/bPlus"
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+            android:src="@drawable/ic_expand_less"
+            android:layout_marginRight="10dp" />
+
+	</LinearLayout>
+
+	
+</LinearLayout>

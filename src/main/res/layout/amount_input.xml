@@ -1,0 +1,49 @@
+<!--
+  Copyright (c) 2010 Denis Solonenko.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  
+  Contributors:
+      Denis Solonenko - initial API and implementation
+      Emmanuel Florent - Port to AppCompat 21,  add icon title
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_marginRight="@dimen/space_small">
+
+    <ToggleButton
+        android:layout_width="@dimen/recommended_touch_size"
+        android:layout_height="@dimen/recommended_touch_size"
+        android:gravity="center"
+        android:id="@+id/toggle"
+        android:textOn=""
+        android:textOff=""
+        android:background="@drawable/btn_toggle_income_expense_bg" />
+
+    <EditText android:layout_height="wrap_content"
+              android:singleLine="true"
+              android:focusable="false"
+              android:layout_width="0dp" android:layout_weight="1"
+              android:textSize="@dimen/text_large" android:gravity="end|center_vertical"
+              android:id="@+id/primary"
+                android:textColor="@color/positive_amount"
+              android:maxLength="16"/>
+    <TextView android:layout_width="wrap_content" android:id="@+id/dot"
+              android:text="." android:textColor="@color/positive_amount"
+              android:layout_height="wrap_content" android:gravity="center_vertical"
+              android:textSize="@dimen/text_large"
+        tools:ignore="HardcodedText" />
+    <EditText android:layout_height="wrap_content"
+               android:singleLine="true"
+                android:focusable="false"
+              android:layout_width="50dp"
+            android:textColor="@color/positive_amount"
+              android:textSize="@dimen/text_large" android:gravity="end|center_vertical"
+              android:id="@+id/secondary"
+              android:maxLength="2"/>
+
+</LinearLayout>

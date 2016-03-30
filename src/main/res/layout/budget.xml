@@ -1,0 +1,53 @@
+<!--
+  Copyright (c) 2010 Denis Solonenko.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  
+  Contributors:
+      Denis Solonenko - initial API and implementation
+      Emmanuel Florent - Port to android support - added FAB button
+-->
+
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+
+
+<LinearLayout
+	android:layout_marginTop="@dimen/space_xlarge"
+	android:paddingTop="@dimen/actionBarSize"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:focusable="true"
+	android:focusableInTouchMode="true"
+	android:orientation="vertical">
+
+	<include layout="@layout/layout_title"/>
+
+	<include layout="@layout/budget_total_text"/>
+
+	<ScrollView
+		android:layout_height="0px"
+		android:layout_weight="1"
+		android:scrollbars="none"
+		android:layout_width="wrap_content">
+
+		<LinearLayout
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/space_large"
+			android:paddingBottom="@dimen/space_xxlarge"
+			android:orientation="vertical" android:id="@+id/list">
+		</LinearLayout>
+	</ScrollView>
+
+</LinearLayout>
+
+
+	<include layout="@layout/toolbar"/>
+
+	</android.support.design.widget.CoordinatorLayout>

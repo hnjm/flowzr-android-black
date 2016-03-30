@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2010 Denis Solonenko.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  
+  Contributors:
+      Denis Solonenko - initial API and implementation
+-->
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginTop="?android:attr/actionBarSize"
+                android:paddingTop="?android:attr/actionBarSize"
+        		android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <include layout="@layout/layout_title"/>
+
+            <ScrollView android:layout_width="wrap_content"
+                android:padding="@dimen/space_large"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
+
+                    <android.support.design.widget.TextInputLayout
+
+                        android:layout_margin="@dimen/space_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+
+                    <EditText android:layout_height="wrap_content"
+                              android:layout_width="wrap_content" android:id="@+id/name"
+                              android:ellipsize="none" android:singleLine="true"
+                              android:maxLength="3"
+                              android:hint="@string/currency_code_hint"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_margin="@dimen/space_normal"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <EditText android:layout_height="wrap_content"
+                              android:layout_width="wrap_content"
+                              android:id="@+id/symbol"
+                              android:singleLine="true" android:maxLength="3"
+                              android:hint="@string/currency_symbol"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <fr.ganfra.materialspinner.MaterialSpinner
+                        android:layout_margin="@dimen/space_normal"
+                        android:id="@+id/spinnerGroupSeparators"
+                        android:entries="@array/group_separators"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ms_multiline="false"
+                        app:ms_hint="@string/group_separator">
+                    </fr.ganfra.materialspinner.MaterialSpinner>
+
+                    <fr.ganfra.materialspinner.MaterialSpinner
+                        android:layout_margin="@dimen/space_normal"
+                        android:id="@+id/spinnerDecimalSeparators"
+                        android:entries="@array/decimal_separators"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ms_multiline="false"
+                        app:ms_hint="@string/decimal_separator">
+                    </fr.ganfra.materialspinner.MaterialSpinner>
+
+                </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <fr.ganfra.materialspinner.MaterialSpinner
+                        android:layout_margin="@dimen/space_normal"
+                        android:id="@+id/spinnerDecimals"
+                        android:entries="@array/decimals"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ms_multiline="false"
+                        app:ms_hint="@string/decimals">
+                    </fr.ganfra.materialspinner.MaterialSpinner>
+
+                    <fr.ganfra.materialspinner.MaterialSpinner
+                        android:layout_margin="@dimen/space_normal"
+                        android:id="@+id/spinnerSymbolFormat"
+                        android:entries="@array/symbol_formats"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ms_multiline="false"
+                        app:ms_hint="@string/currency_symbol_format">
+                    </fr.ganfra.materialspinner.MaterialSpinner>
+        </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <CheckBox android:layout_width="wrap_content"
+                        style="@style/CheckBox"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/is_default"
+                        android:text="@string/is_default"/>
+                </LinearLayout>
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+
+    <include layout="@layout/toolbar"/>
+
+
+</android.support.design.widget.CoordinatorLayout>
+
