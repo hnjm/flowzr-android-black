@@ -53,7 +53,7 @@ public class ReportsListFragment extends ListFragment {
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		setHasOptionsMenu(true);
-    	return inflater.inflate(R.layout.reports_list, container, false);
+    	return inflater.inflate(R.layout.entity_list, container, false);
 	}
 	
 	@Override

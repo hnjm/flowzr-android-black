@@ -314,7 +314,7 @@ public class CategoryListFragment extends AbstractListFragment {
 	
 	@Override
 	protected String getMyTitle() {
-		return getString(R.string.category);
+		return getString(R.string.categories);
 	}
 
 }

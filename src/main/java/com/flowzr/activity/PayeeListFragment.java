@@ -31,7 +31,7 @@ public class PayeeListFragment extends MyEntityListFragment<Payee> {
 
     @Override
     protected String getMyTitle() {
-        return getString(R.string.payee);
+        return getString(R.string.payees);
     }
 
     @Override

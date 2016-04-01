@@ -12,9 +12,11 @@
 package com.flowzr.activity;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,7 +50,13 @@ public class LocationsListFragment extends AbstractListFragment {
 		inflater.inflate(R.menu.add, menu);    
 		super.onCreateOptionsMenu(menu, inflater);
 	}
-	
+
+	public void onAttach(Activity a) {
+		super.onAttach(a);
+		setHasOptionsMenu(true);
+		activity=(MainActivity)a;
+	}
+
 //	@Override
 //	protected List<MenuItemInfo> createContextMenus(long id) {
 //		List<MenuItemInfo> menus = super.createContextMenus(id);
@@ -105,18 +113,16 @@ public class LocationsListFragment extends AbstractListFragment {
 
 	@Override
 	protected String getMyTitle() {
-		return getString(R.string.location);
+		return getString(R.string.locations);
 	}
 
 	@Override
 	protected void viewItem(View v, int position, long id) {
 		MyLocation e = em.load(MyLocation.class, id);
-		Intent intent = new Intent(this.getActivity(), EntityListActivity.class);
 		Criteria blotterFilter = Criteria.eq(BlotterFilter.LOCATION_ID, String.valueOf(e.id));
-		blotterFilter.toIntent(e.name, intent);
-		intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		startActivity(intent);
+		Bundle bundle = new Bundle();
+		blotterFilter.toBundle(e.name,bundle);
+		activity.onFragmentMessage(FragmentAPI.REQUEST_BLOTTER,bundle);
 	}
 
 

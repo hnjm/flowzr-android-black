@@ -27,7 +27,7 @@
         <item name="colorAccent">@color/f_blue</item>
 
          <!-- drawer navigationicon  edit tooltips -->
-        <item name="android:textColorSecondary">@color/f_light_darker1</item> 
+        <item name="android:textColorSecondary">@color/f_light</item> 
         <!-- toobar -->
         <item name="titleTextColor">@color/f_blue_lighter3</item>
         <item name="subtitleTextColor">@color/f_blue_lighter2</item>

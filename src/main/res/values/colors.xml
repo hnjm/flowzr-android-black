@@ -85,7 +85,7 @@
     <!-- Text -->
     <!-- ======================================================================================================== -->
     <color name="text_accent">@color/f_green_lighter1</color>
-    <color name="text_primary">@color/f_light_darker1</color>
+    <color name="text_primary">#FFF</color>
     <color name="text_primary_inverted">@color/f_dark_lighter1</color>
     <color name="text_secondary">@color/f_light_darker5</color>
     <color name="text_green">@color/positive_amount</color>

@@ -137,7 +137,7 @@ public class CurrencyListFragment extends AbstractListFragment {
 
 	@Override
 	protected String getMyTitle() {
-		return getString(R.string.currency);
+		return getString(R.string.currencies);
 	}
 }
 

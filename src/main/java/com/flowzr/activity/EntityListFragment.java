@@ -12,6 +12,8 @@ package com.flowzr.activity;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ListAdapter;
 
@@ -46,9 +48,13 @@ public class EntityListFragment extends AbstractListFragment {
 		setListAdapter(createAdapter(null));
 	}
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
 
-
-	@Override
+    @Override
 	protected Cursor createCursor() {
 		return null;
 	}

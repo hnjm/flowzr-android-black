@@ -16,6 +16,7 @@
     android:layout_height="match_parent">
     
     <ListView
+        android:contentDescription="@string/entities"
         android:id="@android:id/list"
         style="@style/ListView" />
 

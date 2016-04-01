@@ -139,7 +139,7 @@ public class MainActivity  extends AbstractActionBarActivity
             switch (startupScreen.ordinal()) {
                 case 3: // reports
                     Bundle bundle = new Bundle();
-                    bundle.putBoolean(EntityListActivity.REQUEST_REPORTS, true);
+                    bundle.putBoolean(FragmentAPI.REQUEST_REPORTS, true);
                     Fragment f = new EntityListFragment();
                     f.setArguments(bundle);
                     loadFragment(f);

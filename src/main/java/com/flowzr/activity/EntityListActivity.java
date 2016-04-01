@@ -84,14 +84,18 @@ public class EntityListActivity extends AbstractActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Toast.makeText(this, R.string.integrity_fix_in_progress, Toast.LENGTH_SHORT).show();
-	    Intent intent=getIntent();
-	    if (intent.hasExtra(FragmentAPI.EXTRA_REPORT_TYPE)
-	    		|| intent.hasExtra(REQUEST_REPORTS)
-	    		|| intent.hasExtra(REQUEST_PLANNER)) {
-	    	setContentView(R.layout.main_reports);  	    	
-	    } else {
-	    	setContentView(R.layout.main_entities);  
-	    }
+		setContentView(R.layout.main_entities);
+
+
+/**
+ * 		Intent intent=getIntent();
+ if (intent.hasExtra(FragmentAPI.EXTRA_REPORT_TYPE)
+ || intent.hasExtra(REQUEST_REPORTS)
+ || intent.hasExtra(REQUEST_PLANNER)) {
+ setContentView(R.layout.main_reports);
+ } else {
+
+ }
 		initToolbar();
 		setupDrawer();
 
@@ -229,6 +233,8 @@ public class EntityListActivity extends AbstractActionBarActivity {
 			transaction.replace(R.id.fragment_container,new EntityListFragment());
 		}
 		transaction.commit();
+
+		**/
 	}
 
 	@Override

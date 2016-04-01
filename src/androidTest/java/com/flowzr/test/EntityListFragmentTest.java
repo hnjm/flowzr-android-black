@@ -13,109 +13,125 @@
 package com.flowzr.test;
 
 
+import android.content.res.Resources;
+import android.support.annotation.StringRes;
+import android.support.test.espresso.NoMatchingViewException;
+import android.support.test.espresso.ViewInteraction;
+import android.support.test.espresso.assertion.ViewAssertions;
+import android.support.test.espresso.contrib.DrawerActions;
+import android.support.test.espresso.matcher.BoundedMatcher;
+import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
+import android.test.suitebuilder.annotation.LargeTest;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.flowzr.R;
+import com.flowzr.activity.MainActivity;
+
+import com.flowzr.model.EntityType;
+
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 
-import android.content.res.Resources;
-import android.support.annotation.StringRes;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.ViewInteraction;
-import android.support.test.espresso.action.ViewActions;
-import android.support.test.espresso.assertion.ViewAssertions;
-import android.support.test.espresso.contrib.DrawerActions;
-import android.support.test.espresso.matcher.BoundedMatcher;
-import android.support.test.espresso.matcher.ViewMatchers;
-import android.support.v7.widget.Toolbar;
-import android.test.suitebuilder.annotation.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.TextClock;
-import android.widget.TextView;
+import javax.persistence.Entity;
 
-import com.flowzr.activity.MainActivity;
-import com.flowzr.R;
-import com.flowzr.activity.ReportFragment;
-import com.flowzr.activity.ReportsListFragment;
-import com.flowzr.report.Report;
-import com.flowzr.report.ReportType;
-
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
-import static android.support.test.espresso.matcher.ViewMatchers.isFocusable;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.matcher.ViewMatchers.withTagKey;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.core.Is.is;
 
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class ReportsListFragmentTest extends MyFragmentTest {
+public class EntityListFragmentTest extends MyFragmentTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
             MainActivity.class);
 
     @Test
-    public void openReportsList () {
+    public void openEntityList () {
         onView(withId(R.id.drawer_V)).perform(DrawerActions.open());
-        onView(Matchers.allOf(ViewMatchers.withText(R.string.reports))).perform(click());
+        onView(Matchers.allOf(ViewMatchers.withText(R.string.entities))).perform(click());
     }
 
     @Test
-    public void testReportListTitleAndSize() {
-        openReportsList();
-        onView(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE),
-                withListSize(ReportsListFragment.reports.length),
-                withId(R.id.list),
-                isAssignableFrom(ListView.class)
-        ));
-        matchToolbarTitle(R.string.reports);
+    public void testEntityListNoFilter() {
+        openEntityList();
+        // http://stackoverflow.com/questions/20807131/espresso-return-boolean-if-view-exists
+        try {
+            onView(withId(R.id.action_filter)).check(matches(isDisplayed()));
+            //view is displayed logic
+            onView(withId(-1)).check(matches(isDisplayed()));
+        } catch (NoMatchingViewException e) {
+            // test pass
+        }
+        try {
+            onView(withId(R.id.action_add)).check(matches(isDisplayed()));
+            //view is displayed logic
+            onView(withId(-1)).check(matches(isDisplayed()));
+        } catch (NoMatchingViewException e) {
+            // test pass
+        }
     }
 
 
     @Test
-    public void test1stLvlConventionalReports() {
-        ReportType[] reports = new ReportType[]{
-                ReportType.BY_PERIOD,
-                ReportType.BY_CATEGORY,
-                ReportType.BY_PAYEE,
-                ReportType.BY_LOCATION,
-                ReportType.BY_PROJECT,
-                ReportType.BY_ACCOUNT_BY_PERIOD,
-                ReportType.BY_CATEGORY_BY_PERIOD,
-                ReportType.BY_PAYEE_BY_PERIOD,
-                ReportType.BY_LOCATION_BY_PERIOD,
-                ReportType.BY_PROJECT_BY_PERIOD
+    public void testEntityListTitleAndSize() {
+        openEntityList();
+        onView(allOf(withContentDescription(R.string.entities))).check (ViewAssertions.matches (withListSize (EntityType.values().length)));
+            matchToolbarTitle(R.string.entities);
+    }
+
+
+    @Test
+    public void test1stLvlEntityList() {
+
+        EntityType[] entities = new EntityType[]{
+                EntityType.CURRENCIES,
+                EntityType.EXCHANGE_RATES,
+                EntityType.CATEGORIES,
+                EntityType.PAYEES,
+                EntityType.PROJECTS,
+                EntityType.LOCATIONS
         };
 
-        openReportsList();
-        onView(Matchers.allOf(ViewMatchers.withText(ReportType.BY_PERIOD.titleId))).perform(click());
-        matchToolbarTitle(ReportType.BY_PERIOD.titleId);
+        openEntityList();
+        // will fail if drawer have equal number of item :(
+        onView(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), ViewMatchers.withText(R.string.currencies))).perform(click());
+        matchToolbarTitle(EntityType.CURRENCIES.titleId);
         pressBack();
-        onView(Matchers.allOf(ViewMatchers.withText(ReportType.BY_PERIOD.titleId))).perform(click());
-        matchToolbarTitle(ReportType.BY_PERIOD.titleId);
+        onView(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE),isAssignableFrom(AppCompatTextView.class), ViewMatchers.withText(R.string.currencies))).perform(click());
+        matchToolbarTitle(EntityType.CURRENCIES.titleId);
         pressBack();
 
-        for (int i=0;i<reports.length;i++) {
-                onView(Matchers.allOf(ViewMatchers.withText(ReportType.values()[i].titleId))).perform(click());
-                if (reports[i].isConventionalBarReport()) {
-                    matchToolbarTitle(ReportType.values()[i].titleId);
-                }
+        for (int i=0;i<entities.length;i++) {
+            onView(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE),
+                    isAssignableFrom(AppCompatTextView.class),
+                    ViewMatchers.withText(EntityType.values()[i].titleId))).perform(click());
+
+                //onView(Matchers.allOf(ViewMatchers.withText(EntityType.values()[i].titleId))).perform(click());
+                //if (reports[i].isConventionalBarReport()) {
+
+                //}
+                matchToolbarTitle(EntityType.values()[i].titleId);
                 pressBack();
         }
     }

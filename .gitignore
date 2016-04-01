@@ -5,8 +5,12 @@ prepare_keys.sh
 *.jar
 *.apk
 local.properties
+.DS_Store
+*/.DS_Store
 #joe
 *~
+src/main/AndroidManifest.xml-b
+
 .gradle/
 ## Directory-based project format:
 .idea/

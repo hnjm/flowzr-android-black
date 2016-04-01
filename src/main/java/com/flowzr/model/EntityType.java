@@ -28,21 +28,19 @@ import com.flowzr.utils.EntityEnum;
 
 public enum EntityType implements EntityEnum {
 
-    CURRENCIES(R.string.currencies, R.drawable.ic_attach_money, new CurrencyListFragment()),
-    EXCHANGE_RATES(R.string.exchange_rates, R.drawable.ic_trending_up, new ExchangeRatesListFragment()),
-    CATEGORIES(R.string.categories, R.drawable.ic_label, new CategoryListFragment()),
-    PAYEES(R.string.payees, R.drawable.ic_person, new PayeeListFragment()),
-    PROJECTS(R.string.projects, R.drawable.ic_star_border, new ProjectListFragment()),
-    LOCATIONS(R.string.locations, R.drawable.ic_my_location, new LocationsListFragment());
+    CURRENCIES(R.string.currencies, R.drawable.ic_attach_money),
+    EXCHANGE_RATES(R.string.exchange_rates, R.drawable.ic_trending_up),
+    CATEGORIES(R.string.categories, R.drawable.ic_label),
+    PAYEES(R.string.payees, R.drawable.ic_person),
+    PROJECTS(R.string.projects, R.drawable.ic_star_border),
+    LOCATIONS(R.string.locations, R.drawable.ic_my_location);
 
     public final int titleId;
     public final int iconId;
-    public final Fragment actitivyClass;
 
-    EntityType(int titleId, int iconId, Fragment activityClass) {
+    EntityType(int titleId, int iconId) {
         this.titleId = titleId;
         this.iconId = iconId;
-        this.actitivyClass = activityClass;
     }
 
     @Override
@@ -56,9 +54,21 @@ public enum EntityType implements EntityEnum {
     }
 
     public Fragment getActivityClass() {
-        return actitivyClass;
+        switch (this.titleId) {
+            case R.string.currencies:
+                return new CurrencyListFragment();
+            case R.string.exchange_rates:
+                return new ExchangeRatesListFragment();
+            case R.string.categories:
+                return new CategoryListFragment();
+            case R.string.payees:
+                return new PayeeListFragment();
+            case R.string.projects:
+                return new ProjectListFragment();
+            case R.string.locations:
+                return new LocationsListFragment();
+        }
+        return null;
     }
 
-
-    
 }

@@ -11,6 +11,7 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -37,10 +38,16 @@ public abstract class MyEntityListFragment<T extends MyEntity> extends AbstractL
 	private MainActivity activity;
 
 	public MyEntityListFragment(Class<T> clazz) {
-		super(R.layout.project_list);
+		super(R.layout.entity_list);
         this.clazz = clazz;
 	}
-	
+
+	public void onAttach(Activity a) {
+		super.onAttach(a);
+		setHasOptionsMenu(true);
+		activity=(MainActivity)a;
+	}
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.clear();		

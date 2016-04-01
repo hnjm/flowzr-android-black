@@ -33,7 +33,7 @@ public class ProjectListFragment extends MyEntityListFragment<Project> {
 
     @Override
     protected String getMyTitle() {
-        return getString(R.string.project);
+        return getString(R.string.projects);
     }
 
     @SuppressWarnings("unchecked")

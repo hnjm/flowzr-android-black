@@ -409,7 +409,7 @@ public class ExchangeRatesListFragment extends AbstractListFragment {
 
 	@Override
 	protected String getMyTitle() {
-		return getString(R.string.exchange_rate);
+		return getString(R.string.exchange_rates);
 	}
 
 }
