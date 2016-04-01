@@ -53,16 +53,16 @@ public class ReportListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.report_list_item, parent, false);
 			h = new Holder();
-			h.icon = (ImageView)convertView.findViewById(R.id.icon);
+			//h.icon = (ImageView)convertView.findViewById(R.id.icon);
 			h.title = (TextView)convertView.findViewById(R.id.line1);
-			//h.label = (TextView)convertView.findViewById(R.id.label);
+			h.label = (TextView)convertView.findViewById(R.id.label);
 			convertView.setTag(h);
 		} else {
 			h = (Holder)convertView.getTag();
 		}
 		ReportType r = reports[position];
 		h.title.setText(r.titleId);
-		//h.label.setText(r.summaryId);
+		h.label.setText(r.summaryId);
 		//h.icon.setImageResource(r.iconId);
 		return convertView;
 	}

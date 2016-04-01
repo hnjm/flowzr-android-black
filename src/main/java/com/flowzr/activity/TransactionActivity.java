@@ -538,12 +538,11 @@ public class TransactionActivity extends AbstractTransactionActivity {
                 Intent intent = new Intent(this.getApplicationContext(), TransactionPreferencesActivity.class);
                 startActivityForResult(intent, BLOTTER_PREFERENCES);
                 return true;
-            case R.id.action_done:
+            case R.id.saveButton:
         		onOKClicked();
         		 saveAndFinish();
         		return true;
-            /**
-        	case R.id.action_done_new:
+        	case R.id.saveAddButton:
         		onOKClicked();
                 Intent intent2= getIntent();
         		intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
@@ -552,14 +551,10 @@ public class TransactionActivity extends AbstractTransactionActivity {
                     startActivityForResult(intent2, -1);
                     return true;
                 }
-             **/
         	case R.id.action_cancel:
                 setResult(RESULT_CANCELED);
                 finish();
                 return true;
-        	//case R.id.action_location_found:
-        	//	selectCurrentLocation(true);
-            //    return true;
         }
         return super.onOptionsItemSelected(item);
     }

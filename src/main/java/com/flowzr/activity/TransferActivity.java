@@ -54,21 +54,21 @@ public class TransferActivity extends AbstractTransactionActivity {
 		}
 		ToggleButton toggleView = (ToggleButton) findViewById(R.id.toggle);
 		toggleView.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_swap_vert));
-		findViewById(R.id.saveAddButton).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				onOKClicked();
-				Intent intent2 = new Intent(getApplicationContext(), TransferActivity.class);
-				intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
-				intent2.putExtra(ACCOUNT_ID_EXTRA, transaction.fromAccountId);
-				if (saveAndFinish()) {
+		if (findViewById(R.id.saveAddButton)!=null) {
+			findViewById(R.id.saveAddButton).setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					onOKClicked();
+					Intent intent2 = new Intent(getApplicationContext(), TransferActivity.class);
 					intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
-					startActivityForResult(intent2, -1);
+					intent2.putExtra(ACCOUNT_ID_EXTRA, transaction.fromAccountId);
+					if (saveAndFinish()) {
+						intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
+						startActivityForResult(intent2, -1);
+					}
 				}
-			}
-		});
-
-
+			});
+		}
 	}
 
     protected void fetchCategories() {
@@ -149,6 +149,19 @@ public class TransferActivity extends AbstractTransactionActivity {
     {
         switch (item.getItemId())
         {
+			case R.id.saveButton:
+				onOKClicked();
+				saveAndFinish();
+				return true;
+			case R.id.saveAddButton:					onOKClicked();
+				Intent intent2 = new Intent(getApplicationContext(), TransferActivity.class);
+				intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
+				intent2.putExtra(ACCOUNT_ID_EXTRA, transaction.fromAccountId);
+				if (saveAndFinish()) {
+					intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
+					startActivityForResult(intent2, -1);
+				}
+				return true;
 			case R.id.action_settings:
 				Intent intent = new Intent(this.getApplicationContext(), TransactionPreferencesActivity.class);
 				startActivityForResult(intent, BLOTTER_PREFERENCES);

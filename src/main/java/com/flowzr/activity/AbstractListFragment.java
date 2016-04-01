@@ -56,16 +56,18 @@ public abstract class AbstractListFragment extends ListFragment implements Refre
 	protected DatabaseAdapter db;
 	protected MyEntityManager em;
 	protected ImageButton bAdd;
-    protected long selectedId = -1;	
-	
-	
+    protected long selectedId = -1;
+	protected MainActivity activity;
+
+
 	protected AbstractListFragment(int contentId) {
 		this.contentId = contentId;				
 	}
 	
-    public void onAttach(Activity activity) {
-    	super.onAttach(activity);
+    public void onAttach(Activity a) {
+    	super.onAttach(a);
     	setHasOptionsMenu(true);
+		activity=(MainActivity)a;
     }
     
     public void onCreate(Bundle savedInstanceState)

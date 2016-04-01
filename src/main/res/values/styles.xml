@@ -87,11 +87,15 @@
         <item name="android:scaleType">fitXY</item>
     </style>
 
-    <!-- ======================================================================================================== -->
-    <!-- Financisto Dialog -->
-    <style name="FinancistoDialog" parent="@style/Theme.AppCompat">
+    <!-- ========================================================================================================
+     Financisto Dialog
+    <style name="FinancistoDialog" parent="@android:style/Theme.Dialog">
         <item name="android:textColor">@color/text_primary</item>
+        <item name="android:background">@color/f_dark_lighter3</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
     </style>
+
+    -->
 
     <!-- ======================================================================================================== -->
     <!-- Spinner theme (to add parent theme -->

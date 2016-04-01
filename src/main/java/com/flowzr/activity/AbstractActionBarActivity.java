@@ -12,11 +12,15 @@
 package com.flowzr.activity;
 
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
@@ -39,9 +43,12 @@ import android.view.WindowManager;
 import com.flowzr.R;
 import com.flowzr.utils.PinProtection;
 
+import java.util.List;
+
 
 public class AbstractActionBarActivity  extends AppCompatActivity {
-    //private Toolbar actionBar;
+
+    protected final String STATE_TABID="tabId";
     protected static final int CHANGE_PREFERENCES = 600;
     protected static final int ACTIVITY_BACKUP = 800;
 	protected DrawerLayout mDrawerLayout;
@@ -57,6 +64,105 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         super.attachBaseContext(base);
         MultiDex.install(this); //Whoo whoo ...
     }
+
+
+    public static Intent createExplicitFromImplicitIntent(Context context, Intent implicitIntent) {
+        //Retrieve all services that can match the given intent
+        PackageManager pm = context.getPackageManager();
+        List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
+        //Make sure only one match was found
+        if (resolveInfo == null || resolveInfo.size() != 1) {
+            return null;
+        }
+        //Get component info and create ComponentName
+        ResolveInfo serviceInfo = resolveInfo.get(0);
+        String packageName = serviceInfo.serviceInfo.packageName;
+        String className = serviceInfo.serviceInfo.name;
+        ComponentName component = new ComponentName(packageName, className);
+
+        //Create a new intent. Use the old one for extras and such reuse
+        Intent explicitIntent = new Intent(implicitIntent);
+
+        //Set the component to be explicit
+        explicitIntent.setComponent(component);
+
+        return explicitIntent;
+    }
+
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PinProtection.immediateLock(this);
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        PinProtection.unlock(this);
+        if (mDrawerLayout!=null ) {
+            mDrawerToggle.onConfigurationChanged(newConfig);
+            if (newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE) {
+                mDrawerLayout.findViewById(R.id.drawer_header).setVisibility(View.GONE);
+            } else {
+                mDrawerLayout.findViewById(R.id.drawer_header).setVisibility(View.VISIBLE);
+            }
+        }
+        int j=viewPager.getCurrentItem();
+        recreateViewPagerAdapter();
+        viewPager.setCurrentItem(j);
+    }
+
+    protected void recreateViewPagerAdapter() {
+        Intent intent= getIntent();
+        mAdapter = new MyAdapter(getSupportFragmentManager(),intent);
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(mAdapter);
+        viewPager.setOffscreenPageLimit(3);
+        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {
+            }
+
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        setTitle(R.string.accounts);
+                        break;
+                    case 2:
+                        setTitle(R.string.budgets);
+                        break;
+                }
+            }
+        });
+
+        mAdapter.notifyDataSetChanged();
+
+        //handle setting title after viewpager generate title at loading
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                switch (viewPager.getCurrentItem()) {
+                    case 0:
+                        setTitle(R.string.accounts);
+                        break;
+                    case 2:
+                        setTitle(R.string.budgets);
+                        break;
+                }
+            }
+        }, 600);
+
+    }
+
 
     public static class MyAdapter extends FragmentPagerAdapter {
         Bundle bundle;
@@ -147,22 +253,9 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        PinProtection.unlock(this);
-        if (mDrawerLayout!=null ) {
-            mDrawerToggle.onConfigurationChanged(newConfig);
-            if (newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE) {
-                mDrawerLayout.findViewById(R.id.drawer_header).setVisibility(View.GONE);
-            } else {
-                mDrawerLayout.findViewById(R.id.drawer_header).setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt(STATE_TABID,viewPager.getCurrentItem());
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
@@ -174,8 +267,55 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        PinProtection.lock(this);
+    }
 
-        //PinProtection.lock(this);
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        PinProtection.unlock(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+            {
+                if (mDrawerLayout!=null) {
+                    if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                        mDrawerLayout.closeDrawers();
+                    } else {
+                        mDrawerLayout.openDrawer(GravityCompat.START);
+                    }
+                }
+                return true;
+            }
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isTaskRoot()) {
+
+            if (mDrawerLayout!=null) {
+                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mDrawerLayout.closeDrawers();
+                    return;
+                }
+            }
+
+            if (viewPager.getCurrentItem()!=0) {
+                viewPager.setCurrentItem(0);
+            } else {
+                super.onBackPressed();
+            }
+        } else {
+            super.onBackPressed();
+        }
     }
 
 

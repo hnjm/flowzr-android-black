@@ -13,6 +13,7 @@ package com.flowzr.report;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 
 import com.flowzr.activity.BlotterFragment;
 import com.flowzr.activity.EntityListActivity;
@@ -163,22 +164,37 @@ public abstract class Report {
 		return c.getLong(0);
 	}
 
-	public Intent createActivityIntent(Context context, DatabaseAdapter db, WhereFilter parentFilter, long id) {
-		WhereFilter filter = WhereFilter.empty();
-		Criteria c = parentFilter.get(BlotterFilter.DATETIME);
-		if (c != null) {
-			filter.put(c);
-		}
-		c = getCriteriaForId(db, id);
-		if (c != null) {
-			filter.put(c);
-		}
+    public Bundle createFragmentBundle(Context context, DatabaseAdapter db, WhereFilter parentFilter, long id) {
+        Bundle bundle= new Bundle();
+        //bundle.putBoolean(MainActivity.REQUEST_BLOTTER,true);
+        WhereFilter filter = createActivityFilter(context,db,parentFilter,id);
+        filter.eq("from_account_is_include_into_totals", "1");
+        filter.toBundle(bundle);
+        return bundle;
+    }
+
+	public Intent createActivityIntent (Context context, DatabaseAdapter db, WhereFilter parentFilter, long id) {
+		WhereFilter filter = createActivityFilter(context,db,parentFilter,id);
         filter.eq("from_account_is_include_into_totals", "1");
         Intent intent = new Intent(context, EntityListActivity.class);
         intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
 		filter.toIntent(intent);
 		return intent;
 	}
+
+    public WhereFilter createActivityFilter(Context context, DatabaseAdapter db, WhereFilter parentFilter, long id) {
+        WhereFilter filter = WhereFilter.empty();
+        Criteria c = parentFilter.get(BlotterFilter.DATETIME);
+        if (c != null) {
+            filter.put(c);
+        }
+        c = getCriteriaForId(db, id);
+        if (c != null) {
+            filter.put(c);
+        }
+        return filter;
+    }
+
 
     protected abstract Criteria getCriteriaForId(DatabaseAdapter db, long id);
 

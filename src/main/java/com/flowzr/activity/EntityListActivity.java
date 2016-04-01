@@ -25,6 +25,7 @@ import android.text.SpannableString;
 import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.flowzr.R;
 
@@ -82,8 +83,9 @@ public class EntityListActivity extends AbstractActionBarActivity {
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Toast.makeText(this, R.string.integrity_fix_in_progress, Toast.LENGTH_SHORT).show();
 	    Intent intent=getIntent();
-	    if (intent.hasExtra(ReportsListFragment.EXTRA_REPORT_TYPE)
+	    if (intent.hasExtra(FragmentAPI.EXTRA_REPORT_TYPE)
 	    		|| intent.hasExtra(REQUEST_REPORTS)
 	    		|| intent.hasExtra(REQUEST_PLANNER)) {
 	    	setContentView(R.layout.main_reports);  	    	
@@ -145,7 +147,7 @@ public class EntityListActivity extends AbstractActionBarActivity {
 		});
 
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		if (intent.hasExtra(ReportsListFragment.EXTRA_REPORT_TYPE)) {
+		if (intent.hasExtra(FragmentAPI.EXTRA_REPORT_TYPE)) {
 				intent.putExtra(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.report);
 				Fragment f= new ReportFragment();
 				f.setArguments(intent.getExtras());

@@ -12,7 +12,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flowzr" android:versionName="1.7.6" android:versionCode="236"
+    package="com.flowzr" android:versionName="1.7.6" android:versionCode="240"
     android:installLocation="internalOnly">
 
     <!-- Maps API needs OpenGL ES 2.0. -->
@@ -62,10 +62,12 @@
 		    android:description="@string/app_description"
             android:name="android.support.multidex.MultiDexApplication">
 
+        <!-- release key
 
 		<uses-library android:name="com.google.android.maps" />
 
-        <!-- release key -->
+         -->
+
         <meta-data android:name="com.google.android.maps.v2.API_KEY"
                     android:value="AIzaSyBD06B06eal5OrFtJwi58Zqsg_wsRq8jpo"/>
 
@@ -96,7 +98,7 @@
 
 		<receiver android:name=".activity.ScheduledAlarmReceiver">
 		    <intent-filter>
-		        <action android:name=".SCHEDULED_ALARM" />
+		        <action android:name="com.flowzr.SCHEDULED_ALARM" />
                 <action android:name="com.flowzr.SCHEDULED_BACKUP" />
                 <action android:name="com.flowzr.SCHEDULED_SYNC" />
 		        <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -277,31 +279,7 @@
         <activity android:name=".activity.CategorySelectorActivity" 
             android:label="@string/select_category">
         </activity>
-<!--
-        <activity android:name=".activity.AccountListTotalsDetailsActivity" android:label="@string/totals"
-                  android:theme="@style/FinancistoDialog"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:parentActivityName=".activity.MainActivity">
-		    <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".activity.MainActivity" />
-        </activity>
 
-        <activity android:name=".activity.BlotterTotalsDetailsActivity" android:label="@string/totals"
-                  android:theme="@style/FinancistoDialog" android:configChanges="orientation|keyboardHidden|screenSize" android:parentActivityName=".MainActivity">
-		    <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".activity.MainActivity" />
-        </activity>
-
-        <activity android:name=".activity.BudgetListTotalsDetailsActivity" android:label="@string/totals"
-                  android:theme="@style/FinancistoDialog" android:configChanges="orientation|keyboardHidden|screenSize"
-            android:parentActivityName=".activity.MainActivity">
-		    <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".activity.MainActivity" />
-        </activity>
--->
         <activity android:name=".activity.PurgeAccountActivity" android:label="@string/delete_old_transactions"/>
 
         <activity android:name=".activity.FlowzrSyncActivity" android:label="@string/flowzr_sync" 

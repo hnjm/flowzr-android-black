@@ -13,11 +13,12 @@
 package com.flowzr.activity;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +34,15 @@ import com.flowzr.report.ReportType;
 
 
 public class ReportsListFragment extends ListFragment {
-	
 
-	public static final String EXTRA_REPORT_TYPE = "reportType";
-	
+	FragmentAPI mCallback;
+    private Activity activity;
+
+    public interface OnReportSelectedListener {
+        void onReportSelected(String title, long id);
+    }
+
+
 	public final ReportType[] reports = new ReportType[]{
 			ReportType.BY_PERIOD,
 			ReportType.BY_CATEGORY,
@@ -62,33 +68,29 @@ public class ReportsListFragment extends ListFragment {
 		getActivity().setTitle(R.string.reports);
 		setListAdapter(new ReportListAdapter(this.getView().getContext(), reports));
 	}
-	
-	
+
+	@Override
+    public void onAttach(Context c) {
+		super.onAttach(c);
+        activity = (MainActivity) c;
+	}
+
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		Bundle bundle = new Bundle();
-		Fragment fragment;
-		// Conventional Bars reports
-		if (reports[position].isConventionalBarReport()) {
-			bundle.putString(EXTRA_REPORT_TYPE, reports[position].name());
-			fragment= new ReportFragment(); 			
-		} else {
-			bundle.putInt(Report2DChart.REPORT_TYPE, position);
-			fragment= new Report2DChartFragment();
-		}
-		fragment.setArguments(bundle);
-		if (getActivity().findViewById(R.id.fragment_land_container)!=null) {
-			FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-			transaction.replace(R.id.fragment_land_container,fragment);
-			//transaction.addToBackStack(null);
-			transaction.commit();			
-		} else {
-			((EntityListActivity) getActivity()).loadFragment(fragment);	
-		}
+        Bundle bundle=new Bundle();
+        if (reports[position].isConventionalBarReport()) {
+            bundle.putBoolean(FragmentAPI.CONVENTIONAL_REPORTS, true);
+        } else {
+            //bundle.putBoolean(FragmentAPI.CONVENTIONAL_REPORTS, false);
+            bundle.putInt(Report2DChart.REPORT_TYPE, position);
+        }
+        bundle.putString(FragmentAPI.EXTRA_REPORT_TYPE, reports[position].name());
+        Log.e("flowzr","ReportsListFragment viewItem");
+        ((FragmentAPI) activity).onFragmentMessage(FragmentAPI.REQUEST_REPORTS,bundle);
 	}
 
 	public static Report createReport(Context context, MyEntityManager em, Bundle extras) {
-		String reportTypeName = extras.getString(EXTRA_REPORT_TYPE);
+		String reportTypeName = extras.getString(FragmentAPI.EXTRA_REPORT_TYPE);
 		ReportType reportType = ReportType.valueOf(reportTypeName);
         Currency c = em.getHomeCurrency();
 		return reportType.createReport(context, c);

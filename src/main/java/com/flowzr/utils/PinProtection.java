@@ -45,7 +45,6 @@ public class PinProtection {
         @Override
         public LockState lock(Context c) {
             lockTime = System.currentTimeMillis();
-            //Log.e("flowzr","locktime: " + String.valueOf(lockTime));
             return this;
         }
 

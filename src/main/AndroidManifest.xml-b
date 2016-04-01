@@ -12,7 +12,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flowzr" android:versionName="1.7.6" android:versionCode="235"
+    package="com.flowzr" android:versionName="1.7.6" android:versionCode="236"
     android:installLocation="internalOnly">
 
     <!-- Maps API needs OpenGL ES 2.0. -->
@@ -62,10 +62,10 @@
 		    android:description="@string/app_description"
             android:name="android.support.multidex.MultiDexApplication">
 
-<!--
-		<uses-library android:name="com.google.android.maps" />
--->
-        <!-- release key -->
+
+
+
+        <!-- release key 	<uses-library android:name="com.google.android.maps" /> -->
         <meta-data android:name="com.google.android.maps.v2.API_KEY"
                     android:value="your_gmap_key"/>
 
@@ -279,7 +279,7 @@
         </activity>
 <!--
         <activity android:name=".activity.AccountListTotalsDetailsActivity" android:label="@string/totals"
-                  android:theme="@style/FinancistoDialog"
+
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:parentActivityName=".activity.MainActivity">
 		    <meta-data
@@ -288,7 +288,7 @@
         </activity>
 
         <activity android:name=".activity.BlotterTotalsDetailsActivity" android:label="@string/totals"
-                  android:theme="@style/FinancistoDialog" android:configChanges="orientation|keyboardHidden|screenSize" android:parentActivityName=".MainActivity">
+                  android:configChanges="orientation|keyboardHidden|screenSize" android:parentActivityName=".MainActivity">
 		    <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".activity.MainActivity" />

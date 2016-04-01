@@ -480,11 +480,10 @@ public class ReportFragment extends AbstractListFragment implements RefreshSuppo
 	@Override
 	protected void viewItem(View v, int position, long id) {
 		if (currentReport != null) {
-			Intent intent = currentReport.createActivityIntent(this.getActivity(), db, WhereFilter.copyOf(filter), id);
-			startActivity(intent);		
-			//getActivity().finish();
+            Log.e("flowzr","ReportFragment viewItem");
+            Bundle bundle = currentReport.createFragmentBundle(getContext(), db, WhereFilter.copyOf(filter), id);
+            activity.onFragmentMessage(FragmentAPI.REQUEST_REPORTS,bundle);
 		}
-		
 	}
 
 	@Override

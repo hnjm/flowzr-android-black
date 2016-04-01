@@ -14,8 +14,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.flowzr.activity.EntityListActivity;
+import com.flowzr.activity.FragmentAPI;
 import com.flowzr.activity.ReportFragment;
-import com.flowzr.activity.ReportsListFragment;
 import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.filter.Criteria;
@@ -44,7 +44,7 @@ public class CategoryReport extends Report {
 		Intent intent = new Intent(context, EntityListActivity.class);
 		filter.toIntent(intent);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		intent.putExtra(ReportsListFragment.EXTRA_REPORT_TYPE, ReportType.BY_SUB_CATEGORY.name());
+		intent.putExtra(FragmentAPI.EXTRA_REPORT_TYPE, ReportType.BY_SUB_CATEGORY.name());
         intent.putExtra(ReportFragment.FILTER_INCOME_EXPENSE, incomeExpense.name());
 		return intent;
 	}

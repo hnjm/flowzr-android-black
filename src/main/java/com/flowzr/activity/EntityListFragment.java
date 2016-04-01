@@ -22,6 +22,9 @@ import com.flowzr.model.EntityType;
 
 
 public class EntityListFragment extends AbstractListFragment {
+
+	FragmentAPI mCallback;
+
 	
 	
 	public final EntityType[] entities = new EntityType[]{
@@ -66,8 +69,7 @@ public class EntityListFragment extends AbstractListFragment {
 
 	@Override
 	protected void viewItem(View v, int position, long id) {
-		EntityListActivity main=((EntityListActivity)getActivity());
-        main.loadFragment(entities[position].getActivityClass());	
+        activity.loadFragment(entities[position].getActivityClass());
 	}
 
 	@Override

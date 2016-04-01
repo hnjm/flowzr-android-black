@@ -497,9 +497,11 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
 		if (requestCode == 1) {
 			if (resultCode == RESULT_FIRST_USER) {
 				onClick(period, R.id.period_clear);
-			} else if (resultCode == RESULT_OK) {
-				DateTimeCriteria c = WhereFilter.dateTimeFromIntent(data);
-				filter.put(c);
+			} else if (resultCode == RESULT_OK ) {
+				if (data.getStringExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TYPE)!=null) {
+					DateTimeCriteria c = WhereFilter.dateTimeFromIntent(data);
+					filter.put(c);
+				}
 				updatePeriodFromFilter();
 			}
 		}

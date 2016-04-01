@@ -18,14 +18,14 @@
 
 
     <ViewSwitcher android:layout_height="wrap_content" android:layout_gravity="center"
-                  android:id="@+id/switcher" android:layout_width="wrap_content" android:layout_margin="5dp">
+                  android:id="@+id/switcher" android:layout_width="match_parent" android:layout_margin="5dp">
         <TextView android:layout_height="wrap_content"
                   android:gravity="center_vertical|center_horizontal"
                   android:password="true" android:singleLine="true" android:id="@+id/result1"
-                  android:layout_gravity="center" android:layout_width="wrap_content"
+                  android:layout_gravity="center" android:layout_width="match_parent"
                   android:background="@drawable/textfield_default" android:textColor="#000" android:textSize="40sp"/>
         <TextView android:layout_height="wrap_content"
-                  android:layout_width="wrap_content" android:gravity="center_vertical|center_horizontal"
+                  android:layout_width="match_parent" android:gravity="center_vertical|center_horizontal"
                   android:password="true" android:singleLine="true" android:id="@+id/result2"
                   android:background="@drawable/textfield_default" android:textColor="#000" android:textSize="40sp"/>
     </ViewSwitcher>

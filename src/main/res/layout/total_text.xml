@@ -13,6 +13,7 @@
         android:layout_height="72dp"
         android:id="@+id/total_layout"
         android:padding="@dimen/space_small"
+    android:elevation="4dp"
         android:layout_margin="0dp"
         android:layout_width="match_parent"
         android:background="@color/total_bg_color"

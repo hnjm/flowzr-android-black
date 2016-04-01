@@ -14,7 +14,6 @@ package com.flowzr.activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -35,6 +34,7 @@ public abstract class MyEntityListFragment<T extends MyEntity> extends AbstractL
     private final Class<T> clazz;
 
 	private List<T> entities;
+	private MainActivity activity;
 
 	public MyEntityListFragment(Class<T> clazz) {
 		super(R.layout.project_list);
@@ -59,7 +59,8 @@ public abstract class MyEntityListFragment<T extends MyEntity> extends AbstractL
     @Override
 	protected void addItem() {
 		Intent intent = new Intent(MyEntityListFragment.this.getActivity(), getEditActivityClass());
-		startActivityForResult(intent, NEW_ENTITY_REQUEST);
+		//@TODO add editor as fragment
+        startActivityForResult(intent, NEW_ENTITY_REQUEST);
 	}
 
     protected abstract Class<? extends MyEntityActivity> getEditActivityClass();
@@ -100,20 +101,17 @@ public abstract class MyEntityListFragment<T extends MyEntity> extends AbstractL
 	public void editItem(View v, int position, long id) {
 		Intent intent = new Intent(MyEntityListFragment.this.getActivity(), getEditActivityClass());
 		intent.putExtra(MyEntityActivity.ENTITY_ID_EXTRA, id);
+        //@TODO editor to fragments
 		startActivityForResult(intent, EDIT_ENTITY_REQUEST);
 	}	
 	
 	@Override
 	protected void viewItem(View v, int position, long id) {
-
 		T e = em.load(clazz, id);
-		Intent intent = new Intent(this.getActivity(), EntityListActivity.class);
-
 		Criteria blotterFilter = createBlotterCriteria(e);
-        blotterFilter.toIntent(e.title, intent);
-		intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		startActivity(intent);
+		Bundle bundle = new Bundle();
+		blotterFilter.toBundle(e.title,bundle);
+		activity.onFragmentMessage(FragmentAPI.REQUEST_BLOTTER,bundle);
 	}
 
     protected abstract Criteria createBlotterCriteria(T e);

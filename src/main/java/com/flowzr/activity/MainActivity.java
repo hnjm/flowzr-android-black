@@ -12,18 +12,9 @@
 package com.flowzr.activity;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.content.res.Configuration;
-import android.os.Handler;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.GravityCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -41,34 +32,38 @@ import com.flowzr.export.flowzr.FlowzrSyncEngine;
 import com.flowzr.filter.Criteria;
 import com.flowzr.utils.*;
 import com.flowzr.utils.MyPreferences.StartupScreen;
-import java.util.List;
+
 import static com.flowzr.service.DailyAutoBackupScheduler.scheduleNextAutoBackup;
 import static com.flowzr.service.FlowzrAutoSyncScheduler.scheduleNextAutoSync;
-import android.support.design.widget.NavigationView;
 
-public class MainActivity  extends AbstractActionBarActivity implements OnAccountSelectedListener {
+public class MainActivity  extends AbstractActionBarActivity
+        implements OnAccountSelectedListener, FragmentAPI {
 
     static final int CHANGE_PREFERENCES = 600;
 	public static final int TAB_BLOTTER = 1;
-    public static final String REQUEST_BLOTTER = "REQUEST_BLOTTER";
-	public final static String REQUEST_BUDGET_BLOTTER="REQUEST_BUDGET_BLOTTER";
 	public static final String REQUEST_SPLIT_BLOTTER = "REQUEST_SPLIT_BLOTTER";
+	public final static String REQUEST_BLOTTER_TOTALS="REQUEST_BLOTTER_TOTALS";
+
+	public final static String REQUEST_MASS_OP = "REQUEST_MASSOP";
+	public final static String REQUEST_TEMPLATES="REQUEST_TEMPLATES";
+	public final static String REQUEST_EXCHANGE_RATES="REQUEST_EXCHANGE_RATES";
+	public final static String REQUEST_BUDGET_BLOTTER="REQUEST_BUDGET_BLOTTER";
+
+	public final static String REQUEST_PLANNER="REQUEST_PLANNER";
+	public final static String REQUEST_CATEGORY_SELECTOR="REQUEST_CATEGORY_SELECTOR";
+	public final static String REQUEST_SCHEDULED="REQUEST_SCHEDULED";
+	public final static String REQUEST_NEW_TRANSACTION_FROM_TEMPLATE="REQUEST_NEW_TRANSACTION_FROM_TEMPLATE";
+	public final static String REQUEST_BUDGET_TOTALS="REQUEST_BUDGET_TOTALS";
+	public final static String REQUEST_ACCOUNT_TOTALS="REQUEST_ACCOUNT_TOTALS";
+
     public static Activity activity ;
 
-
-
-
-	protected void initUI() {
+    protected void initUI() {
 		activity=this;
 		setContentView(R.layout.main);
 		findViewById(R.id.pager_tab_strip).setVisibility(View.GONE);
 		initToolbar();
 		setupDrawer();
-
-
-
-
-
 
 		if (WebViewDialog.checkVersionAndShowWhatsNewIfNeeded(this)) {
 			if (mDrawerLayout!=null) {
@@ -78,13 +73,12 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
 		initialLoad();
 		FlowzrSyncEngine.setUpdatable(this);
 
-
-		// if (navigationView != null) {
 		navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 			@Override
 			public boolean onNavigationItemSelected(MenuItem menuItem) {
 
 				switch (menuItem.getItemId()) {
+                    // drawer ...
 					case R.id.drawer_item_account:
 						menuItem.setChecked(true);
 						viewPager.setCurrentItem(0);
@@ -98,15 +92,14 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
 						menuItem.setChecked(true);
 						viewPager.setCurrentItem(2);
 						break;
+                    // fragments ...
 					case R.id.drawer_item_reports:
-						Intent intent = new Intent(getApplicationContext(), EntityListActivity.class);
-						intent.putExtra(EntityListActivity.REQUEST_REPORTS, true);
-						startActivity(intent);
+                        loadFragment(new ReportsListFragment());
 						break;
 					case R.id.drawer_item_entities:
-						intent = new Intent(getApplicationContext(), EntityListActivity.class);
-						startActivity(intent);
+                        loadFragment(new EntityListFragment());
 						break;
+                    // activities ...
 					case R.id.drawer_item_preferences:
 						startActivityForResult(new Intent(getApplicationContext(), PreferencesActivity.class), CHANGE_PREFERENCES);
 						break;
@@ -128,136 +121,79 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
 		});
 	}
 
-
-
-	private final String STATE_TABID="tabId";
-
-	@Override
-	public void onSaveInstanceState(Bundle savedInstanceState) {
-		savedInstanceState.putInt(STATE_TABID,viewPager.getCurrentItem());
-		super.onSaveInstanceState(savedInstanceState);
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		int j=viewPager.getCurrentItem();
-		recreateViewPagerAdapter();
-		viewPager.setCurrentItem(j);
-	}
-
-	@Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		initUI();
+        super.onCreate(savedInstanceState);
+        initUI();
 
-		Intent intent= getIntent();
-		recreateViewPagerAdapter();
+        recreateViewPagerAdapter();
 
-		if (intent.hasExtra(REQUEST_BLOTTER) ) {
-			loadTabFragment(R.layout.blotter, intent.getExtras(), TAB_BLOTTER);
-		}  else {
-			StartupScreen startupScreen = MyPreferences.getStartupScreen(this);
-			if (savedInstanceState != null) {
-					viewPager.setCurrentItem(savedInstanceState.getInt(STATE_TABID,startupScreen.ordinal()));
-			} else {
-				switch (startupScreen.ordinal()) {
-					case 3:
-						intent = new Intent(getApplicationContext(), EntityListActivity.class);
-						intent.putExtra(EntityListActivity.REQUEST_REPORTS, true);
-						startActivity(intent);
-						break;
-					case 4:
-						intent = new Intent(getApplicationContext(), EntityListActivity.class);
-						startActivity(intent);
-						break;
-					default:
-						viewPager.setCurrentItem(startupScreen.ordinal());
-		 		}
-			}
-		}
-/**
-		switch(viewPager.getCurrentItem()) {
-			case 0:
-				setTitle(R.string.accounts);
-				break;
-			case 1:
-				setTitle(R.string.blotter);
-				break;
-			case 2:
-				setTitle(R.string.budget);
-				break;
-		}
-**/
+        StartupScreen startupScreen = MyPreferences.getStartupScreen(this);
+        if (savedInstanceState != null) {
+            viewPager.setCurrentItem(savedInstanceState.getInt(STATE_TABID,startupScreen.ordinal()));
+        } else {
+            switch (startupScreen.ordinal()) {
+                case 3: // reports
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(EntityListActivity.REQUEST_REPORTS, true);
+                    Fragment f = new EntityListFragment();
+                    f.setArguments(bundle);
+                    loadFragment(f);
+                    break;
+                case 4: // entity list
+                    loadFragment(new EntityListFragment());
+                    break;
+                default:
+                    viewPager.setCurrentItem(startupScreen.ordinal());
+            }
+        }
 
-	}
+    }
 
-	@Override
-	protected void onPostResume() {
-		super.onPostResume();
-		PinProtection.unlock(this);
-	}
+    @Override
+    public void onFragmentMessage(String TAG, Bundle data) {
+        Log.e("flowzr","onFramgementMessage (bundle) " + TAG);
+        Log.e("flowzr","data: " + data.toString());
+        if (TAG.equals(FragmentAPI.REQUEST_REPORTS)){
+            if (data.getString(FragmentAPI.EXTRA_REPORT_TYPE)!=null) {
+                if (data.getBoolean(FragmentAPI.CONVENTIONAL_REPORTS,true)) {
+                    Fragment fragment= new ReportFragment();
+                    fragment.setArguments(data);
+                    loadFragment(fragment);
+                } else {
+                    Fragment fragment= new Report2DChartFragment();
+                    fragment.setArguments(data);
+                    loadFragment(fragment);
+                }
+            } else {
+                Log.e("flowzr","no report type should load list or entities" );
+            }
 
-	public static Intent createExplicitFromImplicitIntent(Context context, Intent implicitIntent) {
-		//Retrieve all services that can match the given intent
-		PackageManager pm = context.getPackageManager();
-		List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
-		//Make sure only one match was found
-		if (resolveInfo == null || resolveInfo.size() != 1) {
-			return null;
-		}
-		//Get component info and create ComponentName
-		ResolveInfo serviceInfo = resolveInfo.get(0);
-		String packageName = serviceInfo.serviceInfo.packageName;
-		String className = serviceInfo.serviceInfo.name;
-		ComponentName component = new ComponentName(packageName, className);
+        } else if (TAG.equals(FragmentAPI.REQUEST_BLOTTER)){
+            //Do something with 'data' that comes from fragment2
+        }
+    }
 
-		//Create a new intent. Use the old one for extras and such reuse
-		Intent explicitIntent = new Intent(implicitIntent);
-
-		//Set the component to be explicit
-		explicitIntent.setComponent(component);
-
-		return explicitIntent;
-	}
+    @Override
+    public void onFragmentMessage(int requestCode, int resultCode, Intent data) {
+        Log.e("flowzr","onFragmentMessage requestCode, resultCode " + String.valueOf(requestCode) + " " + String.valueOf(resultCode));
+        Log.e("flowzr","data: " + data.toString());
+    }
 
 
-
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		PinProtection.immediateLock(this);
-	}
-
-           
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		//PinProtection.unlock(this);
-    	if (requestCode == CHANGE_PREFERENCES) {
+		PinProtection.unlock(this);
+        if (requestCode == CHANGE_PREFERENCES) {
             scheduleNextAutoBackup(this);
             scheduleNextAutoSync(this);
         }
-
-		mAdapter.notifyDataSetChanged();
-		/**
-        if (resultCode == MainActivity.RESULT_OK && requestCode == BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST) {
-			viewPager.setCurrentItem(TAB_BLOTTER);
-			//mAdapter.blotterFragment.onActivityResult(requestCode, resultCode, data);
-        }
-		**/
 		if (resultCode != MainActivity.RESULT_CANCELED) {
-			if (mAdapter!=null && mAdapter.accountListFragment!=null) {
-				mAdapter.accountListFragment.onActivityResult(requestCode, resultCode, data);
-			}
-			if (mAdapter!=null && mAdapter.blotterFragment!=null) {
-				mAdapter.blotterFragment.onActivityResult(requestCode, resultCode, data);
-			}
-			if (mAdapter!=null && mAdapter.budgetListFragment!=null) {
-				mAdapter.budgetListFragment.onActivityResult(requestCode, resultCode, data);
-			}
+            onFragmentMessage(requestCode,resultCode,data);
+			setResult(RESULT_OK);
 		}
+        mAdapter.notifyDataSetChanged();
     }
 
     private void initialLoad() {
@@ -305,8 +241,6 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
 			Fragment fragment = this.getSupportFragmentManager().findFragmentById(R.id.pager);
 			RefreshSupportedActivity activity = (RefreshSupportedActivity) fragment;
 			if (activity != null) {
-				//activity.recreateCursor();
-				//activity.integrityCheck();
 				viewPager.getAdapter().notifyDataSetChanged();
 				viewPager.destroyDrawingCache();
 				viewPager.setCurrentItem(viewPager.getCurrentItem());
@@ -316,131 +250,31 @@ public class MainActivity  extends AbstractActionBarActivity implements OnAccoun
 		}
     }
 
-  	@Override
-	public void onAccountSelected(String title, long id) {
-		Bundle bundle=new Bundle();
-		bundle.putBoolean(BlotterFilterActivity.IS_ACCOUNT_FILTER, true);
-		Criteria.eq(BlotterFilter.FROM_ACCOUNT_ID, String.valueOf(id))
-				.toBundle(title, bundle);
-		bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.blotter);
-		loadTabFragment(R.layout.blotter, bundle, 1);
+	public void loadFragment(Fragment fragment) {
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.replace(R.id.fragment_container, fragment);
+		transaction.addToBackStack(null);
+		transaction.commit();
 	}
 
+    // out of listener
 	public void loadTabFragment( int rId, Bundle bundle, final int tabId) {
 		bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, rId);
 		Intent data=new Intent(this,BlotterFragment.class);
 		data.putExtras(bundle);
 		viewPager.setCurrentItem(tabId);
-		try {
-			mAdapter.blotterFragment.onActivityResult(BlotterFragment.FILTER_REQUEST, MainActivity.RESULT_OK, data);
-		} catch (Exception e) {
-			// Main activity get destroyed,
-			// better way recreate viewpager fragments ?
-			Intent intent=new Intent(this,MainActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
-			intent.putExtras(bundle);
-
-			Bundle options = ActivityOptionsCompat.makeScaleUpAnimation(
-					viewPager, 0, 0,
-					findViewById(android.R.id.content).getWidth(),
-					findViewById(android.R.id.content).getHeight()).toBundle();
-			ActivityCompat.startActivity(this, intent, options);
-
-		}
+        mAdapter.blotterFragment.onActivityResult(BlotterFragment.FILTER_REQUEST, MainActivity.RESULT_OK, data);
 	}
 
-	private void recreateViewPagerAdapter() {
-		Intent intent= getIntent();
-		mAdapter = new MyAdapter(getSupportFragmentManager(),intent);
-		viewPager = (ViewPager) findViewById(R.id.pager);
-		viewPager.setAdapter(mAdapter);
-		viewPager.setOffscreenPageLimit(3);
-		viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-
-		viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-			public void onPageScrollStateChanged(int state) {
-			}
-
-			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-			}
-
-			public void onPageSelected(int position) {
-				switch (position) {
-					case 0:
-						setTitle(R.string.accounts);
-						break;
-					case 2:
-						setTitle(R.string.budgets);
-						break;
-				}
-			}
-		});
-
-		mAdapter.notifyDataSetChanged();
-
-		//handle setting title after viewpager generate title at loading
-		final Handler handler = new Handler();
-		handler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				switch (viewPager.getCurrentItem()) {
-					case 0:
-						setTitle(R.string.accounts);
-						break;
-					case 2:
-						setTitle(R.string.budgets);
-						break;
-				}
-			}
-		}, 1200);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch (item.getItemId())
-		{
-			case android.R.id.home:
-			{
-				if (mDrawerLayout!=null) {
-					if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-						mDrawerLayout.closeDrawers();
-					} else {
-						mDrawerLayout.openDrawer(GravityCompat.START);
-					}
-				}
-				return true;
-			}
-
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public void onBackPressed() {
-		if (isTaskRoot()) {
-
-			if (mDrawerLayout!=null) {
-				if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-					mDrawerLayout.closeDrawers();
-					return;
-				}
-			}
-
-			if (viewPager.getCurrentItem()!=0) {
-				viewPager.setCurrentItem(0);
-			} else {
-				super.onBackPressed();
-			}
-		} else {
-			super.onBackPressed();
-		}
-	}
-
-
-
+    @Override
+    public void onAccountSelected(String title, long id) {
+        Bundle bundle=new Bundle();
+        bundle.putBoolean(BlotterFilterActivity.IS_ACCOUNT_FILTER, true);
+        Criteria.eq(BlotterFilter.FROM_ACCOUNT_ID, String.valueOf(id))
+                .toBundle(title, bundle);
+        bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.blotter);
+        loadTabFragment(R.layout.blotter, bundle, 1);
+    }
 
 }
 
