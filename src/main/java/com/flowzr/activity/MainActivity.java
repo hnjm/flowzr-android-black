@@ -12,6 +12,7 @@
 package com.flowzr.activity;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+
 import com.flowzr.R;
 import com.flowzr.activity.AccountListFragment.OnAccountSelectedListener;
 import com.flowzr.blotter.BlotterFilter;
@@ -30,6 +33,7 @@ import com.flowzr.db.DatabaseHelper;
 import com.flowzr.dialog.WebViewDialog;
 import com.flowzr.export.flowzr.FlowzrSyncEngine;
 import com.flowzr.filter.Criteria;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.utils.*;
 import com.flowzr.utils.MyPreferences.StartupScreen;
 
@@ -151,10 +155,21 @@ public class MainActivity  extends AbstractActionBarActivity
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (((ViewGroup)findViewById(R.id.fragment_container)).getChildCount()==0) {
+            // show viewpager
+            viewPager.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
     public void onFragmentMessage(String TAG, Bundle data) {
-        Log.e("flowzr","onFramgementMessage (bundle) " + TAG);
+        Log.e("flowzr","onFragmentMessage (bundle) " + TAG);
         Log.e("flowzr","data: " + data.toString());
+
         if (TAG.equals(FragmentAPI.REQUEST_REPORTS)){
+            // Reports
             if (data.getString(FragmentAPI.EXTRA_REPORT_TYPE)!=null) {
                 if (data.getBoolean(FragmentAPI.CONVENTIONAL_REPORTS,true)) {
                     Fragment fragment= new ReportFragment();
@@ -167,10 +182,26 @@ public class MainActivity  extends AbstractActionBarActivity
                 }
             } else {
                 Log.e("flowzr","no report type should load list or entities" );
+                if (data.get(WhereFilter.FILTER_EXTRA)!=null) {
+                    Fragment fragment=new BlotterFragment();
+                    fragment.setArguments(data);
+                    loadFragment(fragment);
+                } else {
+                    Log.e("flowzr","loading default entity list" );
+                    Fragment fragment=new ReportsListFragment();
+                    loadFragment(fragment);
+                }
             }
 
         } else if (TAG.equals(FragmentAPI.REQUEST_BLOTTER)){
-            //Do something with 'data' that comes from fragment2
+            // Blotter
+            Log.e("flowzr","request blotter" );
+
+        } else {
+            Log.e("flowzr","UNHANDLED TAG " + TAG);
+            Log.e("flowzr","data: " + data.toString());
+            viewPager.setVisibility(View.VISIBLE);
+            //}
         }
     }
 
@@ -251,6 +282,7 @@ public class MainActivity  extends AbstractActionBarActivity
     }
 
 	public void loadFragment(Fragment fragment) {
+        viewPager.setVisibility(View.GONE);
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.replace(R.id.fragment_container, fragment);
 		transaction.addToBackStack(null);
@@ -268,6 +300,7 @@ public class MainActivity  extends AbstractActionBarActivity
 
     @Override
     public void onAccountSelected(String title, long id) {
+        viewPager.setVisibility(View.VISIBLE);
         Bundle bundle=new Bundle();
         bundle.putBoolean(BlotterFilterActivity.IS_ACCOUNT_FILTER, true);
         Criteria.eq(BlotterFilter.FROM_ACCOUNT_ID, String.valueOf(id))

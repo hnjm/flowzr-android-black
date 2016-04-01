@@ -485,7 +485,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
             }
             saveFilter=true;
 
-            getActivity().setTitle(blotterFilter.getTitle());
+            //getActivity().setTitle(blotterFilter.getTitle());
             saveFilter();
 
         }
@@ -498,7 +498,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
             getActivity().supportInvalidateOptionsMenu();
             recreateCursor();
             calculateTotals();
-            //((MainActivity)getActivity()).mAdapter.budgetListFragment.onActivityResult(requestCode,resultCode,data);
+            ((MainActivity)getActivity()).mAdapter.budgetListFragment.onActivityResult(requestCode,resultCode,data);
         }
         Log.e("flowzr","blotterFilter.account" + String.valueOf(blotterFilter.getAccountId()));
     }

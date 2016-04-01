@@ -46,6 +46,8 @@ public class EntityListFragment extends AbstractListFragment {
 		setListAdapter(createAdapter(null));
 	}
 
+
+
 	@Override
 	protected Cursor createCursor() {
 		return null;

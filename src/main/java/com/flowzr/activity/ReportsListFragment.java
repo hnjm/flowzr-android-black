@@ -35,15 +35,9 @@ import com.flowzr.report.ReportType;
 
 public class ReportsListFragment extends ListFragment {
 
-	FragmentAPI mCallback;
     private Activity activity;
 
-    public interface OnReportSelectedListener {
-        void onReportSelected(String title, long id);
-    }
-
-
-	public final ReportType[] reports = new ReportType[]{
+	public final static ReportType[] reports = new ReportType[]{
 			ReportType.BY_PERIOD,
 			ReportType.BY_CATEGORY,
             ReportType.BY_PAYEE,
@@ -58,7 +52,7 @@ public class ReportsListFragment extends ListFragment {
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    	setHasOptionsMenu(true);
+		setHasOptionsMenu(true);
     	return inflater.inflate(R.layout.reports_list, container, false);
 	}
 	
@@ -81,11 +75,9 @@ public class ReportsListFragment extends ListFragment {
         if (reports[position].isConventionalBarReport()) {
             bundle.putBoolean(FragmentAPI.CONVENTIONAL_REPORTS, true);
         } else {
-            //bundle.putBoolean(FragmentAPI.CONVENTIONAL_REPORTS, false);
             bundle.putInt(Report2DChart.REPORT_TYPE, position);
         }
         bundle.putString(FragmentAPI.EXTRA_REPORT_TYPE, reports[position].name());
-        Log.e("flowzr","ReportsListFragment viewItem");
         ((FragmentAPI) activity).onFragmentMessage(FragmentAPI.REQUEST_REPORTS,bundle);
 	}
 
@@ -95,11 +87,4 @@ public class ReportsListFragment extends ListFragment {
         Currency c = em.getHomeCurrency();
 		return reportType.createReport(context, c);
 	}
-
-	public static Fragment newInstance(Bundle bundle) {
-	      ReportsListFragment f = new ReportsListFragment();
-          f.setArguments(bundle);
-          return f;
-	}
-
 }

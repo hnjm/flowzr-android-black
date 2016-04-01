@@ -30,7 +30,7 @@ import java.util.List;
 public class WhereFilter {
 	
 	public static final String TITLE_EXTRA = "title";
-    public static final String FILTER_EXTRA = "filter";
+    public static final String FILTER_EXTRA = "WITH_FILTER";
     public static final String SORT_ORDER_EXTRA = "sort_order";
 
     public static final String FILTER_TITLE_PREF = "filterTitle";

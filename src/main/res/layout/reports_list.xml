@@ -16,6 +16,7 @@
     <ListView
         android:layout_marginRight="@dimen/space_small"
         android:layout_height="wrap_content"
+		android:contentDescription="@string/reports"
         android:id="@android:id/list"
         style="@style/ListView"/>
 

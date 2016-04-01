@@ -24,10 +24,13 @@ sourceSets {
     }
 }
 
+
 android {
 
     defaultConfig {
         generatedDensities = []
+
+
     }
     testOptions {
         unitTests.returnDefaultValues = true
@@ -85,6 +88,8 @@ android {
     buildTypes {
 
         debug {
+
+            //resolutionStrategy.force 'com.android.support:support-annotations:22.1.0'
             minifyEnabled false
             shrinkResources false
             debuggable true
@@ -153,6 +158,9 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:0.4.1'
     androidTestCompile 'com.android.support.test:rules:0.4.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    androidTestCompile ('com.android.support.test.espresso:espresso-contrib:2.2.1') {
+        exclude group: 'com.android.support'
+    }
     androidTestCompile 'com.android.support:support-annotations:23.2.1'
 
     compile "com.android.support:support-v4:23.2.1"
@@ -196,9 +204,3 @@ def readKeystoreProperties() {
         println "===== read keystore properties success ====="
     }
 }
-
-
-
-
-
-
