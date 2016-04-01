@@ -1,6 +1,7 @@
 build/
 *.iml
 add_key.sh
+prepare_keys.sh
 *.jar
 *.apk
 local.properties
