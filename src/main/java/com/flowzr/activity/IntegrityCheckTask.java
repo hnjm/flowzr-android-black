@@ -8,7 +8,7 @@
 
 package com.flowzr.activity;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.view.View;
 
@@ -23,9 +23,9 @@ import com.flowzr.utils.IntegrityCheck;
  */
 public class IntegrityCheckTask extends AsyncTask<Void, Void, Boolean> {
 
-    private final Activity activity;
+    private final MainActivity activity;
 
-    public IntegrityCheckTask(Activity activity) {
+    public IntegrityCheckTask(MainActivity activity) {
         this.activity = activity;
     }
 

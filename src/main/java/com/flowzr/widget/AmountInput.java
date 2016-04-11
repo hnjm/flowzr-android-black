@@ -14,6 +14,7 @@ package com.flowzr.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.Spanned;
@@ -52,7 +53,7 @@ public class AmountInput extends LinearLayout {
 
 	private static final AtomicInteger EDIT_AMOUNT_REQUEST = new AtomicInteger(2000);
 
-	protected Activity owner;
+	protected AppCompatActivity owner;
 	private Currency currency;
 	private int decimals;
 
@@ -165,6 +166,7 @@ public class AmountInput extends LinearLayout {
 		primary.setKeyListener(keyListener);
 		primary.addTextChangedListener(textWatcher);
 		primary.setOnFocusChangeListener(selectAllOnFocusListener);
+
 		secondary = (EditText) findViewById(R.id.secondary);
 		secondary.setKeyListener(new DigitsKeyListener(false, false){
 			
@@ -184,14 +186,14 @@ public class AmountInput extends LinearLayout {
 			@Override
 			public int getInputType() {
 				return InputType.TYPE_CLASS_PHONE;
-			}			
-
+			}
 		});
 		secondary.addTextChangedListener(textWatcher);
 		secondary.setOnFocusChangeListener(selectAllOnFocusListener);
+
 	}
-	
-	private static final char[] acceptedChars = new char[]{'0','1','2','3','4','5','6','7','8','9'};
+
+ private static final char[] acceptedChars = new char[]{'0','1','2','3','4','5','6','7','8','9'};
 	private static final char[] commaChars = new char[]{'.', ','};
 	
 	private final NumberKeyListener keyListener = new NumberKeyListener() {
@@ -257,7 +259,8 @@ public class AmountInput extends LinearLayout {
 		}
 		intent.putExtra(EXTRA_TITLE,title);
 		intent.putExtra(EXTRA_AMOUNT, getAbsAmountString());
-		owner.startActivityForResult(intent, requestId);
+        Log.e("flowzr","start " + intent);
+		//owner.startActivityForResult(intent, requestId);
 	}
 
 	protected void onDotOrComma() {
@@ -276,7 +279,7 @@ public class AmountInput extends LinearLayout {
 		this.currency = currency;
 	}
 
-	public void setOwner(Activity owner) {
+	public void setOwner(AppCompatActivity owner) {
 		this.owner = owner;
 	}
 

@@ -12,7 +12,10 @@
 package com.flowzr.activity;
 
 import android.content.Intent;
-import android.view.Menu;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -38,37 +41,54 @@ public class TransferActivity extends AbstractTransactionActivity {
 	private long selectedAccountFromId = -1;
 	private long selectedAccountToId = -1;
 
-	public TransferActivity() {
-	}
+    @Override
+    public String getMyTag() {
+        return MyFragmentAPI.REQUEST_TRANSFER_FINISH;
+    }
+
+    protected int getLayoutId() {
+        return R.layout.transfer_free;
+    }
 
 	@Override
 	protected void internalOnCreate() {
 		super.internalOnCreate();
-		initToolbar();
+
 		if (transaction.isTemplateLike()) {
-			setTitle(transaction.isTemplate() ? R.string.transfer_template : R.string.transfer_schedule);
+			getActivity().setTitle(transaction.isTemplate() ? R.string.transfer_template : R.string.transfer_schedule);
 			if (transaction.isTemplate()) {			
 				dateText.setEnabled(false);
 				timeText.setEnabled(false);			
 			}			
 		}
-		ToggleButton toggleView = (ToggleButton) findViewById(R.id.toggle);
-		toggleView.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_swap_vert));
-		if (findViewById(R.id.saveAddButton)!=null) {
-			findViewById(R.id.saveAddButton).setOnClickListener(new View.OnClickListener() {
+		ToggleButton toggleView = (ToggleButton) getView().findViewById(R.id.toggle);
+		toggleView.setBackgroundDrawable(getTransferIconDrawable());
+		if (getView().findViewById(R.id.saveAddButton)!=null) {
+			getView().findViewById(R.id.saveAddButton).setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					onOKClicked();
-					Intent intent2 = new Intent(getApplicationContext(), TransferActivity.class);
-					intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
-					intent2.putExtra(ACCOUNT_ID_EXTRA, transaction.fromAccountId);
+					Bundle bundle = new Bundle();
+					bundle.putLong(DATETIME_EXTRA, transaction.dateTime);
+					bundle.putLong(ACCOUNT_ID_EXTRA, transaction.fromAccountId);
 					if (saveAndFinish()) {
-						intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
-						startActivityForResult(intent2, -1);
+						bundle.putLong(DATETIME_EXTRA, transaction.dateTime);
+						Fragment fragment= new TransferActivity();
+						fragment.setArguments(bundle);
+						activity.startFragmentForResult(fragment,TransferActivity.this);
 					}
 				}
 			});
 		}
+	}
+
+	private static Drawable icon;
+
+	private Drawable getTransferIconDrawable() {
+		if (icon==null) {
+			icon = getResources().getDrawable(R.drawable.ic_swap_vert);
+		}
+		return icon;
 	}
 
     protected void fetchCategories() {
@@ -82,22 +102,19 @@ public class TransferActivity extends AbstractTransactionActivity {
 		categorySelector.doNotShowSplitCategory();
 	}
 
-	protected int getLayoutId() {
-		return R.layout.transfer_free;
-	}
-	
 	@Override
 	protected void createListNodes(LinearLayout layout) {
+		layout=(LinearLayout)getView().findViewById(R.id.listlayout);
         accountFromText = x.addListNode2(layout, R.id.account_from, R.drawable.ic_action_account_from, R.string.account_from,getResources().getString(R.string.select_account));
 		accountToText = x.addListNode2(layout, R.id.account_to, R.drawable.ic_action_account_to, R.string.account_to, getResources().getString(R.string.select_account));
-        rateView.createTransferUI();
+        rateView.createTransferUI(this);
         // payee
-        isShowPayee = MyPreferences.isShowPayeeInTransfers(this);
+        isShowPayee = MyPreferences.isShowPayeeInTransfers(getContext());
         if (isShowPayee) {
             createPayeeNode(layout);
         }
 		// category
-        if (MyPreferences.isShowCategoryInTransferScreen(this)) {
+        if (MyPreferences.isShowCategoryInTransferScreen(getContext())) {
             categorySelector.createNode(layout, false);
         } else {
             categorySelector.createDummyNode();
@@ -137,12 +154,14 @@ public class TransferActivity extends AbstractTransactionActivity {
         selectPayee(transaction.payeeId);
     }
 
+	/**
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.transaction_actions, menu);
+        getActivity().getMenuInflater().inflate(R.menu.transaction_actions, menu);
         return true;
     }
+	**/
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -153,17 +172,26 @@ public class TransferActivity extends AbstractTransactionActivity {
 				onOKClicked();
 				saveAndFinish();
 				return true;
-			case R.id.saveAddButton:					onOKClicked();
-				Intent intent2 = new Intent(getApplicationContext(), TransferActivity.class);
+			case R.id.saveAddButton:
+				onOKClicked();
+				Intent intent2 = new Intent(getContext(), TransferActivity.class);
 				intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
 				intent2.putExtra(ACCOUNT_ID_EXTRA, transaction.fromAccountId);
+				Fragment fragment = new TransferActivity();
+
+				Bundle bundle= new Bundle();
+				bundle.putLong(DATETIME_EXTRA, transaction.dateTime);
+				bundle.putLong(ACCOUNT_ID_EXTRA, transaction.fromAccountId);
+
 				if (saveAndFinish()) {
-					intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
-					startActivityForResult(intent2, -1);
+					bundle.putLong(DATETIME_EXTRA, transaction.dateTime);
+					fragment.setArguments(bundle);
+					activity.startFragmentForResult(fragment,this);
+
 				}
 				return true;
 			case R.id.action_settings:
-				Intent intent = new Intent(this.getApplicationContext(), TransactionPreferencesActivity.class);
+				Intent intent = new Intent(this.getContext(), TransactionPreferencesActivity.class);
 				startActivityForResult(intent, BLOTTER_PREFERENCES);
 				return true;
         }
@@ -173,15 +201,15 @@ public class TransferActivity extends AbstractTransactionActivity {
 	@Override
 	protected boolean onOKClicked() {
 		if (selectedAccountFromId == -1) {
-			Toast.makeText(this, R.string.select_from_account, Toast.LENGTH_SHORT).show();
+			Toast.makeText(getContext(), R.string.select_from_account, Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		if (selectedAccountToId == -1) {
-			Toast.makeText(this, R.string.select_to_account, Toast.LENGTH_SHORT).show();
+			Toast.makeText(getContext(), R.string.select_to_account, Toast.LENGTH_SHORT).show();
 			return false;
 		}
         if (selectedAccountFromId == selectedAccountToId) {
-            Toast.makeText(this, R.string.select_to_account_differ_from_to_account, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.select_to_account_differ_from_to_account, Toast.LENGTH_SHORT).show();
             return false;
         }
         updateTransferFromUI();
@@ -203,11 +231,11 @@ public class TransferActivity extends AbstractTransactionActivity {
 		super.onClick(v, id);
 		switch (id) {
 			case R.id.account_from:				
-				x.select(this, R.id.account_from, R.string.account, accountCursor, accountAdapter, 
+				x.select(getContext(), R.id.account_from, R.string.account, accountCursor, accountAdapter,
 						AccountColumns.ID, selectedAccountFromId);
 				break;
 			case R.id.account_to:				
-				x.select(this, R.id.account_to, R.string.account, accountCursor, accountAdapter, 
+				x.select(getContext(), R.id.account_to, R.string.account, accountCursor, accountAdapter,
 						AccountColumns.ID, selectedAccountToId);
 				break;
 		}
@@ -263,9 +291,9 @@ public class TransferActivity extends AbstractTransactionActivity {
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
+		if (resultCode == AppCompatActivity.RESULT_OK) {
             rateView.onActivityResult(requestCode, data);
 		}
 	}	

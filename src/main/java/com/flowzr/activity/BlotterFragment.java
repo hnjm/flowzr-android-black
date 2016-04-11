@@ -19,7 +19,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -69,13 +68,9 @@ public class BlotterFragment extends AbstractTotalListFragment {
     }
 
 
-
-    public void recreateAdapter(Bundle b) {
-        blotterFilter = WhereFilter.fromBundle(b);
-        super.recreateAdapter();
-    }
-
     public static final String SAVE_FILTER = "saveFilter";
+    public final static String REQUEST_NEW_TRANSACTION_FROM_TEMPLATE="REQUEST_NEW_TRANSACTION_FROM_TEMPLATE";
+
     protected ImageButton bFilter;
     private TotalCalculationTask calculationTask;
 
@@ -111,11 +106,15 @@ public class BlotterFragment extends AbstractTotalListFragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         Bundle args=this.getArguments();
         if (args != null   ) {
             blotterFilter = WhereFilter.fromBundle(args);
             saveFilter = args.getBoolean(SAVE_FILTER, false);
         }
+
+        Log.e("flowzr","on blotter fragment activiti created");
+        Log.e("flowzr",blotterFilter.toWhereExpression().toString());
         //&& savedInstanceState.getBoolean(BlotterFilterActivity.IS_ACCOUNT_FILTER,false)==false
         if (savedInstanceState != null  ) {
             blotterFilter = WhereFilter.fromBundle(savedInstanceState);
@@ -127,18 +126,6 @@ public class BlotterFragment extends AbstractTotalListFragment {
             blotterFilter = WhereFilter.fromSharedPreferences(getActivity().getPreferences(0));
         }
          **/
-        super.onActivityCreated(savedInstanceState);
-
-        if (getView().findViewById(R.id.fragment_land_container)!=null) {
-            Fragment fragment=new BlotterTotalsDetailsFragment();
-            Bundle bundle= new Bundle();
-
-            blotterFilter.toBundle(bundle);
-            fragment.setArguments(bundle);
-            getChildFragmentManager().beginTransaction().replace(R.id.fragment_land_container, fragment).commitAllowingStateLoss();
-            getChildFragmentManager().executePendingTransactions();
-        }
-
 
         totalText = (TextView)getView().findViewById(R.id.total); // set for calculation task
         if (totalText!=null) { //ex: ScheduledListFragment
@@ -159,47 +146,44 @@ public class BlotterFragment extends AbstractTotalListFragment {
                 createFromTemplate();
             }
         }
-
+        recreateCursor();
         calculateTotals();
+        setUpFab();
+    }
 
+    public void setUpFab() {
         if (isCompatible(14)) {
-            final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) getView().findViewById(R.id.menu1);
-            if (menu1!=null) {
+            final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) activity.findViewById(R.id.menu1);
+            if (menu1 != null) {
+                Log.e("flowzr","setup blotter fab");
+                FloatingActionButton fab1 = (FloatingActionButton) activity.findViewById(R.id.fab1);
+                FloatingActionButton fab2 = (FloatingActionButton) activity.findViewById(R.id.fab2);
+                menu1.getMenuIconView().setImageResource(R.drawable.ic_add);
+                fab1.setImageResource(R.drawable.ic_add);
+                fab2.setImageResource(R.drawable.ic_swap_vert);
+                fab1.setLabelText(getResources().getString(R.string.add_transaction));
+                fab2.setLabelText(getResources().getString(R.string.add_transfer));
+
+
                 menu1.setOnMenuButtonClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                     menu1.toggle(true);
-                        }
+                    @Override
+                    public void onClick(View v) {
+                        menu1.toggle(true);
+                    }
                 });
 
-                FloatingActionButton fab1;
-                FloatingActionButton fab2;
                 Handler mUiHandler = new Handler();
                 List<MyFloatingActionMenu> menus = new ArrayList<>();
-
                 menus.add(menu1);
                 menu1.hideMenuButton(true);
-                int delay = 400;
-                for (final MyFloatingActionMenu menu : menus) {
-                    mUiHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            menu.showMenuButton(true);
-                        }
-                    }, delay);
-                    delay += 150;
-                }
                 menu1.setClosedOnTouchOutside(true);
-                fab1 = (FloatingActionButton) getView().findViewById(R.id.fab1);
-                fab2 = (FloatingActionButton) getView().findViewById(R.id.fab2);
 
-                new Handler().postDelayed(new Runnable() {
+                mUiHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        menu1.showMenuButton(true);
+                        menu1.showMenuButton(false);
                     }
-                }, delay + 150);
-
+                }, 450);
 
                 menu1.setOnMenuToggleListener(new MyFloatingActionMenu.OnMenuToggleListener() {
                     @Override
@@ -207,36 +191,38 @@ public class BlotterFragment extends AbstractTotalListFragment {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                menu1.close(true);
-                                menu1.close(true);
+                                menu1.close(false);
                             }
                         }, 3500);
                     }
                 });
-
-                fab1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        addItem(NEW_TRANSACTION_REQUEST, TransactionActivity.class);
-                    }
-                });
-
-                fab2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        addItem(NEW_TRANSFER_REQUEST, TransferActivity.class);
-                    }
-                });
+                if (fab1!=null) {
+                    fab1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            menu1.toggle(false);
+                            //fragment.
+                            addItem(NEW_TRANSACTION_REQUEST, TransactionActivity.class);
+                        }
+                    });
+                }
+                if (fab2!=null) {
+                    fab2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            menu1.toggle(false);
+                            //fragment.
+                            //
+                            addItem(NEW_TRANSFER_REQUEST, TransferActivity.class);
+                        }
+                    });
+                }
             }
         }
-
-
-
-
     }
 
-    protected void calculateTotals() {
 
+    protected void calculateTotals() {
             if (totalText!=null) {
                 if (calculationTask != null) {
                     calculationTask.stop();
@@ -245,8 +231,6 @@ public class BlotterFragment extends AbstractTotalListFragment {
                 calculationTask = createTotalCalculationTask();
                 calculationTask.execute();
             }
-
-
     }
 
     protected TotalCalculationTask createTotalCalculationTask() {
@@ -265,10 +249,10 @@ public class BlotterFragment extends AbstractTotalListFragment {
     }
 
     private void showTotals() {
-        Intent intent=new Intent(getActivity(),EntityListActivity.class);
-        intent.putExtra(EntityListActivity.REQUEST_BLOTTER_TOTALS, true);
-        blotterFilter.toIntent(intent);
-        ActivityCompat.startActivity(getActivity(), intent, getScaleUpOption());
+        Bundle bundle = new Bundle ();
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,BlotterTotalsDetailsActivity.class.getCanonicalName());
+        blotterFilter.toBundle(bundle);
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
         calculateTotals();
     }
 
@@ -332,13 +316,12 @@ public class BlotterFragment extends AbstractTotalListFragment {
 
 
     protected void createFromTemplate() {
-        Intent intent = new Intent(getActivity(), EntityListActivity.class);
         Bundle bundle= new Bundle();
         bundle.putInt(EXTRA_REQUEST_TYPE, NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
-
-        intent.putExtra(EntityListActivity.REQUEST_NEW_TRANSACTION_FROM_TEMPLATE, true);
-        intent.putExtra(EXTRA_REQUEST_TYPE,NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
-        ActivityCompat.startActivityForResult(getActivity(), intent, NEW_TRANSACTION_FROM_TEMPLATE_REQUEST, getScaleUpOption());
+        bundle.putBoolean(REQUEST_NEW_TRANSACTION_FROM_TEMPLATE, true);
+        bundle.putInt(EXTRA_REQUEST_TYPE,NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,SelectTemplateFragment.class.getCanonicalName());
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
     }
 
 
@@ -377,12 +360,13 @@ public class BlotterFragment extends AbstractTotalListFragment {
             intent.putExtra(TransactionActivity.IS_TRANSFER_EXTRA,true);
         }
 
+
         if ( blotterFilter.get(BlotterFilter.BUDGET_ID)!=null) {
             intent.putExtra(TransactionActivity.BUDGET_ID_EXTRA, blotterFilter.getBudgetId());
         }
 
         if ( blotterFilter.get(BlotterFilter.PROJECT_ID)!=null) {
-            Log.e("flowzr", "project id:" + String.valueOf(blotterFilter.get(BlotterFilter.PROJECT_ID).getIntValue()));
+            Log.e("flowzr", "entity id:" + String.valueOf(blotterFilter.get(BlotterFilter.PROJECT_ID).getIntValue()));
             intent.putExtra(TransactionActivity.PROJECT_ID_EXTRA, (long) blotterFilter.get(BlotterFilter.PROJECT_ID).getIntValue());
         }
 
@@ -414,7 +398,11 @@ public class BlotterFragment extends AbstractTotalListFragment {
         }
 
         intent.putExtra(TransactionActivity.TEMPLATE_EXTRA, blotterFilter.getIsTemplate());
-        ActivityCompat.startActivityForResult(getActivity(), intent, requestId, getScaleUpOption());
+        intent.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, clazz.getCanonicalName());
+        Bundle bundle=new Bundle();
+        bundle.putAll(intent.getExtras());
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+
     }
 
     @Override
@@ -485,9 +473,9 @@ public class BlotterFragment extends AbstractTotalListFragment {
             }
             saveFilter=true;
 
-            //getActivity().setTitle(blotterFilter.getTitle());
-            saveFilter();
-
+            if (activity==null) {
+                saveFilter();
+            }
         }
 
         if (resultCode == MainActivity.RESULT_OK && requestCode == NEW_TRANSACTION_FROM_TEMPLATE_REQUEST) {
@@ -498,9 +486,9 @@ public class BlotterFragment extends AbstractTotalListFragment {
             getActivity().supportInvalidateOptionsMenu();
             recreateCursor();
             calculateTotals();
-            ((MainActivity)getActivity()).mAdapter.budgetListFragment.onActivityResult(requestCode,resultCode,data);
+            //((MainActivity)getActivity()).mAdapter.budgetListFragment.onActivityResult(requestCode,resultCode,data);
         }
-        Log.e("flowzr","blotterFilter.account" + String.valueOf(blotterFilter.getAccountId()));
+
     }
 
 
@@ -525,7 +513,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
     }
 
     private void saveFilter() {
-        SharedPreferences preferences = getActivity().getPreferences(0);
+        SharedPreferences preferences = activity.getPreferences(0);
         blotterFilter.toSharedPreferences(preferences);
     }
 
@@ -589,42 +577,50 @@ public class BlotterFragment extends AbstractTotalListFragment {
                 createFromTemplate();
                 return true;
             case R.id.action_mass_op:
-                intent = new Intent(getActivity(),EntityListActivity.class);
-                intent.putExtra(EntityListActivity.REQUEST_MASS_OP, true);
-                blotterFilter.toIntent(intent);
-                ActivityCompat.startActivity(getActivity(), intent, getScaleUpOption());
-                //startActivity(intent);
-                //((MainActivity) getActivity()).loadTabFragment(new MassOpFragment(),R.layout.blotter_mass_op, new Bundle(),MainActivity.TAB_BLOTTER);
+                Bundle bundle = new Bundle();
+                blotterFilter.toBundle(bundle);
+                bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,MassOpFragment.class.getCanonicalName());
+                activity.onFragmentMessage(MyFragmentAPI.REQUEST_BLOTTER,bundle);
                 return true;
+            case R.id.add_transaction:
             case R.id.bAdd:
                 addItem(NEW_TRANSACTION_REQUEST, TransactionActivity.class);
                 return true;
+            case R.id.add_transfer:
             case R.id.bTransfer:
                 addItem(NEW_TRANSFER_REQUEST, TransferActivity.class);
                 return true;
 
             case R.id.opt_menu_month:
                 // call credit card bill activity sending account id
-                intent = new Intent(this.getActivity(), MonthlyViewActivity.class);
-                intent.putExtra(MonthlyViewActivity.ACCOUNT_EXTRA, blotterFilter.getAccountId());
-                intent.putExtra(MonthlyViewActivity.BILL_PREVIEW_EXTRA, false);
-                ActivityCompat.startActivityForResult(getActivity(), intent, MONTHLY_VIEW_REQUEST, getScaleUpOption());
+                bundle = new Bundle();
+                bundle.putLong(MonthlyViewActivity.ACCOUNT_EXTRA, blotterFilter.getAccountId());
+                bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, blotterFilter.getAccountId());
+                blotterFilter.toBundle(bundle);
+                bundle.putBoolean(BlotterFilterActivity.IS_ACCOUNT_FILTER, blotterFilter.getAccountId() > 0);
+                bundle.putBoolean(MonthlyViewActivity.BILL_PREVIEW_EXTRA, false);
+                bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,MonthlyViewActivity.class.getCanonicalName());
+                activity.onFragmentMessage(MyFragmentAPI.REQUEST_BLOTTER,bundle);
+
                 return true;
             case R.id.action_filter:
-                intent = new Intent(BlotterFragment.this.getActivity(), BlotterFilterActivity.class);
-                blotterFilter.toIntent(intent);
-                intent.putExtra(BlotterFilterActivity.IS_ACCOUNT_FILTER, blotterFilter.getAccountId() > 0);
-                ActivityCompat.startActivityForResult(getActivity(), intent, FILTER_REQUEST, getScaleUpOption());
+                bundle = new Bundle();
+                blotterFilter.toBundle(bundle);
+                bundle.putBoolean(BlotterFilterActivity.IS_ACCOUNT_FILTER, blotterFilter.getAccountId() > 0);
+                Fragment fragment = new BlotterFilterActivity();
+                bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,FILTER_REQUEST);
+                activity.startFragmentForResult(fragment,this);
                 return true;
             case R.id.opt_menu_bill:
                 if (accountId != -1) {
                     Account account = em.getAccount(accountId);
-                    intent = new Intent(this.getActivity(), MonthlyViewActivity.class);
-                    intent.putExtra(MonthlyViewActivity.ACCOUNT_EXTRA, accountId);
-                    // call credit card bill activity sending account id
                     if (account.paymentDay > 0 && account.closingDay>0) {
-                        intent.putExtra(MonthlyViewActivity.BILL_PREVIEW_EXTRA, true);
-                        ActivityCompat.startActivityForResult(getActivity(), intent, BILL_PREVIEW_REQUEST, getScaleUpOption());
+                        bundle = new Bundle();
+                        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,MonthlyViewActivity.class.getCanonicalName());
+                        bundle.putLong(MonthlyViewActivity.ACCOUNT_EXTRA, accountId);
+                        bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, accountId);
+                        bundle.putBoolean(MonthlyViewActivity.BILL_PREVIEW_EXTRA, true);
+                        activity.onFragmentMessage(MyFragmentAPI.REQUEST_BLOTTER,bundle);
                         return true;
                     } else {
                         // display message: need payment and closing day

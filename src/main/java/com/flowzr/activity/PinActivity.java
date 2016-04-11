@@ -13,6 +13,7 @@ package com.flowzr.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
 import com.flowzr.R;
@@ -20,7 +21,7 @@ import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.PinProtection;
 import com.flowzr.view.PinView;
 
-public class PinActivity extends Activity implements PinView.PinListener {
+public class PinActivity extends AppCompatActivity implements PinView.PinListener {
 	
 	public static final String SUCCESS = "PIN_SUCCESS";
 

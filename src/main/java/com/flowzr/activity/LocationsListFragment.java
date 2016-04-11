@@ -12,9 +12,10 @@
 package com.flowzr.activity;
 
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,19 +52,18 @@ public class LocationsListFragment extends AbstractListFragment {
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
-	public void onAttach(Activity a) {
+	@Override
+	protected String getEditActivityClass() {
+		return LocationActivity.class.getCanonicalName(); //.replace("class ","").trim();
+	}
+
+	@Override
+	public void onAttach(Context a) {
 		super.onAttach(a);
 		setHasOptionsMenu(true);
 		activity=(MainActivity)a;
 	}
-
-//	@Override
-//	protected List<MenuItemInfo> createContextMenus(long id) {
-//		List<MenuItemInfo> menus = super.createContextMenus(id);
-//		menus.add(0, new MenuItemInfo(MENU_RESOLVE, R.string.resolve_address));
-//		return menus;
-//	}
-
+    
 	@Override
 	protected ListAdapter createAdapter(Cursor cursor) {
 		return new LocationListAdapter(db, this.getActivity(), cursor);
@@ -87,7 +87,12 @@ public class LocationsListFragment extends AbstractListFragment {
 		startGeocode(location);
 	}
 
-	@Override
+    @Override
+    protected void internalOnCreate(Bundle savedInstanceState) {
+
+    }
+
+    @Override
 	protected Cursor createCursor() {
 		return em.getAllLocations(false);
 	}
@@ -122,7 +127,8 @@ public class LocationsListFragment extends AbstractListFragment {
 		Criteria blotterFilter = Criteria.eq(BlotterFilter.LOCATION_ID, String.valueOf(e.id));
 		Bundle bundle = new Bundle();
 		blotterFilter.toBundle(e.name,bundle);
-		activity.onFragmentMessage(FragmentAPI.REQUEST_BLOTTER,bundle);
+		bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, BlotterFragment.class.getCanonicalName());
+		activity.onFragmentMessage(MyFragmentAPI.REQUEST_BLOTTER,bundle);
 	}
 
 

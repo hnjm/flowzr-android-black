@@ -13,8 +13,10 @@
 package com.flowzr.test;
 
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.StringRes;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.assertion.ViewAssertions;
@@ -26,7 +28,9 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.test.InstrumentationTestRunner;
 import android.test.suitebuilder.annotation.LargeTest;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,7 +38,15 @@ import android.widget.TextView;
 import com.flowzr.R;
 import com.flowzr.activity.MainActivity;
 
+import com.flowzr.adapter.EntityEnumAdapter;
+import com.flowzr.adapter.EntityListAdapter;
+import com.flowzr.adapter.MyEntityAdapter;
+import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.db.DatabaseHelper;
+import com.flowzr.db.MyEntityManager;
 import com.flowzr.model.EntityType;
+import com.flowzr.model.MyEntity;
+import com.flowzr.model.Payee;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
@@ -43,24 +55,32 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.core.deps.guava.base.Predicates.instanceOf;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withTagKey;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.core.Is.is;
 
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class EntityListFragmentTest extends MyFragmentTest {
+public class EntityListFragmentTest extends AbstractDBTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
@@ -119,82 +139,46 @@ public class EntityListFragmentTest extends MyFragmentTest {
         matchToolbarTitle(EntityType.CURRENCIES.titleId);
         pressBack();
         onView(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE),isAssignableFrom(AppCompatTextView.class), ViewMatchers.withText(R.string.currencies))).perform(click());
-        matchToolbarTitle(EntityType.CURRENCIES.titleId);
+        matchToolbarTitle(EntityType.LOCATIONS.titleId);
         pressBack();
 
         for (int i=0;i<entities.length;i++) {
             onView(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE),
                     isAssignableFrom(AppCompatTextView.class),
+                    withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE),
+                    //isDisplayed(),
+                    isCompletelyDisplayed(),
                     ViewMatchers.withText(EntityType.values()[i].titleId))).perform(click());
 
-                //onView(Matchers.allOf(ViewMatchers.withText(EntityType.values()[i].titleId))).perform(click());
-                //if (reports[i].isConventionalBarReport()) {
+            matchToolbarTitle(EntityType.values()[i].titleId);
+            //canViewAll();
 
-                //}
-                matchToolbarTitle(EntityType.values()[i].titleId);
-                pressBack();
+            pressBack();
         }
     }
 
 
-    private static ViewInteraction matchToolbarTitle(Integer titleId) {
-        return onView(isAssignableFrom(Toolbar.class))
-                .check(matches(withToolbarTitle(titleId)));
+    @Test
+    public void  canViewAllPayees() {
+
+        openEntityList();
+        onView(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE),
+                ViewMatchers.withText(R.string.payees))).perform(click());
+
+        // grab db & check all
+        List<Payee> payees = em.getAllPayeeList();
+        for (int i=0;i<payees.size() && i<3 ;i++) {
+            Payee payee = payees.get(i);
+            onView(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE),
+                    isAssignableFrom(AppCompatTextView.class),
+                    withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE),
+                    isCompletelyDisplayed(),
+                    ViewMatchers.withText(payee.getTitle()))).perform(click());
+            matchToolbarTitle(payee.getTitle());
+        }
+
     }
 
 
-
-
-    public static Matcher<Object> withToolbarTitle(@StringRes final int resourceId) {
-
-        return new BoundedMatcher<Object, Toolbar>(Toolbar.class) {
-            private String resourceName = null;
-            private String expectedText = null;
-
-            @Override
-            public void describeTo(org.hamcrest.Description description) {
-                description.appendText("with title resource id: ");
-                description.appendValue(resourceId);
-                if (null != resourceName) {
-                    description.appendText("[");
-                    description.appendText(resourceName);
-                    description.appendText("]");
-                }
-                if (null != expectedText) {
-                    description.appendText(" value: ");
-                    description.appendText(expectedText);
-                }
-            }
-
-            @Override
-            public boolean matchesSafely(final Toolbar toolbar) {
-                if (null == expectedText) {
-                    try {
-                        expectedText = toolbar.getResources().getString(resourceId);
-                        resourceName = toolbar.getResources().getResourceEntryName(resourceId);
-                    } catch (Resources.NotFoundException ignored) {
-                        // view could be from a context unaware of the resource id
-                    }
-                }
-                return null != expectedText && toolbar.getTitle().toString().startsWith(expectedText);
-            }
-        };
-    }
-
-    public static Matcher<View> withListSize(final int size) {
-        return new TypeSafeMatcher<View>() {
-            @Override
-            public void describeTo(org.hamcrest.Description description) {
-                description.appendText ("ListView should have " + size + " items");
-            }
-
-            @Override
-            public boolean matchesSafely(final View view) {
-                return ((ListView) view).getChildCount() == size;
-            }
-
-
-        };
-    }
 
 }

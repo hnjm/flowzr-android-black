@@ -13,6 +13,7 @@ package com.flowzr.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -55,25 +56,34 @@ public class CurrencyActivity extends AbstractEditorActivity {
 	private int maxDecimals; 
 
 	private Currency currency = new Currency();
-	
+
+    @Override
+    public String getMyTag() {
+        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.currency;
+    }
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.currency);
-		initToolbar();
-		db = new DatabaseAdapter(this);
+public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+		db = new DatabaseAdapter(getContext());
 		db.open();
 		em = db.em();
 
-        name = (EditText)findViewById(R.id.name);
-        title = (EditText)findViewById(R.id.title);
-        symbol = (EditText)findViewById(R.id.symbol);
-        isDefault = (CheckBox)findViewById(R.id.is_default);
-		decimals = (Spinner)findViewById(R.id.spinnerDecimals);
-		decimalSeparators = (Spinner)findViewById(R.id.spinnerDecimalSeparators);
-		groupSeparators = (Spinner)findViewById(R.id.spinnerGroupSeparators);
+        name = (EditText)getView().findViewById(R.id.name);
+        title = (EditText)getView().findViewById(R.id.title);
+        symbol = (EditText)getView().findViewById(R.id.symbol);
+        isDefault = (CheckBox)getView().findViewById(R.id.is_default);
+		decimals = (Spinner)getView().findViewById(R.id.spinnerDecimals);
+		decimalSeparators = (Spinner)getView().findViewById(R.id.spinnerDecimalSeparators);
+		groupSeparators = (Spinner)getView().findViewById(R.id.spinnerGroupSeparators);
 		groupSeparators.setSelection(1);
-        symbolFormat = (Spinner)findViewById(R.id.spinnerSymbolFormat);
+        symbolFormat = (Spinner)getView().findViewById(R.id.spinnerSymbolFormat);
         symbolFormat.setSelection(0);
 
 		maxDecimals = decimals.getCount();
@@ -82,16 +92,15 @@ public class CurrencyActivity extends AbstractEditorActivity {
 		groupSeparatorsItems = getResources().getStringArray(R.array.group_separators);
         symbolFormats = SymbolFormat.values();
 
-		Intent intent = getIntent();
-		if (intent != null) {
-			long id = intent.getLongExtra(CURRENCY_ID_EXTRA, -1);
-			if (id != -1) {
-				currency = em.load(Currency.class, id);
-				editCurrency();
-			} else {
-                makeDefaultIfNecessary();
-            }
+		long id = getArguments().getLong(MyFragmentAPI.ENTITY_ID_EXTRA, -1);
+		if (id != -1) {
+			currency = em.load(Currency.class, id);
+			editCurrency();
+		}	  else {
+			makeDefaultIfNecessary();
 		}
+
+
 	}
 
     @Override
@@ -115,13 +124,11 @@ public class CurrencyActivity extends AbstractEditorActivity {
 					CurrencyCache.initialize(em);
 					Intent data = new Intent();
 					data.putExtra(CURRENCY_ID_EXTRA, id);
-					setResult(RESULT_OK, data);
-					finish();
+                    finishAndClose(data.getExtras());
 				}        	        		
         		return true;
 	    	case R.id.action_cancel:
-				setResult(RESULT_CANCELED);
-				finish();
+                finishAndClose(AppCompatActivity.RESULT_CANCELED);
 	    		return true;        
         }
         return super.onOptionsItemSelected(item);
@@ -133,13 +140,13 @@ public class CurrencyActivity extends AbstractEditorActivity {
 
     private void editCurrency() {
 		Currency currency = this.currency;
-		EditText name = (EditText)findViewById(R.id.name);
+		EditText name = (EditText)getView().findViewById(R.id.name);
 		name.setText(currency.name);
-		EditText title = (EditText)findViewById(R.id.title);
+		EditText title = (EditText)getView().findViewById(R.id.title);
 		title.setText(currency.title);
-		EditText symbol = (EditText)findViewById(R.id.symbol);
+		EditText symbol = (EditText)getView().findViewById(R.id.symbol);
 		symbol.setText(currency.symbol);
-		CheckBox isDefault = (CheckBox)findViewById(R.id.is_default);
+		CheckBox isDefault = (CheckBox)getView().findViewById(R.id.is_default);
 		isDefault.setChecked(currency.isDefault);
 		decimals.setSelection(maxDecimals-currency.decimals);
 		decimalSeparators.setSelection(indexOf(decimalSeparatorsItems, currency.decimalSeparator, s.getDecimalSeparator()) +1);
@@ -163,7 +170,7 @@ public class CurrencyActivity extends AbstractEditorActivity {
 	}
 
 	@Override
-	protected void onDestroy() {
+	public void onDestroy() {
 		db.close();
 		super.onDestroy();
 	}

@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,9 +67,12 @@ public class MassOpFragment extends BlotterFragment {
 				}
 				return true;
 			case R.id.action_filter:
-				Intent intent = new Intent(getActivity(), BlotterFilterActivity.class);
-				blotterFilter.toIntent(intent);
-				startActivityForResult(intent, FILTER_REQUEST);				
+				Fragment fragment = new BlotterFilterActivity();
+				Bundle bundle = new Bundle();
+				blotterFilter.toBundle(bundle);
+				bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,FILTER_REQUEST);
+                fragment.setArguments(bundle);
+				activity.startFragmentForResult(fragment,this);
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -90,7 +94,7 @@ public class MassOpFragment extends BlotterFragment {
     @Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		((EntityListActivity) getActivity()).setMyTitle(getResources().getString(R.string.mass_operations));
+
 		Intent intent = getActivity().getIntent();
 		if (intent != null) {			
 			blotterFilter = WhereFilter.fromIntent(intent);
@@ -108,7 +112,7 @@ public class MassOpFragment extends BlotterFragment {
 		LinearLayout l = (LinearLayout)getView().findViewById(R.id.total_text);
 		l.setVisibility(LinearLayout.GONE);		
 		recreateAdapter();
-		((EntityListActivity) getActivity()).getSupportActionBar().invalidateOptionsMenu();
+
 	}
 	
 	protected void applyMassOp(final MassOp op) {

@@ -13,7 +13,9 @@ package com.flowzr.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,10 +29,8 @@ import com.flowzr.model.Currency;
 
 // @TODO: contextual menus (set default currency)
 public class CurrencyListFragment extends AbstractListFragment {
-	
-	private static final int NEW_CURRENCY_REQUEST = 1;
-	private static final int EDIT_CURRENCY_REQUEST = 2;
-    private static final int MENU_MAKE_DEFAULT = MENU_ADD + 1;
+
+    private static final int MENU_MAKE_DEFAULT = 1000;
 
     public CurrencyListFragment() {
 		super(R.layout.currency_list);
@@ -42,15 +42,18 @@ public class CurrencyListFragment extends AbstractListFragment {
 		inflater.inflate(R.menu.currencies_actions, menu);    
 		super.onCreateOptionsMenu(menu, inflater);
 	}
-    
+
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case R.id.action_add_currency: 
 	            addItem();
 	            return true;
-	        case R.id.action_exchange_rates: 
-	            ((EntityListActivity) getActivity()).loadFragment(new ExchangeRatesListFragment());   
+	        case R.id.action_exchange_rates:
+				Bundle bundle = new Bundle();
+				bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, ExchangeRatesListFragment.class.getCanonicalName());
+				activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
 	            return true;	            
 			default:
 	            return super.onOptionsItemSelected(item);	            
@@ -77,14 +80,20 @@ public class CurrencyListFragment extends AbstractListFragment {
         recreateCursor();
     }
 
+    protected String getEditActivityClass() {
+        return CurrencyActivity.class.getCanonicalName();
+    }
+
     @Override
 	protected void addItem() {
         new CurrencySelector(this.getActivity(), em, new CurrencySelector.OnCurrencyCreatedListener() {
             @Override
             public void onCreated(long currencyId) {
                 if (currencyId == 0) {
-                    Intent intent = new Intent(CurrencyListFragment.this.getActivity(), CurrencyActivity.class);
-                    startActivityForResult(intent, NEW_CURRENCY_REQUEST);
+                    Bundle bundle = new Bundle();
+                    bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, currencyId);
+                    bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, getEditActivityClass());
+                    activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
                 } else {
                     recreateCursor();
                 }
@@ -95,6 +104,11 @@ public class CurrencyListFragment extends AbstractListFragment {
 	@Override
 	protected ListAdapter createAdapter(Cursor cursor) {
 		return new CurrencyListAdapter(db, this.getActivity(), cursor);
+	}
+
+	@Override
+	protected void internalOnCreate(Bundle savedInstanceState) {
+
 	}
 
 	@Override
@@ -125,10 +139,11 @@ public class CurrencyListFragment extends AbstractListFragment {
 
 	@Override
 	public void editItem(View v, int position, long id) {
-		Intent intent = new Intent(this.getActivity(), CurrencyActivity.class);
-		intent.putExtra(CurrencyActivity.CURRENCY_ID_EXTRA, id);
-		startActivityForResult(intent, EDIT_CURRENCY_REQUEST);		
-	}	
+        Bundle bundle = new Bundle();
+        bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, id);
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, getEditActivityClass());
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+	}
 	
 	@Override
 	protected void viewItem(View v, int position, long id) {

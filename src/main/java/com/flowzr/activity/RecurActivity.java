@@ -11,6 +11,7 @@
 package com.flowzr.activity;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -18,11 +19,14 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -48,13 +52,14 @@ import com.flowzr.utils.RecurUtils.RecurPeriod;
 import com.flowzr.utils.RecurUtils.SemiMonthly;
 import com.flowzr.utils.RecurUtils.Weekly;
 import com.flowzr.utils.Utils;
+import com.flowzr.view.NodeInflater;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 
 // @TODO check recurActivity call
 
-public class RecurActivity extends AppCompatActivity {
+public class RecurActivity extends AbstractEditorActivity {
 	
 	public static final String EXTRA_RECUR = "recur";
 			
@@ -65,43 +70,60 @@ public class RecurActivity extends AppCompatActivity {
 	private LinearLayout layoutInterval;
 	private LinearLayout layoutRecur;
 	private Button bStartDate;
-	
+    private LayoutInflater inflater;
 	private final Calendar startDate = Calendar.getInstance();
 	private final Calendar stopsOnDate = Calendar.getInstance();
 	
 	private DateFormat df;
 
-	protected void initToolbar() {
-		final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
-		final ActionBar actionBar = getSupportActionBar();
-
-		if (actionBar != null) {
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
+	@Override
+	public String getMyTag() {
+		return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.recur);
-		initToolbar();
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-		df = DateUtils.getLongDateFormat(this);
+	protected int getLayoutId() {
+		return R.layout.recur;
+	}
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        NodeInflater nodeInflater = new NodeInflater(inflater);
+        x = new ActivityLayout(nodeInflater, this);
+        final Bundle args = getArguments();
+        contentId = args != null ? args.getInt("EXTRA_LAYOUT", this.getLayoutId()) : this.getLayoutId();
+        this.inflater=inflater;
+        return inflater.inflate(getLayoutId(), container, false);
+    }
+
+    public void onAttach(Context a) {
+        super.onAttach(a);
+        setHasOptionsMenu(true);
+        activity=(MainActivity)a;
+    }
+
+	@Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		//setContentView(R.layout.recur);
+		//initToolbar();
+		//getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+		df = DateUtils.getLongDateFormat(getContext());
 		
 		stopsOnDate.add(Calendar.YEAR, 1);
 		
-		sInterval = (Spinner)findViewById(R.id.intervalSpinner);
-		sPeriod = (Spinner)findViewById(R.id.recurSpinner);
-		layoutInterval = (LinearLayout)findViewById(R.id.layoutInterval);
-		layoutRecur = (LinearLayout)findViewById(R.id.recurInterval);
+		sInterval = (Spinner)getView().findViewById(R.id.intervalSpinner);
+		sPeriod = (Spinner)getView().findViewById(R.id.recurSpinner);
+		layoutInterval = (LinearLayout)getView().findViewById(R.id.layoutInterval);
+		layoutRecur = (LinearLayout)getView().findViewById(R.id.recurInterval);
 		
-		bStartDate = (Button)findViewById(R.id.bStartDate);
+		bStartDate = (Button)getView().findViewById(R.id.bStartDate);
 		bStartDate.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(final View v) {
 				final Calendar c = startDate;
-				DatePickerDialog d = new DatePickerDialog(RecurActivity.this, new DatePickerDialog.OnDateSetListener(){
+				DatePickerDialog d = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener(){
 					@Override
 					public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 						c.set(Calendar.YEAR, year);
@@ -118,14 +140,15 @@ public class RecurActivity extends AppCompatActivity {
 		addSpinnerItems(sInterval, new RecurInterval[]{RecurInterval.NO_RECUR, RecurInterval.WEEKLY, RecurInterval.MONTHLY});
 		addSpinnerItems(sPeriod, periods);
 		
-		LayoutInflater inflater = getLayoutInflater();
+		//LayoutInflater inflater = getLayoutInflater();
 		//addLayouts(inflater, layoutInterval, intervals);
 		addLayouts(inflater, layoutRecur, periods);
 		
 		Recur recur = RecurUtils.createDefaultRecur();
-		Intent intent = getIntent();
-		if (intent != null) {
-			String extra = intent.getStringExtra(EXTRA_RECUR);
+
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			String extra = bundle.getString(EXTRA_RECUR);
 			if (extra != null) {
 				recur = RecurUtils.createFromExtraString(extra); 
 			}
@@ -164,7 +187,12 @@ public class RecurActivity extends AppCompatActivity {
 		
 	}
 
-    @Override
+	@Override
+	protected void onClick(View v, int id) {
+
+	}
+
+	@Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         switch (item.getItemId())
@@ -176,50 +204,29 @@ public class RecurActivity extends AppCompatActivity {
 				r.startDate = startDate.getTimeInMillis();
 				r.period = period;
 				if (updateInterval(r) && updatePeriod(r)) {
-					Intent data = new Intent();
-					data.putExtra(EXTRA_RECUR, r.toString());
-					setResult(RESULT_OK, data);
-					finish();
+					Bundle bundle  = new Bundle();
+
+					bundle.putString(EXTRA_RECUR, r.toString());
+                    // @TODO clean
+                    bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,BudgetActivity.RECUR_REQUEST);
+                    finishAndClose(bundle);
 				}
+
         		return true;
+            case R.id.home:
         	case R.id.action_cancel:
-				setResult(RESULT_CANCELED, null);
-				finish();
+                finishAndClose(AppCompatActivity.RESULT_CANCELED);
                 return true;
-        	case android.R.id.home:
-            {
-                TaskStackBuilder tsb = TaskStackBuilder.create(this);
-                final int intentCount = tsb.getIntentCount();
-                if (intentCount > 0)
-                {
-                    Intent upIntent = tsb.getIntents()[intentCount - 1];
-                    if (NavUtils.shouldUpRecreateTask(this, upIntent))
-                    {
-                        // This activity is not part of the application's task, so create a new task with a synthesized back stack.
-                        tsb.startActivities();
-                        finish();
-                    }
-                    else
-                    {
-                        // This activity is part of the application's task, so simply navigate up to the hierarchical parent activity.
-                        NavUtils.navigateUpTo(this, upIntent);
-                    }
-                }
-                else
-                {
-                    onBackPressed();
-                }
-                return true;
-            }                
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.ok, menu);
-        return true;
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.ok, menu);
+        getActivity().setTitle(getString(R.string.recur));
+        super.onCreateOptionsMenu(menu, inflater);
     }
     
 	private static class SpinnerItem {
@@ -245,7 +252,7 @@ public class RecurActivity extends AppCompatActivity {
 			String value = x.name();
 			items[i] = new SpinnerItem(title, value);
 		}
-		ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
+		ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, items);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 	}
@@ -294,7 +301,7 @@ public class RecurActivity extends AppCompatActivity {
 					b.setOnClickListener(new OnClickListener(){
 						@Override
 						public void onClick(final View view) {
-							DatePickerDialog d = new DatePickerDialog(RecurActivity.this, new DatePickerDialog.OnDateSetListener(){
+							DatePickerDialog d = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener(){
 								@Override
 								public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 									c.set(Calendar.YEAR, year);
@@ -308,7 +315,7 @@ public class RecurActivity extends AppCompatActivity {
 						}
 					});
 				}
-				layout.addView(v, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+				layout.addView(v, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 			}			
 		}
 	}

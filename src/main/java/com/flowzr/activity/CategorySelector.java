@@ -8,9 +8,12 @@
 
 package com.flowzr.activity;
 
-import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -46,7 +49,8 @@ import java.util.Map;
  */
 public class CategorySelector {
 
-    private final Activity activity;
+    private final MainActivity activity;
+    private final AbstractEditorActivity target;
     private final DatabaseAdapter db;
     private final MyEntityManager em;
     private final ActivityLayout x;
@@ -60,8 +64,9 @@ public class CategorySelector {
     private CategorySelectorListener listener;
     private boolean showSplitCategory = true;
 
-    public CategorySelector(Activity activity, DatabaseAdapter db, ActivityLayout x) {
+    public CategorySelector(MainActivity activity, AbstractEditorActivity target, DatabaseAdapter db, ActivityLayout x) {
         this.activity = activity;
+        this.target=target;
         this.db = db;
         this.em = db.em();
         this.x = x;
@@ -103,15 +108,16 @@ public class CategorySelector {
     public void onClick(int id) {
         switch (id) {
             case R.id.category: {
-                if (!CategorySelectorFragment.pickCategory(activity, selectedCategoryId, showSplitCategory)) {
+                if (!CategorySelectorFragment.pickCategory(activity,target, selectedCategoryId, showSplitCategory)) {
                     x.select(activity, R.id.category, R.string.category, categoryCursor, categoryAdapter,
                             DatabaseHelper.CategoryViewColumns._id.name(), selectedCategoryId);
                 }
                 break;
             }
             case R.id.category_add: {
-                Intent intent = new Intent(activity, CategoryActivity.class);
-                activity.startActivityForResult(intent, CategorySelectorFragment.CATEGORY_ADD);
+                Bundle bundle = new Bundle();
+                bundle.putString(DatabaseHelper.CategoryColumns._id.name(), CategoryActivity.class.getCanonicalName());
+                activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
                 break;
             }
             case R.id.category_split:
@@ -188,18 +194,21 @@ public class CategorySelector {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
+        Log.e("flowzr","category selector " + requestCode + " " + resultCode);
+        if (resultCode == AppCompatActivity.RESULT_OK) {
+            Log.e("flowzr","category selector RESULT OK");
+            Log.e("flowzr",data.getExtras().toString());
             switch (requestCode) {
                 case  CategorySelectorFragment.CATEGORY_ADD: {
                     categoryCursor.requery();
-                    long categoryId = data.getLongExtra(DatabaseHelper.CategoryColumns._id.name(), -1);
+                    long categoryId = data.getLongExtra(MyFragmentAPI.ENTITY_ID_EXTRA, -1);
                     if (categoryId != -1) {
                         selectCategory(categoryId);
                     }
                     break;
                 }
                 case CategorySelectorFragment.CATEGORY_PICK: {
-                    long categoryId = data.getLongExtra(CategorySelectorFragment.SELECTED_CATEGORY_ID, 0);
+                    long categoryId = data.getLongExtra(MyFragmentAPI.ENTITY_ID_EXTRA, 0);
                     selectCategory(categoryId);
                     break;
                 }

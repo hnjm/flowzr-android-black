@@ -11,10 +11,14 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -42,7 +46,8 @@ public abstract class MyEntityListFragment<T extends MyEntity> extends AbstractL
         this.clazz = clazz;
 	}
 
-	public void onAttach(Activity a) {
+	@Override
+	public void onAttach(Context a) {
 		super.onAttach(a);
 		setHasOptionsMenu(true);
 		activity=(MainActivity)a;
@@ -63,14 +68,17 @@ public abstract class MyEntityListFragment<T extends MyEntity> extends AbstractL
 
     protected abstract List<T> loadEntities();
 
+
+
     @Override
 	protected void addItem() {
-		Intent intent = new Intent(MyEntityListFragment.this.getActivity(), getEditActivityClass());
-		//@TODO add editor as fragment
-        startActivityForResult(intent, NEW_ENTITY_REQUEST);
+		Intent intent = new Intent(MyEntityListFragment.this.getActivity(), MainActivity.class);
+        intent.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, getEditActivityClass());
+        intent.putExtra(MyFragmentAPI.ENTITY_ID_EXTRA, -1);
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,intent.getExtras());
 	}
 
-    protected abstract Class<? extends MyEntityActivity> getEditActivityClass();
+    protected abstract String getEditActivityClass();
 
     @Override
 	protected ListAdapter createAdapter(Cursor cursor) {
@@ -106,10 +114,10 @@ public abstract class MyEntityListFragment<T extends MyEntity> extends AbstractL
 
 	@Override
 	public void editItem(View v, int position, long id) {
-		Intent intent = new Intent(MyEntityListFragment.this.getActivity(), getEditActivityClass());
-		intent.putExtra(MyEntityActivity.ENTITY_ID_EXTRA, id);
-        //@TODO editor to fragments
-		startActivityForResult(intent, EDIT_ENTITY_REQUEST);
+		Bundle bundle = new Bundle();
+		bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, id);
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, getEditActivityClass());
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
 	}	
 	
 	@Override
@@ -118,7 +126,9 @@ public abstract class MyEntityListFragment<T extends MyEntity> extends AbstractL
 		Criteria blotterFilter = createBlotterCriteria(e);
 		Bundle bundle = new Bundle();
 		blotterFilter.toBundle(e.title,bundle);
-		activity.onFragmentMessage(FragmentAPI.REQUEST_BLOTTER,bundle);
+		Log.e("flowzr",blotterFilter.toWhereExpression().toString());
+
+		activity.onFragmentMessage(MyFragmentAPI.REQUEST_BLOTTER,bundle);
 	}
 
     protected abstract Criteria createBlotterCriteria(T e);

@@ -13,6 +13,7 @@ package com.flowzr.activity;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -67,18 +68,29 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
 	protected DatabaseAdapter db;
 	protected MyEntityManager em;
 	protected MenuItem bAdd;
-    protected long selectedId = -1;	
+    protected long selectedId = -1;
+
+	protected MainActivity activity;
 
 	protected AbstractTotalListFragment(int contentId) {
 		this.contentId = contentId;				
 	}
 
+    public void onAttach(Context a) {
+        super.onAttach(a);
+        setHasOptionsMenu(true);
+        activity=(MainActivity)a;
+    }
+/**
+
+	//@TODO delete getScaleUpOption()
 	public Bundle getScaleUpOption() {
 		return ActivityOptionsCompat.makeScaleUpAnimation(
 				getView(), 0, 0,
-				getActivity().findViewById(android.R.id.content).getWidth(),
-				getActivity().findViewById(android.R.id.content).getHeight()).toBundle();
+				getView().findViewById(android.R.id.content).getWidth(),
+				getView().findViewById(android.R.id.content).getHeight()).toBundle();
 	}
+*/
 
     public void onCreate(Bundle savedInstanceState)
     {

@@ -120,6 +120,11 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
 
     protected void recreateViewPagerAdapter() {
         Intent intent= getIntent();
+        int pos=0;
+        if (viewPager!=null) {
+             pos=viewPager.getCurrentItem();
+        }
+
         mAdapter = new MyAdapter(getSupportFragmentManager(),intent);
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(mAdapter);
@@ -134,35 +139,25 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
             }
 
             public void onPageSelected(int position) {
+                Log.e("flowzr","on page selected" + String.valueOf(position));
+                mAdapter.notifyDataSetChanged();
+                supportInvalidateOptionsMenu();
                 switch (position) {
                     case 0:
                         setTitle(R.string.accounts);
                         break;
+                    case 1:
+                        setTitle(R.string.blotter);
+                        break;
                     case 2:
                         setTitle(R.string.budgets);
                         break;
                 }
+
             }
         });
-
+        viewPager.setCurrentItem(pos);
         mAdapter.notifyDataSetChanged();
-
-        //handle setting title after viewpager generate title at loading
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                switch (viewPager.getCurrentItem()) {
-                    case 0:
-                        setTitle(R.string.accounts);
-                        break;
-                    case 2:
-                        setTitle(R.string.budgets);
-                        break;
-                }
-            }
-        }, 600);
-
     }
 
 
@@ -298,18 +293,16 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+/**
     @Override
     public void onBackPressed() {
         if (isTaskRoot()) {
-
             if (mDrawerLayout!=null) {
                 if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
                     mDrawerLayout.closeDrawers();
                     return;
                 }
             }
-
             if (viewPager.getCurrentItem()!=0) {
                 viewPager.setCurrentItem(0);
             } else {
@@ -319,6 +312,6 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
+*/
 
 }

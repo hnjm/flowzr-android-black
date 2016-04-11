@@ -11,6 +11,7 @@ package com.flowzr.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,8 @@ import com.flowzr.R;
 import com.flowzr.activity.AbstractTotalListFragment;
 import com.flowzr.activity.AccountActivity;
 import com.flowzr.activity.AccountListFragment;
+import com.flowzr.activity.MainActivity;
+import com.flowzr.activity.MyFragmentAPI;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.MyEntityManager;
 import com.flowzr.model.Account;
@@ -37,6 +40,7 @@ import static com.flowzr.utils.Utils.isNotEmpty;
 
 public class AccountInfoDialog {
 
+    private final MainActivity activity;
     private final AccountListFragment parentActivity;
     private final long accountId;
     private final MyEntityManager em;
@@ -44,9 +48,10 @@ public class AccountInfoDialog {
     private final LayoutInflater layoutInflater;
     private final Utils u;
 
-    public AccountInfoDialog(AccountListFragment parentActivity, long accountId,
+    public AccountInfoDialog(AccountListFragment parentActivity,MainActivity activity, long accountId,
                              DatabaseAdapter db, NodeInflater inflater) {
         this.parentActivity = parentActivity;
+        this.activity = activity;
         this.accountId = accountId;
         //DatabaseAdapter db1 = db;
         this.em = db.em();
@@ -125,11 +130,13 @@ public class AccountInfoDialog {
             @Override
             public void onClick(View arg0) {
                 d.dismiss();
-                Intent intent = new Intent(parentActivity.getActivity(), AccountActivity.class);
-                intent.putExtra(AccountActivity.ACCOUNT_ID_EXTRA, accountId);
-                parentActivity.startActivityForResult(intent, AbstractTotalListFragment.EDIT_ACCOUNT_REQUEST);
+                Bundle bundle= new Bundle();
+                bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,AccountActivity.class.getCanonicalName());
+                bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, accountId);
+                activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
             }
         });
+
 
         Button bClose = (Button) v.findViewById(R.id.bClose);
         bClose.setOnClickListener(new OnClickListener() {

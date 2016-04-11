@@ -10,9 +10,13 @@
  ******************************************************************************/
 package com.flowzr.recur;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,10 +50,13 @@ import java.util.Map;
 
 public class RecurrenceViewFactory {
 
-	private final RecurrenceActivity activity;
-	
-	public RecurrenceViewFactory(RecurrenceActivity activity) {
+	private final FragmentActivity activity;
+
+	private final RecurrenceActivity recurrenceActivity;
+
+	public RecurrenceViewFactory(FragmentActivity activity, RecurrenceActivity recurrenceActivity) {
 		this.activity = activity;
+		this.recurrenceActivity=recurrenceActivity;
 	}
 	
 	public RecurrenceView create(RecurrencePattern p) {
@@ -102,6 +109,7 @@ public class RecurrenceViewFactory {
 		
 		public AbstractView(LocalizableEnum r) {
 			this.r = r;
+
 			LayoutInflater layoutInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			NodeInflater nodeInflater = new NodeInflater(layoutInflater);
 			this.x = new ActivityLayout(nodeInflater, this);
@@ -586,7 +594,7 @@ public class RecurrenceViewFactory {
 			} else {
 				int k = id-100;
 				pattern[k] = MonthlyPattern.values()[selectedPos];
-				activity.createNodes();				
+				recurrenceActivity.createNodes();
 			}
 		}
 

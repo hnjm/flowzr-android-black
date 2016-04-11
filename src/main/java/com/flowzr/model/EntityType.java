@@ -17,7 +17,7 @@ package com.flowzr.model;
 import com.flowzr.R;
 import android.support.v4.app.Fragment;
 
-import com.flowzr.activity.CategoryListFragment;
+import com.flowzr.activity.CategorySelectorFragment;
 import com.flowzr.activity.CurrencyListFragment;
 import com.flowzr.activity.ExchangeRatesListFragment;
 import com.flowzr.activity.LocationsListFragment;
@@ -60,7 +60,7 @@ public enum EntityType implements EntityEnum {
             case R.string.exchange_rates:
                 return new ExchangeRatesListFragment();
             case R.string.categories:
-                return new CategoryListFragment();
+                return new CategorySelectorFragment();
             case R.string.payees:
                 return new PayeeListFragment();
             case R.string.projects:

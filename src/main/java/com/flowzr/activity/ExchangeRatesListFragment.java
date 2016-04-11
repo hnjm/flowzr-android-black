@@ -76,7 +76,7 @@ public class ExchangeRatesListFragment extends AbstractListFragment {
     @Override
 	public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-		getListView().setEmptyView(getActivity().findViewById(R.id.emptyView));
+		getListView().setEmptyView(getView().findViewById(R.id.emptyView));
         currencies = em.getAllCurrenciesList("name");
 
         fromCurrencySpinner = (Spinner)getView().findViewById(R.id.spinnerFromCurrency);
@@ -115,7 +115,7 @@ public class ExchangeRatesListFragment extends AbstractListFragment {
             });
             fromCurrencySpinner.setSelection(findDefaultCurrency());
 
-            ImageButton bFlip = (ImageButton)getActivity().findViewById(R.id.bFlip);
+            ImageButton bFlip = (ImageButton)getView().findViewById(R.id.bFlip);
             bFlip.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View arg0) {
@@ -123,7 +123,7 @@ public class ExchangeRatesListFragment extends AbstractListFragment {
                 }
             });
             
-            LinearLayout empty_TV=(LinearLayout) getActivity().findViewById(R.id.emptyView);
+            LinearLayout empty_TV=(LinearLayout) getView().findViewById(R.id.emptyView);
             empty_TV.setOnClickListener(new View.OnClickListener() {
 				
 			@Override
@@ -140,7 +140,12 @@ public class ExchangeRatesListFragment extends AbstractListFragment {
         }
     }
 
-	@Override
+    @Override
+    protected void internalOnCreate(Bundle savedInstanceState) {
+
+    }
+
+    @Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.clear();		
 		inflater.inflate(R.menu.ex_rates_action, menu);    
@@ -225,14 +230,21 @@ public class ExchangeRatesListFragment extends AbstractListFragment {
     }
 
     @Override
+    protected String getEditActivityClass() {
+        return ExchangeRateActivity.class.getCanonicalName();
+    }
+
+
+    @Override
     protected void addItem() {
         long fromCurrencyId = fromCurrencySpinner.getSelectedItemId();
         long toCurrencyId = toCurrencySpinner.getSelectedItemId();
         if (fromCurrencyId > 0 && toCurrencyId > 0) {
-            Intent intent = new Intent(this.getActivity(), ExchangeRateActivity.class);
-            intent.putExtra(ExchangeRateActivity.FROM_CURRENCY_ID, fromCurrencyId);
-            intent.putExtra(ExchangeRateActivity.TO_CURRENCY_ID, toCurrencyId);
-            startActivityForResult(intent, ADD_RATE);
+            Bundle bundle = new Bundle();
+            bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, getEditActivityClass());
+            bundle.putLong(ExchangeRateActivity.FROM_CURRENCY_ID, fromCurrencyId);
+            bundle.putLong(ExchangeRateActivity.TO_CURRENCY_ID, toCurrencyId);
+            activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
         }
     }
 
@@ -273,11 +285,13 @@ public class ExchangeRatesListFragment extends AbstractListFragment {
     }
 
     private void editRate(ExchangeRate rate) {
-        Intent intent = new Intent(this.getActivity(), ExchangeRateActivity.class);
-        intent.putExtra(ExchangeRateActivity.FROM_CURRENCY_ID, rate.fromCurrencyId);
-        intent.putExtra(ExchangeRateActivity.TO_CURRENCY_ID, rate.toCurrencyId);
-        intent.putExtra(ExchangeRateActivity.RATE_DATE, rate.date);
-        startActivityForResult(intent, EDIT_RATE);
+
+        Bundle bundle = new Bundle();
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, getEditActivityClass());
+        bundle.putLong(ExchangeRateActivity.FROM_CURRENCY_ID, rate.fromCurrencyId);
+        bundle.putLong(ExchangeRateActivity.TO_CURRENCY_ID, rate.toCurrencyId);
+        bundle.putLong(ExchangeRateActivity.RATE_DATE, rate.date);
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
     }
 
     private class RatesDownloadTask extends AsyncTask<Void, Void, List<ExchangeRate>> {

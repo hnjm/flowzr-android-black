@@ -20,7 +20,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
@@ -99,9 +98,13 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 			addItem();
 			return true;
 		case R.id.action_filter_budget:
-			Intent intent = new Intent(BudgetListFragment.this.getActivity(), DateFilterActivity.class);
-			filter.toIntent(intent);
-			ActivityCompat.startActivityForResult(getActivity(), intent, FILTER_BUDGET_REQUEST, getScaleUpOption());
+            Bundle bundle = new Bundle();
+            filter.toBundle(bundle);
+            bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,FILTER_BUDGET_REQUEST);
+            Fragment fragment = new DateFilterActivity();
+            fragment.setTargetFragment(this,0);
+            fragment.setArguments(bundle);
+            activity.startFragmentForResult(fragment,this);
 			return true;
 			case R.id.action_integrity_fix:
 				integrityCheck();
@@ -187,10 +190,11 @@ public class BudgetListFragment extends AbstractTotalListFragment {
     }
 
     private void showTotals() {
-		Intent intent=new Intent(getActivity(),EntityListActivity.class);
-		intent.putExtra(EntityListActivity.REQUEST_BUDGET_TOTALS, true);
-		filter.toIntent(intent);
-		ActivityCompat.startActivity(getActivity(), intent,  getScaleUpOption());
+        Bundle bundle = new Bundle();
+        filter.toBundle(bundle);
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, BudgetListTotalsDetailsActivity.class.getCanonicalName());
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+        calculateTotals();
     }
 
 	private void saveFilter() {
@@ -201,24 +205,34 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode,resultCode,data);
+        Log.e("flowzr",String.valueOf(requestCode));
 		if (requestCode == FILTER_BUDGET_REQUEST) {
 			if (resultCode == MainActivity.RESULT_FIRST_USER) {
 				filter.clear();				
 			} else if (resultCode == MainActivity.RESULT_OK) {
+
 				String periodType = data.getStringExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TYPE);
 				if (periodType!=null) {
 					PeriodType p = PeriodType.valueOf(periodType);
+                    Log.e("flowzr","ok2 " + getResources().getString(p.getTitleId()));
 					if (PeriodType.CUSTOM == p) {
 						long periodFrom = data.getLongExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_FROM, 0);
 						long periodTo = data.getLongExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TO, 0);
 						filter.put(new DateTimeCriteria(periodFrom, periodTo));
 					} else {
+                        Log.e("flowzr","ok3 " + getResources().getString(R.string.budgets) + " " + p.getTitleId());
+                        activity.setTitle(getResources().getString(R.string.budgets) + " " + p.getTitleId());
 						filter.put(new DateTimeCriteria(p));
+
 					}
 				}
+                Log.e("flowzr","result OK with filter " + filter.getTitle());
 			}
-			saveFilter();
+
+
+
+            saveFilter();
 		}
 
 		if (resultCode != MainActivity.RESULT_CANCELED ) {
@@ -263,8 +277,11 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 	
 	@Override
 	protected void addItem() {
-		Intent intent = new Intent(this.getActivity(), BudgetActivity.class);
-		ActivityCompat.startActivityForResult(getActivity(), intent, NEW_BUDGET_REQUEST, getScaleUpOption());
+		//Intent intent = new Intent(this.getActivity(), BudgetActivity.class);
+		//ActivityCompat.startActivityForResult(getActivity(), intent, NEW_BUDGET_REQUEST, getScaleUpOption());
+		Bundle bundle = new Bundle();
+		bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, BudgetActivity.class.getCanonicalName());
+		activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
 
 	}
 
@@ -317,20 +334,27 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 			t.show();
 		}
 		Intent intent = new Intent(this.getActivity(), BudgetActivity.class);
-		intent.putExtra(BudgetActivity.BUDGET_ID_EXTRA, b.parentBudgetId > 0 ? b.parentBudgetId : id);
-		ActivityCompat.startActivityForResult(getActivity(), intent, EDIT_BUDGET_REQUEST, getScaleUpOption());
+		//intent.putExtra(BudgetActivity.BUDGET_ID_EXTRA, b.parentBudgetId > 0 ? b.parentBudgetId : id);
+
+        Bundle bundle =new Bundle();
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,BudgetActivity.class.getCanonicalName());
+        bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA,b.parentBudgetId > 0 ? b.parentBudgetId : id);
+
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+
+		//ActivityCompat.startActivityForResult(getActivity(), intent, EDIT_BUDGET_REQUEST, getScaleUpOption());
 
 	}
 
 	@Override
 	protected void viewItem(View v, int position, long id) {
         Budget b = em.load(Budget.class, id);
-		Intent intent = new Intent(this.getActivity(), EntityListActivity.class);
+        Bundle bundle = new Bundle();
 		Criteria.eq(BlotterFilter.BUDGET_ID, String.valueOf(id))
-			.toIntent(b.title, intent);
-		intent.putExtra(MainActivity.REQUEST_BUDGET_BLOTTER, true);
-		ActivityCompat.startActivity(getActivity(), intent, getScaleUpOption());
-
+			.toBundle(b.title, bundle);
+		bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, id);
+		bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, BudgetBlotterFragment.class.getCanonicalName());
+		activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
 	}	
 	
 	public class BudgetTotalsCalculationTask extends AsyncTask<Void, Total, Total> {

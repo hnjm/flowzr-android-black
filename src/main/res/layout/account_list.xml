@@ -30,28 +30,25 @@
               android:textColor="#f26522" 
               android:visibility="gone"/>
 
-<LinearLayout
-    style="@style/ListItem"
-	 android:id="@+id/emptyView"
-    android:contentDescription="@string/no_accounts"
-    android:paddingLeft="@dimen/space_large"
-    android:paddingRight="@dimen/space_large"
-    android:layout_marginTop="@dimen/space_small"
-    android:layout_gravity="center"
-     android:visibility="gone">
+    <LinearLayout
+        style="@style/ListItem"
+         android:id="@+id/emptyView"
+        android:contentDescription="@string/no_accounts"
+        android:paddingLeft="@dimen/space_large"
+        android:paddingRight="@dimen/space_large"
+        android:layout_marginTop="@dimen/space_small"
+        android:layout_gravity="center"
+         android:visibility="gone">
 
-    <TextView
-        android:text="@string/no_accounts" 
-        style="@style/TextView"
-        android:layout_marginTop="@dimen/space_large"
-        android:layout_marginLeft="64dp"
-        android:layout_width="wrap_content"
-        android:textSize="@dimen/text_xlarge" />
+        <TextView
+            android:text="@string/no_accounts"
+            style="@style/TextView"
+            android:layout_marginTop="@dimen/space_large"
+            android:layout_marginLeft="64dp"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/text_xlarge" />
 
-</LinearLayout>
-    <FrameLayout
-        android:id="@+id/fragment_land_container"
-        android:layout_width="0dp"
-        android:layout_height="0dp" />
+    </LinearLayout>
+
 
 </LinearLayout>

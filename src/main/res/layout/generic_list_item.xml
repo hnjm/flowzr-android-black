@@ -15,6 +15,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:padding="@dimen/space_small"
+	android:id="@+id/list_item"
 	android:minHeight="?listPreferredItemHeight">
 
 	<ImageView android:id="@+id/icon"

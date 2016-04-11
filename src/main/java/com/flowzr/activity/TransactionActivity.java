@@ -16,10 +16,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -78,45 +82,70 @@ public class TransactionActivity extends AbstractTransactionActivity {
     private long selectedOriginCurrencyId = -1;
 
 
-    public TransactionActivity() {
-	}
-
-	protected int getLayoutId() {
-		return R.layout.transaction_free;
-	}
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.transaction_actions, menu);
-        return true;
+    public String getMyTag() {
+        return null;
+    }
+
+    protected int getLayoutId() {
+        return R.layout.transaction_free;
     }
 
 
-    
+
+/***
+ @Override
+ public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+ Log.e("flowzr","inflating layout : " + getLayoutId());
+ return inflater.inflate(getLayoutId(), container, false);
+ }
+
+ @Override
+ public boolean onCreateOptionsMenu(Menu menu)
+ {
+ getMenuInflater().inflate(R.menu.transaction_actions, menu);
+ return true;
+ }
+
+**/
+
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.transaction_actions, menu);
+    }
+
 	@Override
 	protected void internalOnCreate() {
-        initToolbar();
-		Intent intent = getIntent();
-		if (intent != null) {
-			if (intent.hasExtra(CURRENT_BALANCE_EXTRA)) {
-				currentBalance = intent.getLongExtra(CURRENT_BALANCE_EXTRA, 0);
+
+		Bundle bundle = getArguments();
+        if (bundle != null) {
+			if (bundle.containsKey(CURRENT_BALANCE_EXTRA)) {
+				currentBalance = bundle.getLong(CURRENT_BALANCE_EXTRA, 0);
 				isUpdateBalanceMode = true;
-			} else if(intent.hasExtra(AMOUNT_EXTRA)) {
-				currentBalance = intent.getLongExtra(AMOUNT_EXTRA, 0);
+			} else if(bundle.containsKey(AMOUNT_EXTRA)) {
+				currentBalance = bundle.getLong(AMOUNT_EXTRA, 0);
 			}
 		}
 		if (transaction.isTemplateLike()) {
-			setTitle(transaction.isTemplate() ? R.string.transaction_template : R.string.transaction_schedule);
+			getActivity().setTitle(transaction.isTemplate() ? R.string.transaction_template : R.string.transaction_schedule);
 			if (transaction.isTemplate()) {
 				dateText.setEnabled(false);
 				timeText.setEnabled(false);
 			}
-		}
+		} else {
+            if (transaction.id==-1) {
+                getActivity().setTitle(R.string.add_transaction);
+            } else {
+                getActivity().setTitle(R.string.edit);
+            }
+        }
 
         currencyAsAccount.name = getString(R.string.original_currency_as_account);
 
-        ToggleButton toggleView = (ToggleButton) findViewById(R.id.toggle);
+        ToggleButton toggleView = (ToggleButton) getView().findViewById(R.id.toggle);
         if (transaction.fromAmount>0) {
             toggleView.setChecked(true);
         }
@@ -137,7 +166,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
         });
 
 
-        final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) findViewById(R.id.menu1);
+        final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) getView().findViewById(R.id.menu1);
         if (menu1!=null) {
             menu1.setOnMenuButtonClickListener(new View.OnClickListener() {
                 @Override
@@ -182,17 +211,18 @@ public class TransactionActivity extends AbstractTransactionActivity {
                 }
             });
 
-            if (findViewById(R.id.saveAddButton)!=null) {
-                findViewById(R.id.saveAddButton).setOnClickListener(new View.OnClickListener() {
+            if (getView().findViewById(R.id.saveAddButton)!=null) {
+                getView().findViewById(R.id.saveAddButton).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         onOKClicked();
-                        Intent intent2 = new Intent(getApplicationContext(), TransactionActivity.class);
-                        intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
-                        intent2.putExtra(ACCOUNT_ID_EXTRA, transaction.fromAccountId);
+                        Bundle bundle = new Bundle();
+                        bundle.putLong(DATETIME_EXTRA, transaction.dateTime);
+                        bundle.putLong(ACCOUNT_ID_EXTRA, transaction.fromAccountId);
                         if (saveAndFinish()) {
-                            intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
-                            startActivityForResult(intent2, -1);
+                            bundle.putLong(DATETIME_EXTRA, transaction.dateTime);
+                            bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,Transaction.class.getCanonicalName());
+                            activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
                         }
                     }
                 });
@@ -205,14 +235,14 @@ public class TransactionActivity extends AbstractTransactionActivity {
 	}
 
     protected void switchIncomeExpenseButton(Category category) {
-        ToggleButton toggleView = (ToggleButton) findViewById(R.id.toggle);
+        ToggleButton toggleView = (ToggleButton)  getView().findViewById(R.id.toggle);
         if (category.isIncome()) {
             toggleView.setChecked(true);
         } else if (category.isExpense()) {
             toggleView.setChecked(false);
         }
     }
-// TODO Qucikwidget unsplit action grid
+// @TODO Qucikwidget unsplit action grid
 /**
     private void prepareUnsplitActionGrid() {
         if (isGreenDroidSupported()) {
@@ -248,7 +278,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
         }
 
     };
-**/
+
     private void unsplitAdjustAmount() {
         long splitAmount = calculateSplitAmount();
         rateView.setFromAmount(splitAmount);
@@ -288,6 +318,8 @@ public class TransactionActivity extends AbstractTransactionActivity {
         }
         updateUnsplitAmount();
     }
+ **/
+
 
     @Override
     protected void fetchCategories() {
@@ -301,7 +333,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
 
     @Override
 	protected void createListNodes(LinearLayout layout) {
-        rateView.createTransactionUI();
+        rateView.createTransactionUI(this);
         // difference
         if (isUpdateBalanceMode) {
             differenceText = x.addInfoNode(layout, -1, R.string.difference, "0");
@@ -342,20 +374,21 @@ public class TransactionActivity extends AbstractTransactionActivity {
             });
         }
 
-        if (!isUpdateBalanceMode && MyPreferences.isShowCurrency(this)) {
+        if (!isUpdateBalanceMode && MyPreferences.isShowCurrency(getContext())) {
             currencyText = x.addListNode2(layout, R.id.original_currency, R.drawable.ic_attach_money,R.string.currency, getResources().getString(R.string.original_currency_as_account));
         } else {
-            currencyText = new TextView(this);
+            currencyText = new TextView(getContext());
         }
 
 		//account(LinearLayout layout, int id,int drawableId, int labelId, String defaultValue)
+        Log.e("flowzr","adding node account" + layout);
+        layout=(LinearLayout)getView().findViewById(R.id.listlayout);
+        Log.e("flowzr","adding node account" + layout);
+        //Log.e("flowzr","adding node account" + layout.getBackground().getColorFilter().toString());
 		accountText = x.addListNode2(layout, R.id.account, R.drawable.ic_account_balance_wallet, R.string.account, getResources().getString(R.string.select_account));
-        //amount
-
-
 
         //payee
-        isShowPayee = MyPreferences.isShowPayee(this);
+        isShowPayee = MyPreferences.isShowPayee(getContext());
         if (isShowPayee) {
             createPayeeNode(layout);
             payeeText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -369,8 +402,6 @@ public class TransactionActivity extends AbstractTransactionActivity {
         }
 		//category
         categorySelector.createNode(layout, true);
-
-
 	}
 
     private void selectLastCategoryForPayee(long id) {
@@ -381,7 +412,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
     }
 
     private void createSplitsLayout(LinearLayout layout) {
-        splitsLayout = new LinearLayout(this);
+        splitsLayout = new LinearLayout(getContext());
         splitsLayout.setOrientation(LinearLayout.VERTICAL);
         layout.addView(splitsLayout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     }
@@ -421,14 +452,6 @@ public class TransactionActivity extends AbstractTransactionActivity {
     }
 
 
-
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		if (hasFocus) {
-			accountText.requestFocusFromTouch();
-		}
-	}
-
 	@Override
 	protected boolean onOKClicked() {
 		if (checkSelectedId(getSelectedAccountId(), R.string.select_account) &&
@@ -443,7 +466,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
         if (categorySelector.isSplitCategorySelected()) {
             long unsplitAmount = calculateUnsplitAmount();
             if (unsplitAmount != 0) {
-                Toast.makeText(this, R.string.unsplit_amount_greater_than_zero, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.unsplit_amount_greater_than_zero, Toast.LENGTH_LONG).show();
                 return false;
             }
         }
@@ -535,7 +558,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
         switch (item.getItemId())
         {
             case R.id.action_settings:
-                Intent intent = new Intent(this.getApplicationContext(), TransactionPreferencesActivity.class);
+                Intent intent = new Intent(getContext(), TransactionPreferencesActivity.class);
                 startActivityForResult(intent, BLOTTER_PREFERENCES);
                 return true;
             case R.id.saveButton:
@@ -544,16 +567,18 @@ public class TransactionActivity extends AbstractTransactionActivity {
         		return true;
         	case R.id.saveAddButton:
         		onOKClicked();
-                Intent intent2= getIntent();
+                Intent intent2= getActivity().getIntent();
         		intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
         		if (saveAndFinish()) { 
                     intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
-                    startActivityForResult(intent2, -1);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,TransactionActivity.class.getCanonicalName());
+                    bundle.putAll(intent2.getExtras());
+                    activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
                     return true;
                 }
         	case R.id.action_cancel:
-                setResult(RESULT_CANCELED);
-                finish();
+                saveAndFinish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -572,7 +597,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
                 break;
             case R.id.add_split_transfer:
                 if (selectedOriginCurrencyId > 0) {
-                    Toast.makeText(this, R.string.split_transfer_not_supported_yet, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.split_transfer_not_supported_yet, Toast.LENGTH_LONG).show();
                     break;
                 }
                 createSplit(true);
@@ -584,9 +609,9 @@ public class TransactionActivity extends AbstractTransactionActivity {
             case R.id.original_currency:
                 List<Currency> currencies = em.getAllCurrenciesList();
                 currencies.add(0, currencyAsAccount);
-                ListAdapter adapter = TransactionUtils.createCurrencyAdapter(this, currencies);
+                ListAdapter adapter = TransactionUtils.createCurrencyAdapter(getContext(), currencies);
                 int selectedPos = MyEntity.indexOf(currencies, selectedOriginCurrencyId);
-                x.selectItemId(this, R.id.currency, R.string.currency, adapter, selectedPos);
+                x.selectItemId(getContext(), R.id.currency, R.string.currency, adapter, selectedPos);
                 break;
         }
         Transaction split = viewToSplitMap.get(v);
@@ -640,12 +665,12 @@ public class TransactionActivity extends AbstractTransactionActivity {
     }
 
     private void showQuickActionsDialog() {
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(getContext())
             .setTitle(R.string.unsplit_amount)
             .setItems(R.array.unsplit_quick_action_items, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    // TODO show unsplit dialog
+                    // @TODO show unsplit dialog
                     //unsplitActionListener.onQuickActionClicked(unsplitActionGrid, i);
                 }
             })
@@ -663,16 +688,20 @@ public class TransactionActivity extends AbstractTransactionActivity {
     }
 
     private void editSplit(Transaction split, Class splitActivityClass) {
-        Intent intent = new Intent(this, splitActivityClass);
+        Intent intent = new Intent(getContext(), splitActivityClass);
         split.toIntentAsSplit(intent);
-        startActivityForResult(intent, SPLIT_REQUEST);
+        Bundle bundle= new Bundle();
+        bundle.putAll(intent.getExtras());
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,splitActivityClass.getCanonicalName());
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e("flowzr","transaction activity on activity result !!!");
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SPLIT_REQUEST) {
-            if (resultCode == RESULT_OK) {
+            if (resultCode == AppCompatActivity.RESULT_OK) {
                 Transaction split = Transaction.fromIntentAsSplit(data);
                 addOrEditSplit(split);
             }
@@ -680,7 +709,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         try {
             if (categorySelector.isSplitCategorySelected()) {
@@ -702,7 +731,8 @@ public class TransactionActivity extends AbstractTransactionActivity {
             Log.e("Financisto", "Unable to save state", e);
         }
     }
-
+    // @TODO handle configutation change (ex: splits)
+    /**
     @SuppressWarnings("TryFinallyCanBeTryWithResources")
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -732,7 +762,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
             }
         }
     }
-
+**/
     private void addOrEditSplit(Transaction split) {
         View v = findView(split);
         if (v  == null) {
@@ -823,7 +853,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         if (payeeAdapter != null) {
             payeeAdapter.changeCursor(null);
         }

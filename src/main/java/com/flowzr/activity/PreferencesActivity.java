@@ -37,9 +37,6 @@ public class PreferencesActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 
-        //ActionBar actionBar = getActionBar();
-        //actionBar.setDisplayHomeAsUpEnabled(true);
-
         PreferenceScreen preferenceScreen = getPreferenceScreen();
         Preference pLocale = preferenceScreen.findPreference("ui_language");
         pLocale.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {

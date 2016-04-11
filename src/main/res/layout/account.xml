@@ -11,22 +11,13 @@
       Emmanuel Florent - Add icon title, port to appcompat 21+
 -->
 
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical">
-
-
-
-	<LinearLayout
-		android:layout_marginTop="@dimen/space_xlarge"
-		android:paddingTop="@dimen/actionBarSize"
-		android:layout_gravity="center_horizontal"
-		android:gravity="center_horizontal"
-		android:orientation="vertical"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 		<include layout="@layout/layout_title"/>
 
@@ -42,9 +33,10 @@
 			android:orientation="vertical" android:id="@+id/layout">
 		</LinearLayout>
 	</ScrollView>
-	</LinearLayout>
-
-	<include layout="@layout/toolbar"/>
 
 
-</android.support.design.widget.CoordinatorLayout>
+		<ListView
+			android:id="@android:id/list"
+			style="@style/ListView" />
+
+</LinearLayout>

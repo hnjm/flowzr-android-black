@@ -13,6 +13,7 @@ package com.flowzr.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,39 +31,45 @@ import com.flowzr.utils.Utils;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class AttributeActivity extends AbstractEditorActivity implements OnItemSelectedListener {
-	
-	public static final String CATEGORY_ID = "category_id";
 
 	private DatabaseAdapter db;
-	
 	private Spinner typeSpinner;
 	private EditText nameTextView;
 	private EditText valuesTextView;
 	private EditText defaultValueTextView;
 	private CheckBox defaultValueCheckBox;
-	
 	private Attribute attribute = new Attribute();
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.attribute);
-		initToolbar();
 
-		db = new DatabaseAdapter(this);
+    @Override
+    public String getMyTag() {
+        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        // @TODO improve layout R.layout.attribute
+        return R.layout.attribute;
+    }
+
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		db = new DatabaseAdapter(getContext());
 		db.open();
 		
-		typeSpinner = (MaterialSpinner)findViewById(R.id.type);
+		typeSpinner = (MaterialSpinner)getView().findViewById(R.id.type);
 		typeSpinner.setOnItemSelectedListener(this);
 
-		nameTextView = (EditText)findViewById(R.id.title);
-		valuesTextView = (EditText)findViewById(R.id.values);
-		defaultValueTextView = (EditText)findViewById(R.id.default_value_text);
-		defaultValueCheckBox = (CheckBox)findViewById(R.id.default_value_check);
+		nameTextView = (EditText)getView().findViewById(R.id.title);
+		valuesTextView = (EditText)getView().findViewById(R.id.values);
+		defaultValueTextView = (EditText)getView().findViewById(R.id.default_value_text);
+		defaultValueCheckBox = (CheckBox)getView().findViewById(R.id.default_value_check);
 
-		Intent intent = getIntent();
-		if (intent != null) {
-			long id = intent.getLongExtra(AttributeColumns.ID, -1);
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			long id = bundle.getLong(AttributeColumns.ID, -1);
 			if (id != -1) {
 				attribute = db.getAttribute(id);
 				editAttribute();
@@ -81,13 +88,11 @@ public class AttributeActivity extends AbstractEditorActivity implements OnItemS
 					long id = db.insertOrUpdate(attribute);
 					Intent intent = new Intent();				
 					intent.putExtra(AttributeColumns.ID, id);
-					setResult(RESULT_OK, intent);
-					finish();
+                    finishAndClose(intent.getExtras());
 				}   	        		
         		return true;
 	    	case R.id.action_cancel:
-				setResult(RESULT_CANCELED);
-				finish();
+                finishAndClose(AppCompatActivity.RESULT_CANCELED);
 	    		return true;        
         }
         return super.onOptionsItemSelected(item);
@@ -120,18 +125,18 @@ public class AttributeActivity extends AbstractEditorActivity implements OnItemS
 	}
 
 	@Override
-	protected void onDestroy() {
+	public void onDestroy() {
 		db.close();
-		super.onDestroy();		
+		super.onDestroy();
 	}
 	
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		boolean showDefaultCheck = Attribute.TYPE_CHECKBOX - position == 1;
-		findViewById(R.id.default_value_layout1).setVisibility(!showDefaultCheck ? View.VISIBLE : View.GONE);
-		findViewById(R.id.default_value_check).setVisibility(showDefaultCheck ? View.VISIBLE : View.GONE);
+		getView().findViewById(R.id.default_value_layout1).setVisibility(!showDefaultCheck ? View.VISIBLE : View.GONE);
+		getView().findViewById(R.id.default_value_check).setVisibility(showDefaultCheck ? View.VISIBLE : View.GONE);
 		boolean showValues = Attribute.TYPE_LIST - position == 1 || showDefaultCheck;
-		findViewById(R.id.values_layout).setVisibility(showValues ? View.VISIBLE : View.GONE);
+		getView().findViewById(R.id.values_layout).setVisibility(showValues ? View.VISIBLE : View.GONE);
 		if (showDefaultCheck) {
 			valuesTextView.setHint(R.string.checkbox_values_hint);
 		} else {
@@ -145,8 +150,7 @@ public class AttributeActivity extends AbstractEditorActivity implements OnItemS
 
 	@Override
 	protected void onClick(View v, int id) {
-		// TODO Auto-generated method stub
-		
+
 	}
 	
 }

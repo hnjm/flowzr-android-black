@@ -107,7 +107,7 @@ public class CsvImportTest extends AbstractImportExportTest {
         List<CsvTransaction> transactions = new LinkedList<CsvTransaction>();
         transactions.add(newCsvTransactionWithProject(null));
         transactions.add(newCsvTransactionWithProject(""));
-        transactions.add(newCsvTransactionWithProject("No project"));
+        transactions.add(newCsvTransactionWithProject("No entity"));
         transactions.add(newCsvTransactionWithProject("P1"));
         transactions.add(newCsvTransactionWithProject("P1"));
         transactions.add(newCsvTransactionWithProject("P2"));
@@ -160,7 +160,7 @@ public class CsvImportTest extends AbstractImportExportTest {
 
     public void test_should_import_one_transaction_into_the_selected_account() throws Exception {
         categories = CategoryBuilder.createDefaultHierarchy(db);
-        doImport("date,time,account,amount,currency,category,parent,payee,location,project,note\n" +
+        doImport("date,time,account,amount,currency,category,parent,payee,location,entity,note\n" +
                 "10.07.2011,07:13:17,AAA,-10.50,SGD,AA1,A:A1,P1,,,", defaultOptions);
 
         List<TransactionInfo> transactions = em.getTransactionsForAccount(defaultAccountId);
@@ -178,8 +178,8 @@ public class CsvImportTest extends AbstractImportExportTest {
         categories = CategoryBuilder.createDefaultHierarchy(db);
         defaultOptions.useHeaderFromFile = false;
         doImport(
-                "11.07.2011,07:13:17,AAA,2100.56,SGD,1680.10,USD,B,\"\",P1,Current location,No project\n" +
-                        "10.07.2011,07:13:17,AAA,2100.56,SGD,\"\",\"\",B,\"\",P1,Current location,No project,", defaultOptions);
+                "11.07.2011,07:13:17,AAA,2100.56,SGD,1680.10,USD,B,\"\",P1,Current location,No entity\n" +
+                        "10.07.2011,07:13:17,AAA,2100.56,SGD,\"\",\"\",B,\"\",P1,Current location,No entity,", defaultOptions);
 
         List<TransactionInfo> transactions = em.getTransactionsForAccount(defaultAccountId);
         assertEquals(2, transactions.size());

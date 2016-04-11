@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
+    <!--
 
-    <item android:id="@+id/bBack"
-        android:title="@string/back"
+
+
+    <item android:id="@+id/action_expand"
+        android:title="@string/more"
+        android:icon="@drawable/ic_expand_more"
+        app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/action_collapse"
+        android:title="@string/collapse_blotter_buttons"
         android:icon="@drawable/ic_expand_less"
         app:showAsAction="ifRoom"  />
 
-    <item android:id="@+id/bAdd"
-        android:title="@string/add_category"
+    <item android:id="@+id/action_sort_by_title"
+        android:title="@string/sort_by_title"
+        app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/action_re_index"
+        android:title="@string/re_index_categories"
+        app:showAsAction="ifRoom"  />
+    -->
+    <item android:id="@+id/action_back"
+        android:title="@string/back"
+        android:icon="@drawable/ic_expand_less"
+        app:showAsAction="always"  />
+
+    <item android:id="@+id/action_attributes"
+        android:title="@string/attributes"
+        android:icon="@drawable/ic_label"
+        app:showAsAction="ifRoom"  />
+
+    <item android:id="@+id/action_edit"
+        android:title="@string/edit"
         android:icon="@drawable/ic_edit"
         app:showAsAction="always"  />
 
+
+    <item android:id="@+id/action_done"
+        android:title="@string/select"
+        android:icon="@drawable/ic_check"
+        app:showAsAction="always"  />
 
 </menu>
 

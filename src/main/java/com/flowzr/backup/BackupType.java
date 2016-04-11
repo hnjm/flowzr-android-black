@@ -33,7 +33,7 @@ public enum BackupType {
 	BACKUP_DROPBOX(R.string.backup_database_online_dropbox, R.string.backup, R.drawable.ic_action_dropbox){
 		
 	},
-	REESTORE_DROPBOX(R.string.restore_database_online_dropbox, R.string.backup, R.drawable.ic_action_dropbox){
+	REESTORE_DROPBOX(R.string.restore_database_online_dropbox, R.string.restore, R.drawable.ic_action_dropbox){
 		
 	},
 

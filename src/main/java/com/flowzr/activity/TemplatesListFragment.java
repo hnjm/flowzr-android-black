@@ -68,7 +68,6 @@ public class TemplatesListFragment extends BlotterFragment {
 		blotterFilter = new WhereFilter("templates");
 		blotterFilter.eq(BlotterFilter.IS_TEMPLATE, String.valueOf(1));
 	    blotterFilter.eq(BlotterFilter.PARENT_ID, String.valueOf(0));
-	    ((EntityListActivity) getActivity()).setMyTitle(getResources().getString(R.string.template));
 	}
     
     @Override
@@ -84,8 +83,8 @@ public class TemplatesListFragment extends BlotterFragment {
 		if (getView().findViewById(R.id.fragment_land_container)!=null) { 
 			getView().findViewById(R.id.fragment_land_container).setVisibility(View.GONE);
 		}
-        if (getActivity().findViewById(R.id.container_V)!=null) {
-            getActivity().findViewById(R.id.container_V).setVisibility(View.GONE);
+        if (getView().findViewById(R.id.container_V)!=null) {
+            getView().findViewById(R.id.container_V).setVisibility(View.GONE);
         }
 
 

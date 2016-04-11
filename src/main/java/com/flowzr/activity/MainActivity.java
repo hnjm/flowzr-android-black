@@ -12,18 +12,18 @@
 package com.flowzr.activity;
 
 import android.app.Activity;
-import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.view.GravityCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.flowzr.R;
 import com.flowzr.activity.AccountListFragment.OnAccountSelectedListener;
@@ -33,97 +33,256 @@ import com.flowzr.db.DatabaseHelper;
 import com.flowzr.dialog.WebViewDialog;
 import com.flowzr.export.flowzr.FlowzrSyncEngine;
 import com.flowzr.filter.Criteria;
-import com.flowzr.filter.WhereFilter;
 import com.flowzr.utils.*;
 import com.flowzr.utils.MyPreferences.StartupScreen;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.flowzr.service.DailyAutoBackupScheduler.scheduleNextAutoBackup;
 import static com.flowzr.service.FlowzrAutoSyncScheduler.scheduleNextAutoSync;
 
 public class MainActivity  extends AbstractActionBarActivity
-        implements OnAccountSelectedListener, FragmentAPI {
+        implements OnAccountSelectedListener, MyFragmentAPI {
 
     static final int CHANGE_PREFERENCES = 600;
-	public static final int TAB_BLOTTER = 1;
-	public static final String REQUEST_SPLIT_BLOTTER = "REQUEST_SPLIT_BLOTTER";
-	public final static String REQUEST_BLOTTER_TOTALS="REQUEST_BLOTTER_TOTALS";
+    static final String BACKSTACK = "BACKSTACK";
 
-	public final static String REQUEST_MASS_OP = "REQUEST_MASSOP";
-	public final static String REQUEST_TEMPLATES="REQUEST_TEMPLATES";
-	public final static String REQUEST_EXCHANGE_RATES="REQUEST_EXCHANGE_RATES";
-	public final static String REQUEST_BUDGET_BLOTTER="REQUEST_BUDGET_BLOTTER";
+    public static Activity activity;
 
-	public final static String REQUEST_PLANNER="REQUEST_PLANNER";
-	public final static String REQUEST_CATEGORY_SELECTOR="REQUEST_CATEGORY_SELECTOR";
-	public final static String REQUEST_SCHEDULED="REQUEST_SCHEDULED";
-	public final static String REQUEST_NEW_TRANSACTION_FROM_TEMPLATE="REQUEST_NEW_TRANSACTION_FROM_TEMPLATE";
-	public final static String REQUEST_BUDGET_TOTALS="REQUEST_BUDGET_TOTALS";
-	public final static String REQUEST_ACCOUNT_TOTALS="REQUEST_ACCOUNT_TOTALS";
 
-    public static Activity activity ;
+    public void onFragmentMessage(String TAG, int requestCode,Intent intent) {
+        startActivityForResult(intent, requestCode);
+    }
+
+    @Override
+    public void onFragmentMessage(String TAG, Bundle data) {
+        Log.e("flowzr", "onFragmentMessage (bundle) " + TAG + "data: " + data.toString());
+        if (TAG.equals(MyFragmentAPI.REQUEST_MYENTITY_FINISH)) {
+            handleFragmentResult(data);
+        } else if ( TAG.equals(MyFragmentAPI.REQUEST_BLOTTER)
+                ||  TAG.equals(MyFragmentAPI.EDIT_ENTITY_REQUEST)) {
+
+            if (data.containsKey(ENTITY_CLASS_EXTRA)) {
+                Fragment fragment = getFragmentForClass(data.getString(ENTITY_CLASS_EXTRA));
+                fragment.setArguments(data);
+                loadFragment(fragment);
+            } else {
+                Log.e("flowzr", "UNHANDLED QUERY (no class extra) " + data);
+            }
+        } else {
+            Log.e("flowzr", "UNHANDLED TAG :  " + TAG + "data: " + data.toString());
+        }
+    }
+
+    public void startFragmentForResult(Fragment fragment, Fragment target) {
+        ensurePaneMode();
+        fragment.setTargetFragment(target,0);
+        showHideFragment(fragment,target);
+    }
+
+    private void loadFragment(Fragment fragment) {
+        ensurePaneMode();
+        if (fragment.getTargetFragment() == null) {
+            replacePaneFragments(fragment);
+        }
+    }
+
+
+
+    public void handleFragmentResult(Bundle data) {
+        FragmentManager manager = getSupportFragmentManager();
+
+        Log.e("flowzr","child is: "  +  String.valueOf(manager.findFragmentById(R.id.fragment_container)));
+        Fragment currentFragment = manager.findFragmentById(R.id.fragment_container);
+        Log.e("flowzr","target is :" + currentFragment.getTargetFragment());
+        Fragment target =  currentFragment.getTargetFragment();
+        if (target==null) {
+            Log.e("flowzr","handleFragmentResult (no target) popBackStack");
+            //getSupportFragmentManager().popBackStackImmediate();
+            removePaneFragment(currentFragment);
+            Log.e("flowzr","ensure VP now ...");
+            ensureViewPagerMode();
+            try {
+
+                recreateViewPagerAdapter();
+            } catch(Exception e) {
+                // content view nfraot created ...
+                // from budgets ...
+                e.printStackTrace();
+            }
+
+            //ensureViewPagerMode();
+        } else {
+
+            Intent intent = new Intent();
+            intent.putExtras(data);
+            int resultCode=data.getInt(MyFragmentAPI.RESULT_EXTRA);
+            int requestCode=data.getInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA);
+            Log.e("flowzr","calling onActivityResult " + String .valueOf(resultCode) + " " + String.valueOf(requestCode));
+            target.onActivityResult(requestCode,resultCode,  intent);
+            removePaneFragment(currentFragment);
+        }
+    }
+
+    private void showHideFragment(Fragment fragment, Fragment target) {
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+
+        if (!fragment.isAdded()) {
+            transaction.add(R.id.fragment_container, fragment);
+            activePaneFragments.add(fragment);
+        } else {
+            transaction.show(fragment);
+        }
+        Log.e("flowzr","show" + target.getClass().getCanonicalName());
+
+        if (!target.isAdded()) {
+            transaction.add(R.id.fragment_container, target);
+        }
+        Log.e("flowzr","hide" + target.getClass().getCanonicalName());
+        transaction.hide(target);
+        //transaction.addToBackStack(BACKSTACK);
+        transaction.commit();
+    }
+
+    private void addPaneFragments(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.fragment_container, fragment);
+        //transaction.addToBackStack(BACKSTACK);
+        activePaneFragments.add(fragment);
+        fragmentTransaction.commit();
+    }
+
+    private void replacePaneFragments(Fragment fragment) {
+        removePaneFragments();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.fragment_container, fragment);
+        activePaneFragments.add(fragment);
+        fragmentTransaction.commit();
+    }
+
+    private void removePaneFragments() {
+        if (activePaneFragments.size() > 0) {
+            FragmentTransaction  fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            for (Fragment activeFragment : activePaneFragments) {
+                fragmentTransaction.remove(activeFragment);
+            }
+            activePaneFragments.clear();
+            fragmentTransaction.commit();
+        }
+    }
+
+    private void removePaneFragment(Fragment activeFragment) {
+        if (activePaneFragments.size() > 0) {
+            FragmentTransaction  fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.remove(activeFragment);
+            activePaneFragments.remove(activeFragment);
+            fragmentTransaction.commit();
+        }
+    }
+
+
+    List<Fragment> activePaneFragments = new ArrayList<Fragment>();
+
+    public boolean paneMode=false;
+
+    public void ensureViewPagerMode() {
+
+        findViewById(R.id.fragment_container).setVisibility(View.GONE);
+        viewPager.setVisibility(View.VISIBLE);
+        paneMode=false;
+    }
+
+    public void ensurePaneMode() {
+        // if (viewPager.getVisibility()==View.VISIBLE) {
+        viewPager.setVisibility(View.GONE);
+        findViewById(R.id.fragment_container).setVisibility(View.VISIBLE);
+        paneMode=true;
+        //}
+
+    }
+
+    public Fragment getFragmentForClass(String canonicalClassName) {
+        try {
+            Class clazz = Class.forName(canonicalClassName);
+            return (Fragment) clazz.newInstance();
+        } catch (Exception e) {
+            Log.e("flowzr", "UNHANDLED CLASS " + canonicalClassName);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     protected void initUI() {
-		activity=this;
-		setContentView(R.layout.main);
-		findViewById(R.id.pager_tab_strip).setVisibility(View.GONE);
-		initToolbar();
-		setupDrawer();
+        activity = this;
+        setContentView(R.layout.main);
+        findViewById(R.id.pager_tab_strip).setVisibility(View.GONE);
+        findViewById(R.id.pager_tab_strip).setVisibility(View.GONE);
+        initToolbar();
+        setupDrawer();
 
-		if (WebViewDialog.checkVersionAndShowWhatsNewIfNeeded(this)) {
-			if (mDrawerLayout!=null) {
-				mDrawerLayout.openDrawer(Gravity.LEFT);
-			}
-		}
-		initialLoad();
-		FlowzrSyncEngine.setUpdatable(this);
+        if (WebViewDialog.checkVersionAndShowWhatsNewIfNeeded(this)) {
+            if (mDrawerLayout != null) {
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+            }
+        }
+        initialLoad();
+        FlowzrSyncEngine.setUpdatable(this);
 
-		navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-			@Override
-			public boolean onNavigationItemSelected(MenuItem menuItem) {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-				switch (menuItem.getItemId()) {
+                switch (menuItem.getItemId()) {
                     // drawer ...
-					case R.id.drawer_item_account:
-						menuItem.setChecked(true);
-						viewPager.setCurrentItem(0);
-						break;
-					case R.id.drawer_item_blotter:
-						menuItem.setChecked(true);
-						viewPager.setCurrentItem(1);
-						mAdapter.notifyDataSetChanged();
-						break;
-					case R.id.drawer_item_budget:
-						menuItem.setChecked(true);
-						viewPager.setCurrentItem(2);
-						break;
+                    case R.id.drawer_item_account:
+                        menuItem.setChecked(true);
+                        ensureViewPagerMode();
+                        viewPager.setCurrentItem(0);
+                        break;
+                    case R.id.drawer_item_blotter:
+                        menuItem.setChecked(true);
+                        ensureViewPagerMode();
+                        viewPager.setCurrentItem(1);
+                        break;
+                    case R.id.drawer_item_budget:
+                        menuItem.setChecked(true);
+                        ensureViewPagerMode();
+                        viewPager.setCurrentItem(2);
+                        break;
                     // fragments ...
-					case R.id.drawer_item_reports:
+                    case R.id.drawer_item_reports:
+                        ensurePaneMode();
                         loadFragment(new ReportsListFragment());
-						break;
-					case R.id.drawer_item_entities:
+                        break;
+                    case R.id.drawer_item_entities:
+                        ensurePaneMode();
                         loadFragment(new EntityListFragment());
-						break;
+                        break;
                     // activities ...
-					case R.id.drawer_item_preferences:
-						startActivityForResult(new Intent(getApplicationContext(), PreferencesActivity.class), CHANGE_PREFERENCES);
-						break;
-					case R.id.drawer_item_about:
-						startActivity(new Intent(getApplicationContext(), AboutActivity.class));
-						break;
-					case R.id.drawer_item_sync:
-						startActivity(new Intent(getApplicationContext(), FlowzrSyncActivity.class));
-						break;
-					case R.id.drawer_item_backup:
-						startActivityForResult(new Intent(getApplicationContext(), BackupListActivity.class), ACTIVITY_BACKUP);
-						break;
-				}
-				if (!isDrawerLocked) {
-					mDrawerLayout.closeDrawers();
-				}
-				return false;
-			}
-		});
-	}
+                    case R.id.drawer_item_preferences:
+                        startActivityForResult(new Intent(getApplicationContext(), PreferencesActivity.class), CHANGE_PREFERENCES);
+                        break;
+                    case R.id.drawer_item_about:
+                        startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                        break;
+                    case R.id.drawer_item_sync:
+                        startActivity(new Intent(getApplicationContext(), FlowzrSyncActivity.class));
+                        break;
+                    case R.id.drawer_item_backup:
+                        startActivityForResult(new Intent(getApplicationContext(), BackupListActivity.class), ACTIVITY_BACKUP);
+                        break;
+                }
+                if (!isDrawerLocked) {
+                    mDrawerLayout.closeDrawers();
+                }
+                return false;
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,17 +293,18 @@ public class MainActivity  extends AbstractActionBarActivity
 
         StartupScreen startupScreen = MyPreferences.getStartupScreen(this);
         if (savedInstanceState != null) {
-            viewPager.setCurrentItem(savedInstanceState.getInt(STATE_TABID,startupScreen.ordinal()));
+            viewPager.setCurrentItem(savedInstanceState.getInt(STATE_TABID, startupScreen.ordinal()));
         } else {
             switch (startupScreen.ordinal()) {
                 case 3: // reports
+                    ensurePaneMode();
                     Bundle bundle = new Bundle();
-                    bundle.putBoolean(FragmentAPI.REQUEST_REPORTS, true);
-                    Fragment f = new EntityListFragment();
+                    Fragment f = new ReportsListFragment();
                     f.setArguments(bundle);
                     loadFragment(f);
                     break;
                 case 4: // entity list
+                    ensurePaneMode();
                     loadFragment(new EntityListFragment());
                     break;
                 default:
@@ -156,74 +316,92 @@ public class MainActivity  extends AbstractActionBarActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        if (((ViewGroup)findViewById(R.id.fragment_container)).getChildCount()==0) {
-            // show viewpager
-            viewPager.setVisibility(View.VISIBLE);
+        Log.e("flowzr","paneCount " + String.valueOf(activePaneFragments.size()));
+        if (mDrawerLayout != null) {
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mDrawerLayout.closeDrawers();
+                return;
+            }
+        }
+
+        if (paneMode) {
+            Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            switch (activePaneFragments.size()) {
+                case 0:
+                    ensureViewPagerMode();
+                    break;
+                case 1:
+                    removePaneFragment(f);
+                    ensureViewPagerMode();
+                    break;
+                case 2:
+                    removePaneFragment(f);
+                    break;
+                default:
+                    removePaneFragments();
+                    ensureViewPagerMode();
+            }
+        } else{ // viewpager mode
+            if (viewPager.getCurrentItem()!=0 && !paneMode) {
+                ensureViewPagerMode();
+                viewPager.setCurrentItem(0);
+                //not needed returnreturn;
+            } else if (viewPager.getCurrentItem()==0){
+                // quit app ..
+                super.onBackPressed();
+            }
         }
     }
 
-    @Override
-    public void onFragmentMessage(String TAG, Bundle data) {
-        Log.e("flowzr","onFragmentMessage (bundle) " + TAG);
-        Log.e("flowzr","data: " + data.toString());
 
-        if (TAG.equals(FragmentAPI.REQUEST_REPORTS)){
-            // Reports
-            if (data.getString(FragmentAPI.EXTRA_REPORT_TYPE)!=null) {
-                if (data.getBoolean(FragmentAPI.CONVENTIONAL_REPORTS,true)) {
-                    Fragment fragment= new ReportFragment();
-                    fragment.setArguments(data);
-                    loadFragment(fragment);
-                } else {
-                    Fragment fragment= new Report2DChartFragment();
-                    fragment.setArguments(data);
-                    loadFragment(fragment);
-                }
-            } else {
-                Log.e("flowzr","no report type should load list or entities" );
-                if (data.get(WhereFilter.FILTER_EXTRA)!=null) {
-                    Fragment fragment=new BlotterFragment();
-                    fragment.setArguments(data);
-                    loadFragment(fragment);
-                } else {
-                    Log.e("flowzr","loading default entity list" );
-                    Fragment fragment=new ReportsListFragment();
-                    loadFragment(fragment);
+
+/*
+    @Override
+    public void onBackPressed() {
+
+        if (isTaskRoot()) {
+            if (mDrawerLayout!=null) {
+                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mDrawerLayout.closeDrawers();
+                    return;
                 }
             }
 
-        } else if (TAG.equals(FragmentAPI.REQUEST_BLOTTER)){
-            // Blotter
-            Log.e("flowzr","request blotter" );
-
-        } else {
-            Log.e("flowzr","UNHANDLED TAG " + TAG);
-            Log.e("flowzr","data: " + data.toString());
-            viewPager.setVisibility(View.VISIBLE);
-            //}
+            if (viewPager.getCurrentItem()!=0) {
+                ensureViewPagerMode();
+                viewPager.setCurrentItem(0);
+            } else {
+                super.onBackPressed();
+            }
         }
+        super.onBackPressed();
     }
+
+*/
 
     @Override
     public void onFragmentMessage(int requestCode, int resultCode, Intent data) {
-        Log.e("flowzr","onFragmentMessage requestCode, resultCode " + String.valueOf(requestCode) + " " + String.valueOf(resultCode));
-        Log.e("flowzr","data: " + data.toString());
+        Log.e("flowzr", "onFragmentMessage requestCode, resultCode " + String.valueOf(requestCode) + " " + String.valueOf(resultCode));
+        Log.e("flowzr", "data: " + data.toString());
+        Log.e("flowzr", "DO NOTHING ...");
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		PinProtection.unlock(this);
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("flowzr","Main got on activity result;" + data);
+        PinProtection.unlock(this);
         if (requestCode == CHANGE_PREFERENCES) {
             scheduleNextAutoBackup(this);
             scheduleNextAutoSync(this);
         }
-		if (resultCode != MainActivity.RESULT_CANCELED) {
-            onFragmentMessage(requestCode,resultCode,data);
-			setResult(RESULT_OK);
-		}
+        /*
+        if (resultCode != MainActivity.RESULT_CANCELED) {
+            onFragmentMessage(requestCode, resultCode, data);
+            setResult(RESULT_OK);
+        }
+        */
         mAdapter.notifyDataSetChanged();
     }
 
@@ -267,48 +445,43 @@ public class MainActivity  extends AbstractActionBarActivity
         db.execSQL("update " + table + " set " + field + "=? where _id=?", new Object[]{value, id});
     }
 
-    public void refreshCurrentTab() {   
-		try {
-			Fragment fragment = this.getSupportFragmentManager().findFragmentById(R.id.pager);
-			RefreshSupportedActivity activity = (RefreshSupportedActivity) fragment;
-			if (activity != null) {
-				viewPager.getAdapter().notifyDataSetChanged();
-				viewPager.destroyDrawingCache();
-				viewPager.setCurrentItem(viewPager.getCurrentItem());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    public void refreshCurrentTab() {
+        try {
+            Fragment fragment = this.getSupportFragmentManager().findFragmentById(R.id.pager);
+            RefreshSupportedActivity activity = (RefreshSupportedActivity) fragment;
+            if (activity != null) {
+                viewPager.getAdapter().notifyDataSetChanged();
+                viewPager.destroyDrawingCache();
+                viewPager.setCurrentItem(viewPager.getCurrentItem());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-	public void loadFragment(Fragment fragment) {
-        viewPager.setVisibility(View.GONE);
-		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.replace(R.id.fragment_container, fragment);
-		transaction.addToBackStack(null);
-		transaction.commit();
-	}
-
     // out of listener
-	public void loadTabFragment( int rId, Bundle bundle, final int tabId) {
-		bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, rId);
-		Intent data=new Intent(this,BlotterFragment.class);
-		data.putExtras(bundle);
-		viewPager.setCurrentItem(tabId);
-        mAdapter.blotterFragment.onActivityResult(BlotterFragment.FILTER_REQUEST, MainActivity.RESULT_OK, data);
-	}
+    public void loadTabFragment(int rId, Bundle bundle, final int tabId) {
+        ensureViewPagerMode();
+        bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, rId);
+        Intent data = new Intent(this, BlotterFragment.class);
+        data.putExtras(bundle);
+        viewPager.setCurrentItem(tabId);
+        //mAdapter.blotterFragment.onActivityResult(BlotterFragment.FILTER_REQUEST, MainActivity.RESULT_OK, data);
+
+    }
 
     @Override
     public void onAccountSelected(String title, long id) {
-        viewPager.setVisibility(View.VISIBLE);
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putBoolean(BlotterFilterActivity.IS_ACCOUNT_FILTER, true);
         Criteria.eq(BlotterFilter.FROM_ACCOUNT_ID, String.valueOf(id))
                 .toBundle(title, bundle);
         bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.blotter);
         loadTabFragment(R.layout.blotter, bundle, 1);
+        ensureViewPagerMode();
     }
 
-}
 
+
+}
 

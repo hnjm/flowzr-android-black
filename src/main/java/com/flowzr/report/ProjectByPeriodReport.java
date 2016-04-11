@@ -42,7 +42,7 @@ public class ProjectByPeriodReport extends Report2DChart {
 				return context.getString(R.string.no_project);
 			}
 		} else {
-			// no project
+			// no entity
 			return context.getString(R.string.no_project);
 		}
 	}

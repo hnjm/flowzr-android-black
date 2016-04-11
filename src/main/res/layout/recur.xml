@@ -9,21 +9,15 @@
   Contributors:
       Denis Solonenko - initial API and implementation
 -->
-<android.support.design.widget.CoordinatorLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical">
 
-	<LinearLayout
-		android:layout_marginTop="@dimen/space_xlarge"
-        android:paddingTop="@dimen/actionBarSize"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:paddingBottom="@dimen/dynamic_margin_narrow_vertical"
-		android:paddingLeft="@dimen/dynamic_margin_narrow_horizontal"
-		android:paddingRight="@dimen/dynamic_margin_narrow_horizontal"
-		android:orientation="vertical">
+<LinearLayout	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_marginTop="@dimen/space_xlarge"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:paddingBottom="@dimen/dynamic_margin_narrow_vertical"
+	android:paddingLeft="@dimen/dynamic_margin_narrow_horizontal"
+	android:paddingRight="@dimen/dynamic_margin_narrow_horizontal"
+	android:orientation="vertical">
 
 
 		<ScrollView android:layout_height="0dp"
@@ -81,9 +75,10 @@
 			</LinearLayout>
 		</ScrollView>
 
+	<ListView
+		android:contentDescription="@string/entities"
+		android:tag="@string/entities"
+		android:id="@android:id/list"
+		style="@style/ListView" />
+
 	</LinearLayout>
-
-	<include layout="@layout/toolbar"/>
-
-
-</android.support.design.widget.CoordinatorLayout>

@@ -9,16 +9,11 @@
   Contributors:
       Denis Solonenko - initial API and implementation
 -->
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
 
         <LinearLayout
-                android:paddingTop="@dimen/actionBarSize"
-        		android:layout_width="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
@@ -141,11 +136,12 @@
 
                 </LinearLayout>
             </ScrollView>
+
+            <ListView
+                android:contentDescription="@string/entities"
+                android:tag="@string/entities"
+                android:id="@android:id/list"
+                style="@style/ListView" />
         </LinearLayout>
 
-
-    <include layout="@layout/toolbar"/>
-
-
-</android.support.design.widget.CoordinatorLayout>
 

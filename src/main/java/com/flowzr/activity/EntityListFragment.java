@@ -7,11 +7,14 @@
  * 
  * Contributors:
  *     Denis Solonenko - initial API and implementation
+ *      Emmanuel Florent - port to Android API 11+
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -25,10 +28,20 @@ import com.flowzr.model.EntityType;
 
 public class EntityListFragment extends AbstractListFragment {
 
-	FragmentAPI mCallback;
+	@Override
+	protected String getEditActivityClass() {
+		return null;
+	}
 
-	
-	
+	@Override
+	public void onAttach(Context a) {
+		super.onAttach(a);
+		setHasOptionsMenu(true);
+		activity=(MainActivity)a;
+	}
+
+
+
 	public final EntityType[] entities = new EntityType[]{
 			EntityType.CURRENCIES,
 			EntityType.EXCHANGE_RATES,
@@ -47,6 +60,11 @@ public class EntityListFragment extends AbstractListFragment {
 		super.onCreate(savedInstanceState);
 		setListAdapter(createAdapter(null));
 	}
+
+    @Override
+    protected void internalOnCreate(Bundle savedInstanceState) {
+
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -77,7 +95,9 @@ public class EntityListFragment extends AbstractListFragment {
 
 	@Override
 	protected void viewItem(View v, int position, long id) {
-        activity.loadFragment(entities[position].getActivityClass());
+		Bundle bundle = new Bundle();
+		bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, entities[position].getActivityClass().getClass().getCanonicalName());
+		activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
 	}
 
 	@Override

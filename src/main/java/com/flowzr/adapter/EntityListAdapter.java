@@ -56,13 +56,14 @@ public class EntityListAdapter<T extends MyEntity> extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		GenericViewHolder v;
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.generic_list_item, parent, false);
+			convertView = inflater.inflate(R.layout.entity_list_item, parent, false);
+
 			v = GenericViewHolder.createAndTag(convertView);
 		} else {
 			v = (GenericViewHolder)convertView.getTag();
 		}
-		v.labelView.setVisibility(View.GONE);
-		v.amountView.setVisibility(View.GONE);
+		//v.labelView.setVisibility(View.GONE);
+		//v.amountView.setVisibility(View.GONE);
 		
 		MyEntity e = getItem(position);
 		v.lineView.setText(e.title);

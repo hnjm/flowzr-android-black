@@ -12,10 +12,11 @@ package com.flowzr.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -43,15 +44,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-//@TODO edit budget title doesn't work'
-
 public class BudgetActivity extends AbstractEditorActivity {
 	
 	public static final String BUDGET_ID_EXTRA = "budgetId";
 
 	private static final int NEW_CATEGORY_REQUEST = 1;
 	private static final int NEW_PROJECT_REQUEST = 2;
-	private static final int RECUR_REQUEST = 3;
+	public static final int RECUR_REQUEST = 3;
 	public static final int CALCULATOR_REQUEST = 4 ;
 
 	private EditText titleText;
@@ -75,32 +74,34 @@ public class BudgetActivity extends AbstractEditorActivity {
 	private TextView totalText;
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.ok, menu);
-        return true;
+    public String getMyTag() {
+        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.budget;
     }
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.budget);
-		initToolbar();
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
         accountOptions = createAccountsList();
-        accountAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, accountOptions);
+        accountAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, accountOptions);
 
 		categories = db.getCategoriesList(true);
 		projects = em.getActiveProjectsList(true);
 		
-		LinearLayout layout = (LinearLayout) findViewById(R.id.list);
+		LinearLayout layout = (LinearLayout) getView().findViewById(R.id.list);
 		//LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		titleText = (EditText) findViewById(R.id.title);
+		titleText = (EditText) getView().findViewById(R.id.title);
 		// (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 		//x.addEditNode(layout, R.string.title, titleText);
 
-		AmountInput amountInput = new AmountInput(this);
-		amountInput.setOwner(this);
+		AmountInput amountInput = new AmountInput(getContext());
+		amountInput.setOwner(activity);
 		amountInput.setIncome();
 		//amountInput.disableIncomeExpenseButton();
 
@@ -124,23 +125,25 @@ public class BudgetActivity extends AbstractEditorActivity {
 				R.id.type, R.string.budget_type_saving, R.drawable.account_type_asset,
 				R.string.budget_type_saving_summary, false);
 
-		totalText = ( TextView ) findViewById(R.id.total);
+		totalText = ( TextView ) getView().findViewById(R.id.total);
 		totalText.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-				Intent intent = new Intent(getApplicationContext(), CalculatorInput.class);
+				Intent intent = new Intent(getContext(), CalculatorInput.class);
 				if (budget.currencyId > -1) {
 					intent.putExtra(AmountInput.EXTRA_CURRENCY, budget.currencyId);
 				}
 				intent.putExtra(AmountInput.EXTRA_AMOUNT, totalText.getText().toString().trim());
+                // @TODO calc from budget
 				startActivityForResult(intent, CALCULATOR_REQUEST);
 			}
 		});
 
-		Intent intent = getIntent();
-		if (intent != null) {
-			long id = intent.getLongExtra(BUDGET_ID_EXTRA, -1);
+		//Intent intent = getActivity().getIntent();
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			long id = bundle.getLong(MyFragmentAPI.ENTITY_ID_EXTRA, -1);
 			if (id != -1) {
 				budget = em.load(Budget.class, id);
 				editBudget();
@@ -153,7 +156,18 @@ public class BudgetActivity extends AbstractEditorActivity {
 		//ImageButton toggle = (ImageButton) findViewById(R.id.toggle);
 	}
 
+    public boolean finishAndClose(int result) {
+        Bundle bundle = new  Bundle();
+        bundle.putInt(MyFragmentAPI.RESULT_EXTRA,result);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
+        return true;
+    }
 
+    public boolean finishAndClose(Bundle bundle) {
+        bundle.putInt(MyFragmentAPI.RESULT_EXTRA,AppCompatActivity.RESULT_OK);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -165,14 +179,12 @@ public class BudgetActivity extends AbstractEditorActivity {
 					updateBudgetFromUI();
 					long id = em.insertBudget(budget);
 					Intent intent = new Intent();
-					intent.putExtra(BUDGET_ID_EXTRA, id);
-					setResult(RESULT_OK, intent);
-					finish();
+					intent.putExtra(MyFragmentAPI.ENTITY_ID_EXTRA, id);
+                    finishAndClose(intent.getExtras());
 				}
         		return true;
         	case R.id.action_cancel:
-                setResult(RESULT_CANCELED);
-                finish();
+                finishAndClose(AppCompatActivity.RESULT_CANCELED);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -195,10 +207,10 @@ public class BudgetActivity extends AbstractEditorActivity {
     private void editBudget() {
 		titleText.setText(budget.title);
 
-		totalText = ( TextView ) findViewById(R.id.total);
+		totalText = ( TextView ) getView().findViewById(R.id.total);
 		Total t =new Total(budget.currency);
 		t.balance=budget.amount;
-		u = new Utils(this);
+		u = new Utils(getContext());
 		u.setTotal(totalText, t);
         totalText.setTextColor(getResources().getColor(R.color.f_blue_lighter1));
 		//amountInput.setAmount(budget.amount);
@@ -272,28 +284,39 @@ public class BudgetActivity extends AbstractEditorActivity {
             cbSavingBudget.performClick();
             break;
 		case R.id.category:
-			x.selectMultiChoice(this, R.id.category, R.string.categories, categories);
+			x.selectMultiChoice(getContext(), R.id.category, R.string.categories, categories);
 			break;
-		case R.id.category_add: {
-			Intent intent = new Intent(this, CategoryActivity.class);
-			startActivityForResult(intent, NEW_CATEGORY_REQUEST);
-			} break;
+		case R.id.category_add:
+            Bundle bundle=new Bundle();
+            bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,NEW_CATEGORY_REQUEST);
+            Fragment fragment = new CategoryActivity();
+            fragment.setArguments(bundle);
+            activity.startFragmentForResult(fragment,this);
+            break;
 		case R.id.project:
-			x.selectMultiChoice(this, R.id.project, R.string.projects, projects);
+			x.selectMultiChoice(getContext(), R.id.project, R.string.projects, projects);
 			break;
 		case R.id.project_add: {
-			Intent intent = new Intent(this, ProjectActivity.class);
-			startActivityForResult(intent, NEW_PROJECT_REQUEST);
+            bundle=new Bundle();
+            fragment = new ProjectActivity();
+            bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,NEW_PROJECT_REQUEST);
+            fragment.setArguments(bundle);
+            activity.startFragmentForResult(fragment,this);
 			} break;
 		case R.id.account:
-			x.selectPosition(this, R.id.account, R.string.account, accountAdapter, selectedAccountOption);
+			x.selectPosition(getContext(), R.id.account, R.string.account, accountAdapter, selectedAccountOption);
 			break;
 		case R.id.period_recur: {
-			Intent intent = new Intent(this, RecurActivity.class);
+            bundle=new Bundle();
+            fragment = new RecurActivity();
 			if (budget.recur != null) {
-				intent.putExtra(RecurActivity.EXTRA_RECUR, budget.recur);
+				bundle.putString(RecurActivity.EXTRA_RECUR, budget.recur);
 			}
-			startActivityForResult(intent, RECUR_REQUEST);
+            bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,RECUR_REQUEST);
+            fragment.setArguments(bundle);
+
+            activity.startFragmentForResult(fragment,this);
+
 			} break;
 		}
 	}
@@ -376,14 +399,15 @@ public class BudgetActivity extends AbstractEditorActivity {
 		if (recur != null) {
 			budget.recur = recur;
 			Recur r = RecurUtils.createFromExtraString(recur);
-			periodRecurText.setText(r != null ? r.toString(this) : "");
+            periodRecurText.setText(r != null ? r.toString(getContext()) : "");
 		}
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
+		Log.e("flowzr","on activity result" + String.valueOf(requestCode)+ String.valueOf(resultCode));
+		if (resultCode == AppCompatActivity.RESULT_OK) {
 			Total t =new Total(budget.currency);
 			String amount = data.getStringExtra(AmountInput.EXTRA_AMOUNT);
 			if (amount != null) {
@@ -392,7 +416,7 @@ public class BudgetActivity extends AbstractEditorActivity {
 							BigDecimal.ROUND_HALF_UP);
 					t.balance=d.unscaledValue().longValue();
 					budget.amount=d.unscaledValue().longValue();
-					u = new Utils(this);
+					u = new Utils(getContext());
 					u.setTotal(totalText, t);
 					totalText.setTextColor(getResources().getColor(R.color.f_blue_lighter1));
 				} catch (NumberFormatException ex) {

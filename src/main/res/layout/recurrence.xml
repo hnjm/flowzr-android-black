@@ -10,36 +10,27 @@
       Denis Solonenko - initial API and implementation
       Emmanuel Florent - Add icon title, port to appcompat 21+
 -->
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_gravity="center_horizontal"
+	android:gravity="center_horizontal"
+	android:orientation="vertical"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical">
+	android:layout_height="match_parent">
 
-	<LinearLayout
-		android:layout_marginTop="@dimen/space_xlarge"
-		android:paddingTop="@dimen/actionBarSize"
-		android:layout_gravity="center_horizontal"
-		android:gravity="center_horizontal"
-		android:orientation="vertical"
+	<ScrollView
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="0dp"
+		android:layout_weight="1">
 
-		<ScrollView
-			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:layout_weight="1">
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:id="@+id/layout" />
 
-			<LinearLayout
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:orientation="vertical"
-				android:id="@+id/layout" />
-
-		</ScrollView>
-
-	</LinearLayout>
-
-	<include layout="@layout/toolbar"/>
-
-</android.support.design.widget.CoordinatorLayout>
+	</ScrollView>
+	<ListView
+		android:id="@android:id/list"
+		style="@style/ListView" />
+</LinearLayout>

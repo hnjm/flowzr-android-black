@@ -11,18 +11,15 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -41,13 +38,12 @@ import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.blotter.TotalCalculationTask;
 import com.flowzr.datetime.Period;
 import com.flowzr.datetime.PeriodType;
-import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.db.DatabaseHelper;
 import com.flowzr.dialog.AccountInfoDialog;
 import com.flowzr.filter.DateTimeCriteria;
 import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Account;
 import com.flowzr.model.Total;
-import com.flowzr.utils.IntegrityFix;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.view.NodeInflater;
 import java.util.Calendar;
@@ -58,14 +54,14 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 	protected TextView totalText;
     OnAccountSelectedListener mListener;
 
-
     @Override
-    public void onAttach(Context activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity=(MainActivity)context;
         try {
-            mListener = (OnAccountSelectedListener) activity;
+            mListener = (OnAccountSelectedListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement OnArticleSelectedListener");
+            throw new ClassCastException(context.toString() + " must implement OnAccountSelectedListener");
         }
     }
 
@@ -77,9 +73,10 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	setHasOptionsMenu(true);
-        getActivity().setTitle(getString(R.string.accounts));
     	return inflater.inflate(R.layout.account_list, container, false);
 	}
+
+
 
 
 
@@ -106,23 +103,10 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     }
 
 
-
-    protected void createFromTemplate() {
-        Bundle bundle= new Bundle();
-        bundle.putInt(EXTRA_REQUEST_TYPE, BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
-        Intent intent = new Intent(getActivity(), EntityListActivity.class);
-        intent.putExtra(EntityListActivity.REQUEST_NEW_TRANSACTION_FROM_TEMPLATE, true);
-        intent.putExtra(EXTRA_REQUEST_TYPE, BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
-        ActivityCompat.startActivityForResult(getActivity(), intent, BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST, getScaleUpOption());
-
-    }
-
-
     // TODO set context menu position, filter closed accounts
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    DateTimeCriteria criteria;
-        Intent intent;
 	    switch (item.getItemId()) {
 	        case R.id.action_add_account: 
 	            addItem();
@@ -134,7 +118,9 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 	            integrityCheck();
 	            return true;
             case R.id.action_list_template:
-                createFromTemplate();
+                Bundle bundle = new Bundle();
+                bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, SelectTemplateFragment.class.getCanonicalName());
+                activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
                 return true;
 			case R.id.action_planner:
 				@SuppressWarnings("ConstantConditions") WhereFilter filter = new WhereFilter(getView().getResources().getString(R.string.planner));
@@ -147,23 +133,20 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 		            period.start = now;
 		            criteria = new DateTimeCriteria(period);
 		        }
-		        filter.put(criteria);						    
-				intent = new Intent(getActivity(),EntityListActivity.class);
-				intent.putExtra(EntityListActivity.REQUEST_PLANNER, true);
-				filter.toIntent(intent);
-                ActivityCompat.startActivity(getActivity(), intent, getScaleUpOption());
+		        filter.put(criteria);
+                bundle = new Bundle();
+                filter.toBundle(bundle);
+                bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,PlannerFragment.class.getCanonicalName());
+                activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
             	return true;	            
 			case R.id.action_scheduled_transaction:
 				@SuppressWarnings("ConstantConditions") WhereFilter blotterFilter = new WhereFilter(getView().getResources().getString(R.string.scheduled));
 				blotterFilter.eq(BlotterFilter.IS_TEMPLATE, String.valueOf(2));
 		        blotterFilter.eq(BlotterFilter.PARENT_ID, String.valueOf(0));
-		        //blotterFilter.toBundle(bundle);       
-				//((MainActivity) getActivity()).loadTabFragment(new ScheduledListFragment(),R.layout.scheduled_transactions, bundle,MainActivity.TAB_BLOTTER);
-				intent = new Intent(getActivity(),EntityListActivity.class);
-				intent.putExtra(EntityListActivity.REQUEST_SCHEDULED, true);
-				blotterFilter.toIntent(intent);
-
-                ActivityCompat.startActivity(getActivity(), intent, getScaleUpOption());
+                bundle = new Bundle();
+                blotterFilter.toBundle(bundle);
+                bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,ScheduledListFragment.class.getCanonicalName());
+                activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
 				return true;
 			default:
 	            return super.onOptionsItemSelected(item);
@@ -175,7 +158,8 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     @Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.clear();		
-		inflater.inflate(R.menu.accounts_actions, menu);    
+		inflater.inflate(R.menu.accounts_actions, menu);
+        getActivity().setTitle(getString(R.string.accounts));
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -199,6 +183,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
             }
 			case R.id.context_account_close: {
 				closeAccount(mi.id);
+                break;
 			} 			
         	case R.id.context_account_delete:
         		deleteItem(mi.id);
@@ -221,11 +206,13 @@ public class AccountListFragment extends AbstractTotalListFragment  {
         }
 		return false;
 	}    
-    
+
     private void deleteOldTransaction(long id) {
-        Intent intent = new Intent(this.getActivity(), PurgeAccountActivity.class);
-        intent.putExtra(PurgeAccountActivity.ACCOUNT_ID, id);
-        ActivityCompat.startActivityForResult(getActivity(), intent, PURGE_ACCOUNT_REQUEST, getScaleUpOption());
+        Bundle bundle = new Bundle();
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, PurgeAccountActivity.class.getCanonicalName());
+        bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, id);
+        bundle.putLong(DatabaseHelper.AttributeColumns.ID, id);
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
     }
     
     private void closeAccount(long id) {
@@ -236,9 +223,10 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     }
 	
     private void addTransaction(long accountId, Class<? extends AbstractTransactionActivity> clazz) {
-        Intent intent = new Intent(this.getActivity(), clazz);
-        intent.putExtra(TransactionActivity.ACCOUNT_ID_EXTRA, accountId);
-        ActivityCompat.startActivityForResult(getActivity(), intent, VIEW_ACCOUNT_REQUEST, getScaleUpOption());
+        Bundle bundle = new Bundle();
+        bundle.putLong(TransactionActivity.ACCOUNT_ID_EXTRA, accountId);
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, TransactionActivity.class.getCanonicalName());
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
     }
 
     @Override
@@ -262,19 +250,20 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 	        totalText.setOnClickListener(new View.OnClickListener() {
 	            @Override
 	            public void onClick(View view) {
-	                showTotals();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,AccountListTotalsDetailsActivity.class.getCanonicalName());
+                    activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+
+
 	            }
 	        });
+
 	        totalCalculationTask = new AccountTotalsCalculationTask(this.getActivity(), totalText);
 			totalCalculationTask.execute();
         }
 	}
 
-    private void showTotals() {
-		Intent intent=new Intent(getActivity(),EntityListActivity.class);
-		intent.putExtra(EntityListActivity.REQUEST_ACCOUNT_TOTALS, true);
-        ActivityCompat.startActivity(getActivity(), intent,  getScaleUpOption());
-    }
+
 	
 	public class AccountTotalsCalculationTask extends TotalCalculationTask {
 
@@ -311,19 +300,21 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     private boolean updateAccountBalance(long id) {
         Account a = em.getAccount(id);
         if (a != null) {
-            Intent intent = new Intent(this.getActivity(), TransactionActivity.class);
-            intent.putExtra(TransactionActivity.ACCOUNT_ID_EXTRA, a.id);
-            intent.putExtra(TransactionActivity.CURRENT_BALANCE_EXTRA, a.totalAmount);
-            ActivityCompat.startActivityForResult(getActivity(), intent, 0, getScaleUpOption());
+            Bundle bundle = new Bundle();
+            bundle.putLong(TransactionActivity.ACCOUNT_ID_EXTRA, a.id);
+            bundle.putLong(TransactionActivity.CURRENT_BALANCE_EXTRA, a.totalAmount);
+            bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,TransactionActivity.class.getCanonicalName());
+            activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
             return true;
         }
         return false;
     }
 
     @Override
-	protected void addItem() {		
-		Intent intent = new Intent(AccountListFragment.this.getActivity(), AccountActivity.class);
-        ActivityCompat.startActivityForResult(getActivity(), intent, NEW_ACCOUNT_REQUEST, getScaleUpOption());
+	protected void addItem() {
+        Bundle bundle = new Bundle();
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, AccountActivity.class.getCanonicalName());
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
 	}
 
 
@@ -356,15 +347,16 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 	}
 
     private void editAccount(long id) {
-        Intent intent = new Intent(AccountListFragment.this.getActivity(), AccountActivity.class);
-        intent.putExtra(AccountActivity.ACCOUNT_ID_EXTRA, id);
-        ActivityCompat.startActivityForResult(getActivity(), intent, EDIT_ACCOUNT_REQUEST, getScaleUpOption());
+        Bundle bundle = new Bundle();
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, AccountActivity.class.getCanonicalName());
+        bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, id);
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
     }
 
     private void showAccountInfo(long id) {
         LayoutInflater layoutInflater = (LayoutInflater)this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         NodeInflater inflater = new NodeInflater(layoutInflater);
-        AccountInfoDialog accountInfoDialog = new AccountInfoDialog(this, id, db, inflater);
+        AccountInfoDialog accountInfoDialog = new AccountInfoDialog(this,activity, id, db, inflater);
         accountInfoDialog.show();
     }
        

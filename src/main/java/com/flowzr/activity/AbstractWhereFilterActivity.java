@@ -1,17 +1,26 @@
-/*
- * Copyright (c) 2013 Denis Solonenko.
+/*******************************************************************************
+ * Copyright (c) 2010 Denis Solonenko.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- */
+ *
+ * Contributors:
+ *     Denis Solonenko - initial API and implementation
+ *     Emmanuel Florent - Port to AppCompat 21,  add icon title
+ ******************************************************************************/
+
 package com.flowzr.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -69,17 +78,36 @@ public abstract class AbstractWhereFilterActivity extends AbstractEditorActivity
     protected long accountId;
     protected boolean isAccountFilter;
 
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		setHasOptionsMenu(true);
+		getActivity().setTitle(getString(R.string.filter));
+		return inflater.inflate(R.layout.blotter_filter, container, false);
+	}
+
+    public boolean finishAndClose(int result) {
+        Bundle bundle = new  Bundle();
+        bundle.putInt(MyFragmentAPI.RESULT_EXTRA,result);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_WHEREFILTER_FINISH,bundle);
+        return true;
+    }
+
+    public boolean finishAndClose(Bundle bundle) {
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_WHEREFILTER_FINISH,bundle);
+        return true;
+    }
+
+
+
     @Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		setContentView(R.layout.blotter_filter);
-		
-		df = DateUtils.getShortDateFormat(this);
+
+		df = DateUtils.getShortDateFormat(getContext());
 		sortBlotterEntries = getResources().getStringArray(R.array.sort_blotter_entries);
         filterValueNotFound = getString(R.string.filter_value_not_found);
 
-		LinearLayout layout = (LinearLayout)findViewById(R.id.layout);
+		LinearLayout layout = (LinearLayout) getView().findViewById(R.id.layout);
 		period = x.addFilterNodeMinus(layout, R.id.period, R.id.period_clear, R.string.period, R.string.no_filter);
 		account = x.addFilterNodeMinus(layout, R.id.account, R.id.account_clear, R.string.account, R.string.no_filter);
 		currency = x.addFilterNodeMinus(layout, R.id.currency, R.id.currency_clear, R.string.currency, R.string.no_filter);
@@ -92,27 +120,25 @@ public abstract class AbstractWhereFilterActivity extends AbstractEditorActivity
 		    sortOrder = x.addFilterNodeMinus(layout, R.id.sort_order, R.id.sort_order_clear, R.string.sort_order, sortBlotterEntries[0]);
         }
 
-		Button bOk = (Button)findViewById(R.id.bOK);
+		Button bOk = (Button)getView().findViewById(R.id.bOK);
 		bOk.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				Intent data = new Intent();
 				filter.toIntent(data);
-				setResult(RESULT_OK, data);
-				finish();
+				finishAndClose(data.getExtras());
 			}
 		});
 		
-		Button bCancel = (Button)findViewById(R.id.bCancel);
+		Button bCancel = (Button)getView().findViewById(R.id.bCancel);
 		bCancel.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				setResult(RESULT_CANCELED);
-				finish();
+				finishAndClose(AppCompatActivity.RESULT_CANCELED);
 			}
 		});
 		
-		Button bNoFilter = (Button)findViewById(R.id.bNoFilter);
+		Button bNoFilter = (Button)getView().findViewById(R.id.bNoFilter);
 		bNoFilter.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -120,16 +146,15 @@ public abstract class AbstractWhereFilterActivity extends AbstractEditorActivity
                     Intent data = new Intent();
                     Criteria.eq(BlotterFilter.FROM_ACCOUNT_ID, String.valueOf(accountId))
                         .toIntent(filter.getTitle(), data);
-                    setResult(RESULT_OK, data);
-                    finish();
+                    finishAndClose(data.getExtras());
+
                 } else {
-				    setResult(RESULT_FIRST_USER);
-				    finish();
+				    finishAndClose(AppCompatActivity.RESULT_FIRST_USER);
                 }
 			}
 		});		
 		
-		Intent intent = getIntent();
+		Intent intent = getActivity().getIntent();
 		if (intent != null) {
 			filter = WhereFilter.fromIntent(intent);
             getAccountIdFromFilter(intent);
@@ -294,9 +319,12 @@ public abstract class AbstractWhereFilterActivity extends AbstractEditorActivity
 	protected void onClick(View v, int id) {
 		switch (id) {
 		case R.id.period:
-			Intent intent = new Intent(this, DateFilterActivity.class);
-			filter.toIntent(intent);
-			startActivityForResult(intent, 1);
+			Fragment fragment = new DateFilterActivity();
+			Bundle bundle = new Bundle();
+			filter.toBundle(bundle);
+			fragment.setArguments(bundle);
+
+			activity.startFragmentForResult(fragment,this);
 			break;
 		case R.id.period_clear:
             clear(BlotterFilter.DATETIME, period);
@@ -306,11 +334,11 @@ public abstract class AbstractWhereFilterActivity extends AbstractEditorActivity
                 return;
             }
 			Cursor cursor = em.getAllAccounts();
-			startManagingCursor(cursor);
-			ListAdapter adapter = TransactionUtils.createAccountAdapter(this, cursor);
+			getActivity().startManagingCursor(cursor);
+			ListAdapter adapter = TransactionUtils.createAccountAdapter(getContext(), cursor);
 			Criteria c = filter.get(BlotterFilter.FROM_ACCOUNT_ID);
 			long selectedId = c != null ? c.getLongValue1() : -1;
-			x.select(this, R.id.account, R.string.account, cursor, adapter, "_id", selectedId);
+			x.select(getContext(), R.id.account, R.string.account, cursor, adapter, "_id", selectedId);
 		} break;
 		case R.id.account_clear:
             if (isAccountFilter()) {
@@ -320,26 +348,26 @@ public abstract class AbstractWhereFilterActivity extends AbstractEditorActivity
 			break;
 		case R.id.currency: {
 			Cursor cursor = em.getAllCurrencies("name");
-			startManagingCursor(cursor);
-			ListAdapter adapter = TransactionUtils.createCurrencyAdapter(this, cursor);
+			getActivity().startManagingCursor(cursor);
+			ListAdapter adapter = TransactionUtils.createCurrencyAdapter(getContext(), cursor);
 			Criteria c = filter.get(BlotterFilter.FROM_ACCOUNT_CURRENCY_ID);
 			long selectedId = c != null ? c.getLongValue1() : -1;
-			x.select(this, R.id.currency, R.string.currency, cursor, adapter, "_id", selectedId);
+			x.select(getContext(), R.id.currency, R.string.currency, cursor, adapter, "_id", selectedId);
 		} break;
 		case R.id.currency_clear:
 			clear(BlotterFilter.FROM_ACCOUNT_CURRENCY_ID, currency);
 			break;
 		case R.id.category: {
 			Cursor cursor = db.getCategories(true);
-			startManagingCursor(cursor);
-			ListAdapter adapter = TransactionUtils.createCategoryAdapter(db, this, cursor);
+			getActivity().startManagingCursor(cursor);
+			ListAdapter adapter = TransactionUtils.createCategoryAdapter(db, getContext(), cursor);
 			Criteria c = filter.get(BlotterFilter.CATEGORY_LEFT);
             if (c != null) {
-                x.select(this, R.id.category, R.string.category, cursor, adapter, CategoryViewColumns.left.name(),
+                x.select(getContext(), R.id.category, R.string.category, cursor, adapter, CategoryViewColumns.left.name(),
                         c.getLongValue1());
             } else {
                 c = filter.get(BlotterFilter.CATEGORY_ID);
-                x.select(this, R.id.category, R.string.category, cursor, adapter, CategoryViewColumns._id.name(),
+                x.select(getContext(), R.id.category, R.string.category, cursor, adapter, CategoryViewColumns._id.name(),
                         c != null ? c.getLongValue1() : -1);
             }
 		} break;
@@ -348,11 +376,11 @@ public abstract class AbstractWhereFilterActivity extends AbstractEditorActivity
 			break;
 		case R.id.project: {
 			ArrayList<Project> projects = em.getActiveProjectsList(true);
-			ListAdapter adapter = TransactionUtils.createProjectAdapter(this, projects);
+			ListAdapter adapter = TransactionUtils.createProjectAdapter(getContext(), projects);
 			Criteria c = filter.get(BlotterFilter.PROJECT_ID);
 			long selectedId = c != null ? c.getLongValue1() : -1;
 			int selectedPos = MyEntity.indexOf(projects, selectedId);
-			x.selectItemId(this, R.id.project, R.string.project, adapter, selectedPos);
+			x.selectItemId(getContext(), R.id.project, R.string.project, adapter, selectedPos);
 		} break;
 		case R.id.project_clear:
 			clear(BlotterFilter.PROJECT_ID, project);
@@ -360,30 +388,30 @@ public abstract class AbstractWhereFilterActivity extends AbstractEditorActivity
         case R.id.payee: {
             List<Payee> payees = em.getAllPayeeList();
             payees.add(0, noPayee());
-            ListAdapter adapter = TransactionUtils.createPayeeAdapter(this, payees);
+            ListAdapter adapter = TransactionUtils.createPayeeAdapter(getContext(), payees);
             Criteria c = filter.get(BlotterFilter.PAYEE_ID);
             long selectedId = c != null ? c.getLongValue1() : -1;
             int selectedPos = MyEntity.indexOf(payees, selectedId);
-            x.selectItemId(this, R.id.payee, R.string.payee, adapter, selectedPos);
+            x.selectItemId(getContext(), R.id.payee, R.string.payee, adapter, selectedPos);
         } break;
         case R.id.payee_clear:
             clear(BlotterFilter.PAYEE_ID, payee);
             break;
 		case R.id.location: {
 			Cursor cursor = em.getAllLocations(true);
-			startManagingCursor(cursor);
-			ListAdapter adapter = TransactionUtils.createLocationAdapter(this, cursor);
+			getActivity().startManagingCursor(cursor);
+			ListAdapter adapter = TransactionUtils.createLocationAdapter(getContext(), cursor);
 			Criteria c = filter.get(BlotterFilter.LOCATION_ID);
 			long selectedId = c != null ? c.getLongValue1() : -1;
-			x.select(this, R.id.location, R.string.location, cursor, adapter, "_id", selectedId);
+			x.select(getContext(), R.id.location, R.string.location, cursor, adapter, "_id", selectedId);
 		} break;
 		case R.id.location_clear:
 			clear(BlotterFilter.LOCATION_ID, location);
 			break;
 		case R.id.sort_order: {
-			ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortBlotterEntries);
+			ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, sortBlotterEntries);
 			int selectedId = BlotterFilter.SORT_OLDER_TO_NEWER.equals(filter.getSortOrder()) ? 1 : 0;
-			x.selectPosition(this, R.id.sort_order, R.string.sort_order, adapter, selectedId);
+			x.selectPosition(getContext(), R.id.sort_order, R.string.sort_order, adapter, selectedId);
 		} break;
 		case R.id.sort_order_clear:
 			filter.resetSort();
@@ -391,10 +419,10 @@ public abstract class AbstractWhereFilterActivity extends AbstractEditorActivity
 			updateSortOrderFromFilter();
 			break;
 		case R.id.status: {
-			ArrayAdapter<String> adapter = EnumUtils.createDropDownAdapter(this, statuses);
+			ArrayAdapter<String> adapter = EnumUtils.createDropDownAdapter(getContext(), statuses);
 			Criteria c = filter.get(BlotterFilter.STATUS);
 			int selectedPos = c != null ? TransactionStatus.valueOf(c.getStringValue()).ordinal() : -1;
-			x.selectPosition(this, R.id.status, R.string.transaction_status, adapter, selectedPos);
+			x.selectPosition(getContext(), R.id.status, R.string.transaction_status, adapter, selectedPos);
 		} break;
 		case R.id.status_clear:
 			clear(BlotterFilter.STATUS, status);
@@ -480,11 +508,11 @@ public abstract class AbstractWhereFilterActivity extends AbstractEditorActivity
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
-			if (resultCode == RESULT_FIRST_USER) {
+			if (resultCode == AppCompatActivity.RESULT_FIRST_USER) {
 				onClick(period, R.id.period_clear);
-			} else if (resultCode == RESULT_OK) {
+			} else if (resultCode == AppCompatActivity.RESULT_OK) {
 				DateTimeCriteria c = WhereFilter.dateTimeFromIntent(data);
 				filter.put(c);
 				updatePeriodFromFilter();

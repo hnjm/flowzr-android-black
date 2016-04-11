@@ -84,7 +84,7 @@ public class RateNode {
             }
         });
         rateInfo = (TextView)rateInfoNode.findViewById(R.id.data);
-        //bCalc = (ImageButton)rateInfoNode.findViewById(R.id.rateCalculator);
+
         rateInfoNode.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

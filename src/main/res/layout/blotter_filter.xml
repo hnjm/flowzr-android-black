@@ -11,36 +11,24 @@
       Emmanuel Florent - port to Android API 11+
 -->
 
-<android.support.design.widget.CoordinatorLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="@dimen/space_xlarge"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <ScrollView android:id="@+id/scroll"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_weight="1">
 
-
-	<LinearLayout
-		android:paddingTop="@dimen/actionBarSize"
-		android:layout_marginTop="@dimen/space_xlarge"
-		android:orientation="vertical"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent">
-
-        <ScrollView android:id="@+id/scroll"
-            android:layout_height="match_parent"
+        <LinearLayout android:id="@+id/layout"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_weight="1">
+            android:paddingTop="@dimen/space_large"
+            android:orientation="vertical"/>
 
-            <LinearLayout android:id="@+id/layout"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:paddingTop="@dimen/space_large"
-                android:orientation="vertical"/>
+    </ScrollView>
 
-        </ScrollView>
-
-    </LinearLayout>
-
-	<include layout="@layout/toolbar"/>
-
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

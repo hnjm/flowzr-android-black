@@ -1,6 +1,7 @@
 package com.flowzr.activity;
 
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,11 +33,22 @@ public class SplitTransactionActivity extends AbstractSplitActivity implements C
     }
 
     @Override
+    public String getMyTag() {
+        return MyFragmentAPI.REQUEST_SPLITTRANSACTION_FINISH;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.split_fixed;
+    }
+
+
+    @Override
     protected void createUI(LinearLayout layout) {
         categorySelector.createNode(layout, false);
 
-        amountInput = new AmountInput(this);
-        amountInput.setOwner(this);
+        amountInput = new AmountInput(getContext());
+        amountInput.setOwner(activity);
         amountInput.setOnAmountChangedListener(new AmountInput.OnAmountChangedListener() {
             @Override
             public void onAmountChanged(long oldAmount, long newAmount) {
@@ -46,12 +58,12 @@ public class SplitTransactionActivity extends AbstractSplitActivity implements C
         View v = x.addEditNode(layout, R.string.amount, amountInput);
         amountTitle = (TextView) v.findViewById(R.id.label);
         categorySelector.createAttributesLayout(layout);
-        initToolbar();
+
     }
 
     @Override
     protected void fetchData() {
-        categorySelector = new CategorySelector(this, db, x);
+        categorySelector = new CategorySelector(activity,this, db, x);
         categorySelector.setListener(this);
         categorySelector.doNotShowSplitCategory();
         categorySelector.fetchCategories(false);
@@ -111,10 +123,10 @@ public class SplitTransactionActivity extends AbstractSplitActivity implements C
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         categorySelector.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if (resultCode == AppCompatActivity.RESULT_OK) {
             amountInput.processActivityResult(requestCode, data);
         }
     }

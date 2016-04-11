@@ -65,7 +65,7 @@ public class CsvImportTask extends ImportExportAsyncTask {
                 handler.sendEmptyMessage(R.string.import_file_not_found);
             else if (message.equals("Unknown category in import line"))
                 handler.sendEmptyMessage(R.string.import_unknown_category);
-            else if (message.equals("Unknown project in import line"))
+            else if (message.equals("Unknown entity in import line"))
                 handler.sendEmptyMessage(R.string.import_unknown_project);
             else if (message.equals("Wrong currency in import line"))
                 handler.sendEmptyMessage(R.string.import_wrong_currency);

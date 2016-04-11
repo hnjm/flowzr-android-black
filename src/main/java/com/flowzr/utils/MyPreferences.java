@@ -316,9 +316,9 @@ public class MyPreferences {
 	}
 	
 	/**
-	 * Gets the flag that indicates if the list of filter ids will include No Filter (no category, no project or current location) or not.
+	 * Gets the flag that indicates if the list of filter ids will include No Filter (no category, no entity or current location) or not.
 	 * @param context The activity context.
-	 * @return True if no category, no project and current location shall be displayed in 2D Reports, false otherwise.
+	 * @return True if no category, no entity and current location shall be displayed in 2D Reports, false otherwise.
 	 */
 	public static boolean includeNoFilterInReport(Context context) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);

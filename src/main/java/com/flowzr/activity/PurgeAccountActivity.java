@@ -17,7 +17,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -27,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.flowzr.R;
-import com.flowzr.backup.DatabaseExport;
 import com.flowzr.datetime.DateUtils;
 import com.flowzr.model.Account;
 
@@ -52,18 +51,27 @@ public class PurgeAccountActivity extends AbstractEditorActivity {
     private DateFormat df;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.purge_account);
-        initToolbar();
-        df = DateUtils.getLongDateFormat(this);
+    public String getMyTag() {
+        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
+    }
 
-        layout = (LinearLayout)findViewById(R.id.layout);
+    @Override
+    protected int getLayoutId() {
+        return R.layout.purge_account;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        df = DateUtils.getLongDateFormat(getContext());
+
+        layout = (LinearLayout)getView().findViewById(R.id.layout);
         date = Calendar.getInstance();
         date.add(Calendar.YEAR, -1);
         date.add(Calendar.DAY_OF_YEAR, -1);
 
-        Button bOk = (Button)findViewById(R.id.bOK);
+        Button bOk = (Button)getView().findViewById(R.id.bOK);
         bOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,12 +79,11 @@ public class PurgeAccountActivity extends AbstractEditorActivity {
             }
         });
 
-        Button bCancel = (Button)findViewById(R.id.bCancel);
+        Button bCancel = (Button)getView().findViewById(R.id.bCancel);
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(RESULT_CANCELED);
-                finish();
+                finishAndClose(AppCompatActivity.RESULT_CANCELED);
             }
         });
 
@@ -86,7 +93,7 @@ public class PurgeAccountActivity extends AbstractEditorActivity {
     }
 
     private void deleteOldTransactions() {
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(getContext())
             .setTitle(R.string.purge_account_confirm_title)
             .setMessage(getString(R.string.purge_account_confirm_message, new Object[]{account.title, getDateString()}))
             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -100,24 +107,25 @@ public class PurgeAccountActivity extends AbstractEditorActivity {
     }
 
     private void loadAccount() {
-        Intent intent = getIntent();
+        Intent intent = getActivity().getIntent();
         if (intent == null) {
-            Toast.makeText(this, "No account specified", Toast.LENGTH_SHORT).show();
-            finish();
+            //TODO send message to activity
+            Toast.makeText(getContext(), "No account specified", Toast.LENGTH_SHORT).show();
+            finishAndClose(AppCompatActivity.RESULT_CANCELED);
             return;
         }
 
         long accountId = intent.getLongExtra(ACCOUNT_ID, -1);
         if (accountId <= 0) {
-            Toast.makeText(this, "Invalid account specified", Toast.LENGTH_SHORT).show();
-            finish();
+            Toast.makeText(getContext(), "Invalid account specified", Toast.LENGTH_SHORT).show();
+            finishAndClose(AppCompatActivity.RESULT_CANCELED);
             return;
         }
 
         account = em.getAccount(accountId);
         if (account == null) {
-            Toast.makeText(this, "No account found", Toast.LENGTH_SHORT).show();
-            finish();
+            Toast.makeText(getContext(), "No account found", Toast.LENGTH_SHORT).show();
+            finishAndClose(AppCompatActivity.RESULT_CANCELED);
         }
     }
 
@@ -132,7 +140,7 @@ public class PurgeAccountActivity extends AbstractEditorActivity {
     protected void onClick(View v, int id) {
         switch (id) {
             case R.id.date:
-                DatePickerDialog d = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener(){
+                DatePickerDialog d = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener(){
                     @Override
                     public void onDateSet(DatePicker arg0, int y, int m, int d) {
                         date.set(y, m, d);
@@ -161,7 +169,7 @@ public class PurgeAccountActivity extends AbstractEditorActivity {
         private Dialog d;
 
         private PurgeAccountTask() {
-            this.context = PurgeAccountActivity.this;
+            this.context = PurgeAccountActivity.this.getContext();
         }
 
         @Override
@@ -178,6 +186,7 @@ public class PurgeAccountActivity extends AbstractEditorActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            /**
             if (databaseBackup.isChecked()) {
                 DatabaseExport export = new DatabaseExport(context, db.db(), true);
                 try {
@@ -188,9 +197,9 @@ public class PurgeAccountActivity extends AbstractEditorActivity {
                     return null;
                 }
             }
+            **/
             db.purgeAccountAtDate(account, date.getTimeInMillis());
-            setResult(RESULT_OK);
-            finish();
+            finishAndClose(AppCompatActivity.RESULT_OK);
             return null;
         }
 

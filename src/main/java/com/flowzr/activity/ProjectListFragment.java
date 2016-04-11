@@ -11,6 +11,7 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.flowzr.R;
@@ -36,15 +37,20 @@ public class ProjectListFragment extends MyEntityListFragment<Project> {
         return getString(R.string.projects);
     }
 
-    @SuppressWarnings("unchecked")
+
     @Override
-    protected Class getEditActivityClass() {
-        return ProjectActivity.class;
+    protected String getEditActivityClass() {
+        return ProjectActivity.class.getCanonicalName();
     }
 
     @Override
     protected Criteria createBlotterCriteria(Project p) {
         return Criteria.eq(BlotterFilter.PROJECT_ID, String.valueOf(p.id));
+    }
+
+    @Override
+    protected void internalOnCreate(Bundle savedInstanceState) {
+
     }
 
     @Override

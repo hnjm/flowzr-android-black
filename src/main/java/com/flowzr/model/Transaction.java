@@ -14,6 +14,8 @@ package com.flowzr.model;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
+
 import com.flowzr.db.DatabaseHelper.TransactionColumns;
 import com.flowzr.db.DatabaseHelper.BlotterColumns;
 
@@ -101,6 +103,7 @@ public class Transaction extends TransactionBase {
     public void toIntentAsSplit(Intent intent) {
         intent.putExtra(SPLIT_BLOB, this);
     }
+
 
     public static Transaction fromIntentAsSplit(Intent intent) {
         return (Transaction)intent.getSerializableExtra(SPLIT_BLOB);

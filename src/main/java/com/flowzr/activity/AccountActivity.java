@@ -16,9 +16,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,8 +45,8 @@ import static com.flowzr.utils.Utils.text;
 
 public class AccountActivity extends AbstractEditorActivity {
 	
-	public static final String ACCOUNT_ID_EXTRA = "accountId";
-	
+	//public static final String MyFragmentAPI.ENTITY_ID_EXTRA = "accountId";
+
 	private static final int NEW_CURRENCY_REQUEST = 1;
 	private static final int REQUEST_NEW_CURRENCY =  667;
 
@@ -73,48 +73,54 @@ public class AccountActivity extends AbstractEditorActivity {
 	private ListAdapter currencyAdapter;
 	private Account account = new Account();
 
+    @Override
+    public String getMyTag() {
+        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        //@TODO simplify account.xml
+        return R.layout.account;
+    }
 
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+    @Override
+	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.account);
-		initToolbar();
-
-		LinearLayout layout = (LinearLayout)findViewById(R.id.layout);
-
-		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		accountTitle= (EditText) findViewById(R.id.title);
+		accountTitle= (EditText) getView().findViewById(R.id.title);
 		accountTitle.setSingleLine();
-
-		accountTypeAdapter = new EntityEnumAdapter<>(this, AccountType.values());
+		LayoutInflater layoutInflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LinearLayout layout = (LinearLayout)getView().findViewById(R.id.layout);
+		accountTypeAdapter = new EntityEnumAdapter<>(getContext(), AccountType.values());
 		accountTypeNode = x.addListNodeIcon(layout, R.id.account_type, R.string.account_type, R.string.account_type);
 
-		cardIssuerAdapter = new EntityEnumAdapter<>(this, CardIssuer.values());
+		cardIssuerAdapter = new EntityEnumAdapter<>(getContext(), CardIssuer.values());
 		cardIssuerNode = x.addListNodeIcon(layout, R.id.card_issuer, R.string.card_issuer, R.string.card_issuer);
 		setVisibility(cardIssuerNode, View.GONE);
 
 		currencyCursor = em.getAllCurrencies("name");
-		startManagingCursor(currencyCursor);
-		currencyAdapter = TransactionUtils.createCurrencyAdapter(this, currencyCursor);
+		getActivity().startManagingCursor(currencyCursor);
+		currencyAdapter = TransactionUtils.createCurrencyAdapter(getContext(), currencyCursor);
 		currencyText = x.addListNode2(layout, R.id.currency, android.R.color.transparent, R.id.currency_add, getResources().getString(R.string.select_currency));
 
-		Intent intent = getIntent();
-		if (intent != null) {
-			long accountId = intent.getLongExtra(ACCOUNT_ID_EXTRA, -1);
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			long accountId = bundle.getLong(MyFragmentAPI.ENTITY_ID_EXTRA, -1);
 			if (accountId != -1) {
 				this.account = em.getAccount(accountId);
 				if (this.account == null) {
 					this.account = new Account();
 				}
+			} else {
+				activity.setTitle(R.string.add_account);
 			}
 		}
 
-
-		amountInput = new AmountInput(this);
-		amountInput.setOwner(this);
-		limitInput = new AmountInput(this);
-		limitInput.setOwner(this);
+		amountInput = new AmountInput(getContext());
+		amountInput.setOwner(activity);
+		limitInput = new AmountInput(getContext());
+		limitInput.setOwner(activity);
 
 		limitInput.setExpense();
 		limitInput.setColor(getResources().getColor(R.color.negative_amount));
@@ -184,7 +190,7 @@ public class AccountActivity extends AbstractEditorActivity {
 
 	public boolean saveAndFinish() {
 		if (account.currency == null) {
-			Toast.makeText(AccountActivity.this, R.string.select_currency, Toast.LENGTH_SHORT).show();
+			Toast.makeText(AccountActivity.this.getContext(), R.string.select_currency, Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		if (Utils.isEmpty(accountTitle)) {
@@ -205,7 +211,7 @@ public class AccountActivity extends AbstractEditorActivity {
 			account.closingDay = closingDay == null ? 0 : Integer.parseInt(closingDay);
 			if (account.closingDay != 0) {
 				if (account.closingDay>31) {
-					Toast.makeText(AccountActivity.this, R.string.closing_day_error, Toast.LENGTH_SHORT).show();
+					Toast.makeText(AccountActivity.this.getContext(), R.string.closing_day_error, Toast.LENGTH_SHORT).show();
 					return false;
 				}
 			}
@@ -214,7 +220,7 @@ public class AccountActivity extends AbstractEditorActivity {
 			account.paymentDay = paymentDay == null ? 0 : Integer.parseInt(paymentDay);
 			if (account.paymentDay != 0) {
 				if (account.paymentDay>31) {
-					Toast.makeText(AccountActivity.this, R.string.payment_day_error, Toast.LENGTH_SHORT).show();
+					Toast.makeText(AccountActivity.this.getContext(), R.string.payment_day_error, Toast.LENGTH_SHORT).show();
 					return false;
 				}
 			}
@@ -239,9 +245,8 @@ public class AccountActivity extends AbstractEditorActivity {
 			db.insertOrUpdate(t, null);
 		}
 		Intent intent = new Intent();
-		intent.putExtra(ACCOUNT_ID_EXTRA, accountId);
-		setResult(RESULT_OK, intent);
-		finish();
+		intent.putExtra(MyFragmentAPI.ENTITY_ID_EXTRA, accountId);
+		finishAndClose(intent.getExtras());
 		return true;
 	}
 
@@ -254,8 +259,7 @@ public class AccountActivity extends AbstractEditorActivity {
 				saveAndFinish();
         		return true;
         	case R.id.action_cancel:
-				setResult(RESULT_CANCELED);
-				finish();
+                finishAndClose(AppCompatActivity.RESULT_CANCELED);
         		return true;
         	
         }
@@ -269,14 +273,14 @@ public class AccountActivity extends AbstractEditorActivity {
 				isIncludedIntoTotals.performClick();
 				break;
 			case R.id.account_type:
-				x.selectPosition(this, R.id.account_type, R.string.account_type, accountTypeAdapter, AccountType.valueOf(account.type).ordinal());
+				x.selectPosition(getContext(), R.id.account_type, R.string.account_type, accountTypeAdapter, AccountType.valueOf(account.type).ordinal());
 				break;
 			case R.id.card_issuer:				
-				x.selectPosition(this, R.id.card_issuer, R.string.card_issuer, cardIssuerAdapter, 
+				x.selectPosition(getContext(), R.id.card_issuer, R.string.card_issuer, cardIssuerAdapter,
 						account.cardIssuer != null ? CardIssuer.valueOf(account.cardIssuer).ordinal() : 0);
 				break;
 			case R.id.currency:
-				x.selectWithAddOption(this, R.id.currency, R.string.currency, currencyCursor, currencyAdapter,
+				x.selectWithAddOption(getContext(), R.id.currency, R.string.currency, currencyCursor, currencyAdapter,
 						"_id", account.currency != null ? account.currency.id : -1, R.string.new_currency,REQUEST_NEW_CURRENCY);
 				break;
 			case R.id.currency_add:
@@ -286,12 +290,13 @@ public class AccountActivity extends AbstractEditorActivity {
 	}
 
     private void addNewCurrency() {
-        new CurrencySelector(this, em, new CurrencySelector.OnCurrencyCreatedListener() {
+        new CurrencySelector(getContext(), em, new CurrencySelector.OnCurrencyCreatedListener() {
             @Override
             public void onCreated(long currencyId) {
                 if (currencyId == 0) {
-                    Intent intent = new Intent(AccountActivity.this, CurrencyActivity.class);
-                    startActivityForResult(intent, NEW_CURRENCY_REQUEST);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, CurrencyActivity.class.getCanonicalName());
+                    activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
                 } else {
                     currencyCursor.requery();
                     selectCurrency(currencyId);
@@ -396,10 +401,10 @@ public class AccountActivity extends AbstractEditorActivity {
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		if (resultCode == RESULT_OK) {
+		if (resultCode == AppCompatActivity.RESULT_OK) {
             if (limitInput.processActivityResult(requestCode, data)) {
                 //return;
             }
@@ -418,14 +423,4 @@ public class AccountActivity extends AbstractEditorActivity {
 		}
 	}
 
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-	}	
-		
 }

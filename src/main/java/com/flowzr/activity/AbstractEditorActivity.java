@@ -11,19 +11,16 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.support.v4.app.ListFragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.view.MenuInflater;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.flowzr.R;
@@ -35,90 +32,71 @@ import com.flowzr.utils.Utils;
 import com.flowzr.view.NodeInflater;
 
 import java.util.List;
+import java.util.MissingFormatArgumentException;
 
-public abstract class AbstractEditorActivity extends AppCompatActivity implements ActivityLayoutListener {
+public abstract class AbstractEditorActivity extends ListFragment implements ActivityLayoutListener {
 
 	protected DatabaseAdapter db;
 	protected MyEntityManager em;
-	
+    protected int contentId;
 	protected ActivityLayout x;
-
     protected Utils u;
+    protected MainActivity activity;
+
+    public abstract String getMyTag();
 
 
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		NodeInflater nodeInflater = new NodeInflater(layoutInflater);
-
-		x = new ActivityLayout(nodeInflater, this);
-		db = new DatabaseAdapter(this);
-		db.open();
-		em = db.em();
-
-        this.getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-	}
-
-
-    protected void initToolbar() {
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        final ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_clear);
-        }
-    }
+    protected abstract int getLayoutId();
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.ok, menu);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.ok, menu);
+    }
+
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        NodeInflater nodeInflater = new NodeInflater(inflater);
+        x = new ActivityLayout(nodeInflater, this);
+        final Bundle args = getArguments();
+        contentId = args != null ? args.getInt("EXTRA_LAYOUT", this.getLayoutId()) : this.getLayoutId();
+        return inflater.inflate(getLayoutId(), container, false);
+    }
+
+
+    public boolean finishAndClose(int result) {
+        Bundle bundle = new  Bundle();
+        bundle.putInt(MyFragmentAPI.RESULT_EXTRA,result);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
         return true;
     }
 
+    public boolean finishAndClose(Bundle bundle) {
+        bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,getArguments().getInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA));
+        bundle.putInt(MyFragmentAPI.RESULT_EXTRA, AppCompatActivity.RESULT_OK);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
+        return true;
+    }
 
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {	   	        
-            case android.R.id.home:
-            {
-                TaskStackBuilder tsb = TaskStackBuilder.create(this);
-                final int intentCount = tsb.getIntentCount();
-                if (intentCount > 0)
-                {
-                    Intent upIntent = tsb.getIntents()[intentCount - 1];
-                    if (NavUtils.shouldUpRecreateTask(this, upIntent))
-                    {
-                        // This activity is not part of the application's task, so create a new task with a synthesized back stack.
-                        tsb.startActivities();
-                        finish();
-                    }
-                    else
-                    {
-                        // This activity is part of the application's task, so simply navigate up to the hierarchical parent activity.
-                        NavUtils.navigateUpTo(this, upIntent);
-                    }
-                }
-                else
-                {
-                    onBackPressed();
-                }
-                return true;
-            }
+    public void onAttach(Context a) {
+        super.onAttach(a);
+        setHasOptionsMenu(true);
+        activity=(MainActivity)a;
+    }
 
-        }
-        return super.onOptionsItemSelected(item);
-    }	
-	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		db = new DatabaseAdapter(getContext());
+		db.open();
+		em = db.em();
+	}
+
     protected boolean shouldLock() {
         return true;
     }
@@ -146,7 +124,7 @@ public abstract class AbstractEditorActivity extends AppCompatActivity implement
 
     protected boolean checkSelected(Object value, @SuppressWarnings("SameParameterValue") int messageResId) {
         if (value == null) {
-            Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), messageResId, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -154,7 +132,7 @@ public abstract class AbstractEditorActivity extends AppCompatActivity implement
 
     protected boolean checkSelectedId(long value, @SuppressWarnings("SameParameterValue") int messageResId) {
 		if (value <= 0) {
-			Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+			Toast.makeText(getContext(), messageResId, Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		return true;
@@ -169,25 +147,25 @@ public abstract class AbstractEditorActivity extends AppCompatActivity implement
 	}
 		
 	@Override
-	protected void onDestroy() {
+	public void onDestroy() {
 		db.close();
 		super.onDestroy();		
 	}
 
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         if (shouldLock()) {
-            PinProtection.lock(this);
+            PinProtection.lock(getContext());
         }
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if (shouldLock()) {
-            PinProtection.unlock(this);
+            PinProtection.unlock(getContext());
         }
     }
 

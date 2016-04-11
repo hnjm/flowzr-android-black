@@ -89,7 +89,7 @@ public class CsvImport {
     }
 
     private boolean isNewProject(Map<String, Project> map, String project) {
-        return Utils.isNotEmpty(project) && !"No project".equals(project) && !map.containsKey(project);
+        return Utils.isNotEmpty(project) && !"No entity".equals(project) && !map.containsKey(project);
     }
 
     public Map<String, Payee> collectAndInsertPayees(List<CsvTransaction> transactions) {

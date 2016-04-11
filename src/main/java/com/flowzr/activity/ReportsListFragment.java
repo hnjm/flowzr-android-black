@@ -16,9 +16,7 @@ package com.flowzr.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +33,7 @@ import com.flowzr.report.ReportType;
 
 public class ReportsListFragment extends ListFragment {
 
-    private Activity activity;
+    private MainActivity activity;
 
 	public final static ReportType[] reports = new ReportType[]{
 			ReportType.BY_PERIOD,
@@ -73,16 +71,18 @@ public class ReportsListFragment extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
         Bundle bundle=new Bundle();
         if (reports[position].isConventionalBarReport()) {
-            bundle.putBoolean(FragmentAPI.CONVENTIONAL_REPORTS, true);
+            bundle.putBoolean(MyFragmentAPI.CONVENTIONAL_REPORTS, true);
+            bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, ReportFragment.class.getCanonicalName());
         } else {
+            bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, Report2DChartFragment.class.getCanonicalName());
             bundle.putInt(Report2DChart.REPORT_TYPE, position);
         }
-        bundle.putString(FragmentAPI.EXTRA_REPORT_TYPE, reports[position].name());
-        ((FragmentAPI) activity).onFragmentMessage(FragmentAPI.REQUEST_REPORTS,bundle);
+        bundle.putString(MyFragmentAPI.EXTRA_REPORT_TYPE, reports[position].name());
+        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
 	}
 
 	public static Report createReport(Context context, MyEntityManager em, Bundle extras) {
-		String reportTypeName = extras.getString(FragmentAPI.EXTRA_REPORT_TYPE);
+		String reportTypeName = extras.getString(MyFragmentAPI.EXTRA_REPORT_TYPE);
 		ReportType reportType = ReportType.valueOf(reportTypeName);
         Currency c = em.getHomeCurrency();
 		return reportType.createReport(context, c);

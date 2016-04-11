@@ -50,10 +50,11 @@
 
 		</LinearLayout>
 
-	<LinearLayout android:layout_height="wrap_content"
+	<LinearLayout
 		android:id="@+id/layout"
 		android:layout_toRightOf="@+id/icon"
 		android:layout_below="@id/layout0"
+		android:layout_height="wrap_content"
 		android:layout_width="match_parent">
 		<TextView android:id="@+id/center"
 			android:text="center"
@@ -84,8 +85,9 @@
         android:layout_alignLeft="@id/layout"
 		android:layout_below="@id/layout">
 
-			<TextView android:text=""
+			<TextView
 				android:id="@+id/bottom"
+				android:text=""
 				android:layout_width="0dp"
 				android:singleLine="true"
 				android:layout_height="wrap_content"
@@ -93,12 +95,14 @@
 				style="@style/TextView"
 				android:textSize="@dimen/text_small"/>
 		
-		<TextView android:layout_width="wrap_content"
+		<TextView
+			android:id="@+id/right"
+			android:layout_width="wrap_content"
 			style="@style/TextView"
 			android:textSize="@dimen/text_small"
 			android:singleLine="true"
 			android:layout_height="wrap_content"
-			android:id="@+id/right"
+
 			android:text=""
 			android:paddingLeft="5dp" />
 	</LinearLayout>

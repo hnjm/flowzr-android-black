@@ -1,10 +1,10 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-rc1'
+        classpath 'com.android.tools.build:gradle:2.0.0'
     }
 }
 
@@ -13,7 +13,7 @@ apply plugin: 'com.android.application'
 repositories {
     maven { url "http://repo.commonsware.com.s3.amazonaws.com" }
     maven { url "https://repository-achartengine.forge.cloudbees.com/snapshot/" }
-    mavenCentral()
+    jcenter()
 }
 
 //noinspection GroovyAssignabilityCheck
@@ -29,9 +29,8 @@ android {
 
     defaultConfig {
         generatedDensities = []
-
-
     }
+    
     testOptions {
         unitTests.returnDefaultValues = true
     }

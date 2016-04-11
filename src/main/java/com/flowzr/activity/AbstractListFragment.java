@@ -12,12 +12,14 @@
 package com.flowzr.activity;
 
 
-import android.app.Activity;
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -39,17 +41,9 @@ import com.flowzr.db.MyEntityManager;
 
 public abstract class AbstractListFragment extends ListFragment implements RefreshSupportedActivity {
 	
-	protected static final int MENU_VIEW = Menu.FIRST+1;
-	protected static final int MENU_EDIT = Menu.FIRST+2;
-	protected static final int MENU_DELETE = Menu.FIRST+3;
+
 	protected static final int MENU_ADD = Menu.FIRST+4;
-	protected static final int CONTENT_ID_NOT_PROVIDED=-1;
-	
-	protected static final String EXTRA_LAYOUT="EXTRA_LAYOUT";
-	public static final String EXTRA_REQUEST_TYPE="EXTRA_REQUEST_TYPE";
 	protected int contentId;
-	
-	
     protected LayoutInflater inflater;
 	protected Cursor cursor;
 	protected ListAdapter adapter;
@@ -63,14 +57,25 @@ public abstract class AbstractListFragment extends ListFragment implements Refre
 	protected AbstractListFragment(int contentId) {
 		this.contentId = contentId;				
 	}
-	
-    public void onAttach(Activity a) {
+
+	protected abstract String getEditActivityClass();
+
+	@Override
+    public void onAttach(Context a) {
     	super.onAttach(a);
     	setHasOptionsMenu(true);
 		activity=(MainActivity)a;
     }
-    
-    public void onCreate(Bundle savedInstanceState)
+
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		recreateCursor();
+	}
+
+
+	public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);        
@@ -87,23 +92,21 @@ public abstract class AbstractListFragment extends ListFragment implements Refre
 		}		
 		
         createAdapter(cursor);
-		getActivity().setTitle(this.getMyTitle());
+		Log.e("flowzr","list fragment on create");
+		//getActivity().setTitle(this.getMyTitle());
     }	
     
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	return inflater.inflate(contentId, container, false);
 	}
-	
-	
-	
 
-	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
-	    //getActivity().setTitle(getMyTitle());
-		getListView().setEmptyView(getActivity().findViewById(R.id.emptyView));	    		
+		Log.e("flowzr","list fragment on activity created created");
+	    getActivity().setTitle(getMyTitle());
+		getListView().setEmptyView(getView().findViewById(R.id.emptyView));
         recreateAdapter();
         registerForContextMenu(getListView());
 	}
@@ -112,9 +115,11 @@ public abstract class AbstractListFragment extends ListFragment implements Refre
 	        adapter = createAdapter(cursor);
 	        setListAdapter(adapter);
     }
-  
-    
-    protected abstract Cursor createCursor();
+
+
+	protected abstract void internalOnCreate(Bundle savedInstanceState);
+
+	protected abstract Cursor createCursor();
 
 	protected abstract ListAdapter createAdapter(Cursor cursor);
 	
@@ -206,7 +211,7 @@ public abstract class AbstractListFragment extends ListFragment implements Refre
 
     @Override
     public void integrityCheck() {
-        new IntegrityCheckTask(this.getActivity()).execute();
+        new IntegrityCheckTask(activity).execute();
     }
 
     @Override

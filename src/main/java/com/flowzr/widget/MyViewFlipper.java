@@ -23,7 +23,7 @@ public class MyViewFlipper extends ViewFlipper {
 			try {
 				super.onDetachedFromWindow();
 			} catch (IllegalArgumentException e) {
-				Log.w("MyViewFlipper", "Android project issue 6191 workaround.");
+				Log.w("MyViewFlipper", "Android entity issue 6191 workaround.");
 			} finally {
 				super.stopFlipping();
 			}

@@ -10,13 +10,8 @@
     Denis Solonenko - initial API and implementation
     Emmanuel Florent - Port to AppCompat 11+
 -->
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
-
-<LinearLayout android:paddingTop="@dimen/actionBarSize"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_marginTop="@dimen/space_xlarge"
               android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:orientation="vertical">
@@ -36,7 +31,3 @@
     </ScrollView>
 
 </LinearLayout>
-
-    <include layout="@layout/toolbar"/>
-
-</android.support.design.widget.CoordinatorLayout>

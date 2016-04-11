@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *     Denis Solonenko - initial API and implementation
+ *     Emmanuel Florent - port to Android API 11+
  ******************************************************************************/
 package com.flowzr.activity;
 
@@ -18,8 +19,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -38,6 +42,7 @@ import com.flowzr.recur.RecurrenceUntil;
 import com.flowzr.recur.RecurrenceView;
 import com.flowzr.recur.RecurrenceViewFactory;
 import com.flowzr.utils.EnumUtils;
+import com.flowzr.view.NodeInflater;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -59,19 +64,36 @@ public class RecurrenceActivity extends AbstractEditorActivity {
 	private RecurrenceView recurrencePatternView;
 	private RecurrenceView recurrencePeriodView;
 
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public String getMyTag() {
+		return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
+	}
 
-		setContentView(R.layout.recurrence);
-		initToolbar();
+	@Override
+	protected int getLayoutId() {
+		return R.layout.recurrence;
+	}
 
-		layout = (LinearLayout)findViewById(R.id.layout);
-		viewFactory = new RecurrenceViewFactory(this);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		setHasOptionsMenu(true);
+        NodeInflater nodeInflater = new NodeInflater(inflater);
+        x = new ActivityLayout(nodeInflater, this);
+		return inflater.inflate(R.layout.recurrence, container, false);
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+		layout = (LinearLayout)getView().findViewById(R.id.layout);
+		viewFactory = new RecurrenceViewFactory(getActivity(),this);
 		
-		Intent intent = getIntent();
-		if (intent != null) {
-			String recurrencePattern = intent.getStringExtra(RECURRENCE_PATTERN);
+		//Intent intent = getActivity().getIntent();
+		Bundle bundle= getArguments();
+		if (bundle != null) {
+			String recurrencePattern = bundle.getString(RECURRENCE_PATTERN);
 			if (recurrencePattern != null) {
 				try {
 					recurrence = Recurrence.parse(recurrencePattern);
@@ -100,21 +122,22 @@ public class RecurrenceActivity extends AbstractEditorActivity {
         {	 
         	case R.id.action_done:
 				if (recurrencePatternView == null) {
-					Intent data = new Intent();
-					setResult(RESULT_OK, data);
-					finish();					
+					Intent intent = new Intent();
+                    Bundle bundle=new Bundle();
+                    //bundle.putAll(intent.getExtras());
+                    bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,AbstractTransactionActivity.RECURRENCE_REQUEST);
+					finishAndClose(intent.getExtras());
 				} else {
 					if (recurrencePatternView.validateState() && (recurrencePeriodView == null || recurrencePeriodView.validateState())) {
-						Intent data = new Intent();
-						data.putExtra(RECURRENCE_PATTERN, stateToString());
-						setResult(RESULT_OK, data);
-						finish();
+                        Bundle bundle=new Bundle();
+                        bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,AbstractTransactionActivity.RECURRENCE_REQUEST);
+						bundle.putString(RECURRENCE_PATTERN, stateToString());
+						finishAndClose(bundle);
 					}
 				}	        		
         		return true;
 	    	case R.id.action_cancel:
-				setResult(RESULT_CANCELED);
-				finish();
+				finishAndClose(AppCompatActivity.RESULT_CANCELED);
 	    		return true;        
         }
         return super.onOptionsItemSelected(item);
@@ -142,9 +165,9 @@ public class RecurrenceActivity extends AbstractEditorActivity {
 		if (recurrencePatternView != null) {
 			recurrencePatternView.createNodes(layout);
 			startDateView = x.addInfoNode(layout, R.id.start_date, R.string.recurrence_period_starts_on_date, 
-					DateUtils.getShortDateFormat(this).format(recurrence.getStartDate().getTime()));
+					DateUtils.getShortDateFormat(getContext()).format(recurrence.getStartDate().getTime()));
 			startTimeView = x.addInfoNode(layout, R.id.start_time, R.string.recurrence_period_starts_on_time, 
-					DateUtils.getTimeFormat(this).format(recurrence.getStartDate().getTime()));
+					DateUtils.getTimeFormat(getContext()).format(recurrence.getStartDate().getTime()));
 			if (recurrence.pattern.frequency != RecurrenceFrequency.GEEKY) {
 				x.addListNode2(layout, R.id.recurrence_period, R.drawable.ic_today, R.string.recurrence_period, getString(recurrence.period.until.titleId));
 				if (recurrencePeriodView != null) {
@@ -159,31 +182,31 @@ public class RecurrenceActivity extends AbstractEditorActivity {
 	protected void onClick(View v, int id) {
 		switch (id) {
 			case R.id.recurrence_pattern: {
-				ArrayAdapter<String> adapter = EnumUtils.createDropDownAdapter(this, frequencies);
-				x.selectPosition(this, R.id.recurrence_pattern, R.string.recurrence_pattern, adapter, recurrence.pattern.frequency.ordinal());
+				ArrayAdapter<String> adapter = EnumUtils.createDropDownAdapter(getContext(), frequencies);
+				x.selectPosition(getContext(), R.id.recurrence_pattern, R.string.recurrence_pattern, adapter, recurrence.pattern.frequency.ordinal());
 			} break;
 			case R.id.recurrence_period: {
-				ArrayAdapter<String> adapter = EnumUtils.createDropDownAdapter(this, untils);
-				x.selectPosition(this, R.id.recurrence_period, R.string.recurrence_period, adapter, recurrence.period.until.ordinal());
+				ArrayAdapter<String> adapter = EnumUtils.createDropDownAdapter(getContext(), untils);
+				x.selectPosition(getContext(), R.id.recurrence_period, R.string.recurrence_period, adapter, recurrence.period.until.ordinal());
 			} break;
 			case R.id.start_date: {
 				final Calendar c = recurrence.getStartDate();
-				new DatePickerDialog(this, new OnDateSetListener(){
+				new DatePickerDialog(getContext(), new OnDateSetListener(){
 					@Override
 					public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 						recurrence.updateStartDate(year, monthOfYear, dayOfMonth);
-						startDateView.setText(DateUtils.getMediumDateFormat(RecurrenceActivity.this).format(c.getTime()));						
+						startDateView.setText(DateUtils.getMediumDateFormat(getContext()).format(c.getTime()));
 					}				
 				}, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
 			} break;
 			case R.id.start_time: {
 				final Calendar c = recurrence.getStartDate();
-				boolean is24Format = DateUtils.is24HourFormat(RecurrenceActivity.this);
-				new TimePickerDialog(RecurrenceActivity.this, new OnTimeSetListener(){
+				boolean is24Format = DateUtils.is24HourFormat(getContext());
+				new TimePickerDialog(getContext(), new OnTimeSetListener(){
 					@Override
 					public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 						recurrence.updateStartTime(hourOfDay, minute, 0);
-						startTimeView.setText(DateUtils.getTimeFormat(RecurrenceActivity.this).format(c.getTime()));						
+						startTimeView.setText(DateUtils.getTimeFormat(getContext()).format(c.getTime()));
 					}				
 				}, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), is24Format).show();
 			} break;
@@ -193,7 +216,7 @@ public class RecurrenceActivity extends AbstractEditorActivity {
 					Recurrence r = Recurrence.parse(stateAsString);
 					DateRecurrenceIterator ri = r.createIterator(new Date());
 					StringBuilder sb = new StringBuilder();
-					DateFormat df = DateUtils.getMediumDateFormat(this);
+					DateFormat df = DateUtils.getMediumDateFormat(getContext());
 					String n = String.format("%n");
 					int count = 0;
 					while (count++ < 10 && ri.hasNext()) {
@@ -206,7 +229,7 @@ public class RecurrenceActivity extends AbstractEditorActivity {
 					if (ri.hasNext()) {
 						sb.append(n).append("...");
 					}
-					new AlertDialog.Builder(this)
+					new AlertDialog.Builder(getContext())
 						.setTitle(getString(r.pattern.frequency.titleId))
 						.setMessage(sb.toString())
 						.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener(){
@@ -217,7 +240,7 @@ public class RecurrenceActivity extends AbstractEditorActivity {
 						})
 						.show();
 				} catch (Exception ex) {
-					Toast.makeText(this, ex.getClass().getSimpleName()+":"+ex.getMessage(), Toast.LENGTH_SHORT).show();
+					Toast.makeText(getContext(), ex.getClass().getSimpleName()+":"+ex.getMessage(), Toast.LENGTH_SHORT).show();
 				}
 			} break;
 		}

@@ -10,19 +10,11 @@
       Emmanuel Florent - Port to android support - added FAB button
 -->
 
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:orientation="vertical">
-
-
-
-<LinearLayout
-	android:layout_marginTop="@dimen/space_xlarge"
-	android:paddingTop="@dimen/actionBarSize"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
+	android:animateLayoutChanges="true"
 	android:focusable="true"
 	android:focusableInTouchMode="true"
 	android:orientation="vertical">
@@ -34,6 +26,7 @@
 	<ScrollView
 		android:layout_height="0px"
 		android:layout_weight="1"
+		android:animateLayoutChanges="true"
 		android:scrollbars="none"
 		android:layout_width="wrap_content">
 
@@ -44,10 +37,7 @@
 			android:orientation="vertical" android:id="@+id/list">
 		</LinearLayout>
 	</ScrollView>
-
+	<ListView
+		android:id="@android:id/list"
+		style="@style/ListView" />
 </LinearLayout>
-
-
-	<include layout="@layout/toolbar"/>
-
-	</android.support.design.widget.CoordinatorLayout>

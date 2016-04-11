@@ -27,8 +27,7 @@
             android:layout_marginTop="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/f_dark_lighter3">
+            android:orientation="vertical">
 
         <FrameLayout
             android:id="@+id/fragment_container"
@@ -40,7 +39,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <android.support.v4.view.PagerTabStrip
                 android:id="@+id/pager_tab_strip"
@@ -55,6 +54,62 @@
 
 
         <include layout="@layout/toolbar"/>
+
+<!--             style="@style/FloatingActionMenu" -->
+
+        <com.flowzr.view.MyFloatingActionMenu
+            android:id="@+id/menu1"
+            app:layout_anchor="@id/pager"
+            app:layout_anchorGravity="bottom|right|end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_xlarge"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/ic_check"
+            app:menu_icon="@drawable/ic_check"
+            app:paddingEnd="@dimen/space_xxlarge"
+            app:paddingStart="@dimen/space_xxlarge"
+            app:menu_fab_hide_animation="@anim/fab_scale_down"
+            app:menu_fab_show_animation="@anim/fab_scale_up"
+            app:menu_colorNormal="@color/fabColor"
+            app:menu_colorPressed="@color/fabPressed"
+            app:menu_colorRipple="@color/fabRipple"
+            style="@style/FloatingActionButton"
+            app:menu_labels_style="@style/MenuLabelsStyle"
+            android:visibility="gone">
+
+
+
+
+            <com.flowzr.view.FloatingActionButton
+                android:id="@+id/fab2"
+                android:src="@drawable/ic_add"
+                app:fab_label="@string/save_and_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_size="normal"
+                app:fab_colorNormal="@color/fabColor"
+                app:fab_colorPressed="@color/fabPressed"
+                app:fab_colorRipple="@color/fabRipple"
+                /><!-- style="@style/FloatingActionButton"  -->
+
+            <com.flowzr.view.FloatingActionButton
+                android:id="@+id/fab1"
+                android:src="@drawable/ic_check"
+                app:fab_label="@string/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_size="normal"
+                app:menu_labels_style="@style/MenuLabelsStyle"
+                app:fab_colorNormal="@color/fabColor"
+                app:fab_colorPressed="@color/fabPressed"
+                app:fab_colorRipple="@color/fabRipple"
+                />
+
+        </com.flowzr.view.MyFloatingActionMenu>
+
+
 
     </android.support.design.widget.CoordinatorLayout>
 

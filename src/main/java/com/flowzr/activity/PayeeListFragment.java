@@ -11,6 +11,8 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.os.Bundle;
+
 import com.flowzr.R;
 import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.filter.Criteria;
@@ -30,14 +32,22 @@ public class PayeeListFragment extends MyEntityListFragment<Payee> {
     }
 
     @Override
+    protected void internalOnCreate(Bundle savedInstanceState) {
+
+    }
+
+    @Override
     protected String getMyTitle() {
         return getString(R.string.payees);
     }
 
     @Override
-    protected Class<? extends MyEntityActivity> getEditActivityClass() {
-        return PayeeActivity.class;
+    protected String getEditActivityClass() {
+        return PayeeActivity.class.getCanonicalName();
     }
+
+
+
 
     @Override
     protected Criteria createBlotterCriteria(Payee p) {

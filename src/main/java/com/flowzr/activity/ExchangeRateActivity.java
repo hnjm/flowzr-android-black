@@ -8,7 +8,7 @@
 
 package com.flowzr.activity;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,24 +50,42 @@ public class ExchangeRateActivity extends AbstractEditorActivity implements Rate
     private TextView dateNode;
     private RateNode rateNode;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.exchange_rate);
-        initToolbar();
-        Intent intent = getIntent();
-        if (intent == null) {
-            finish();
+    public String getMyTag() {
+        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.exchange_rate;
+    }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle == null) {
+            finishAndClose(AppCompatActivity.RESULT_CANCELED);
             return;
         }
 
-        if (validateIntent(intent)) {
-            LinearLayout layout = (LinearLayout) findViewById(R.id.list);
+        if (validateIntent(bundle)) {
+            LinearLayout layout = (LinearLayout) getView().findViewById(R.id.list);
             updateUI(layout);
         } else {
-            finish();
+            finishAndClose(AppCompatActivity.RESULT_CANCELED);
         }
     }
+
+    public boolean finishAndClose(int result) {
+        Bundle bundle = new  Bundle();
+        bundle.putInt(MyFragmentAPI.RESULT_EXTRA,result);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
+        return true;
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -77,14 +95,11 @@ public class ExchangeRateActivity extends AbstractEditorActivity implements Rate
         	case R.id.action_done:
               ExchangeRate rate = createRateFromUI();
               db.replaceRate(rate, originalDate);
-              Intent data = new Intent();
-              setResult(RESULT_OK, data);
-              finish();      	        		
+              finishAndClose(AppCompatActivity.RESULT_OK);
         		return true;
 	    	case R.id.action_cancel:
-				setResult(RESULT_CANCELED);
-				finish();
-	    		return true;        
+                finishAndClose(AppCompatActivity.RESULT_CANCELED);
+	    		return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -99,30 +114,31 @@ public class ExchangeRateActivity extends AbstractEditorActivity implements Rate
     }
 
     private void updateUI(LinearLayout layout) {
+        //x=getView().findViewById(R.id.list);
         x.addInfoNode(layout, 0, R.string.rate_from_currency, fromCurrency.name);
         x.addInfoNode(layout, 0, R.string.rate_to_currency, toCurrency.name);
-        dateNode = x.addInfoNode(layout, R.id.date, R.string.date, formatRateDate(this, date));
+        dateNode = x.addInfoNode(layout, R.id.date, R.string.date, formatRateDate(getContext(), date));
         rateNode = new RateNode(this, x, layout);
         rateNode.setRate(rate);
         rateNode.updateRateInfo();
     }
 
-    private boolean validateIntent(Intent intent) {
-        long fromCurrencyId = intent.getLongExtra(FROM_CURRENCY_ID, -1);
+    private boolean validateIntent(Bundle intent) {
+        long fromCurrencyId = intent.getLong(FROM_CURRENCY_ID, -1);
         fromCurrency = em.get(Currency.class, fromCurrencyId);
         if (fromCurrency == null) {
-            finish();
+            finishAndClose(AppCompatActivity.RESULT_CANCELED);
             return false;
         }
 
-        long toCurrencyId = intent.getLongExtra(TO_CURRENCY_ID, -1);
+        long toCurrencyId = intent.getLong(TO_CURRENCY_ID, -1);
         toCurrency = em.get(Currency.class, toCurrencyId);
         if (toCurrency == null) {
-            finish();
+            finishAndClose(AppCompatActivity.RESULT_CANCELED);
             return false;
         }
 
-        long date = intent.getLongExtra(RATE_DATE, -1);
+        long date = intent.getLong(RATE_DATE, -1);
         if (date == -1) {
             date = DateUtils.atMidnight(System.currentTimeMillis());
         }
@@ -137,9 +153,9 @@ public class ExchangeRateActivity extends AbstractEditorActivity implements Rate
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == RateNode.EDIT_RATE) {
+        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == RateNode.EDIT_RATE) {
             String amount = data.getStringExtra(AmountInput.EXTRA_AMOUNT);
             if (amount != null) {
                 rateNode.setRate(Float.parseFloat(amount));
@@ -160,12 +176,12 @@ public class ExchangeRateActivity extends AbstractEditorActivity implements Rate
     private void editDate() {
         final Calendar c = Calendar.getInstance();
         c.setTimeInMillis(date);
-        DatePickerDialog d = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener(){
+        DatePickerDialog d = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener(){
             @Override
             public void onDateSet(DatePicker arg0, int y, int m, int d) {
                 c.set(y, m, d);
                 date = c.getTimeInMillis();
-                dateNode.setText(formatRateDate(ExchangeRateActivity.this, date));
+                dateNode.setText(formatRateDate(getContext(), date));
             }
         }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
         d.show();
@@ -189,11 +205,6 @@ public class ExchangeRateActivity extends AbstractEditorActivity implements Rate
     @Override
     public void onRateChanged() {
         rateNode.updateRateInfo();
-    }
-
-    @Override
-    public Activity getActivity() {
-        return this;
     }
 
     @Override

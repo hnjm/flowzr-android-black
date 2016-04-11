@@ -16,8 +16,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import com.flowzr.activity.BlotterFragment;
-import com.flowzr.activity.EntityListActivity;
-import com.flowzr.activity.MainActivity;
+
+import com.flowzr.activity.MyFragmentAPI;
+import com.flowzr.activity.ReportFragment;
 import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.DatabaseHelper;
@@ -166,21 +167,13 @@ public abstract class Report {
 
     public Bundle createFragmentBundle(Context context, DatabaseAdapter db, WhereFilter parentFilter, long id) {
         Bundle bundle= new Bundle();
-        //bundle.putBoolean(MainActivity.REQUEST_BLOTTER,true);
         WhereFilter filter = createActivityFilter(context,db,parentFilter,id);
         filter.eq("from_account_is_include_into_totals", "1");
         filter.toBundle(bundle);
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, ReportFragment.class.getCanonicalName());
         return bundle;
     }
 
-	public Intent createActivityIntent (Context context, DatabaseAdapter db, WhereFilter parentFilter, long id) {
-		WhereFilter filter = createActivityFilter(context,db,parentFilter,id);
-        filter.eq("from_account_is_include_into_totals", "1");
-        Intent intent = new Intent(context, EntityListActivity.class);
-        intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
-		filter.toIntent(intent);
-		return intent;
-	}
 
     public WhereFilter createActivityFilter(Context context, DatabaseAdapter db, WhereFilter parentFilter, long id) {
         WhereFilter filter = WhereFilter.empty();

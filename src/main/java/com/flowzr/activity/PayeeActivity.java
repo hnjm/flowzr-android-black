@@ -7,20 +7,33 @@
  * 
  * Contributors:
  *     Denis Solonenko - initial API and implementation
+ *      Emmanuel Florent - port to Android API 11+
  ******************************************************************************/
 package com.flowzr.activity;
 
 import android.view.View;
 
+import com.flowzr.R;
 import com.flowzr.model.Payee;
 
-public class PayeeActivity extends MyEntityActivity<Payee> {
+public class
+PayeeActivity extends MyEntityActivity<Payee> {
 
     public PayeeActivity() {
         super(Payee.class);
     }
 
-	@Override
+    @Override
+    public String getMyTag() {
+        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.entity_edit;
+    }
+
+    @Override
 	protected void onClick(View v, int id) {
 		// Auto-generated method stub
 		

@@ -10,14 +10,10 @@
       Denis Solonenko - initial API and implementation
       Emmanuel Florent - port to Android API 11+
 -->
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
-
-	<LinearLayout
 		android:layout_marginTop="@dimen/space_xlarge"
-		android:paddingTop="@dimen/actionBarSize"
 		android:layout_gravity="center_horizontal"
 		android:gravity="center_horizontal"
 		android:orientation="vertical"
@@ -75,10 +71,10 @@
             android:layout_marginTop="@dimen/recommended_touch_size"
             />
 
-	</LinearLayout>
+		<ListView
+			android:contentDescription="@string/entities"
+			android:tag="@string/entities"
+			android:id="@android:id/list"
+			style="@style/ListView" />
+</LinearLayout>
 
-
-	<include layout="@layout/toolbar"/>
-
-
-</android.support.design.widget.CoordinatorLayout>

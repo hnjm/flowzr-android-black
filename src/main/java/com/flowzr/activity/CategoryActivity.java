@@ -15,6 +15,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,10 +37,13 @@ import com.flowzr.db.DatabaseHelper.AttributeColumns;
 import com.flowzr.db.DatabaseHelper.CategoryColumns;
 import com.flowzr.model.Attribute;
 import com.flowzr.model.Category;
+import com.flowzr.model.Currency;
+import com.flowzr.utils.StringUtil;
 
 import java.util.ArrayList;
 
 import static com.flowzr.utils.Utils.checkEditText;
+import static com.flowzr.utils.Utils.formatRateDate;
 import static com.flowzr.utils.Utils.text;
 
 public class CategoryActivity extends AbstractEditorActivity {
@@ -65,26 +71,36 @@ public class CategoryActivity extends AbstractEditorActivity {
 
     private Category category = new Category(-1);
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.category);
-		initToolbar();
-		types = getResources().getStringArray(R.array.attribute_types);
-		scrollView = (ScrollView)findViewById(R.id.scroll);
+    @Override
+    public String getMyTag() {
+        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
+    }
 
-		
-		Intent intent = getIntent();
-		if (intent != null) {
-			long id  = intent.getLongExtra(CATEGORY_ID_EXTRA, -1);
+    @Override
+    protected int getLayoutId() {
+        return R.layout.category;
+    }
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+		types = getResources().getStringArray(R.array.attribute_types);
+		scrollView = (ScrollView)getView().findViewById(R.id.scroll);
+
+		Bundle b = getArguments();
+		if (b != null) {
+            Log.e("flowzr","received args ");
+			long id = b.getLong(MyFragmentAPI.ENTITY_ID_EXTRA, -1);
 			if (id != -1) {
-				category = db.getCategory(id);				
+				category = db.getCategory(id);
 			}
 		}
+        Log.e("flowzr","received categgory ID " + String.valueOf(category));
 
 		attributeCursor = db.getAllAttributes();
-		startManagingCursor(attributeCursor);
-		attributeAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_dropdown_item, 
+		getActivity().startManagingCursor(attributeCursor);
+		attributeAdapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item,
 				attributeCursor, new String[]{AttributeColumns.NAME}, new int[]{android.R.id.text1});
 		
 		if (category.id == -1) {
@@ -92,25 +108,20 @@ public class CategoryActivity extends AbstractEditorActivity {
 		} else {
 			categoryCursor = db.getCategoriesWithoutSubtree(category.id);
 		}
-		startManagingCursor(categoryCursor);
+		getActivity().startManagingCursor(categoryCursor);
 
-		LinearLayout layout = (LinearLayout)findViewById(R.id.layout);
-        LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LinearLayout layout = (LinearLayout)getView().findViewById(R.id.layout);
+        LayoutInflater layoutInflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		//LinearLayout titleLayout = new LinearLayout(this);
 		layoutInflater.inflate(R.layout.category_title, layout, true);
-
-
-
-		//x.addEditNode(layout, R.string.title, titleLayout);
 
         categoryTitle=(EditText)layoutInflater
                 .inflate(R.layout.category_title, null)
                 .findViewById(R.id.title);
 
-        categoryTitle = (EditText) findViewById(R.id.title);
+        categoryTitle = (EditText) getView().findViewById(R.id.title);
         categoryTitle.setSingleLine();
-        incomeExpenseButton = (ToggleButton) findViewById(R.id.toggle);
+        incomeExpenseButton = (ToggleButton) getView().findViewById(R.id.toggle);
 
 		parentCategoryText = x.addListNode(layout, R.id.category, R.string.parent, R.string.select_category);
 
@@ -121,11 +132,8 @@ public class CategoryActivity extends AbstractEditorActivity {
 		addParentAttributes();		
 		
 		categoryAdapter = new CategoryListAdapter(
-				db, this, android.R.layout.simple_spinner_dropdown_item, categoryCursor);
-			
+				db, getContext(), android.R.layout.simple_spinner_dropdown_item, categoryCursor);
 		editCategory();
-
-
 	}
 
     @Override
@@ -149,13 +157,11 @@ public class CategoryActivity extends AbstractEditorActivity {
 					long id = db.insertOrUpdate(category, attributes);
 					Intent data = new Intent();
 					data.putExtra(DatabaseHelper.CategoryColumns._id.name(), id);
-					setResult(RESULT_OK, data);
-					finish();						
+                    finishAndClose(data.getExtras());
 				} 	        		
         		return true;
 	    	case R.id.action_cancel:
-				setResult(RESULT_CANCELED);
-				finish();
+                finishAndClose(AppCompatActivity.RESULT_CANCELED);
 	    		return true;        
         }
         return super.onOptionsItemSelected(item);
@@ -239,23 +245,27 @@ public class CategoryActivity extends AbstractEditorActivity {
 	protected void onClick(View v, int id) {
 		switch(id) {
 			case R.id.category:				
-				x.select(this, R.id.category, R.string.parent, categoryCursor, categoryAdapter, 
+				x.select(getContext(), R.id.category, R.string.parent, categoryCursor, categoryAdapter,
 						CategoryColumns._id.name(), category.getParentId());
 				break;
 			case R.id.new_attribute:				
-				x.select(this, R.id.new_attribute, R.string.attribute, attributeCursor, attributeAdapter, 
+				x.select(getContext(), R.id.new_attribute, R.string.attribute, attributeCursor, attributeAdapter,
 						AttributeColumns.ID, -1);
 				break;
 			case R.id.add_attribute: {
-				Intent intent = new Intent(this, AttributeActivity.class);
-				startActivityForResult(intent, NEW_ATTRIBUTE_REQUEST);				
+                Bundle bundle = new Bundle();
+                bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, AttributeActivity.class.getCanonicalName());
+                activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
 			} break;
 			case R.id.edit_attribute: {
 				Object o = v.getTag();
 				if (o instanceof Attribute) {
-					Intent intent = new Intent(this, AttributeActivity.class);
-					intent.putExtra(AttributeColumns.ID, ((Attribute)o).id);
-					startActivityForResult(intent, EDIT_ATTRIBUTE_REQUEST);
+                    Bundle bundle = new Bundle();
+                    Fragment fragment = new AttributeActivity();
+                    bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, ((Attribute)o).id);
+					bundle.putLong(AttributeColumns.ID, ((Attribute)o).id);
+                    fragment.setArguments(bundle);
+                    activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
 				}
 			} break;
 			case R.id.remove_attribute:
@@ -289,9 +299,9 @@ public class CategoryActivity extends AbstractEditorActivity {
 	}
 	
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
+		if (resultCode == AppCompatActivity.RESULT_OK) {
 			switch(requestCode) {
 			case NEW_ATTRIBUTE_REQUEST: {
 				long attributeId = data.getLongExtra(AttributeColumns.ID, -1);

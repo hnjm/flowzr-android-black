@@ -1,11 +1,13 @@
 package com.flowzr.activity;
 
-import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,8 +23,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.flowzr.R;
+import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.db.DatabaseHelper;
+import com.flowzr.filter.Criteria;
+import com.flowzr.filter.SingleCategoryCriteria;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Category;
 import com.flowzr.model.CategoryTree;
 import com.flowzr.model.CategoryTreeNavigator;
@@ -36,19 +42,15 @@ import java.util.Map;
  * Date: 3/14/12 10:40 PM
  */
 
-/**
- * Created by IntelliJ IDEA.
- * User: denis.solonenko
- * Date: 3/14/12 10:40 PM
- */
+
 public class CategorySelectorFragment extends AbstractListFragment {
 
-    public static final String SELECTED_CATEGORY_ID = "SELECTED_CATEGORY_ID";
+    //public static final String SELECTED_CATEGORY_ID = "SELECTED_CATEGORY_ID";
     public static final String INCLUDE_SPLIT_CATEGORY = "INCLUDE_SPLIT_CATEGORY";
 
     public static final int CATEGORY_PICK = 1000;
     public static final int CATEGORY_ADD = 1001;
-    
+
     private int incomeColor;
     private int expenseColor;
 
@@ -58,9 +60,14 @@ public class CategorySelectorFragment extends AbstractListFragment {
     private Button bBack;
 
     public CategorySelectorFragment() {
-        super(R.layout.category_selector);
+        super(R.layout.entity_list);
     }
 
+
+    @Override
+    protected String getEditActivityClass() {
+        return CategoryActivity.class.getCanonicalName();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,81 +85,111 @@ public class CategorySelectorFragment extends AbstractListFragment {
         }
         attributes = db.getAllAttributesMap();
     }
-    
-	@Override
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+            // disable context menu
+    }
+
+
+     @Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		menu.clear();
+         super.onCreateOptionsMenu(menu, inflater);
+         menu.clear();
 		inflater.inflate(R.menu.category_selector_actions, menu);
-        if (!navigator.canGoBack()) {
-            menu.removeItem(R.id.bBack);
-        }
-		super.onCreateOptionsMenu(menu, inflater);
+        //if (!navigator.canGoBack()) {
+        //    menu.removeItem(R.id.action_back);
+        //}
+
 	}
-	
-	
+
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+        Bundle bundle = new Bundle();
         switch (item.getItemId()) {
             case android.R.id.home:
-            case R.id.bBack:
+            case R.id.action_back:
                 if (navigator.goBack()) {
                     recreateAdapter();
                 }
-                getActivity().supportInvalidateOptionsMenu();
+                //getActivity().supportInvalidateOptionsMenu();
                 break;
-            case R.id.bSelect:
+            case R.id.action_done:
                 confirmSelection();
             break;
-            case R.id.bAdd:
-                Intent intent = new Intent(getActivity(), CategoryActivity.class);
-                startActivityForResult(intent, CATEGORY_ADD);
+            case R.id.action_add:
+                bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, getEditActivityClass());
+                activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
             break;
+            case R.id.action_edit:
+                bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, getEditActivityClass());
+                bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, navigator.selectedCategoryId);
+                activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+                break;
+            case R.id.action_attributes:
+                bundle = new Bundle();
+                bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, AttributeListFragment.class.getCanonicalName());
+                activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+                break;
         }
+        //action_sort_by_title
+        //action_re_index
+        //action_collapse
+        //action_expand
+        //action_attributes
 	    return true;
 	}
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e("flowzr","in category selector");
         navigator = new CategoryTreeNavigator(db);
         recreateAdapter();
-        navigator.selectedCategoryId=data.getLongExtra(DatabaseHelper.CategoryColumns._id.name(), 0);
-        navigator.selectCategory(data.getLongExtra(DatabaseHelper.CategoryColumns._id.name(), 0));
+        navigator.selectedCategoryId=data.getLongExtra(MyFragmentAPI.ENTITY_ID_EXTRA, 0);
+        navigator.selectCategory(data.getLongExtra(MyFragmentAPI.ENTITY_ID_EXTRA, 0));
         confirmSelection();
     }
+
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
-	        Intent intent = getActivity().getIntent();
-	        if (intent != null) {
-	            boolean includeSplit = intent.getBooleanExtra(INCLUDE_SPLIT_CATEGORY, false);
-	            if (includeSplit) {
-	                navigator.addSplitCategoryToTheTop();
-	            }
-	            long selectedCategoryId = intent.getLongExtra(SELECTED_CATEGORY_ID, 0);
-	            navigator.selectCategory(selectedCategoryId);
-	        }
-        //FAB
-        getView().findViewById(R.id.bSelect).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                confirmSelection();
+        if (getArguments()!=null) {
+            Bundle bundle = new Bundle();
+            bundle.putAll(getArguments());
+            if (bundle.getBoolean(INCLUDE_SPLIT_CATEGORY, false)) {
+                navigator.addSplitCategoryToTheTop();
             }
-        });
+            navigator.selectCategory(bundle.getLong(MyFragmentAPI.ENTITY_ID_EXTRA, 0));
+        } else {
+            navigator.selectCategory(0);
+        }
+
 	}
-    
-    private void confirmSelection() {
-    	Log.i("flowzr","confirm selection");
-        Intent data = new Intent();
-        data.putExtra(SELECTED_CATEGORY_ID, navigator.selectedCategoryId);
-        getActivity().setResult(Activity.RESULT_OK, data);
-        getActivity().finish();
+
+    @Override
+    protected void internalOnCreate(Bundle savedInstanceState) {
+
     }
 
-//    @Override
-//    protected List<MenuItemInfo> createContextMenus(long id) {
-//        return Collections.emptyList();
-//    }
+    private void confirmSelection() {
+        Bundle bundle = new Bundle();
+        WhereFilter filter = WhereFilter.empty();
+        if (navigator.selectedCategoryId == 0) {
+                filter.put(new SingleCategoryCriteria(0));
+        } else {
+            Category cat = db.getCategory(navigator.selectedCategoryId);
+            filter.put(Criteria.btw(BlotterFilter.CATEGORY_LEFT, String.valueOf(cat.left), String.valueOf(cat.right)));
+        }
+        filter.toBundle(bundle);
+        bundle.putInt(MyFragmentAPI.RESULT_EXTRA, AppCompatActivity.RESULT_OK);
+        bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,CATEGORY_PICK);
+        bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, navigator.selectedCategoryId);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
+    }
 
     @Override
     protected Cursor createCursor() {
@@ -161,7 +198,6 @@ public class CategorySelectorFragment extends AbstractListFragment {
 
     @Override
     protected ListAdapter createAdapter(Cursor cursor) {
-        //bBack.setEnabled(navigator.canGoBack());
         return new CategoryAdapter(navigator.categories);
     }
 
@@ -171,6 +207,7 @@ public class CategorySelectorFragment extends AbstractListFragment {
 
     @Override
     protected void editItem(View v, int position, long id) {
+
     }
 
     @Override
@@ -178,29 +215,37 @@ public class CategorySelectorFragment extends AbstractListFragment {
 
     	navigator.selectCategory(id);
     	navigator.selectedCategoryId=id;
-    	if (navigator.navigateTo(id)) {
-            recreateAdapter();
-        } 
-        else {
-        	recreateAdapter();
-//            if (MyPreferences.isAutoSelectChildCategory(getActivity())) {
-//                confirmSelection();
-//            }
-        }
-        getActivity().supportInvalidateOptionsMenu();
+        navigator.navigateTo(id);
+        recreateAdapter();
+        //getActivity().supportInvalidateOptionsMenu();
+        // @TODO category selector navigation and consider longpress doublick
+        //if (!navigator.canGoBack()) {
+        //    confirmSelection();
+        //}
+    }
+/**
+    public static boolean pickCategory(MainActivity activity, long selectedCategoryId, boolean includeSplitCategory) {
+        Bundle bundle = new Bundle();
+        bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, selectedCategoryId);
+        bundle.putLong(MyFragmentAPI.ENTITY_REQUEST_EXTRA, AbstractTransactionActivity.CATEGORY_REQUEST);
+        bundle.putBoolean(CategorySelectorFragment.INCLUDE_SPLIT_CATEGORY, includeSplitCategory);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
+        return true;
+    }
+*/
+
+    public static boolean pickCategory(MainActivity activity,AbstractEditorActivity target, long selectedCategoryId, boolean includeSplitCategory) {
+        Bundle bundle = new Bundle();
+        bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, selectedCategoryId);
+        bundle.putLong(MyFragmentAPI.ENTITY_REQUEST_EXTRA, CATEGORY_PICK);
+        bundle.putBoolean(CategorySelectorFragment.INCLUDE_SPLIT_CATEGORY, includeSplitCategory);
+        Fragment fragment = new CategorySelectorFragment();
+        fragment.setArguments(bundle);
+        Log.e("flowzr","in category pickCategory");
+        activity.startFragmentForResult(fragment,target);
+        return true;
     }
 
-    public static boolean pickCategory(Activity activity, long selectedCategoryId, boolean includeSplitCategory) {
-        if (MyPreferences.isUseHierarchicalCategorySelector(activity)) {
-            Intent intent = new Intent(activity, EntityListActivity.class);
-            intent.putExtra(EntityListActivity.REQUEST_CATEGORY_SELECTOR,true);            
-            intent.putExtra(CategorySelectorFragment.SELECTED_CATEGORY_ID, selectedCategoryId);
-            intent.putExtra(CategorySelectorFragment.INCLUDE_SPLIT_CATEGORY, includeSplitCategory);
-            activity.startActivityForResult(intent, CATEGORY_PICK);
-            return true;
-        }
-        return false;
-    }
 
     private class CategoryAdapter extends BaseAdapter {
 
@@ -293,8 +338,7 @@ public class CategorySelectorFragment extends AbstractListFragment {
 
 	@Override
 	protected String getMyTitle() {
-		// TODO Auto-generated method stub
-		return null;
+		return getResources().getString(R.string.categories);
 	}
     
 

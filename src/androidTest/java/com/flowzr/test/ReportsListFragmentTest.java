@@ -121,10 +121,7 @@ public class ReportsListFragmentTest extends MyFragmentTest {
     }
 
 
-    private static ViewInteraction matchToolbarTitle(Integer titleId) {
-        return onView(isAssignableFrom(Toolbar.class))
-                .check(matches(withToolbarTitle(titleId)));
-    }
+
 
 
 

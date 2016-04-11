@@ -80,7 +80,12 @@ public class Report2DChartFragment extends AbstractListFragment {
     public Report2DChartFragment() {
 		super(R.layout.report_2d);
 	}
-	
+
+	@Override
+	protected String getEditActivityClass() {
+		return null;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -105,7 +110,12 @@ public class Report2DChartFragment extends AbstractListFragment {
 		init();
 	}
 
-    /**
+	@Override
+	protected void internalOnCreate(Bundle savedInstanceState) {
+
+	}
+
+	/**
      * Initialize activity.
      */
 	private void init() {
@@ -129,23 +139,23 @@ public class Report2DChartFragment extends AbstractListFragment {
 		switch (reportType) {
 		case Report2DChart.REPORT_ACCOUNT_BY_PERIOD:
 			reportData = new AccountByPeriodReport(this.getActivity(), em, startPeriod, periodLength, currency);
-			((EntityListActivity) getActivity()).setMyTitle(getResources().getString(R.string.report_by_account_by_period_summary));
+			activity.setTitle(getResources().getString(R.string.report_by_account_by_period_summary));
 			break;	
 		case Report2DChart.REPORT_CATEGORY_BY_PERIOD:
 			reportData = new CategoryByPeriodReport(this.getActivity(), em, startPeriod, periodLength, currency);
-			((EntityListActivity) getActivity()).setMyTitle(getResources().getString(R.string.report_by_category_by_period_summary));
+			activity.setTitle(getResources().getString(R.string.report_by_category_by_period_summary));
 			break;
         case Report2DChart.REPORT_PAYEE_BY_PERIOD:
             reportData = new PayeeByPeriodReport(this.getActivity(), em, startPeriod, periodLength, currency);
-			((EntityListActivity) getActivity()).setMyTitle(getResources().getString(R.string.report_by_payee_by_period_summary));            
+			activity.setTitle(getResources().getString(R.string.report_by_payee_by_period_summary));
             break;
 		case Report2DChart.REPORT_LOCATION_BY_PERIOD:
 			reportData = new LocationByPeriodReport(this.getActivity(), em, startPeriod, periodLength, currency);
-			((EntityListActivity) getActivity()).setMyTitle(getResources().getString(R.string.report_by_location_by_period_summary));     			
+			activity.setTitle(getResources().getString(R.string.report_by_location_by_period_summary));
 			break;
 		case Report2DChart.REPORT_PROJECT_BY_PERIOD:
 			reportData = new ProjectByPeriodReport(this.getActivity(), em, startPeriod, periodLength, currency);
-			((EntityListActivity) getActivity()).setMyTitle(getResources().getString(R.string.report_by_project_by_period_summary));     	
+			activity.setTitle(getResources().getString(R.string.report_by_project_by_period_summary));
 			break;
 		}
 		
@@ -153,7 +163,7 @@ public class Report2DChartFragment extends AbstractListFragment {
 			refreshView();
 			built = true;
 		} else {
-			//  There is no <location, project or category> available for filtering data. 
+			//  There is no <location, entity or category> available for filtering data.
 			alertNoFilter(reportData.getNoFilterMessage(this.getActivity()));
 			adjustLabels(); 
 		}
@@ -239,7 +249,7 @@ public class Report2DChartFragment extends AbstractListFragment {
 	}
 	
 	/**
-	 * Alert message to warn that there is no filter available (no category, no project, no account or no location)
+	 * Alert message to warn that there is no filter available (no category, no entity, no account or no location)
 	 * @param message Message warning the lack of filters by report type.
 	 */
 	private void alertNoFilter(String message) {

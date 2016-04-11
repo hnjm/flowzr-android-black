@@ -20,7 +20,9 @@ import android.widget.TextView;
 
 import com.flowzr.R;
 import com.flowzr.activity.AbstractEditorActivity;
+import com.flowzr.activity.AbstractTransactionActivity;
 import com.flowzr.activity.ActivityLayout;
+import com.flowzr.activity.MainActivity;
 import com.flowzr.model.Currency;
 
 import static com.flowzr.activity.AbstractEditorActivity.setVisibility;
@@ -65,16 +67,16 @@ public class RateLayoutView implements RateNodeOwner {
         this.amountToChangeListener = amountToChangeListener;
     }
 
-    private void createUI(int fromAmountTitleId, int toAmountTitleId) {
+    private void createUI(AbstractEditorActivity context, int fromAmountTitleId, int toAmountTitleId) {
         //amount from
-        amountInputFrom = new AmountInput(activity);
-        amountInputFrom.setOwner(activity);
+        amountInputFrom = new AmountInput(context.getContext());
+        //amountInputFrom.setOwner(this.fr);
         amountInputFrom.setExpense();
         amountFromTitleId = fromAmountTitleId;
         amountInputFromNode = x.addEditNode(layout, fromAmountTitleId, amountInputFrom);
         //amount to & rate
-        amountInputTo = new AmountInput(activity);
-        amountInputTo.setOwner(activity);
+        amountInputTo = new AmountInput(context.getContext());
+        //amountInputTo.setOwner(activity);
         amountInputTo.setIncome();
         amountToTitleId = toAmountTitleId;
         amountInputToNode = x.addEditNode(layout, toAmountTitleId, amountInputTo);
@@ -83,16 +85,17 @@ public class RateLayoutView implements RateNodeOwner {
         setVisibility(amountInputToNode, View.GONE);
         rateNode = new RateNode(this, x, layout);
         setVisibility(rateNode.rateInfoNode, View.GONE);
+
     }
 
-    public void createTransferUI() {
-        createUI(R.string.amount_from, R.string.amount_to);
+    public void createTransferUI(AbstractEditorActivity context) {
+        createUI(context, R.string.amount_from, R.string.amount_to);
         amountInputFrom.disableIncomeExpenseButton();
         amountInputTo.disableIncomeExpenseButton();
     }
 
-    public void createTransactionUI() {
-        createUI(R.string.amount, R.string.amount);
+    public void createTransactionUI(AbstractEditorActivity context) {
+        createUI(context,R.string.amount, R.string.amount);
         amountInputTo.disableIncomeExpenseButton();
     }
 
@@ -295,8 +298,9 @@ public class RateLayoutView implements RateNodeOwner {
 
     @Override
     public Activity getActivity() {
-        return activity;
+        return null;
     }
+
 
     public void selectSameCurrency(Currency currency) {
         selectCurrencyFrom(currency);

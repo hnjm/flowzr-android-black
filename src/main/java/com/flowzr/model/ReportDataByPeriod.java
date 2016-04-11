@@ -164,7 +164,7 @@ public class ReportDataByPeriod {
 	 * Build a where clause based on the following format:
 	 * <filteredColumn>=? and (datetime>=? and datetime<=?) and (from_account_id=? or from_account_id=? ...)
 	 * 
-	 * @param filterColumn The report filter (account, category, location or project)
+	 * @param filterColumn The report filter (account, category, location or entity)
 	 * @param accounts List of account ids for which the reference currency is the report reference currency.
 	 * */
 	private String getWhereClause(String filterColumn, int[] filterId, int[] accounts) {
@@ -172,7 +172,7 @@ public class ReportDataByPeriod {
 		// no templates and scheduled transactions
 		accountsWhere.append(TransactionColumns.is_template).append("=0");
 		
-		// report filtering (account, category, location or project)
+		// report filtering (account, category, location or entity)
 		accountsWhere.append(" and (");
 		for (int i=0;i<filterId.length;i++) 
 		{
@@ -205,7 +205,7 @@ public class ReportDataByPeriod {
 	 * 
 	 * @param startDate The first month of the report period
 	 * @param periodLength The number of months of the report period
-	 * @param filterId The id of the filtering column (account, category, location or project)
+	 * @param filterId The id of the filtering column (account, category, location or entity)
 	 * @param accounts The ids of accounts to be considered in this query
 	 * */
 	private String[] getWherePars(Calendar startDate, int periodLength, int[] filterId, int[] accounts) {

@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *     Denis Solonenko - initial API and implementation
+ *     Emmanuel Florent - port to Android API 11+
  ******************************************************************************/
 package com.flowzr.activity;
 
@@ -14,6 +15,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -57,31 +59,38 @@ public class DateFilterActivity extends AbstractEditorActivity {
     private PeriodType[] periods = PeriodType.allRegular();
 
     @Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    public String getMyTag() {
+        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
+    }
 
-		setContentView(R.layout.date_filter);
-		initToolbar();
+    @Override
+    protected int getLayoutId() {
+        return R.layout.date_filter;
+    }
 
-		df = DateUtils.getShortDateFormat(this);
+    @Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
 
-        Intent intent = getIntent();
-        setCorrectPeriods(intent);
+
+		df = DateUtils.getShortDateFormat(getContext());
+
+        Bundle bundle = getArguments();
+        setCorrectPeriods(bundle);
         createPeriodsSpinner();
 						
-		Button bNoFilter = (Button)findViewById(R.id.bNoFilter);
+		Button bNoFilter = (Button)getView().findViewById(R.id.bNoFilter);
 		bNoFilter.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				setResult(RESULT_FIRST_USER);
-				finish();
+                finishAndClose(AppCompatActivity.RESULT_FIRST_USER);
 			}
 		});		
 
-		if (intent == null) {
+		if (bundle == null) {
 			reset();
 		} else {
-			WhereFilter filter = WhereFilter.fromIntent(intent);
+			WhereFilter filter = WhereFilter.fromBundle(bundle);
 			DateTimeCriteria c = (DateTimeCriteria)filter.get(BlotterFilter.DATETIME);
 			if (c != null) {
 				if (c.getPeriod() == null || c.getPeriod().type == PeriodType.CUSTOM) {
@@ -91,17 +100,17 @@ public class DateFilterActivity extends AbstractEditorActivity {
 				}
 				
 			}
-			if (intent.getBooleanExtra(EXTRA_FILTER_DONT_SHOW_NO_FILTER, false)) {
+			if (bundle.getBoolean(EXTRA_FILTER_DONT_SHOW_NO_FILTER, false)) {
 				bNoFilter.setVisibility(View.GONE);
 			}
 		}
 		
-		buttonPeriodFrom = (Button)findViewById(R.id.bPeriodFrom);
+		buttonPeriodFrom = (Button)getView().findViewById(R.id.bPeriodFrom);
 		buttonPeriodFrom.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				final Calendar c = cFrom;
-				DatePickerDialog d = new DatePickerDialog(DateFilterActivity.this, new DatePickerDialog.OnDateSetListener(){
+				DatePickerDialog d = new DatePickerDialog(DateFilterActivity.this.getContext(), new DatePickerDialog.OnDateSetListener(){
 					@Override
 					public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 						c.set(Calendar.YEAR, year);
@@ -115,12 +124,12 @@ public class DateFilterActivity extends AbstractEditorActivity {
 				d.show();
 			}
 		});		
-		buttonPeriodTo = (Button)findViewById(R.id.bPeriodTo);	
+		buttonPeriodTo = (Button)getView().findViewById(R.id.bPeriodTo);
 		buttonPeriodTo.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				final Calendar c = cTo;
-				DatePickerDialog d = new DatePickerDialog(DateFilterActivity.this, new DatePickerDialog.OnDateSetListener(){
+				DatePickerDialog d = new DatePickerDialog(DateFilterActivity.this.getContext(), new DatePickerDialog.OnDateSetListener(){
 					@Override
 					public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 						c.set(Calendar.YEAR, year);
@@ -142,55 +151,49 @@ public class DateFilterActivity extends AbstractEditorActivity {
         switch (item.getItemId())
         {	
         	case R.id.action_done:
-				Intent data = new Intent();
+				Bundle bundle = new Bundle();
 				if (spinnerPeriodType.getSelectedItemPosition()>0) {
 					PeriodType period = periods[spinnerPeriodType.getSelectedItemPosition()-1];
-					data.putExtra(EXTRA_FILTER_PERIOD_TYPE, period.name());
-					data.putExtra(EXTRA_FILTER_PERIOD_FROM, cFrom.getTimeInMillis());
-					data.putExtra(EXTRA_FILTER_PERIOD_TO, cTo.getTimeInMillis());
+					bundle.putString(EXTRA_FILTER_PERIOD_TYPE, period.name());
+					bundle.putLong(EXTRA_FILTER_PERIOD_FROM, cFrom.getTimeInMillis());
+					bundle.putLong(EXTRA_FILTER_PERIOD_TO, cTo.getTimeInMillis());
 				}
-
-				setResult(RESULT_OK, data);
-				finish();
+				bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,getArguments().getInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA));
+                finishAndClose(bundle);
         		return true;
         	case R.id.action_cancel:
-				setResult(RESULT_CANCELED);
-				finish();
+                finishAndClose(AppCompatActivity.RESULT_CANCELED);
                 return true;
         	case android.R.id.home:
             {
-				setResult(RESULT_CANCELED);
-				finish();
+                finishAndClose(AppCompatActivity.RESULT_CANCELED);
                 return true;
-            }                
+            }
         }
-		return true;
-        //return super.onOptionsItemSelected(item);
+		//return true;
+        return super.onOptionsItemSelected(item);
     }
-    
-    private void setCorrectPeriods(Intent intent) {
-        if (intent != null && intent.getBooleanExtra(EXTRA_FILTER_SHOW_PLANNER, false)) {
+
+    private void setCorrectPeriods(Bundle bundle) {
+        if (bundle!= null && bundle.getBoolean(EXTRA_FILTER_SHOW_PLANNER, false)) {
             periods = PeriodType.allPlanner();
         }
     }
 
     private void createPeriodsSpinner() {
-        spinnerPeriodType = (Spinner) findViewById(R.id.period);
-        spinnerPeriodType.setAdapter(createSpinnerAdapter(this, periods));
+        spinnerPeriodType = (Spinner) getView().findViewById(R.id.period);
+        spinnerPeriodType.setAdapter(createSpinnerAdapter(getContext(), periods));
         spinnerPeriodType.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				try {
+				if (position>0) {
 					PeriodType period = periods[position];
 					if (period == PeriodType.CUSTOM) {
 						selectCustom();
 					} else {
 						selectPeriod(period);
 					}
-				} catch (Exception e){
-					e.printStackTrace();
 				}
-
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -217,9 +220,8 @@ public class DateFilterActivity extends AbstractEditorActivity {
         return 0;
     }
 
-    @Override
 	protected Dialog onCreateDialog(final int id) {
-		final Dialog d = new Dialog(this);
+		final Dialog d = new Dialog(getContext());
 		d.setCancelable(true);
 		d.setTitle(id == 1 ? R.string.period_from : R.string.period_to);
 		d.setContentView(R.layout.filter_period_select);
@@ -241,7 +243,7 @@ public class DateFilterActivity extends AbstractEditorActivity {
 		return d;
 	}
 	
-	@Override
+
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		prepareDialog(dialog, id == 1 ? cFrom : cTo);
 	}
@@ -250,7 +252,7 @@ public class DateFilterActivity extends AbstractEditorActivity {
 		DatePicker dp = (DatePicker)dialog.findViewById(R.id.date);
 		dp.init(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), null);
 		TimePicker tp = (TimePicker)dialog.findViewById(R.id.time);
-        tp.setIs24HourView(is24HourFormat(this));
+        tp.setIs24HourView(is24HourFormat(getContext()));
         tp.setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
 		tp.setCurrentMinute(c.get(Calendar.MINUTE));
 	}

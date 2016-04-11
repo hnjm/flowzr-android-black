@@ -17,7 +17,6 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.location.Criteria;
@@ -28,14 +27,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -53,7 +53,6 @@ import android.widget.TimePicker;
 import com.flowzr.R;
 import com.flowzr.datetime.DateUtils;
 import com.flowzr.db.DatabaseHelper.AccountColumns;
-import com.flowzr.db.DatabaseHelper.TransactionColumns;
 import com.flowzr.model.Account;
 import com.flowzr.model.Attribute;
 import com.flowzr.model.Budget;
@@ -74,7 +73,9 @@ import com.flowzr.utils.TransactionUtils;
 import com.flowzr.utils.Utils;
 import com.flowzr.view.AttributeView;
 import com.flowzr.view.AttributeViewFactory;
+import com.flowzr.view.FloatingActionButton;
 import com.flowzr.view.MyFloatingActionMenu;
+import com.flowzr.view.NodeInflater;
 import com.flowzr.widget.RateLayoutView;
 
 import java.io.File;
@@ -84,6 +85,7 @@ import java.util.Date;
 import java.util.List;
 
 
+import static com.flowzr.utils.AndroidUtils.isCompatible;
 import static com.flowzr.utils.ThumbnailUtil.PICTURES_DIR;
 import static com.flowzr.utils.ThumbnailUtil.PICTURES_THUMB_DIR;
 import static com.flowzr.utils.ThumbnailUtil.PICTURE_FILE_NAME_FORMAT;
@@ -100,9 +102,10 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
     public static final String NEW_FROM_TEMPLATE_EXTRA = "newFromTemplateExtra";
 
 	private static final int NEW_LOCATION_REQUEST = 4002;
-	private static final int RECURRENCE_REQUEST = 4003;
+	protected static final int RECURRENCE_REQUEST = 4003;
 	private static final int NOTIFICATION_REQUEST = 4004;
 	private static final int PICTURE_REQUEST = 4005;
+    protected static final int CATEGORY_REQUEST = 4007;
 	protected static final int NEW_PROJECT_REQUEST = 4006;
 
 	private static final TransactionStatus[] statuses = TransactionStatus.values();
@@ -118,8 +121,8 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 	public static final String LOCATION_ID_EXTRA = "locationId";
 	public static final String PAYEE_ID_EXTRA = "payeeId";
 	public static final String CATEGORY_ID_EXTRA ="categoryId" ;
-	public static String PROJECT_ID_EXTRA="projectId";
-	public static String BUDGET_ID_EXTRA="budgetId";
+	public static final String PROJECT_ID_EXTRA="projectId";
+	public static final String BUDGET_ID_EXTRA="budgetId";
 
 	protected RateLayoutView rateView;
 
@@ -187,81 +190,119 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 	private boolean locationShown=false;
 
 	public AbstractTransactionActivity() {}
-	
-	protected abstract int getLayoutId();
 
 	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		if (saveAndFinish()) {
-			Intent intent = getIntent();
-			intent.removeExtra(ACCOUNT_ID_EXTRA);
-			intent.removeExtra(TRAN_ID_EXTRA);
-			intent.putExtra(TRAN_ID_EXTRA, transaction.id);
-			Bundle options = ActivityOptionsCompat.makeScaleUpAnimation(
-					findViewById(android.R.id.content), 0, 0,
-					findViewById(android.R.id.content).getWidth(),
-					findViewById(android.R.id.content).getHeight()).toBundle();
-			ActivityCompat.startActivity(this, intent, options);
-		}
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		Log.e("flowzr","on create view abstract transaction activity inflating layout : " + getLayoutId());
+		NodeInflater nodeInflater = new NodeInflater(inflater);
+		x = new ActivityLayout(nodeInflater, this);
+		return inflater.inflate(getLayoutId(), container, false);
 	}
 
 
+	public void onAttach(Context a) {
+		super.onAttach(a);
+		setHasOptionsMenu(true);
+		activity=(MainActivity)a;
+	}
+
+    protected boolean saveAndFinish() {
+        long id = save();
+        if (id > 0) {
+            Bundle bundle = new Bundle();
+            bundle.putLong(ACCOUNT_ID_EXTRA,transaction.fromAccountId);
+            bundle.putLong(TRAN_ID_EXTRA,transaction.id);
+            bundle.putBoolean(TEMPLATE_EXTRA,transaction.isTemplate());
+            bundle.putLong(DATETIME_EXTRA,transaction.dateTime);
+            activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean finishAndClose(int result) {
+        Bundle bundle = new  Bundle();
+        bundle.putInt(MyFragmentAPI.RESULT_EXTRA,result);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
+        return true;
+    }
+
+
+    public boolean finishAndClose(Bundle bundle) {
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
+        return true;
+    }
+
+    private long save() {
+        if (onOKClicked()) {
+            boolean isNew = transaction.id == -1;
+            long id = db.insertOrUpdate(transaction, getAttributes());
+            if (isNew) {
+                MyPreferences.setLastAccount(getContext(), transaction.fromAccountId);
+            }
+            AccountWidget.updateWidgets(getContext());
+            return id;
+        }
+        return -1;
+    }
+
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+        Log.e("flowzr","abstract transaction on activity created" );
+		u = new Utils(getContext());
 
-		u = new Utils(this);
-
-		df = DateUtils.getShortDateFormat(this);
-		tf = DateUtils.getTimeFormat(this);
+		df = DateUtils.getShortDateFormat(getContext());
+		tf = DateUtils.getTimeFormat(getContext());
 
 		long t0 = System.currentTimeMillis();
 
-		setContentView(getLayoutId());
+		isRememberLastAccount = MyPreferences.isRememberAccount(getContext());
+		isRememberLastCategory = isRememberLastAccount && MyPreferences.isRememberCategory(getContext());
+		isRememberLastLocation = isRememberLastCategory && MyPreferences.isRememberLocation(getContext());
+		isRememberLastProject = isRememberLastCategory && MyPreferences.isRememberProject(getContext());
+		isShowLocation = MyPreferences.isShowLocation(getContext());
+		isShowNote = MyPreferences.isShowNote(getContext());
+		isShowTakePicture = MyPreferences.isShowTakePicture(getContext());
+		isShowIsCCardPayment = MyPreferences.isShowIsCCardPayment(getContext());
+		isOpenCalculatorForTemplates = MyPreferences.isOpenCalculatorForTemplates(getContext());
 
-		isRememberLastAccount = MyPreferences.isRememberAccount(this);
-		isRememberLastCategory = isRememberLastAccount && MyPreferences.isRememberCategory(this);
-		isRememberLastLocation = isRememberLastCategory && MyPreferences.isRememberLocation(this);
-		isRememberLastProject = isRememberLastCategory && MyPreferences.isRememberProject(this);
-		isShowLocation = MyPreferences.isShowLocation(this);
-		isShowNote = MyPreferences.isShowNote(this);
-		isShowTakePicture = MyPreferences.isShowTakePicture(this);
-		isShowIsCCardPayment = MyPreferences.isShowIsCCardPayment(this);
-		isOpenCalculatorForTemplates = MyPreferences.isOpenCalculatorForTemplates(this);
-
-		categorySelector = new CategorySelector(this, db, x);
+		categorySelector = new CategorySelector(activity,this, db, x);
 		categorySelector.setListener(this);
 		fetchCategories();
 
-		projectSelector = new ProjectSelector(this, em, x);
+		projectSelector = new ProjectSelector(activity,this, em, x);
 		projectSelector.fetchProjects();
 
 		if (isShowLocation) {
 			locationCursor = em.getAllLocations(true);
-			startManagingCursor(locationCursor);
-			locationAdapter = TransactionUtils.createLocationAdapter(this, locationCursor);
+			getActivity().startManagingCursor(locationCursor);
+			locationAdapter = TransactionUtils.createLocationAdapter(getContext(), locationCursor);
 		}
 
 		long accountId = -1;
 		long transactionId = -1;
 		boolean isNewFromTemplate = false;
-		final Intent intent = getIntent();
-		if (intent != null) {
-			accountId = intent.getLongExtra(ACCOUNT_ID_EXTRA, -1);
-			transactionId = intent.getLongExtra(TRAN_ID_EXTRA, -1);
-			transaction.dateTime = intent.getLongExtra(DATETIME_EXTRA, System.currentTimeMillis());
+
+		//Intent intent = getActivity().getIntent();
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			accountId = bundle.getLong(ACCOUNT_ID_EXTRA, -1);
+			transactionId = bundle.getLong(TRAN_ID_EXTRA, -1);
+			transaction.dateTime = bundle.getLong(DATETIME_EXTRA, System.currentTimeMillis());
 			if (transactionId != -1) {
 				transaction = db.getTransaction(transactionId);
 				transaction.categoryAttributes = db.getAllAttributesForTransaction(transactionId);
-				isDuplicate = intent.getBooleanExtra(DUPLICATE_EXTRA, false);
-				isNewFromTemplate = intent.getBooleanExtra(NEW_FROM_TEMPLATE_EXTRA, false);
+				isDuplicate = bundle.getBoolean(DUPLICATE_EXTRA, false);
+				isNewFromTemplate = bundle.getBoolean(NEW_FROM_TEMPLATE_EXTRA, false);
 				if (isDuplicate) {
 					transaction.id = -1;
 					transaction.dateTime = System.currentTimeMillis();
 				}
 			}
-			transaction.isTemplate = intent.getIntExtra(TEMPLATE_EXTRA, transaction.isTemplate);
+			transaction.isTemplate = bundle.getInt(TEMPLATE_EXTRA, transaction.isTemplate);
 		}
 
 		if (transaction.id == -1) {
@@ -269,27 +310,27 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		} else {
 			accountCursor = em.getAccountsForTransaction(transaction);
 		}
-		startManagingCursor(accountCursor);
-		accountAdapter = TransactionUtils.createAccountAdapter(this, accountCursor);
+		getActivity().startManagingCursor(accountCursor);
+		accountAdapter = TransactionUtils.createAccountAdapter(getContext(), accountCursor);
 
 		dateTime = Calendar.getInstance();
 		Date date = dateTime.getTime();
 
-		status = (ImageButton) findViewById(R.id.status);
+		status = (ImageButton) getView().findViewById(R.id.status);
 		status.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ArrayAdapter<String> adapter = EnumUtils.createDropDownAdapter(AbstractTransactionActivity.this, statuses);
-				x.selectPosition(AbstractTransactionActivity.this, R.id.status, R.string.transaction_status, adapter, transaction.status.ordinal());
+				ArrayAdapter<String> adapter = EnumUtils.createDropDownAdapter(AbstractTransactionActivity.this.getContext(), statuses);
+				x.selectPosition(AbstractTransactionActivity.this.getContext(), R.id.status, R.string.transaction_status, adapter, transaction.status.ordinal());
 			}
 		});
 
-		dateText = (Button) findViewById(R.id.date);
+		dateText = (Button) getView().findViewById(R.id.date);
 		dateText.setText(df.format(date));
 		dateText.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				DatePickerDialog d = new DatePickerDialog(AbstractTransactionActivity.this, new OnDateSetListener() {
+				DatePickerDialog d = new DatePickerDialog(AbstractTransactionActivity.this.getContext(), new OnDateSetListener() {
 					@Override
 					public void onDateSet(DatePicker arg0, int y, int m, int d) {
 						dateTime.set(y, m, d);
@@ -300,13 +341,13 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			}
 		});
 
-		timeText = (Button) findViewById(R.id.time);
+		timeText = (Button) getView().findViewById(R.id.time);
 		timeText.setText(tf.format(date));
 		timeText.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				boolean is24Format = DateUtils.is24HourFormat(AbstractTransactionActivity.this);
-				TimePickerDialog d = new TimePickerDialog(AbstractTransactionActivity.this, new OnTimeSetListener() {
+				boolean is24Format = DateUtils.is24HourFormat(AbstractTransactionActivity.this.getContext());
+				TimePickerDialog d = new TimePickerDialog(AbstractTransactionActivity.this.getContext(), new OnTimeSetListener() {
 					@Override
 					public void onTimeSet(TimePicker picker, int h, int m) {
 						dateTime.set(Calendar.HOUR_OF_DAY, picker.getCurrentHour());
@@ -320,8 +361,9 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 
 		internalOnCreate();
 
-		LinearLayout layout = (LinearLayout) findViewById(R.id.list);
-		LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LinearLayout layout = (LinearLayout) getView().findViewById(R.id.listlayout);
+
+		LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.templateName = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 
 		if (transaction.isTemplate()) {
@@ -329,7 +371,10 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		}
 
 		rateView = new RateLayoutView(this, x, layout);
-
+		Log.e("flowzr","rateview:");
+		Log.e("flowzr",rateView.toString());
+        Log.e("flowzr","layout:");
+        Log.e("flowzr",layout.toString());
 		createListNodes(layout);
 		rateView.hideFromAmount();
 
@@ -340,7 +385,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			recurText = x.addListNode2(layout, R.id.recurrence_pattern,R.drawable.ic_schedule, R.string.recur, getResources().getString(R.string.recur_interval_no_recur));
 			notificationText = x.addListNode2(layout, R.id.notification,R.drawable.ic_alarm, R.string.notification, getResources().getString(R.string.notification_options_default));
 			Attribute sa = db.getSystemAttribute(SystemAttribute.DELETE_AFTER_EXPIRED);
-			deleteAfterExpired = AttributeViewFactory.createViewForAttribute(this, sa);
+			deleteAfterExpired = AttributeViewFactory.createViewForAttribute(getContext(), sa);
 			//String value = transaction.getSystemAttribute(SystemAttribute.DELETE_AFTER_EXPIRED);
 			//deleteAfterExpired.inflateView(layout, value != null ? value : sa.defaultValue);
 			x.addCheckboxNode(layout,R.id.deleteAfterExpired,R.string.system_attribute_delete_after_expired, R.drawable.ic_delete, R.string.system_attribute_delete_after_expired, true);
@@ -356,7 +401,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			if (accountId != -1) {
 				selectAccount(accountId);
 			} else {
-				long lastAccountId = MyPreferences.getLastAccount(this);
+				long lastAccountId = MyPreferences.getLastAccount(getContext());
 				if (isRememberLastAccount && lastAccountId != -1) {
 					selectAccount(lastAccountId);
 				}
@@ -373,8 +418,8 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 				selectStatus(TransactionStatus.PN);
 			}
 
-			if (intent.hasExtra(BUDGET_ID_EXTRA)) {
-				Budget b=em.load(Budget.class,intent.getLongExtra(BUDGET_ID_EXTRA,-1));
+			if (bundle.containsKey(BUDGET_ID_EXTRA)) {
+				Budget b=em.load(Budget.class,bundle.getLong(BUDGET_ID_EXTRA,-1));
 				if (b!=null && b.projects!=null) {
 					long[] pids = MyEntity.splitIds(b.projects);
 					if (pids!=null) {
@@ -395,38 +440,31 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 				}
 			}
 
-			if (intent.hasExtra(PROJECT_ID_EXTRA)) {
-				Log.e("flowzr","project got " + intent.getLongExtra(PROJECT_ID_EXTRA, 0) );
-				projectSelector.selectProject(intent.getLongExtra(PROJECT_ID_EXTRA, 0));
+			if (bundle.containsKey(PROJECT_ID_EXTRA)) {
+				projectSelector.selectProject(bundle.getLong(PROJECT_ID_EXTRA, 0));
 			}
 
-			if (intent.hasExtra(CATEGORY_ID_EXTRA)) {
-				Log.e("flowzr","category got " + intent.getLongExtra(CATEGORY_ID_EXTRA,0) );
-				transaction.categoryId=intent.getLongExtra(CATEGORY_ID_EXTRA,0);
-				categorySelector.selectCategory(intent.getLongExtra(CATEGORY_ID_EXTRA, 0), false);
-				Log.e("flowzr","XXXXXXXXXX selected category" + intent.getLongExtra(CATEGORY_ID_EXTRA,0));
+			if (bundle.containsKey(CATEGORY_ID_EXTRA)) {
+				transaction.categoryId=bundle.getLong(CATEGORY_ID_EXTRA,0);
+				categorySelector.selectCategory(bundle.getLong(CATEGORY_ID_EXTRA, 0), false);
 			}
 
-			if (intent.hasExtra(PAYEE_ID_EXTRA)) {
-				selectPayee(intent.getLongExtra(PAYEE_ID_EXTRA, -1));
-				Log.e("flowzr", "got payee : " + intent.getLongExtra(PAYEE_ID_EXTRA, -1));
+			if (bundle.containsKey(PAYEE_ID_EXTRA)) {
+				selectPayee(bundle.getLong(PAYEE_ID_EXTRA, -1));
 			}
 
-			if (intent.hasExtra(LOCATION_ID_EXTRA)) {
-				selectLocation(intent.getLongExtra(LOCATION_ID_EXTRA, -1));
-				Log.e("flowzr", "got location : " + String.valueOf(intent.getLongExtra(LOCATION_ID_EXTRA, -1)));
-				//selectedLocationId=intent.getIntExtra(LOCATION_ID_EXTRA,-1);
+			if (bundle.containsKey(LOCATION_ID_EXTRA)) {
+				selectLocation(bundle.getLong(LOCATION_ID_EXTRA, -1));
 			}
 
 
-			if (intent.hasExtra(STATUS_EXTRA)) {
-				Log.e("flowzr","status got : "  + TransactionStatus.valueOf(intent.getStringExtra(STATUS_EXTRA)));
-				selectStatus(TransactionStatus.valueOf(intent.getStringExtra(STATUS_EXTRA)));
+			if (bundle.containsKey(STATUS_EXTRA)) {
+				selectStatus(TransactionStatus.valueOf(bundle.getString(STATUS_EXTRA)));
 			}
 		}
 
-		if (findViewById(R.id.saveButton)!=null) {
-			findViewById(R.id.saveButton).setOnClickListener(new OnClickListener() {
+		if (getView().findViewById(R.id.saveButton)!=null) {
+			getView().findViewById(R.id.saveButton).setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					onOKClicked();
@@ -436,7 +474,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		}
 
 
-		totalText = (TextView) findViewById(R.id.total);
+		totalText = (TextView) getView().findViewById(R.id.total);
 		totalText.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -448,10 +486,10 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		t.balance = transaction.fromAmount;
 		u.setTotal(totalText, t);
 
-		long t1 = System.currentTimeMillis();
+
 		if (transactionId == -1) {
 			String title=(getResources().getString(R.string.add_transaction));
-			if (transaction.isTransfer()|| intent.hasExtra(TransactionActivity.IS_TRANSFER_EXTRA)) {
+			if (transaction.isTransfer()|| bundle.containsKey(TransactionActivity.IS_TRANSFER_EXTRA)) {
 				title=getResources().getString(R.string.add_transfer);
 			}
 			if (transaction.isTemplate()) {
@@ -459,48 +497,61 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			}
 			rateView.openFromAmountCalculator(title);
 		}
-        final MyFloatingActionMenu fab = (MyFloatingActionMenu) findViewById(R.id.menu1);
-        if (fab!=null) {
-            findViewById(R.id.scroll)
-                    .setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            switch (event.getAction()) {
-                                case MotionEvent.ACTION_SCROLL:
-                                case MotionEvent.ACTION_MOVE:
-                                    fab.hideMenu(true);
-                                    break;
-                                case MotionEvent.ACTION_CANCEL:
-                                case MotionEvent.ACTION_UP:
-
-                                    new Handler().postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            fab.showMenu(true);
-                                            new Handler().postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    //fab.hideMenu(true);
-                                                }
-                                            }, 10000);
-
-                                        }
-                                    }, 3000);
-                                    break;
-                            }
-                            return false;
-                        }
-                    });
-        }
-
-
+            setupFab();
+			long t1 = System.currentTimeMillis();
 			Log.i("TransactionActivity","onCreate "+(t1-t0)+"ms");
 		}
 
+    public void setupFab() {
+        if (isCompatible(14)) {
+            final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) getView().findViewById(R.id.menu1);
+            FloatingActionButton fab1 = (FloatingActionButton) activity.findViewById(R.id.fab1);
+            FloatingActionButton fab2 = (FloatingActionButton) activity.findViewById(R.id.fab2);
+            //menu1.getMenuIconView().setImageResource(R.drawable.ic_add);
+            fab1.setImageResource(R.drawable.ic_check);
+            fab2.setImageResource(R.drawable.ic_add);
+            fab1.setLabelText(getResources().getString(R.string.save));
+            fab2.setLabelText(getResources().getString(R.string.save_and_new));
+
+            if (menu1!=null) {
+                getView().findViewById(R.id.scroll)
+                        .setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                switch (event.getAction()) {
+                                    case MotionEvent.ACTION_SCROLL:
+                                    case MotionEvent.ACTION_MOVE:
+                                        menu1.hideMenu(true);
+                                        break;
+                                    case MotionEvent.ACTION_CANCEL:
+                                    case MotionEvent.ACTION_UP:
+
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                menu1.showMenu(true);
+                                                new Handler().postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        //fab.hideMenu(true);
+                                                    }
+                                                }, 10000);
+
+                                            }
+                                        }, 3000);
+                                        break;
+                                }
+                                return false;
+                            }
+                        });
+            }
+        }
+
+    }
 
 	protected void createPayeeNode(LinearLayout layout) {
-        payeeAdapter = TransactionUtils.createPayeeAdapter(this, db);
-        LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        payeeAdapter = TransactionUtils.createPayeeAdapter(getContext(), db);
+        LayoutInflater layoutInflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         payeeText = (AutoCompleteTextView) layoutInflater.inflate(R.layout.autocomplete, null);
         payeeText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS |
 				InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS |
@@ -522,30 +573,6 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 
 	protected abstract void fetchCategories(long[] cids);
 
-    protected boolean saveAndFinish() {
-        long id = save();
-        if (id > 0) {
-            Intent data = new Intent();
-            data.putExtra(TransactionColumns._id.name(), id);
-            setResult(RESULT_OK, data);
-            finish();
-            return true;
-        }
-        return false;
-    }
-
-    private long save() {
-        if (onOKClicked()) {
-            boolean isNew = transaction.id == -1;
-            long id = db.insertOrUpdate(transaction, getAttributes());
-            if (isNew) {
-                MyPreferences.setLastAccount(this, transaction.fromAccountId);
-            }
-            AccountWidget.updateWidgets(this);
-            return id;
-        }
-        return -1;
-    }
 
     private List<TransactionAttribute> getAttributes() {
         List<TransactionAttribute> attributes = categorySelector.getAttributes();
@@ -571,11 +598,11 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		}		
 		if (!locationShown)  {
 			isShowLocation=true;
-			locationText= x.addListNode2((LinearLayout) findViewById(R.id.list), R.id.location, R.drawable.ic_my_location, R.string.location, getResources().getString(R.string.select_location));
+			locationText= x.addListNode2((LinearLayout) getView().findViewById(R.id.listlayout), R.id.location, R.drawable.ic_my_location, R.string.location, getResources().getString(R.string.select_location));
 			locationShown=true;
 		}
         // Start listener to find current location
-        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
         String provider = locationManager.getBestProvider(new Criteria(), true);
         
         if (provider != null) {
@@ -595,7 +622,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 
 	private void connectGps(boolean forceUseGps) {
 		if (locationManager != null) {
-			boolean useGps = forceUseGps || MyPreferences.isUseGps(this);
+			boolean useGps = forceUseGps || MyPreferences.isUseGps(getContext());
             try {
                 if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {	    	        
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, networkLocationListener);	        	    	        
@@ -621,24 +648,24 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 	}
 
 	@Override
-	protected void onDestroy() {
+	public void onDestroy() {
 		disconnectGPS();
 		super.onDestroy();
 	}
 
 	@Override
-	protected void onPause() {
+	public void onPause() {
 		disconnectGPS();
 		super.onPause();
 	}
 
     @Override
     protected boolean shouldLock() {
-        return MyPreferences.isPinProtectedNewTransaction(this);
+        return MyPreferences.isPinProtectedNewTransaction(getContext());
     }
 
     @Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
 		if (lastFix != null) {
 			connectGps(false);
@@ -682,9 +709,9 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 	private final LocationListener gpsLocationListener = new DefaultLocationListener();
 
 	protected void createCommonNodes(LinearLayout layout) {
-		int locationOrder = MyPreferences.getLocationOrder(this);
-		int noteOrder = MyPreferences.getNoteOrder(this);
-		int projectOrder = MyPreferences.getProjectOrder(this);
+		int locationOrder = MyPreferences.getLocationOrder(getContext());
+		int noteOrder = MyPreferences.getNoteOrder(getContext());
+		int projectOrder = MyPreferences.getProjectOrder(getContext());
 		for (int i=0; i<6; i++) {
 			if (i == locationOrder) {
 				if (isShowLocation) {
@@ -700,7 +727,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			if (i == noteOrder) {
 				if (isShowNote) {
 					//note
-					LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					LayoutInflater layoutInflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 					noteText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 					x.addEditNode2(layout,  R.drawable.ic_subject, noteText);
 				}
@@ -711,7 +738,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		}
         //@TODO permission denial picture API23+
 		if (isShowTakePicture && transaction.isNotTemplateLike()) {
-			pictureView = x.addPictureNodeMinus(this, layout, R.id.attach_picture,R.drawable.ic_camera_alt, R.id.delete_picture, R.string.attach_picture, R.string.new_picture);
+			pictureView = x.addPictureNodeMinus(getContext(), layout, R.id.attach_picture,R.drawable.ic_camera_alt, R.id.delete_picture, R.string.attach_picture, R.string.new_picture);
 		}
 		if (isShowIsCCardPayment) {
 			// checkbox to register if the transaction is a credit card payment. 
@@ -731,28 +758,39 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
         categorySelector.onClick(id);
 		switch(id) {
 			case R.id.account:				
-				x.select(this, R.id.account, R.string.account, accountCursor, accountAdapter,
+				x.select(getContext(), R.id.account, R.string.account, accountCursor, accountAdapter,
                         AccountColumns.ID, getSelectedAccountId());
 				break;
 			case R.id.location: {
-				x.selectWithAddOption(this, R.id.location, R.string.location, locationCursor, locationAdapter, "_id", selectedLocationId, R.string.create,NEW_LOCATION_REQUEST);
+				x.selectWithAddOption(getContext(), R.id.location, R.string.location, locationCursor, locationAdapter, "_id", selectedLocationId, R.string.create,NEW_LOCATION_REQUEST);
 				break;
 			}
 			case R.id.location_add: {
-				Intent intent = new Intent(this, LocationActivity.class);
-				startActivityForResult(intent, NEW_LOCATION_REQUEST);				
+				Bundle bundle=new Bundle();
+				bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,LocationActivity.class.getCanonicalName());
+                // @TODO location activity to fragment
+                //Fragment fragment = new LocationActivity();
+                //fragment.setArguments(bundle);
+                //fragment.setTargetFragment(this,0);
+                //activity.startFragmentForResult(fragment);
 				break;
 			}
 			case R.id.recurrence_pattern: {
-				Intent intent = new Intent(this, RecurrenceActivity.class);
-				intent.putExtra(RecurrenceActivity.RECURRENCE_PATTERN, recurrence);
-				startActivityForResult(intent, RECURRENCE_REQUEST);				
+				Bundle bundle=new Bundle();
+				bundle.putString(RecurrenceActivity.RECURRENCE_PATTERN, recurrence);
+                bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,RECURRENCE_REQUEST);
+                Fragment fragment = new RecurrenceActivity();
+                fragment.setArguments(bundle);
+                activity.startFragmentForResult(fragment,this);
 				break;
 			}
 			case R.id.notification: {
-				Intent intent = new Intent(this, NotificationOptionsActivity.class);
-				intent.putExtra(NotificationOptionsActivity.NOTIFICATION_OPTIONS, notificationOptions);
-				startActivityForResult(intent, NOTIFICATION_REQUEST);				
+                Bundle bundle = new Bundle();
+                bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,NotificationOptionsActivity.class.getCanonicalName());
+                bundle.putString(NotificationOptionsActivity.NOTIFICATION_OPTIONS,notificationOptions);
+                Fragment fragment = new NotificationOptionsActivity();
+                fragment.setArguments(bundle);
+                activity.startFragmentForResult(fragment,this);
 				break;
 			}
 			case R.id.attach_picture: {
@@ -763,7 +801,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, 
 						Uri.fromFile(new File(PICTURES_DIR, pictureFileName)));
-				startActivityForResult(intent, PICTURE_REQUEST);
+                activity.onFragmentMessage(MyFragmentAPI.REQUEST_ACTIVITY,PICTURE_REQUEST,intent);
 				break;
 			}
 			case R.id.delete_picture: {
@@ -775,7 +813,6 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 				transaction.isCCardPayment = ccardPayment.isChecked()?1:0;
 			}
 			case R.id.deleteAfterExpired: {
-
 				break;
 			}
 		}
@@ -802,8 +839,8 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 				break;
 			case R.id.location:
 				if (selectedId==NEW_LOCATION_REQUEST) {
-					Intent intent = new Intent(this, LocationActivity.class);
-					startActivityForResult(intent, NEW_LOCATION_REQUEST);
+					Intent intent = new Intent(getContext(), LocationActivity.class);
+                    activity.onFragmentMessage(MyFragmentAPI.REQUEST_ACTIVITY,NEW_LOCATION_REQUEST,intent);
 					break;
 				}
 				selectLocation(selectedId);
@@ -838,6 +875,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 
     @Override
     public void onCategorySelected(Category category, boolean selectLast) {
+        Log.e("flowzr","on category selected");
         addOrRemoveSplits();
         categorySelector.addAttributes(transaction);
         switchIncomeExpenseButton(category);
@@ -882,7 +920,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			dateText.setEnabled(false);
 			timeText.setEnabled(false);
 			Recurrence r = Recurrence.parse(recurrence);
-			recurText.setText(r.toInfoString(this));
+			recurText.setText(r.toInfoString(getContext()));
 		}
 	}
 
@@ -892,17 +930,18 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			notificationText.setText(R.string.notification_options_default);
 		} else {			
 			NotificationOptions o = NotificationOptions.parse(notificationOptions);
-			notificationText.setText(o.toInfoString(this));
+			notificationText.setText(o.toInfoString(getContext()));
 		}
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+        Log.e("flowzr","Abstract Tr onActivity result " + String.valueOf(requestCode) +" " + resultCode);
         projectSelector.onActivityResult(requestCode, resultCode, data);
-
         categorySelector.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
+
+		if (resultCode == AppCompatActivity.RESULT_OK) {
             rateView.onActivityResult(requestCode, data);
 			switch (requestCode) {
 				case NEW_LOCATION_REQUEST:
@@ -912,7 +951,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 						selectLocation(locationId);
 					}
 					break;
-				case RECURRENCE_REQUEST:					
+				case RECURRENCE_REQUEST:
 					String recurrence = data.getStringExtra(RecurrenceActivity.RECURRENCE_PATTERN);
 					setRecurrence(recurrence);
 					break;
@@ -924,6 +963,10 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
                     transaction.blobKey=null;
 					selectPicture(pictureFileName);	
 					break;
+                case CATEGORY_REQUEST:
+                    long id=data.getLongExtra(MyFragmentAPI.ENTITY_ID_EXTRA,0);
+                    categorySelector.selectCategory(id);
+                    break;
 				default:
 					break;
 			}
@@ -965,11 +1008,10 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
                 @Override
                 public void onClick(View v) {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(pictureFileName));
-                    startActivity(browserIntent);
+                    // nothing to edit (CANCELED)
+                    activity.onFragmentMessage(MyFragmentAPI.REQUEST_ACTIVITY,AppCompatActivity.RESULT_CANCELED,browserIntent);
                 }
             });
-
-
     }
 
 
@@ -989,7 +1031,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 	}
 
 	private Bitmap createThumbnail(File pictureFile) {
-		return createAndStoreImageThumbnail(getContentResolver(), pictureFile);
+		return createAndStoreImageThumbnail(getActivity().getContentResolver(), pictureFile);
 	}
 
 	protected void setDateTime(long date) {

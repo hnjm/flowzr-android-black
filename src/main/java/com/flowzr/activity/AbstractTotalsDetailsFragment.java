@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.BundleCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,9 +53,16 @@ public abstract class AbstractTotalsDetailsFragment extends Fragment implements 
 	protected DatabaseAdapter db;
 	protected MyEntityManager em;
 	private ActivityLayout x;
+    private MainActivity activity;
 
     protected AbstractTotalsDetailsFragment(int titleNodeResId) {
         this.titleNodeResId = titleNodeResId;
+    }
+
+    public void onAttach(Context a) {
+        super.onAttach(a);
+        setHasOptionsMenu(true);
+        activity=(MainActivity)a;
     }
     
     @Override
@@ -159,10 +167,9 @@ public abstract class AbstractTotalsDetailsFragment extends Fragment implements 
 				
 				@Override
 				public void onClick(View v) {
-        			Intent intent=new Intent(getActivity(),EntityListActivity.class);
-        			intent.putExtra(EntityListActivity.REQUEST_EXCHANGE_RATES, true);
-        			startActivity(intent);
-					
+                    Bundle bundle = new Bundle();
+                    bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,ExchangeRateActivity.class.getCanonicalName());
+                    activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
 				}
 			});
         }

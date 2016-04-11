@@ -46,7 +46,7 @@ public class CsvExportTest extends AbstractExportTest<CsvExport, CsvExportOption
 
     public void test_should_include_header() throws Exception {
         CsvExportOptions options = new CsvExportOptions(Currency.EMPTY, ',', true, false, false, WhereFilter.empty(), false);
-        assertEquals("date,time,account,amount,currency,original amount,original currency,category,parent,payee,location,project,note\n", exportAsString(options));
+        assertEquals("date,time,account,amount,currency,original amount,original currency,category,parent,payee,location,entity_edit,note\n", exportAsString(options));
     }
 
     public void test_should_export_regular_transaction() throws Exception {

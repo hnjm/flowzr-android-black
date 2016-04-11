@@ -17,6 +17,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -90,12 +91,12 @@ public class ReportFragment extends AbstractListFragment implements RefreshSuppo
 		super.onPrepareOptionsMenu(menu);
 		MenuItem item= menu.findItem(R.id.bFilter);
 		item.setIcon(filter.isEmpty() ? R.drawable.ic_filter_list : R.drawable.ic_menu_filter_on);	
-		if (currentReport!=null && incomeExpenseState!=null && getActivity().findViewById(R.id.total_V)!=null) {
+		if (currentReport!=null && incomeExpenseState!=null && getView().findViewById(R.id.total_V)!=null) {
         	item= menu.findItem(R.id.bToggle);
 			if (currentReport instanceof PeriodReport) {
-				getActivity().findViewById(R.id.total_V).setVisibility(View.GONE);
+				getView().findViewById(R.id.total_V).setVisibility(View.GONE);
 	        } else {
-	        	getActivity().findViewById(R.id.total_V).setVisibility(View.VISIBLE);	
+	        	getView().findViewById(R.id.total_V).setVisibility(View.VISIBLE);
 	        }
 		    item.setIcon(incomeExpenseState.getIconId());    
 	        
@@ -123,12 +124,16 @@ public class ReportFragment extends AbstractListFragment implements RefreshSuppo
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    Intent intent;
+
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
-	        case R.id.bFilter: 
-				intent = new Intent(ReportFragment.this.getActivity(), ReportFilterActivity.class);
-				filter.toIntent(intent);
-				startActivityForResult(intent, FILTER_REQUEST);
+	        case R.id.bFilter:
+                Fragment fragment = new  ReportFilterActivity();
+                Bundle bundle= new Bundle();
+                filter.toBundle(bundle);
+                fragment.setArguments(bundle);
+                bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,FILTER_REQUEST);
+                activity.startFragmentForResult(fragment,this);
 	            return true;
 	        case R.id.bToggle: 
 	        	toggleIncomeExpense();
@@ -156,7 +161,12 @@ public class ReportFragment extends AbstractListFragment implements RefreshSuppo
 	    }
 	}
 
-	@Override
+    @Override
+    protected String getEditActivityClass() {
+        return null;
+    }
+
+    @Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		Bundle bundle=getArguments();
@@ -177,10 +187,13 @@ public class ReportFragment extends AbstractListFragment implements RefreshSuppo
 		}
 	
 	}
-	
+
+    @Override
+    protected void internalOnCreate(Bundle savedInstanceState) {
+
+    }
 
 
-	
     private SharedPreferences getPreferencesForReport() {
         return getActivity().getSharedPreferences("ReportActivity_"+currentReport.reportType.name()+"_DEFAULT", 0);
     }
@@ -263,7 +276,7 @@ public class ReportFragment extends AbstractListFragment implements RefreshSuppo
 
 	@Override
 	public void recreateCursor() {
-		selectReport();
+		//selectReport();
 	}
 
     @Override
@@ -482,7 +495,7 @@ public class ReportFragment extends AbstractListFragment implements RefreshSuppo
 		if (currentReport != null) {
             Log.e("flowzr","ReportFragment viewItem");
             Bundle bundle = currentReport.createFragmentBundle(getContext(), db, WhereFilter.copyOf(filter), id);
-            activity.onFragmentMessage(FragmentAPI.REQUEST_REPORTS,bundle);
+            activity.onFragmentMessage(MyFragmentAPI.ENTITY_REQUEST_EXTRA,bundle);
 		}
 	}
 

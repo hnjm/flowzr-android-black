@@ -10,7 +10,8 @@
  ******************************************************************************/
 package com.flowzr.model;
 
-import android.app.Activity;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.content.Context;
 import android.database.Cursor;
 import com.flowzr.R;
@@ -58,7 +59,7 @@ public class TransactionInfo extends TransactionBase {
 		return toAccount != null;
 	}
 
-	public Class<? extends Activity> getActivity() {
+	public Class<? extends Fragment> getActivity() {
 		return isTransfer() ? TransferActivity.class : TransactionActivity.class;
 	}
 	

@@ -14,6 +14,8 @@ package com.flowzr.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,9 +29,15 @@ import com.flowzr.db.DatabaseHelper.AttributeColumns;
 public class AttributeListFragment extends AbstractListFragment {
 	
 	public AttributeListFragment() {
-		super(R.layout.attributes_list);
+		super(R.layout.entity_list);
 	}
-	
+
+
+	@Override
+	protected String getEditActivityClass() {
+		return AttributeActivity.class.getCanonicalName();
+	}
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.clear();		
@@ -39,13 +47,19 @@ public class AttributeListFragment extends AbstractListFragment {
 
 	@Override
 	protected void addItem() {
-		Intent intent = new Intent(this.getActivity(), AttributeActivity.class);
-		startActivityForResult(intent, 1);
+		Bundle bundle = new Bundle ();
+		bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,AttributeActivity.class.getCanonicalName());
+		activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
 	}
 
 	@Override
 	protected ListAdapter createAdapter(Cursor cursor) {
 		return new AttributeListAdapter(db, this.getActivity(), cursor);
+	}
+
+	@Override
+	protected void internalOnCreate(Bundle savedInstanceState) {
+
 	}
 
 	@Override
@@ -80,10 +94,12 @@ public class AttributeListFragment extends AbstractListFragment {
 
 	@Override
 	public void editItem(View v, int position, long id) {
-		Intent intent = new Intent(this.getActivity(), AttributeActivity.class);
-		intent.putExtra(AttributeColumns.ID, id);
-		startActivityForResult(intent, 2);		
-	}	
+		Bundle bundle = new Bundle();
+		bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, getEditActivityClass());
+		bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, id);
+		bundle.putLong(AttributeColumns.ID, id);
+		activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+	}
 	
 	@Override
 	protected void viewItem(View v, int position, long id) {

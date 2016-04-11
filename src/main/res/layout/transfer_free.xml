@@ -10,64 +10,59 @@
       Denis Solonenko - initial API and implementation
       Emmanuel Florent - Port to AppCompat 21,  add icon title, add FAB button
 -->
-<android.support.design.widget.CoordinatorLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/main_layout">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/space_xlarge"
-        android:paddingTop="@dimen/actionBarSize"
-        android:id="@+id/main_layout">
+    <include layout="@layout/transaction_total_text"/>
 
-        <include layout="@layout/transaction_total_text"/>
+    <LinearLayout android:layout_height="wrap_content"
+        android:background="@color/date_sel_bg_color"
+        android:paddingTop="@dimen/space_normal"
+        android:paddingBottom="@dimen/space_normal"
+        android:layout_width="match_parent">
 
-        <LinearLayout android:layout_height="wrap_content"
-            android:background="@color/date_sel_bg_color"
-            android:paddingTop="@dimen/space_normal"
-            android:paddingBottom="@dimen/space_normal"
-            android:layout_width="match_parent">
-
-            <ImageButton android:id="@+id/status"
-                android:layout_marginLeft="@dimen/space_normal"
-                android:layout_gravity="center"
-                android:layout_marginRight="@dimen/space_large"
-                android:layout_width="@dimen/recommended_touch_size"
-                android:layout_height="@dimen/recommended_touch_size"
-                android:background="@null"
-                android:src="@drawable/transaction_status_unreconciled_2"/>
-            <Button android:layout_width="0dp" android:gravity="center"
-                android:text="04/03/09"  android:id="@+id/date"
-                android:layout_height="wrap_content" android:layout_weight="1"
-                tools:ignore="HardcodedText" />
-            <Button android:layout_width="wrap_content" android:gravity="center"
-                android:text="12:56 PM" android:id="@+id/time"
-                android:layout_marginRight="@dimen/space_normal"
-                android:layout_height="wrap_content"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
-
-        <ScrollView
-            android:id="@+id/scroll"
-            android:layout_height="0px"
-            android:layout_weight="1"
-            android:scrollbars="none"
-            android:layout_width="wrap_content">
-
-            <LinearLayout android:id="@+id/list"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_large"
-                android:orientation="vertical"
-                android:paddingBottom="?listPreferredItemHeight">
-            </LinearLayout>
-        </ScrollView>
-
+        <ImageButton android:id="@+id/status"
+            android:layout_marginLeft="@dimen/space_normal"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/space_large"
+            android:layout_width="@dimen/recommended_touch_size"
+            android:layout_height="@dimen/recommended_touch_size"
+            android:background="@null"
+            android:src="@drawable/transaction_status_unreconciled_2"/>
+        <Button android:layout_width="0dp" android:gravity="center"
+            android:text="04/03/09"  android:id="@+id/date"
+            android:layout_height="wrap_content" android:layout_weight="1"
+            tools:ignore="HardcodedText" />
+        <Button android:layout_width="wrap_content" android:gravity="center"
+            android:text="12:56 PM" android:id="@+id/time"
+            android:layout_marginRight="@dimen/space_normal"
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 
-    <include layout="@layout/toolbar"/>
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:scrollbars="none">
+        <LinearLayout
+            android:id="@+id/listlayout"
+            style="@style/ListView"
+            android:orientation="vertical" />
+    </ScrollView>
 
-</android.support.design.widget.CoordinatorLayout>
+    <ListView
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:id="@android:id/list"/>
+
+</LinearLayout>
+

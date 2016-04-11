@@ -1,8 +1,20 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Denis Solonenko.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ * Contributors:
+ *     Denis Solonenko - initial API and implementation
+ *     Emmanuel Florent - port to Android API 11+
+ ******************************************************************************/
 
 package com.flowzr.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -30,24 +42,34 @@ public class SplitTransferActivity extends AbstractSplitActivity {
     }
 
     @Override
+    public String getMyTag() {
+        return MyFragmentAPI.REQUEST_SPLITTRANSFER_FINISH;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.split_fixed;
+    }
+
+
+    @Override
     protected void createUI(LinearLayout layout) {
         accountText = x.addListNode(layout, R.id.account, R.string.account, R.string.select_to_account);
         rateView = new RateLayoutView(this, x, layout);
-        rateView.createTransferUI();
+        rateView.createTransferUI( this);
         rateView.setAmountFromChangeListener(new AmountInput.OnAmountChangedListener() {
             @Override
             public void onAmountChanged(long oldAmount, long newAmount) {
                 setUnsplitAmount(split.unsplitAmount - newAmount);
             }
         });
-        initToolbar();
     }
 
     @Override
     protected void fetchData() {
         accountCursor = db.em().getAllActiveAccounts();
-        startManagingCursor(accountCursor);
-        accountAdapter = TransactionUtils.createAccountAdapter(this, accountCursor);
+        getActivity().startManagingCursor(accountCursor);
+        accountAdapter = TransactionUtils.createAccountAdapter(getContext(), accountCursor);
     }
 
     @Override
@@ -65,7 +87,7 @@ public class SplitTransferActivity extends AbstractSplitActivity {
         split.fromAmount = rateView.getFromAmount();
         split.toAmount = rateView.getToAmount();
         if (split.fromAccountId == split.toAccountId) {
-            Toast.makeText(this, R.string.select_to_account_differ_from_to_account, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.select_to_account_differ_from_to_account, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -95,11 +117,12 @@ public class SplitTransferActivity extends AbstractSplitActivity {
         rateView.setToAmount(amount);
     }
 
+
     @Override
     protected void onClick(View v, int id) {
         super.onClick(v, id);
         if (id == R.id.account) {
-            x.select(this, R.id.account, R.string.account_to, accountCursor, accountAdapter,
+            x.select(getContext(), R.id.account, R.string.account_to, accountCursor, accountAdapter,
                     DatabaseHelper.AccountColumns.ID, split.toAccountId);
         }
     }
@@ -114,9 +137,9 @@ public class SplitTransferActivity extends AbstractSplitActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if (resultCode == AppCompatActivity.RESULT_OK) {
             rateView.onActivityResult(requestCode, data);
         }
     }

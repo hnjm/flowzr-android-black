@@ -26,7 +26,6 @@ import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -117,7 +116,7 @@ public class BackupListActivity extends AbstractActionBarActivity implements Goo
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_entities);
+		setContentView(R.layout.main_backup);
         initToolbar();
 
 		ListView listview= (ListView)findViewById(R.id.listview);

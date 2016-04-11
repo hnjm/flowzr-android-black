@@ -12,7 +12,6 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical">
 	<LinearLayout
-		android:paddingTop="@dimen/actionBarSize"
 		android:layout_gravity="center_horizontal"
 		android:gravity="center_horizontal"
 		android:orientation="vertical"
@@ -26,5 +25,8 @@
 		</ScrollView>
 		<include layout="@layout/ok_cancel_buttons" />
 	</LinearLayout>
+
+
+
 	<include layout="@layout/toolbar"/>
 </android.support.design.widget.CoordinatorLayout>

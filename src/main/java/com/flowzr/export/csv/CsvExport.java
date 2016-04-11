@@ -38,7 +38,7 @@ import static com.flowzr.datetime.DateUtils.FORMAT_TIME_ISO_8601;
 
 public class CsvExport extends Export {
 
-    public static final String[] HEADER = "date,time,account,amount,currency,original amount,original currency,category,parent,payee,location,project,note,status".split(",");
+    public static final String[] HEADER = "date,time,account,amount,currency,original amount,original currency,category,parent,payee,location,entity,note,status".split(",");
 
     private static final MyLocation TRANSFER_IN = new MyLocation();
     private static final MyLocation TRANSFER_OUT = new MyLocation();

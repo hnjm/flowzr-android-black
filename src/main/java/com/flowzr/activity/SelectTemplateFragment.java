@@ -85,25 +85,22 @@ public class SelectTemplateFragment extends TemplatesListFragment {
 				decrementMultiplier();
 			}
 		});
-		if (getActivity().findViewById(R.id.fragment_land_container)!=null) { 
-			getActivity().findViewById(R.id.fragment_land_container).setVisibility(View.GONE);
+		if (getView().findViewById(R.id.fragment_land_container)!=null) {
+			getView().findViewById(R.id.fragment_land_container).setVisibility(View.GONE);
 		}
-        if (getActivity().findViewById(R.id.container_V)!=null) {
-            getActivity().findViewById(R.id.container_V).setVisibility(View.VISIBLE);
+        if (getView().findViewById(R.id.container_V)!=null) {
+            getView().findViewById(R.id.container_V).setVisibility(View.VISIBLE);
         }
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-		Intent intent;
 		switch (item.getItemId()) {
 			case R.id.bEditTemplate:
-				getActivity().setResult(MainActivity.RESULT_CANCELED);
-				getActivity().finish();
-				intent = new Intent(getActivity(), EntityListActivity.class);
-				intent.putExtra(EntityListActivity.REQUEST_TEMPLATES, true);
-				startActivity(intent);				
+				Bundle bundle = new Bundle();
+				bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,TemplatesListFragment.class.getCanonicalName());
+				activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -158,12 +155,12 @@ public class SelectTemplateFragment extends TemplatesListFragment {
 	}
 
 	void returnResult(long id, boolean edit) {
-		Intent intent = new Intent();
-		intent.putExtra(TEMPATE_ID, id);
-		intent.putExtra(MULTIPLIER, multiplier);
-		if (edit) intent.putExtra(EDIT_AFTER_CREATION, true);
-		getActivity().setResult(MainActivity.RESULT_OK, intent);
-		getActivity().finish();
-	}
+        //@TODO generate templates
+        Bundle bundle = new Bundle();
+        bundle.putLong(TEMPATE_ID,id);
+        bundle.putInt(MULTIPLIER,multiplier);
+        bundle.putLong(MyFragmentAPI.ENTITY_CLASS_EXTRA,id);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
+    }
 
 }

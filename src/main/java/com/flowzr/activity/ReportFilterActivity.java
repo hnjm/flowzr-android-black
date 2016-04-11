@@ -10,6 +10,8 @@ package com.flowzr.activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -61,15 +63,23 @@ public class ReportFilterActivity extends AbstractEditorActivity {
     private String filterValueNotFound;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public String getMyTag() {
+        return MyFragmentAPI.REQUEST_REPORTFILTER_FINISH;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.blotter_filter;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.blotter_filter);
-        initToolbar();
-        df = DateUtils.getShortDateFormat(this);
+        df = DateUtils.getShortDateFormat(getContext());
         filterValueNotFound = getString(R.string.filter_value_not_found);
 
-        LinearLayout layout = (LinearLayout)findViewById(R.id.layout);
+        LinearLayout layout = (LinearLayout)getView().findViewById(R.id.layout);
         period = x.addFilterNodeMinus(layout, R.id.period, R.id.period_clear, R.string.period, R.string.no_filter);
         account = x.addFilterNodeMinus(layout, R.id.account, R.id.account_clear, R.string.account, R.string.no_filter);
         currency = x.addFilterNodeMinus(layout, R.id.currency, R.id.currency_clear, R.string.currency, R.string.no_filter);
@@ -79,19 +89,7 @@ public class ReportFilterActivity extends AbstractEditorActivity {
         location = x.addFilterNodeMinus(layout, R.id.location, R.id.location_clear, R.string.location, R.string.no_filter);
         status = x.addFilterNodeMinus(layout, R.id.status, R.id.status_clear, R.string.transaction_status, R.string.no_filter);
 
-
-
-//
-//        ImageButton bNoFilter = (ImageButton)findViewById(R.id.bNoFilter);
-//        bNoFilter.setOnClickListener(new OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                setResult(RESULT_FIRST_USER);
-//                finish();
-//            }
-//        });
-
-        Intent intent = getIntent();
+        Intent intent = getActivity().getIntent();
         if (intent != null) {
             filter = WhereFilter.fromIntent(intent);
             updatePeriodFromFilter();
@@ -115,13 +113,12 @@ public class ReportFilterActivity extends AbstractEditorActivity {
         	case R.id.action_done:
 				Intent data = new Intent();
 				filter.toIntent(data);
-				setResult(RESULT_OK, data);
-				finish();
+                finishAndClose(data.getExtras());
         		return true;
         	case R.id.action_cancel:
-                setResult(RESULT_CANCELED);
-                finish();
+                finishAndClose(AppCompatActivity.RESULT_CANCELED);
                 return true;
+            //@TODO clear report filter
 //        	case R.id.action_select_all:
 // 				setResult(RESULT_FIRST_USER);
 // 				finish();
@@ -239,84 +236,86 @@ public class ReportFilterActivity extends AbstractEditorActivity {
     protected void onClick(View v, int id) {
         switch (id) {
             case R.id.period:
-                Intent intent = new Intent(this, DateFilterActivity.class);
-                filter.toIntent(intent);
-                startActivityForResult(intent, 1);
+                Fragment fragment = new DateFilterActivity();
+                Bundle bundle= new Bundle();
+                filter.toBundle(bundle);
+                fragment.setArguments(bundle);
+                activity.startFragmentForResult(fragment,this);
                 break;
             case R.id.period_clear:
                 clear(BlotterFilter.DATETIME, period);
                 break;
             case R.id.account: {
                 Cursor cursor = em.getAllAccounts();
-                startManagingCursor(cursor);
-                ListAdapter adapter = TransactionUtils.createAccountAdapter(this, cursor);
+                getActivity().startManagingCursor(cursor);
+                ListAdapter adapter = TransactionUtils.createAccountAdapter(getContext(), cursor);
                 Criteria c = filter.get(BlotterFilter.FROM_ACCOUNT_ID);
                 long selectedId = c != null ? c.getLongValue1() : -1;
-                x.select(this, R.id.account, R.string.account, cursor, adapter, "_id", selectedId);
+                x.select(getContext(), R.id.account, R.string.account, cursor, adapter, "_id", selectedId);
             } break;
             case R.id.account_clear:
                 clear(BlotterFilter.FROM_ACCOUNT_ID, account);
                 break;
             case R.id.currency: {
                 Cursor cursor = em.getAllCurrencies("name");
-                startManagingCursor(cursor);
-                ListAdapter adapter = TransactionUtils.createCurrencyAdapter(this, cursor);
+                getActivity().startManagingCursor(cursor);
+                ListAdapter adapter = TransactionUtils.createCurrencyAdapter(getContext(), cursor);
                 Criteria c = filter.get(BlotterFilter.FROM_ACCOUNT_CURRENCY_ID);
                 long selectedId = c != null ? c.getLongValue1() : -1;
-                x.select(this, R.id.currency, R.string.currency, cursor, adapter, "_id", selectedId);
+                x.select(getContext(), R.id.currency, R.string.currency, cursor, adapter, "_id", selectedId);
             } break;
             case R.id.currency_clear:
                 clear(BlotterFilter.FROM_ACCOUNT_CURRENCY_ID, currency);
                 break;
             case R.id.category: {
                 Cursor cursor = db.getCategories(false);
-                startManagingCursor(cursor);
-                ListAdapter adapter = TransactionUtils.createCategoryAdapter(db, this, cursor);
+                getActivity().startManagingCursor(cursor);
+                ListAdapter adapter = TransactionUtils.createCategoryAdapter(db,getContext(), cursor);
                 Criteria c = filter.get(BlotterFilter.CATEGORY_LEFT);
                 long selectedId = c != null ? c.getLongValue1() : -1;
-                x.select(this, R.id.category, R.string.category, cursor, adapter, DatabaseHelper.CategoryViewColumns.left.name(), selectedId);
+                x.select(getContext(), R.id.category, R.string.category, cursor, adapter, DatabaseHelper.CategoryViewColumns.left.name(), selectedId);
             } break;
             case R.id.category_clear:
                 clear(BlotterFilter.CATEGORY_LEFT, category);
                 break;
             case R.id.project: {
                 ArrayList<Project> projects = em.getActiveProjectsList(false);
-                ListAdapter adapter = TransactionUtils.createProjectAdapter(this, projects);
+                ListAdapter adapter = TransactionUtils.createProjectAdapter(getContext(), projects);
                 Criteria c = filter.get(BlotterFilter.PROJECT_ID);
                 long selectedId = c != null ? c.getLongValue1() : -1;
                 int selectedPos = MyEntity.indexOf(projects, selectedId);
-                x.selectItemId(this, R.id.project, R.string.project, adapter, selectedPos);
+                x.selectItemId(getContext(), R.id.project, R.string.project, adapter, selectedPos);
             } break;
             case R.id.project_clear:
                 clear(BlotterFilter.PROJECT_ID, project);
                 break;
             case R.id.payee: {
                 List<Payee> payees = em.getAllPayeeList();
-                ListAdapter adapter = TransactionUtils.createPayeeAdapter(this, payees);
+                ListAdapter adapter = TransactionUtils.createPayeeAdapter(getContext(), payees);
                 Criteria c = filter.get(BlotterFilter.PAYEE_ID);
                 long selectedId = c != null ? c.getLongValue1() : -1;
                 int selectedPos = MyEntity.indexOf(payees, selectedId);
-                x.selectItemId(this, R.id.payee, R.string.payee, adapter, selectedPos);
+                x.selectItemId(getContext(), R.id.payee, R.string.payee, adapter, selectedPos);
             } break;
             case R.id.payee_clear:
                 clear(BlotterFilter.PAYEE_ID, payee);
                 break;
             case R.id.location: {
                 Cursor cursor = em.getAllLocations(false);
-                startManagingCursor(cursor);
-                ListAdapter adapter = TransactionUtils.createLocationAdapter(this, cursor);
+                getActivity().startManagingCursor(cursor);
+                ListAdapter adapter = TransactionUtils.createLocationAdapter(getContext(), cursor);
                 Criteria c = filter.get(BlotterFilter.LOCATION_ID);
                 long selectedId = c != null ? c.getLongValue1() : -1;
-                x.select(this, R.id.location, R.string.location, cursor, adapter, "_id", selectedId);
+                x.select(getContext(), R.id.location, R.string.location, cursor, adapter, "_id", selectedId);
             } break;
             case R.id.location_clear:
                 clear(BlotterFilter.LOCATION_ID, location);
                 break;
             case R.id.status: {
-                ArrayAdapter<String> adapter = EnumUtils.createDropDownAdapter(this, statuses);
+                ArrayAdapter<String> adapter = EnumUtils.createDropDownAdapter(getContext(), statuses);
                 Criteria c = filter.get(BlotterFilter.STATUS);
                 int selectedPos = c != null ? TransactionStatus.valueOf(c.getStringValue()).ordinal() : -1;
-                x.selectPosition(this, R.id.status, R.string.transaction_status, adapter, selectedPos);
+                x.selectPosition(getContext(), R.id.status, R.string.transaction_status, adapter, selectedPos);
             } break;
             case R.id.status_clear:
                 clear(BlotterFilter.STATUS, status);
@@ -372,11 +371,11 @@ public class ReportFilterActivity extends AbstractEditorActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
-            if (resultCode == RESULT_FIRST_USER) {
+            if (resultCode == AppCompatActivity.RESULT_FIRST_USER) {
                 onClick(period, R.id.period_clear);
-            } else if (resultCode == RESULT_OK) {
+            } else if (resultCode == AppCompatActivity.RESULT_OK) {
                 DateTimeCriteria c = WhereFilter.dateTimeFromIntent(data);
                 filter.put(c);
                 updatePeriodFromFilter();

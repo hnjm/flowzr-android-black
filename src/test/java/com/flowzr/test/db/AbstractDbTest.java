@@ -13,6 +13,9 @@ import com.flowzr.model.Category;
 import com.flowzr.model.Transaction;
 import com.flowzr.test.test.DateTime;
 
+import org.junit.After;
+import org.junit.Before;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,7 +35,7 @@ public abstract class AbstractDbTest extends AndroidTestCase {
         return new HashSet<T>(Arrays.asList(values));
     }
 
-    @Override
+    @Before
     public void setUp() throws Exception {
         Context context = new RenamingDelegatingContext(getContext(), "test-");
         dbHelper = new DatabaseHelper(context);
@@ -41,7 +44,7 @@ public abstract class AbstractDbTest extends AndroidTestCase {
         em = db.em();
     }
 
-    @Override
+    @After
     public void tearDown() throws Exception {
         dbHelper.close();
     }

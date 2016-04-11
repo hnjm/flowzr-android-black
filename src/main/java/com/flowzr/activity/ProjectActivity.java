@@ -13,6 +13,7 @@ package com.flowzr.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -26,33 +27,36 @@ import com.flowzr.model.Project;
 
 public class ProjectActivity extends AbstractEditorActivity {
 
-
-    public static final String ENTITY_ID_EXTRA = "entityId";
     private MyEntityManager em;
 
     private Project project = new Project();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.project);
-        initToolbar();
+    public String getMyTag() {
+        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
+    }
 
-        CheckBox activityCheckBox = (CheckBox) findViewById(R.id.isActive);
+    @Override
+    protected int getLayoutId() {
+        return R.layout.entity_edit;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        CheckBox activityCheckBox = (CheckBox) getView().findViewById(R.id.isActive);
         activityCheckBox.setChecked(true);
 
-        DatabaseAdapter db = new DatabaseAdapter(this);
+        DatabaseAdapter db = new DatabaseAdapter(getContext());
         db.open();
 
         em = db.em();
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            long id = intent.getLongExtra(ENTITY_ID_EXTRA, -1);
-            if (id != -1) {
-                project = em.load(Project.class, id);
-                editProject();
-            }
+        long id = getArguments().getLong(MyFragmentAPI.ENTITY_ID_EXTRA, -1);
+        if (id != -1) {
+            project = em.load(Project.class, id);
+            editProject();
         }
 
     }
@@ -63,27 +67,25 @@ public class ProjectActivity extends AbstractEditorActivity {
         switch (item.getItemId())
         {	 
         	case R.id.action_done:
-                EditText title = (EditText)findViewById(R.id.title);
-                CheckBox activityCheckBox = (CheckBox) findViewById(R.id.isActive);
+                EditText title = (EditText)getView().findViewById(R.id.title);
+                CheckBox activityCheckBox = (CheckBox) getView().findViewById(R.id.isActive);
                 project.title = title.getText().toString();
                 project.isActive = activityCheckBox.isChecked();
                 long id = em.saveOrUpdate(project);
                 Intent intent = new Intent();
                 intent.putExtra(DatabaseHelper.EntityColumns.ID, id);
-                setResult(RESULT_OK, intent);
-                finish();	        		
+                finishAndClose(intent.getExtras());
         		return true;
 	    	case R.id.action_cancel:
-				setResult(RESULT_CANCELED);
-				finish();
+                finishAndClose(AppCompatActivity.RESULT_CANCELED);
 	    		return true;        
         }
         return super.onOptionsItemSelected(item);
     }
     
     private void editProject() {
-        EditText title = (EditText)findViewById(R.id.title);
-        CheckBox activityCheckBox = (CheckBox) findViewById(R.id.isActive);
+        EditText title = (EditText)getView().findViewById(R.id.title);
+        CheckBox activityCheckBox = (CheckBox) getView().findViewById(R.id.isActive);
         title.setText(project.title);
         activityCheckBox.setChecked(project.isActive);
     }

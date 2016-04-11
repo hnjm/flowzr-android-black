@@ -8,10 +8,11 @@
 
 package com.flowzr.activity;
 
-import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -36,7 +37,8 @@ import static com.flowzr.activity.AbstractEditorActivity.setVisibility;
  */
 public class ProjectSelector {
 
-    private final Activity activity;
+    private final MainActivity activity;
+    private final Fragment myFragment;
     private final MyEntityManager em;
     private final ActivityLayout x;
     private final boolean isShowProject;
@@ -48,8 +50,9 @@ public class ProjectSelector {
 
     private long selectedProjectId = 0;
 
-    public ProjectSelector(Activity activity, MyEntityManager em, ActivityLayout x) {
+    public ProjectSelector(MainActivity activity, Fragment myFragment, MyEntityManager em, ActivityLayout x) {
         this.activity = activity;
+        this.myFragment = myFragment;
         this.em = em;
         this.x = x;
         this.isShowProject = MyPreferences.isShowProject(activity);
@@ -63,7 +66,7 @@ public class ProjectSelector {
     public void fetchProjects(long[] ids) {
         projects = em.getActiveProjectsList(true);
         ArrayList<Project> filtered= new ArrayList<>();
-        //ArrayList<T> list = new ArrayList<T>();
+
         for (int i=0; i<projects.size(); i++) {
             for (long id : ids) {
                 if (id == projects.get(i).id) {
@@ -89,7 +92,9 @@ public class ProjectSelector {
                 break;
             case R.id.project_add: {
                 Intent intent = new Intent(activity, ProjectActivity.class);
-                activity.startActivityForResult(intent, AbstractTransactionActivity.NEW_PROJECT_REQUEST);
+                Fragment fragment = new ProjectActivity();
+
+                activity.startFragmentForResult(fragment,myFragment);
                 break;
             }
         }
@@ -110,8 +115,12 @@ public class ProjectSelector {
 
     private void onProjectSelected(int selectedPos) {
         if (selectedPos== DialogInterface.BUTTON_NEUTRAL) {
-            Intent intent = new Intent(activity, ProjectActivity.class);
-            activity.startActivityForResult(intent, AbstractTransactionActivity.NEW_PROJECT_REQUEST);
+            Bundle bundle = new Bundle();
+            bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,AbstractTransactionActivity.NEW_PROJECT_REQUEST);
+            bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,ProjectActivity.class.getCanonicalName());
+            Fragment fragment = new ProjectActivity();
+            fragment.setArguments(bundle);
+            activity.startFragmentForResult(fragment,myFragment);
         }else {
             Project p = projects.get(selectedPos);
             selectProject(p);
@@ -134,7 +143,7 @@ public class ProjectSelector {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == AppCompatActivity.RESULT_OK) {
             switch (requestCode) {
                 case AbstractTransactionActivity.NEW_PROJECT_REQUEST:
                     onNewProject(data);

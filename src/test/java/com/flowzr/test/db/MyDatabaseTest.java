@@ -1,5 +1,7 @@
 package com.flowzr.test.db;
 
+import android.util.Log;
+
 import com.flowzr.model.Account;
 import com.flowzr.model.Attribute;
 import com.flowzr.model.Category;
@@ -10,6 +12,8 @@ import com.flowzr.test.test.AccountBuilder;
 import com.flowzr.test.test.CategoryBuilder;
 import com.flowzr.test.test.TransactionBuilder;
 
+import org.junit.Before;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +23,7 @@ public class MyDatabaseTest extends AbstractDbTest {
     Account a1;
     Map<String, Category> categoriesMap;
 
-    @Override
+    @Before
     public void setUp() throws Exception {
         super.setUp();
         a1 = AccountBuilder.createDefault(db);

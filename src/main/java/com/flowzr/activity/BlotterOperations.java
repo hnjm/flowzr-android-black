@@ -4,16 +4,19 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ * Contributors:
+ *     Denis Solonenko - initial API and implementation
+ *     Emmanuel Florent - port to Android API 11+
  */
 
 package com.flowzr.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.flowzr.R;
 import com.flowzr.db.DatabaseAdapter;
@@ -30,7 +33,7 @@ public class BlotterOperations {
     private static final int EDIT_TRANSACTION_REQUEST = 2;
 	private static final int EDIT_TRANSFER_REQUEST = 4;
 
-    private final BlotterFragment activity;
+    private final BlotterFragment blotterFragment;
     private final DatabaseAdapter db;
     private final Transaction originalTransaction;
     private final Transaction targetTransaction;
@@ -38,7 +41,7 @@ public class BlotterOperations {
     private boolean newFromTemplate = false;
 
     public BlotterOperations(BlotterFragment activity, DatabaseAdapter db, long transactionId) {
-        this.activity = activity;
+        this.blotterFragment = activity;
         this.db = db;
         this.originalTransaction = db.getTransaction(transactionId);
         if (this.originalTransaction.isSplitChild()) {
@@ -61,28 +64,26 @@ public class BlotterOperations {
         }
     }
 
-    private void startEditTransactionActivity(Class<? extends AppCompatActivity> activityClass, int requestCode) {
-        Intent intent = new Intent(activity.getActivity(), activityClass);
-        intent.putExtra(AbstractTransactionActivity.TRAN_ID_EXTRA, targetTransaction.id);
-        intent.putExtra(AbstractTransactionActivity.DUPLICATE_EXTRA, false);
-        intent.putExtra(AbstractTransactionActivity.NEW_FROM_TEMPLATE_EXTRA, newFromTemplate);
-
-        ActivityCompat.startActivityForResult(activity.getActivity(), intent, requestCode, activity.getScaleUpOption());
-
-        //activity.startActivityForResult(intent, requestCode);
+    private void startEditTransactionActivity(Class<? extends AbstractTransactionActivity> activityClass, int requestCode) {
+        Bundle bundle = new Bundle();
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, activityClass.getCanonicalName());
+        bundle.putLong(AbstractTransactionActivity.TRAN_ID_EXTRA, targetTransaction.id);
+        bundle.putBoolean(AbstractTransactionActivity.DUPLICATE_EXTRA, false);
+        bundle.putBoolean(AbstractTransactionActivity.NEW_FROM_TEMPLATE_EXTRA, newFromTemplate);
+        blotterFragment.activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
     }
 
     public void deleteTransaction() {
         int titleId = targetTransaction.isTemplate() ? R.string.delete_template_confirm
                 : (originalTransaction.isSplitChild() ? R.string.delete_transaction_parent_confirm : R.string.delete_transaction_confirm);
-        new AlertDialog.Builder(activity.getActivity())
+        new AlertDialog.Builder(blotterFragment.getActivity())
                 .setMessage(titleId)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         long transactionIdToDelete = targetTransaction.id;
                         db.deleteTransaction(transactionIdToDelete);
-                        activity.afterDeletingTransaction(transactionIdToDelete);
+                        blotterFragment.afterDeletingTransaction(transactionIdToDelete);
                     }
                 })
                 .setNegativeButton(R.string.no, null)
