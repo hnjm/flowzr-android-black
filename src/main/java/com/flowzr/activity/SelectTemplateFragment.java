@@ -18,6 +18,7 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,6 +47,15 @@ public class SelectTemplateFragment extends TemplatesListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	setHasOptionsMenu(true);
     	return inflater.inflate(R.layout.templates, container, false);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		menu.clear();
+		inflater.inflate(R.menu.template_actions, menu);
+		menu.removeItem(R.id.bAdd);
+		menu.removeItem(R.id.bCancel);
+		menu.removeItem(R.id.bTransfer);
 	}
     
 	@Override
@@ -108,8 +118,11 @@ public class SelectTemplateFragment extends TemplatesListFragment {
 	
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-		super.onPrepareOptionsMenu(menu);    	
-		menu.findItem(R.id.bEditTemplate).setVisible(true);
+		super.onPrepareOptionsMenu(menu);
+        if (menu.findItem(R.id.bEditTemplate)!=null) {
+            menu.findItem(R.id.bEditTemplate).setVisible(true);
+        }
+
     }
     
 	protected void incrementMultiplier() {

@@ -84,6 +84,11 @@ public class BlotterFragment extends AbstractTotalListFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.blotter_actions, menu);
+        if (blotterFilter.getAccountId()==-1) {
+            if (menu.findItem(R.id.opt_menu_month)!=null) {
+                menu.removeItem(R.id.opt_menu_month);
+            }
+        }
     }
 
 
@@ -141,11 +146,11 @@ public class BlotterFragment extends AbstractTotalListFragment {
         getActivity().setTitle(blotterFilter.getTitle());
         //prepareAddButtonActionGrid();
 
-        if (args != null && args.containsKey(BlotterFragment.EXTRA_REQUEST_TYPE)) {
-            if (args.getInt(BlotterFragment.EXTRA_REQUEST_TYPE)==BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST) {
-                createFromTemplate();
-            }
-        }
+        //if (args != null && args.containsKey(BlotterFragment.EXTRA_REQUEST_TYPE)) {
+        //    if (args.getInt(BlotterFragment.EXTRA_REQUEST_TYPE)==BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST) {
+        //        createFromTemplate();
+        //    }
+        //}
         recreateCursor();
         calculateTotals();
         setUpFab();
@@ -317,11 +322,16 @@ public class BlotterFragment extends AbstractTotalListFragment {
 
     protected void createFromTemplate() {
         Bundle bundle= new Bundle();
-        bundle.putInt(EXTRA_REQUEST_TYPE, NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
-        bundle.putBoolean(REQUEST_NEW_TRANSACTION_FROM_TEMPLATE, true);
-        bundle.putInt(EXTRA_REQUEST_TYPE,NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
+        //bundle.putInt(EXTRA_REQUEST_TYPE, NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
+        //bundle.putBoolean(REQUEST_NEW_TRANSACTION_FROM_TEMPLATE, true);
+        //bundle.putInt(EXTRA_REQUEST_TYPE,NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
+        //bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,SelectTemplateFragment.class.getCanonicalName());
+        //activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+        bundle = new Bundle();
         bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,SelectTemplateFragment.class.getCanonicalName());
         activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+
+
     }
 
 
@@ -483,11 +493,12 @@ public class BlotterFragment extends AbstractTotalListFragment {
         }
 
         if (resultCode != MainActivity.RESULT_CANCELED ) {
-            getActivity().supportInvalidateOptionsMenu();
-            recreateCursor();
-            calculateTotals();
-            //((MainActivity)getActivity()).mAdapter.budgetListFragment.onActivityResult(requestCode,resultCode,data);
-        }
+            if (activity!=null) {
+                activity.supportInvalidateOptionsMenu();
+                recreateCursor();
+                calculateTotals();
+            }
+       }
 
     }
 

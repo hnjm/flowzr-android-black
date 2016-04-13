@@ -12,6 +12,7 @@
 package com.flowzr.activity;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +21,9 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.view.GravityCompat;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -50,9 +54,18 @@ public class MainActivity  extends AbstractActionBarActivity
 
     public static Activity activity;
 
-
+    // called for attachpicture
     public void onFragmentMessage(String TAG, int requestCode,Intent intent) {
         startActivityForResult(intent, requestCode);
+    }
+
+    public void setMyTitle(String t) {
+        SpannableString s = new SpannableString(t);
+        s.setSpan(new TypefaceSpan(String.valueOf(Typeface.DEFAULT)), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (getSupportActionBar()!=null) {
+            getSupportActionBar().setTitle(s);
+        }
     }
 
     @Override
@@ -60,9 +73,7 @@ public class MainActivity  extends AbstractActionBarActivity
         Log.e("flowzr", "onFragmentMessage (bundle) " + TAG + "data: " + data.toString());
         if (TAG.equals(MyFragmentAPI.REQUEST_MYENTITY_FINISH)) {
             handleFragmentResult(data);
-        } else if ( TAG.equals(MyFragmentAPI.REQUEST_BLOTTER)
-                ||  TAG.equals(MyFragmentAPI.EDIT_ENTITY_REQUEST)) {
-
+        } else if ( TAG.equals(MyFragmentAPI.EDIT_ENTITY_REQUEST)) {
             if (data.containsKey(ENTITY_CLASS_EXTRA)) {
                 Fragment fragment = getFragmentForClass(data.getString(ENTITY_CLASS_EXTRA));
                 fragment.setArguments(data);
@@ -70,6 +81,21 @@ public class MainActivity  extends AbstractActionBarActivity
             } else {
                 Log.e("flowzr", "UNHANDLED QUERY (no class extra) " + data);
             }
+        } else if ( TAG.equals(MyFragmentAPI.REQUEST_BLOTTER)){
+            Fragment fragment;
+            if (data.containsKey(ENTITY_CLASS_EXTRA)) {
+                if (data.getString(ENTITY_CLASS_EXTRA).equals(ReportFragment.class.getCanonicalName())) {
+                    fragment = getFragmentForClass(BlotterFragment.class.getCanonicalName());
+                } else {
+                    fragment = getFragmentForClass(data.getString(ENTITY_CLASS_EXTRA));
+                }
+            }  else {
+                fragment = getFragmentForClass(BlotterFragment.class.getCanonicalName());
+
+            }
+            Log.e("flowzr","built " + fragment.getClass().getCanonicalName());
+            fragment.setArguments(data);
+            loadFragment(fragment);
         } else {
             Log.e("flowzr", "UNHANDLED TAG :  " + TAG + "data: " + data.toString());
         }
@@ -98,10 +124,9 @@ public class MainActivity  extends AbstractActionBarActivity
         Log.e("flowzr","target is :" + currentFragment.getTargetFragment());
         Fragment target =  currentFragment.getTargetFragment();
         if (target==null) {
-            Log.e("flowzr","handleFragmentResult (no target) popBackStack");
-            //getSupportFragmentManager().popBackStackImmediate();
+            Log.e("flowzr","handleFragmentResult no target ! removing all panes");
             removePaneFragment(currentFragment);
-            Log.e("flowzr","ensure VP now ...");
+            Log.e("flowzr","ensuring view pager now ...");
             ensureViewPagerMode();
             try {
 
@@ -121,22 +146,48 @@ public class MainActivity  extends AbstractActionBarActivity
             int requestCode=data.getInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA);
             Log.e("flowzr","calling onActivityResult " + String .valueOf(resultCode) + " " + String.valueOf(requestCode));
             target.onActivityResult(requestCode,resultCode,  intent);
-            removePaneFragment(currentFragment);
+
+            Log.e("flowzr","target was " + target);
+            Log.e("flowzr","target was " + currentFragment);
+            showResultingFragment(target,currentFragment);
         }
+    }
+
+
+
+    private void showResultingFragment(Fragment target, Fragment fragment) {
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+
+        if (!target.isAdded()) {
+            transaction.add(R.id.fragment_container, target);
+            activePaneFragments.add(target);
+            Log.e("flowzr","this should never happen Ek66E999");
+        } else {
+            transaction.show(target);
+        }
+        Log.e("flowzr","show2" + target.getClass().getCanonicalName());
+        //******
+        if (fragment.isAdded()) {
+            activePaneFragments.add(fragment);
+            transaction.remove( fragment);
+        }
+        Log.e("flowzr","hide2" + fragment.getClass().getCanonicalName());
+        //transaction.addToBackStack(BACKSTACK);
+        transaction.commit();
     }
 
     private void showHideFragment(Fragment fragment, Fragment target) {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-
         if (!fragment.isAdded()) {
             transaction.add(R.id.fragment_container, fragment);
             activePaneFragments.add(fragment);
         } else {
             transaction.show(fragment);
         }
-        Log.e("flowzr","show" + target.getClass().getCanonicalName());
+        Log.e("flowzr","show" + fragment.getClass().getCanonicalName());
 
         if (!target.isAdded()) {
             transaction.add(R.id.fragment_container, target);
@@ -147,20 +198,18 @@ public class MainActivity  extends AbstractActionBarActivity
         transaction.commit();
     }
 
-    private void addPaneFragments(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, fragment);
-        //transaction.addToBackStack(BACKSTACK);
-        activePaneFragments.add(fragment);
-        fragmentTransaction.commit();
-    }
 
     private void replacePaneFragments(Fragment fragment) {
-        removePaneFragments();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, fragment);
-        activePaneFragments.add(fragment);
-        fragmentTransaction.commit();
+
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+            // removePaneFragments();
+            // fragmentTransaction.replace(R.id.fragment_container, fragment);
+
+            fragmentTransaction.replace(R.id.fragment_container, fragment);
+            activePaneFragments.add(fragment);
+            fragmentTransaction.addToBackStack(BACKSTACK);
+            fragmentTransaction.commit();
     }
 
     private void removePaneFragments() {
@@ -189,7 +238,7 @@ public class MainActivity  extends AbstractActionBarActivity
     public boolean paneMode=false;
 
     public void ensureViewPagerMode() {
-
+        removePaneFragments();
         findViewById(R.id.fragment_container).setVisibility(View.GONE);
         viewPager.setVisibility(View.VISIBLE);
         paneMode=false;
@@ -314,6 +363,8 @@ public class MainActivity  extends AbstractActionBarActivity
 
     }
 
+
+
     @Override
     public void onBackPressed() {
         Log.e("flowzr","paneCount " + String.valueOf(activePaneFragments.size()));
@@ -328,18 +379,43 @@ public class MainActivity  extends AbstractActionBarActivity
             Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             switch (activePaneFragments.size()) {
                 case 0:
-                    ensureViewPagerMode();
-                    break;
                 case 1:
-                    removePaneFragment(f);
                     ensureViewPagerMode();
                     break;
-                case 2:
-                    removePaneFragment(f);
-                    break;
+                //case 1:
+                    //removePaneFragment(f);
+                    //ensureViewPagerMode();
+                //    break;
+                //case 2:
+                    //removePaneFragment(f);
+                //    break;
                 default:
-                    removePaneFragments();
-                    ensureViewPagerMode();
+                    super.onBackPressed();
+                    //.show(f)
+                    activePaneFragments.remove(f);
+                    try {
+                        Fragment fragment = activePaneFragments.get(activePaneFragments.size()-1);
+                        if (fragment.isAdded()) {
+                            FragmentManager fm = getSupportFragmentManager();
+                            fm.beginTransaction()
+                                    .show(fragment)
+                                    .commit();
+                        } else {
+                            FragmentManager fm = getSupportFragmentManager();
+                            fm.beginTransaction()
+                                    .add(R.id.fragment_container,fragment)
+                                    .commit();
+                        }
+
+                    } catch (Exception e) {
+                        activePaneFragments.clear();
+                        removePaneFragments();
+                        e.printStackTrace();
+                    }
+
+
+
+                    break;
             }
         } else{ // viewpager mode
             if (viewPager.getCurrentItem()!=0 && !paneMode) {
@@ -348,6 +424,7 @@ public class MainActivity  extends AbstractActionBarActivity
                 //not needed returnreturn;
             } else if (viewPager.getCurrentItem()==0){
                 // quit app ..
+                Log.e("flowzr","======= quit app ?");
                 super.onBackPressed();
             }
         }
@@ -466,7 +543,7 @@ public class MainActivity  extends AbstractActionBarActivity
         Intent data = new Intent(this, BlotterFragment.class);
         data.putExtras(bundle);
         viewPager.setCurrentItem(tabId);
-        //mAdapter.blotterFragment.onActivityResult(BlotterFragment.FILTER_REQUEST, MainActivity.RESULT_OK, data);
+        mAdapter.blotterFragment.onActivityResult(BlotterFragment.FILTER_REQUEST, MainActivity.RESULT_OK, data);
 
     }
 

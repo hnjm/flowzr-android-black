@@ -32,7 +32,7 @@ import com.flowzr.filter.WhereFilter;
 
 public class TemplatesListFragment extends BlotterFragment {
 
-	public TemplatesListFragment() {}
+	//public TemplatesListFragment() {}
 	
 	
 	@Override
@@ -68,6 +68,7 @@ public class TemplatesListFragment extends BlotterFragment {
 		blotterFilter = new WhereFilter("templates");
 		blotterFilter.eq(BlotterFilter.IS_TEMPLATE, String.valueOf(1));
 	    blotterFilter.eq(BlotterFilter.PARENT_ID, String.valueOf(0));
+		Log.e("flowzr","template list fragment on activity created");
 	}
     
     @Override
@@ -86,8 +87,10 @@ public class TemplatesListFragment extends BlotterFragment {
         if (getView().findViewById(R.id.container_V)!=null) {
             getView().findViewById(R.id.container_V).setVisibility(View.GONE);
         }
-
-
+		Log.e("flowzr","template list fragment on activity created");
+		Log.e("flowzr",String.valueOf(blotterFilter.isTemplate()));
+        //recreateAdapter();
+        recreateCursor();
 	}
 	
     
@@ -105,7 +108,7 @@ public class TemplatesListFragment extends BlotterFragment {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);    	
-		menu.findItem(R.id.bEditTemplate).setVisible(false);
+		//menu.findItem(R.id.bEditTemplate).setVisible(false);
     }
     
     

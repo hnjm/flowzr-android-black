@@ -140,7 +140,8 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
 
             public void onPageSelected(int position) {
                 Log.e("flowzr","on page selected" + String.valueOf(position));
-                mAdapter.notifyDataSetChanged();
+                //mAdapter.notifyDataSetChanged();
+                //recreateViewPagerAdapter();
                 supportInvalidateOptionsMenu();
                 switch (position) {
                     case 0:

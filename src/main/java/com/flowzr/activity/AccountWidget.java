@@ -197,8 +197,8 @@ public class AccountWidget extends AppWidgetProvider {
 
         //add template
         intent = new Intent(context, MainActivity.class);
-        intent.putExtra(MyFragmentAPI.REQUEST_NEW_TRANSACTION_FROM_TEMPLATE, true);
-        intent.putExtra(AccountListFragment.EXTRA_REQUEST_TYPE, BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
+        intent.putExtra(MyFragmentAPI.EDIT_ENTITY_REQUEST, true);
+        intent.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, ScheduledListFragment.class.getCanonicalName());
         Criteria blotterFilter = Criteria.eq(BlotterFilter.FROM_ACCOUNT_ID, String.valueOf(a.id));
         blotterFilter.toIntent(a.title, intent);
         intent.putExtra(MainActivity.REQUEST_BLOTTER, true);

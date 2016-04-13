@@ -76,7 +76,7 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
 
     @Override
     public String getMyTag() {
-        return MyFragmentAPI.REQUEST_BLOTTERFILTER_FINISH;
+        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
     }
 
     @Override

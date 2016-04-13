@@ -214,6 +214,8 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
             bundle.putLong(TRAN_ID_EXTRA,transaction.id);
             bundle.putBoolean(TEMPLATE_EXTRA,transaction.isTemplate());
             bundle.putLong(DATETIME_EXTRA,transaction.dateTime);
+			bundle.putInt(MyFragmentAPI.RESULT_EXTRA,AppCompatActivity.RESULT_OK);
+			bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA,transaction.id);
             activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
             return true;
         }

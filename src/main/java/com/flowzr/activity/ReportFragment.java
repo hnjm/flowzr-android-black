@@ -495,7 +495,7 @@ public class ReportFragment extends AbstractListFragment implements RefreshSuppo
 		if (currentReport != null) {
             Log.e("flowzr","ReportFragment viewItem");
             Bundle bundle = currentReport.createFragmentBundle(getContext(), db, WhereFilter.copyOf(filter), id);
-            activity.onFragmentMessage(MyFragmentAPI.ENTITY_REQUEST_EXTRA,bundle);
+            activity.onFragmentMessage(MyFragmentAPI.REQUEST_BLOTTER,bundle);
 		}
 	}
 

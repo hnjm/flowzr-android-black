@@ -34,14 +34,14 @@ public class EntityListActivity extends AbstractActionBarActivity {
 
 
 
-	public void setMyTitle(String t) {
-		SpannableString s = new SpannableString(t);
-		s.setSpan(new TypefaceSpan("sans-serif"), 0, s.length(),
-				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		if (getSupportActionBar()!=null) {
-			getSupportActionBar().setTitle(s);
-		}
-	}
+    public void setMyTitle(String t) {
+        SpannableString s = new SpannableString(t);
+        s.setSpan(new TypefaceSpan("sans-serif"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (getSupportActionBar()!=null) {
+            getSupportActionBar().setTitle(s);
+        }
+    }
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

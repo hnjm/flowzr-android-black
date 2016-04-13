@@ -40,6 +40,7 @@ import com.flowzr.filter.Criteria;
 import com.flowzr.filter.DateTimeCriteria;
 import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Total;
+import com.flowzr.model.Transaction;
 import com.flowzr.utils.FuturePlanner;
 import com.flowzr.utils.TransactionList;
 import com.flowzr.utils.Utils;
@@ -92,21 +93,31 @@ public class PlannerFragment extends BlotterFragment {
     
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
+        if (menu.findItem(R.id.action_list_template)!=null) {
+            menu.findItem(R.id.action_list_template).setVisible(false);
+        }
+        if (menu.findItem(R.id.action_mass_op)!=null) {
+            menu.findItem(R.id.action_mass_op).setVisible(false);
+        }
+        if (menu.findItem(R.id.opt_menu_bill)!=null) {
+            menu.findItem(R.id.opt_menu_bill).setVisible(false);
+        }
+        if (menu.findItem(R.id.opt_menu_month)!=null) {
+            menu.findItem(R.id.opt_menu_month).setVisible(false);
+        }
 
-		menu.findItem(R.id.action_list_template).setVisible(false);
-		menu.findItem(R.id.action_mass_op).setVisible(false);
-		menu.findItem(R.id.opt_menu_bill).setVisible(false);
-		menu.findItem(R.id.opt_menu_month).setVisible(false);
-        menu.findItem(R.id.action_filter).setOnMenuItemClickListener(
-                new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        showFilter();
-                        return false;
+        if (menu.findItem(R.id.action_filter)!=null) {
+            menu.findItem(R.id.action_filter).setIcon(R.drawable.ic_menu_filter_on);
+            menu.findItem(R.id.action_filter).setOnMenuItemClickListener(
+                    new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            showFilter();
+                            return false;
+                        }
                     }
-                }
-        );
-
+            );
+        }
     }
 
     @Override
@@ -188,11 +199,26 @@ public class PlannerFragment extends BlotterFragment {
 
     @Override
     protected void viewItem(View v, int position, long id) {
-        Log.e("flowzr","view item");
+        Transaction t = db.getTransaction(id);
+        Fragment fragment = null;
+        if (t.isTransfer()) {
+            fragment = new TransferActivity();
+        } else {
+            fragment = new TransactionActivity();
+        }
+        Bundle bundle = new Bundle();
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, t.getClass().getCanonicalName()  );
+        bundle.putLong(AbstractTransactionActivity.TRAN_ID_EXTRA, id);
+        bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, id);
+        fragment.setArguments(bundle);
+        fragment.setTargetFragment(this,0);
+         //blotterFragment.activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+        activity.startFragmentForResult(fragment,this);
     }
 
     @Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e("flowzr","planner on activity result");
         if (resultCode == AppCompatActivity.RESULT_OK && data!=null) {
             if (data.getStringExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TYPE)!=null) {
                 DateTimeCriteria c = WhereFilter.dateTimeFromIntent(data);

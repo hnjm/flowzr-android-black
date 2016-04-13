@@ -30,5 +30,7 @@
             android:orientation="vertical"/>
 
     </ScrollView>
-
+    <ListView
+        android:id="@android:id/list"
+        style="@style/ListView" />
 </LinearLayout>

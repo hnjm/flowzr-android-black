@@ -35,12 +35,12 @@ public class AccountListTotalsDetailsActivity extends AbstractTotalsDetailsFragm
 		super.onActivityCreated(savedInstanceState);
     }
 
-
+/**
 	@Override
 	public void onSaveInstanceState(final Bundle outState) {
-		// super.onSaveInstanceState(outState);
+		//super.onSaveInstanceState(outState);
 	}
-
+**/
     protected Total getTotalInHomeCurrency() {
         return db.getAccountsTotalInHomeCurrency();
     }
