@@ -19,9 +19,11 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -66,22 +68,22 @@ public class NotificationOptionsActivity extends AbstractEditorActivity implemen
 	}
 
 	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		NodeInflater nodeInflater = new NodeInflater(inflater);
+		x = new ActivityLayout(nodeInflater, this);
+		return inflater.inflate(getLayoutId(), container, false);
+	}
+
+	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-        //LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //NodeInflater nodeInflater = new NodeInflater(layoutInflater);
-        //x = new ActivityLayout(nodeInflater, this);
         db = new DatabaseAdapter(activity);
         db.open();
         em = db.em();
-        //initToolbar();
-
-		//setContentView(R.layout.recurrence);
 
 		layout = (LinearLayout)getView().findViewById(R.id.layout);
 
-		//Intent intent = getIntent();
 		Bundle bundle = getArguments();
 		if (bundle != null) {
 			String options = bundle.getString(NOTIFICATION_OPTIONS);
@@ -132,7 +134,7 @@ public class NotificationOptionsActivity extends AbstractEditorActivity implemen
 					intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, Uri.parse(options.sound));
 				}
 				intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
-                activity.onFragmentMessage(MyFragmentAPI.REQUEST_ACTIVITY,PICKUP_RINGTONE,intent);
+                activity.onFragmentMessage(MyFragmentAPI.REQUEST_ACTIVITY,PICKUP_RINGTONE,intent,this);
 			} break;
 			case R.id.notification_vibra: {
 				ArrayAdapter<String> adapter = EnumUtils.createDropDownAdapter(getContext(), patterns);

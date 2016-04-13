@@ -112,7 +112,10 @@ MyEntityActivity<T extends MyEntity> extends AbstractEditorActivity {
 
 	@Override
 	public void onDestroy() {
-		db.close();
+		if (db!=null) {
+			db.close();
+		}
+
 		super.onDestroy();
 	}
 	

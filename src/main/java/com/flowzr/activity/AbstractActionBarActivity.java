@@ -19,6 +19,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -26,6 +27,7 @@ import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.GravityCompat;
@@ -35,6 +37,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +50,7 @@ import android.widget.FrameLayout;
 import com.flowzr.R;
 import com.flowzr.utils.PinProtection;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -67,6 +73,48 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         MultiDex.install(this); //Whoo whoo ...
     }
 
+    List<Fragment> activePaneFragments = new ArrayList<Fragment>();
+
+    @Override
+    public void onBackPressed() {
+        Log.e("flowzr", "paneCount " + String.valueOf(activePaneFragments.size()));
+        if (activePaneFragments.size()==0) {
+            ensureViewPagerMode();
+        }
+        super.onBackPressed();
+    }
+
+    public void setMyTitle(String t) {
+        SpannableString s = new SpannableString(t);
+        s.setSpan(new TypefaceSpan(String.valueOf(Typeface.DEFAULT)), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (getSupportActionBar()!=null) {
+            getSupportActionBar().setTitle(s);
+        }
+    }
+
+
+    public boolean paneMode=false;
+
+    public void ensureViewPagerMode() {
+        removePaneFragments();
+        findViewById(R.id.fragment_container).setVisibility(View.GONE);
+        viewPager.setVisibility(View.VISIBLE);
+        paneMode=false;
+    }
+
+    private void removePaneFragments() {
+        if (activePaneFragments.size() > 0) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            for (Fragment activeFragment : activePaneFragments) {
+                fragmentTransaction.remove(activeFragment);
+            }
+            activePaneFragments.clear();
+            fragmentTransaction.addToBackStack(MainActivity.BACKSTACK);
+            fragmentTransaction.commit();
+            Log.e("flowzr", "remove Pane Fragments paneCount " + String.valueOf(activePaneFragments.size()));
+        }
+    }
 
     public static Intent createExplicitFromImplicitIntent(Context context, Intent implicitIntent) {
         //Retrieve all services that can match the given intent
@@ -139,10 +187,6 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
             }
 
             public void onPageSelected(int position) {
-                Log.e("flowzr","on page selected" + String.valueOf(position));
-                //mAdapter.notifyDataSetChanged();
-                //recreateViewPagerAdapter();
-                supportInvalidateOptionsMenu();
                 switch (position) {
                     case 0:
                         setTitle(R.string.accounts);

@@ -803,7 +803,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, 
 						Uri.fromFile(new File(PICTURES_DIR, pictureFileName)));
-                activity.onFragmentMessage(MyFragmentAPI.REQUEST_ACTIVITY,PICTURE_REQUEST,intent);
+                activity.onFragmentMessage(MyFragmentAPI.REQUEST_ACTIVITY,PICTURE_REQUEST,intent,this);
 				break;
 			}
 			case R.id.delete_picture: {
@@ -842,7 +842,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			case R.id.location:
 				if (selectedId==NEW_LOCATION_REQUEST) {
 					Intent intent = new Intent(getContext(), LocationActivity.class);
-                    activity.onFragmentMessage(MyFragmentAPI.REQUEST_ACTIVITY,NEW_LOCATION_REQUEST,intent);
+                    activity.onFragmentMessage(MyFragmentAPI.REQUEST_ACTIVITY,NEW_LOCATION_REQUEST,intent,this);
 					break;
 				}
 				selectLocation(selectedId);
@@ -1003,7 +1003,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
         if (pictureFileName == null) {
             return;
         }
-
+			final Fragment f =this;
             pictureView.setImageResource(R.drawable.ic_action_drive);
             pictureView.setTag(pictureFileName);
             pictureView.setOnClickListener(new OnClickListener() {
@@ -1011,7 +1011,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
                 public void onClick(View v) {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(pictureFileName));
                     // nothing to edit (CANCELED)
-                    activity.onFragmentMessage(MyFragmentAPI.REQUEST_ACTIVITY,AppCompatActivity.RESULT_CANCELED,browserIntent);
+                    activity.onFragmentMessage(MyFragmentAPI.REQUEST_ACTIVITY,AppCompatActivity.RESULT_CANCELED,browserIntent,f);
                 }
             });
     }

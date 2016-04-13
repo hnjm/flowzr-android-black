@@ -86,7 +86,10 @@ public class BlotterFragment extends AbstractTotalListFragment {
         inflater.inflate(R.menu.blotter_actions, menu);
         if (blotterFilter.getAccountId()==-1) {
             if (menu.findItem(R.id.opt_menu_month)!=null) {
-                menu.removeItem(R.id.opt_menu_month);
+                menu.findItem(R.id.opt_menu_month).setVisible(false);
+            }
+            if (menu.findItem(R.id.opt_menu_bill)!=null) {
+                menu.findItem(R.id.opt_menu_bill).setVisible(false);
             }
         }
     }
@@ -494,9 +497,12 @@ public class BlotterFragment extends AbstractTotalListFragment {
 
         if (resultCode != MainActivity.RESULT_CANCELED ) {
             if (activity!=null) {
-                activity.supportInvalidateOptionsMenu();
-                recreateCursor();
-                calculateTotals();
+                //activity.supportInvalidateOptionsMenu();
+                if (getListView()!=null) { // content view not yet created ...
+                    recreateCursor();
+                    calculateTotals();
+                }
+
             }
        }
 

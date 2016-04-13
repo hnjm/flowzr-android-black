@@ -11,12 +11,13 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="wrap_content"
+	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	style="@style/ListItem">
-	<TextView android:id="@+id/label" android:layout_height="wrap_content" android:gravity="center_horizontal|center_vertical"
+	<TextView android:id="@+id/label" android:layout_height="wrap_content"
+		android:gravity="center_horizontal|center_vertical"
 		android:singleLine="true" android:textSize="@dimen/text_normal"
-		android:ellipsize="marquee" android:layout_width="wrap_content"
+		android:ellipsize="marquee" android:layout_width="match_parent"
 		android:text="AAA"
 		tools:ignore="HardcodedText" />
 </LinearLayout>

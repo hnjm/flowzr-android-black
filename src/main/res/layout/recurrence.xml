@@ -15,6 +15,7 @@
 	android:layout_gravity="center_horizontal"
 	android:gravity="center_horizontal"
 	android:orientation="vertical"
+	android:layout_marginTop="@dimen/space_xxlarge"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 

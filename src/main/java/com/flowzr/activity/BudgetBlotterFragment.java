@@ -62,7 +62,10 @@ public class BudgetBlotterFragment extends BlotterFragment {
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         MenuItem item = menu.findItem(R.id.action_filter);
-        item.setVisible(false);
+        if (item!=null) {
+            item.setVisible(false);
+        }
+
         item = menu.findItem(R.id.action_mass_op);
         item.setVisible(false);
         item = menu.findItem(R.id.opt_menu_bill);
