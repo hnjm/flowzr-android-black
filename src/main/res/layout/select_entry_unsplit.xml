@@ -13,7 +13,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/space_large"
+	android:minHeight="?android:listPreferredItemHeight"
+    android:layout_marginLeft="88dp"
     android:layout_marginRight="@dimen/space_large">
 
 	<RelativeLayout android:layout_width="0dp"
@@ -49,11 +50,15 @@
 		android:layout_height="24dp"
 		android:layout_width="24dp"
         android:focusable="true"
-        android:clickable="true"/>
+		android:layout_marginEnd="@dimen/space_large"
+        android:clickable="true"
+		android:layout_marginTop="@dimen/space_large"
+		android:layout_marginRight="@dimen/space_large" />
 
 	<ImageView style="@style/PlusButton"
 		android:layout_height="24dp"
 		android:layout_width="24dp"
+		android:layout_marginTop="@dimen/space_large"
 		android:id="@+id/plus_minus"
 		android:focusable="true"
         android:clickable="true"/>

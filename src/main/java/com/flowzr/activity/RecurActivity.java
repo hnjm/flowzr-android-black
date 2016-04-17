@@ -77,11 +77,6 @@ public class RecurActivity extends AbstractEditorActivity {
 	private DateFormat df;
 
 	@Override
-	public String getMyTag() {
-		return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
-	}
-
-	@Override
 	protected int getLayoutId() {
 		return R.layout.recur;
 	}

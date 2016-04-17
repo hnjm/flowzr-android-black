@@ -58,11 +58,6 @@ public class CurrencyActivity extends AbstractEditorActivity {
 	private Currency currency = new Currency();
 
     @Override
-    public String getMyTag() {
-        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
-    }
-
-    @Override
     protected int getLayoutId() {
         return R.layout.currency;
     }

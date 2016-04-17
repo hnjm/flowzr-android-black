@@ -304,7 +304,7 @@ public class FlowzrSyncEngine  {
         });
 
 
-        if (!isCanceled && MyPreferences.doGooglePictureUpload(context)) {
+        if (MyPreferences.doGooglePictureUpload(context)) {
             notifyUser(context.getString(R.string.flowzr_sync_sending) + " Google Drive",95);
             pushAllBlobs();
         }  else {

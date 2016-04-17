@@ -76,17 +76,6 @@ public class AccountListFragment extends AbstractTotalListFragment  {
     	return inflater.inflate(R.layout.account_list, container, false);
 	}
 
-
-
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -94,12 +83,10 @@ public class AccountListFragment extends AbstractTotalListFragment  {
             Fragment fragment=new AccountListTotalsDetailsActivity();
             getChildFragmentManager().beginTransaction().replace(R.id.fragment_land_container, fragment).addToBackStack(null).commit();
             getChildFragmentManager().executePendingTransactions();
-
         }
         recreateCursor();
         recreateAdapter();
         calculateTotals();
-        //integrityCheck();
     }
 
 
@@ -159,7 +146,7 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.clear();		
 		inflater.inflate(R.menu.accounts_actions, menu);
-        getActivity().setTitle(getString(R.string.accounts));
+        //getActivity().setTitle(getString(R.string.accounts));
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 

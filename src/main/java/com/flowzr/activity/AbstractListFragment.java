@@ -92,23 +92,22 @@ public abstract class AbstractListFragment extends ListFragment implements Refre
 		}		
 		
         createAdapter(cursor);
-		Log.e("flowzr","list fragment on create");
-		//getActivity().setTitle(this.getMyTitle());
+
     }	
     
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().setTitle(this.getMyTitle());
     	return inflater.inflate(contentId, container, false);
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
-		Log.e("flowzr","list fragment on activity created created");
-	    getActivity().setTitle(getMyTitle());
 		getListView().setEmptyView(getView().findViewById(R.id.emptyView));
         recreateAdapter();
         registerForContextMenu(getListView());
+		getActivity().setTitle(getMyTitle());
 	}
 
     protected void recreateAdapter() {

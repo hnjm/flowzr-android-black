@@ -12,4 +12,6 @@
 <View xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="1dp"
-    android:layout_marginLeft="82dp"/>
+    android:layout_marginRight="@dimen/space_xlarge"
+    android:layout_marginLeft="@dimen/space_xlarge"
+    android:background="?android:attr/listDivider" />

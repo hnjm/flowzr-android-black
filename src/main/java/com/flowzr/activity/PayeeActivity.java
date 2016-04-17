@@ -24,11 +24,6 @@ PayeeActivity extends MyEntityActivity<Payee> {
     }
 
     @Override
-    public String getMyTag() {
-        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
-    }
-
-    @Override
     protected int getLayoutId() {
         return R.layout.entity_edit;
     }

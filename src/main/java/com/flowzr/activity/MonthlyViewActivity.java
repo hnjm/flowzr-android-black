@@ -3,12 +3,12 @@ package com.flowzr.activity;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ListActivity;
-import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -44,7 +44,8 @@ import java.util.List;
  * Display only expenses, ignoring payments (positive values) in Credit Card accounts. 
  * @author Abdsandryk
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+
+
 public class MonthlyViewActivity extends ListFragment {
 	
     public static final String ACCOUNT_EXTRA = "account_id";
@@ -85,16 +86,13 @@ public class MonthlyViewActivity extends ListFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		NodeInflater nodeInflater = new NodeInflater(inflater);
-
-		final Bundle args = getArguments();
 		return inflater.inflate(getLayoutId(), container, false);
 	}
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         u = new Utils(activity);
 		Bundle bundle = getArguments();
 		if (bundle != null) {

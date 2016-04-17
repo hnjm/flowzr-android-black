@@ -15,14 +15,17 @@
     android:layout_width="match_parent"
     android:layout_marginRight="@dimen/space_small">
 
-    <ToggleButton
-        android:layout_width="@dimen/recommended_touch_size"
-        android:layout_height="@dimen/recommended_touch_size"
-        android:gravity="center"
+    <android.support.v7.widget.SwitchCompat
         android:id="@+id/toggle"
-        android:textOn=""
-        android:textOff=""
-        android:background="@drawable/btn_toggle_income_expense_bg" />
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:checked="false"
+        android:textOff="OFF"
+        android:textOn="ON" />
 
     <EditText android:layout_height="wrap_content"
               android:singleLine="true"

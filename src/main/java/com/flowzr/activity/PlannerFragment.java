@@ -75,7 +75,6 @@ public class PlannerFragment extends BlotterFragment {
         setupFilter();
         totalText = (TextView)getView().findViewById(R.id.total);
         filterText = (TextView)getView().findViewById(R.id.period);
-        //recreateCursor();
         recreateAdapter();
     }
 
@@ -119,7 +118,7 @@ public class PlannerFragment extends BlotterFragment {
             );
         }
     }
-
+/*
     @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // caught by parent but needed
@@ -131,6 +130,7 @@ public class PlannerFragment extends BlotterFragment {
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
+    */
 
     private void loadFilter() {
         SharedPreferences preferences = getActivity().getPreferences(PreferenceActivity.MODE_PRIVATE);
@@ -184,41 +184,7 @@ public class PlannerFragment extends BlotterFragment {
     }
 
     @Override
-    protected ListAdapter createAdapter(Cursor cursor) {
-        return null;
-    }
-
-    @Override
-    protected void deleteItem(int position, long id) {
-    }
-
-    @Override
-	public void editItem(long id) {
-        Log.e("flowzr","edit item");
-    }
-
-    @Override
-    protected void viewItem(View v, int position, long id) {
-        Transaction t = db.getTransaction(id);
-        Fragment fragment = null;
-        if (t.isTransfer()) {
-            fragment = new TransferActivity();
-        } else {
-            fragment = new TransactionActivity();
-        }
-        Bundle bundle = new Bundle();
-        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, t.getClass().getCanonicalName()  );
-        bundle.putLong(AbstractTransactionActivity.TRAN_ID_EXTRA, id);
-        bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, id);
-        fragment.setArguments(bundle);
-        fragment.setTargetFragment(this,0);
-         //blotterFragment.activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
-        activity.startFragmentForResult(fragment,this);
-    }
-
-    @Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("flowzr","planner on activity result");
         if (resultCode == AppCompatActivity.RESULT_OK && data!=null) {
             if (data.getStringExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TYPE)!=null) {
                 DateTimeCriteria c = WhereFilter.dateTimeFromIntent(data);

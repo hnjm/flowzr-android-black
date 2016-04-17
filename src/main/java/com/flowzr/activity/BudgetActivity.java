@@ -73,10 +73,6 @@ public class BudgetActivity extends AbstractEditorActivity {
     private int selectedAccountOption;
 	private TextView totalText;
 
-    @Override
-    public String getMyTag() {
-        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
-    }
 
     @Override
     protected int getLayoutId() {
@@ -101,7 +97,7 @@ public class BudgetActivity extends AbstractEditorActivity {
 		//x.addEditNode(layout, R.string.title, titleText);
 
 		AmountInput amountInput = new AmountInput(getContext());
-		amountInput.setOwner(activity);
+		amountInput.setOwner(this);
 		amountInput.setIncome();
 		//amountInput.disableIncomeExpenseButton();
 
@@ -135,7 +131,6 @@ public class BudgetActivity extends AbstractEditorActivity {
 					intent.putExtra(AmountInput.EXTRA_CURRENCY, budget.currencyId);
 				}
 				intent.putExtra(AmountInput.EXTRA_AMOUNT, totalText.getText().toString().trim());
-                // @TODO calc from budget
 				startActivityForResult(intent, CALCULATOR_REQUEST);
 			}
 		});
@@ -406,7 +401,6 @@ public class BudgetActivity extends AbstractEditorActivity {
 	@Override
 public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Log.e("flowzr","on activity result" + String.valueOf(requestCode)+ String.valueOf(resultCode));
 		if (resultCode == AppCompatActivity.RESULT_OK) {
 			Total t =new Total(budget.currency);
 			String amount = data.getStringExtra(AmountInput.EXTRA_AMOUNT);

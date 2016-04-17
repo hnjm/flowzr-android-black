@@ -14,6 +14,7 @@ package com.flowzr.widget;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -70,13 +71,13 @@ public class RateLayoutView implements RateNodeOwner {
     private void createUI(AbstractEditorActivity context, int fromAmountTitleId, int toAmountTitleId) {
         //amount from
         amountInputFrom = new AmountInput(context.getContext());
-        //amountInputFrom.setOwner(this.fr);
+        amountInputFrom.setOwner(context);
         amountInputFrom.setExpense();
         amountFromTitleId = fromAmountTitleId;
         amountInputFromNode = x.addEditNode(layout, fromAmountTitleId, amountInputFrom);
         //amount to & rate
         amountInputTo = new AmountInput(context.getContext());
-        //amountInputTo.setOwner(activity);
+        amountInputTo.setOwner(context);
         amountInputTo.setIncome();
         amountToTitleId = toAmountTitleId;
         amountInputToNode = x.addEditNode(layout, toAmountTitleId, amountInputTo);
@@ -298,7 +299,7 @@ public class RateLayoutView implements RateNodeOwner {
 
     @Override
     public Activity getActivity() {
-        return null;
+        return activity.getActivity();
     }
 
 

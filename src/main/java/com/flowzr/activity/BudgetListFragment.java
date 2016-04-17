@@ -102,7 +102,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
             filter.toBundle(bundle);
             bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,FILTER_BUDGET_REQUEST);
             Fragment fragment = new DateFilterActivity();
-            fragment.setTargetFragment(this,0);
+            fragment.setTargetFragment(this,FILTER_BUDGET_REQUEST);
             fragment.setArguments(bundle);
             activity.startFragmentForResult(fragment,this);
 			return true;
@@ -206,7 +206,6 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
-        Log.e("flowzr",String.valueOf(requestCode));
 		if (requestCode == FILTER_BUDGET_REQUEST) {
 			if (resultCode == MainActivity.RESULT_FIRST_USER) {
 				filter.clear();				
@@ -215,19 +214,16 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 				String periodType = data.getStringExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TYPE);
 				if (periodType!=null) {
 					PeriodType p = PeriodType.valueOf(periodType);
-                    Log.e("flowzr","ok2 " + getResources().getString(p.getTitleId()));
 					if (PeriodType.CUSTOM == p) {
 						long periodFrom = data.getLongExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_FROM, 0);
 						long periodTo = data.getLongExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TO, 0);
 						filter.put(new DateTimeCriteria(periodFrom, periodTo));
 					} else {
-                        Log.e("flowzr","ok3 " + getResources().getString(R.string.budgets) + " " + p.getTitleId());
                         activity.setTitle(getResources().getString(R.string.budgets) + " " + p.getTitleId());
 						filter.put(new DateTimeCriteria(p));
 
 					}
 				}
-                Log.e("flowzr","result OK with filter " + filter.getTitle());
 			}
 
 
@@ -277,8 +273,6 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 	
 	@Override
 	protected void addItem() {
-		//Intent intent = new Intent(this.getActivity(), BudgetActivity.class);
-		//ActivityCompat.startActivityForResult(getActivity(), intent, NEW_BUDGET_REQUEST, getScaleUpOption());
 		Bundle bundle = new Bundle();
 		bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, BudgetActivity.class.getCanonicalName());
 		activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
@@ -334,17 +328,13 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 			t.show();
 		}
 		Intent intent = new Intent(this.getActivity(), BudgetActivity.class);
-		//intent.putExtra(BudgetActivity.BUDGET_ID_EXTRA, b.parentBudgetId > 0 ? b.parentBudgetId : id);
 
         Bundle bundle =new Bundle();
         bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,BudgetActivity.class.getCanonicalName());
         bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA,b.parentBudgetId > 0 ? b.parentBudgetId : id);
 
         activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
-
-		//ActivityCompat.startActivityForResult(getActivity(), intent, EDIT_BUDGET_REQUEST, getScaleUpOption());
-
-	}
+		}
 
 	@Override
 	protected void viewItem(View v, int position, long id) {
@@ -426,7 +416,12 @@ public class BudgetListFragment extends AbstractTotalListFragment {
                 viewItem(null,mi.position,mi.id);
                 break;
             case R.id.context_budget_edit:
-                editItem(mi.id);
+				try {
+					editItem(mi.id);
+				} catch (Exception e) {
+                    // id may have been re initialized
+					e.printStackTrace();
+				}
                 break;  
         }
 

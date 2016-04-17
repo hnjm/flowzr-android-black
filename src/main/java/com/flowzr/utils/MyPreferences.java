@@ -609,14 +609,10 @@ public class MyPreferences {
         return sharedPreferences.getString("googledrive_folder", "financial_docs");
     }    
 
-    public static boolean doGoogleDriveUpload(Context context) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getBoolean("googledrive_upload", false);
-    }
 
 	public static boolean doGooglePictureUpload(Context context) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-		return sharedPreferences.getBoolean("googledrive_upload", false);
+		return sharedPreferences.getBoolean("picture_upload", true);
 	}
 
 	public static boolean isDriveUploadAutoBackups(Context context) {

@@ -18,6 +18,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -169,7 +170,7 @@ public class BackupPreferencesActivity extends PreferenceActivity implements Goo
 
 
     @Override
-    public void onConnectionFailed(ConnectionResult result) {
+    public void onConnectionFailed(@NonNull ConnectionResult result) {
 
         // Called whenever the API client fails to connect
         if (drive_action==CHOOSE_DRIVE_ACCOUNT ) {
@@ -181,7 +182,6 @@ public class BackupPreferencesActivity extends PreferenceActivity implements Goo
                 return;
             }
             try {
-                Log.e("flowzr","start a resolution");
                 result.startResolutionForResult(this, REQUEST_CODE_RESOLUTION);
             } catch (IntentSender.SendIntentException e) {
                 e.printStackTrace();

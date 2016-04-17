@@ -107,6 +107,5 @@ public interface MyFragmentAPI {
 
     void onFragmentMessage(String TAG, Bundle data);
 
-    void onFragmentMessage(int requestCode, int resultCode, Intent data);
 
 }

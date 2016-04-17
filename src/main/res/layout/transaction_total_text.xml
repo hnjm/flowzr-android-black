@@ -6,23 +6,17 @@
   ~ which accompanies this distribution, and is available at
   ~ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_height="76dp"
-        android:layout_width="match_parent"
-        android:background="@color/total_bg_color">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="76dp"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/total_bg_color">
 
-    <ToggleButton
-        android:layout_width="@dimen/recommended_touch_size"
-        android:layout_height="@dimen/recommended_touch_size"
-        android:layout_margin="@dimen/space_normal"
-        android:gravity="center_vertical"
-        android:layout_gravity="center_vertical"
-        android:id="@+id/toggle"
-        android:textOn=""
-        android:textOff=""/>
+
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/total"
             style="@style/TextView"
@@ -30,5 +24,17 @@
             android:gravity="end|center_vertical"
             android:textSize="@dimen/text_xxlarge"
             android:layout_marginRight="@dimen/space_normal" />
+
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_normal"
+        android:layout_marginStart="@dimen/space_normal"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="@dimen/space_normal"
+        android:layout_marginRight="@dimen/space_normal"
+        app:theme="@style/CustomWidgetSwitchCompat" />
 
     </LinearLayout>

@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -98,12 +99,20 @@ public class BackupListActivity extends AbstractActionBarActivity implements Goo
 
 
     @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.prefs, menu);
         return true;
     }
 
+    @Override
     protected void initToolbar() {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -528,10 +537,9 @@ public class BackupListActivity extends AbstractActionBarActivity implements Goo
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult result) {
+    public void onConnectionFailed(@NonNull ConnectionResult result) {
         // Called whenever the API client fails to connect
         if (!result.hasResolution()) {
-            //Log.e("flowzr","no resolution");
             // show the localized error dialog.
             GoogleApiAvailability.getInstance().getErrorDialog(this, result.getErrorCode(), 0).show();
             return;

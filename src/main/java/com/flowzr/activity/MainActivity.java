@@ -20,6 +20,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.ListFragment;
 import android.support.v4.view.GravityCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -37,150 +38,169 @@ import com.flowzr.db.DatabaseHelper;
 import com.flowzr.dialog.WebViewDialog;
 import com.flowzr.export.flowzr.FlowzrSyncEngine;
 import com.flowzr.filter.Criteria;
+import com.flowzr.filter.WhereFilter;
 import com.flowzr.utils.*;
 import com.flowzr.utils.MyPreferences.StartupScreen;
+import com.flowzr.view.MyFloatingActionMenu;
 
 import static com.flowzr.service.DailyAutoBackupScheduler.scheduleNextAutoBackup;
 import static com.flowzr.service.FlowzrAutoSyncScheduler.scheduleNextAutoSync;
+import static com.flowzr.utils.AndroidUtils.isCompatible;
 
 public class MainActivity  extends AbstractActionBarActivity
         implements OnAccountSelectedListener, MyFragmentAPI {
 
     static final int CHANGE_PREFERENCES = 600;
-    static final String BACKSTACK = "BACKSTACK";
+
 
     public static Activity activity;
 
-    public void editEntityRequest(Bundle data) {
-        if (data.containsKey(ENTITY_CLASS_EXTRA)) {
-            Fragment fragment = getFragmentForClass(data.getString(ENTITY_CLASS_EXTRA));
-            fragment.setArguments(data);
-            loadFragment(fragment);
-        } else {
-            Log.e("flowzr", "UNHANDLED QUERY (no class extra) " + data);
-        }
-    }
-
-    public void requestBlotter(Bundle data) {
-        Fragment fragment;
-        if (data.containsKey(ENTITY_CLASS_EXTRA)) {
-            if (data.getString(ENTITY_CLASS_EXTRA).equals(ReportFragment.class.getCanonicalName())) {
-                fragment = getFragmentForClass(BlotterFragment.class.getCanonicalName());
-            } else {
-                fragment = getFragmentForClass(data.getString(ENTITY_CLASS_EXTRA));
-            }
-        }  else {
-            fragment = getFragmentForClass(BlotterFragment.class.getCanonicalName());
-
-        }
-        Log.e("flowzr","built " + fragment.getClass().getCanonicalName());
-        fragment.setArguments(data);
-        loadFragment(fragment);
-    }
 
     @Override
     public void onFragmentMessage(String TAG, Bundle data) {
-        Log.e("flowzr", "onFragmentMessage (bundle) " + TAG + "data: " + data.toString());
-
         switch (TAG) {
-            case MyFragmentAPI.REQUEST_MYENTITY_FINISH:
-                myEntityFinish(data);
+            case MyFragmentAPI.EDIT_ENTITY_REQUEST:
+                editEntityRequest(data);
                 break;
             case MyFragmentAPI.REQUEST_BLOTTER:
                 requestBlotter(data);
                 break;
-            case MyFragmentAPI.EDIT_ENTITY_REQUEST:
-                editEntityRequest(data);
+            case MyFragmentAPI.REQUEST_MYENTITY_FINISH:
+                myEntityFinish(data);
                 break;
             default:
                 Log.e("flowzr", "UNHANDLED TAG :  " + TAG + "data: " + data.toString());
                 break;
         }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    // called for attachpicture, location, filemanager, calc
+    public void onFragmentMessage(String TAG, int requestCode,Intent intent, Fragment target) {
+        startActivityForResult(intent, requestCode);
     }
 
     public void startFragmentForResult(Fragment fragment, Fragment target) {
         ensurePaneMode();
-        fragment.setTargetFragment(target,0);
         showHideFragment(fragment,target);
+    }
+
+    private Fragment getFragmentForClass(String canonicalClassName) {
+        Class clazz = null;
+        try {
+            clazz = Class.forName(canonicalClassName);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            return (Fragment) clazz.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    private ListFragment getListFragmentForClass(String canonicalClassName) {
+        Class clazz = null;
+        try {
+            clazz = Class.forName(canonicalClassName);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            return (ListFragment) clazz.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    private void editEntityRequest(Bundle data) {
+        if (data.containsKey(ENTITY_CLASS_EXTRA)) {
+            Fragment fragment = getFragmentForClass(data.getString(ENTITY_CLASS_EXTRA));
+            fragment.setArguments(data);
+            loadFragment(fragment);
+
+        } else {
+            Log.e("flowzr", "Unhandled message (no ENTITY_CLASS_EXTRA) " + data);
+        }
+    }
+
+    private void requestBlotter(Bundle data) {
+        Fragment fragment;
+        if (data.containsKey(MyFragmentAPI.ENTITY_CLASS_EXTRA)) {
+            if (data.getString(MyFragmentAPI.ENTITY_CLASS_EXTRA).equals(ReportFragment.class.getCanonicalName())) {
+                fragment = getFragmentForClass(BlotterFragment.class.getCanonicalName());
+            } else {
+                fragment = getFragmentForClass(data.getString(MyFragmentAPI.ENTITY_CLASS_EXTRA));
+            }
+        }  else {
+            fragment = getFragmentForClass(BlotterFragment.class.getCanonicalName());
+        }
+        if (fragment!=null) {
+            fragment.setArguments(data);
+            loadFragment(fragment);
+        }
+    }
+
+
+    private void myEntityFinish(Bundle data) {
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment currentFragment = manager.findFragmentById(R.id.fragment_container);
+        Fragment target =  currentFragment.getTargetFragment();
+        if (target==null) {
+            removePaneFragment(currentFragment);
+            // from entity list ...
+            if (data.getInt(ENTITY_REQUEST_EXTRA)==CategorySelectorFragment.CATEGORY_PICK) {
+                requestBlotter(data);
+            }
+        } else {
+            Intent intent = new Intent();
+            intent.putExtras(data);
+            int resultCode=data.getInt(MyFragmentAPI.RESULT_EXTRA);
+            int requestCode=data.getInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA);
+           target.onActivityResult(requestCode,resultCode , intent);
+            showResultingFragment(target,currentFragment);
+        }
     }
 
     private void loadFragment(Fragment fragment) {
         ensurePaneMode();
         if (fragment.getTargetFragment() == null) {
             replacePaneFragments(fragment);
-        }
-    }
-
-    // called for attachpicture, location, filemanager,
-    public void onFragmentMessage(String TAG, int requestCode,Intent intent, Fragment target) {
-        startActivityForResult(intent, requestCode);
-    }
-
-
-    public void myEntityFinish(Bundle data) {
-        FragmentManager manager = getSupportFragmentManager();
-
-        Log.e("flowzr","child is: "  +  String.valueOf(manager.findFragmentById(R.id.fragment_container)));
-        Fragment currentFragment = manager.findFragmentById(R.id.fragment_container);
-        Log.e("flowzr","target is :" + currentFragment.getTargetFragment());
-        Fragment target =  currentFragment.getTargetFragment();
-        if (target==null) {
-            Log.e("flowzr","myEntityFinish no target ! removing all panes");
-            removePaneFragment(currentFragment);
-            //removePaneFragments();
-            //Log.e("flowzr","ensuring view pager now ...");
-            //ensureViewPagerMode();
-           /*
-            try {
-
-                recreateViewPagerAdapter();
-            } catch(Exception e) {
-                // content view nfraot created ...
-                // from budgets ...
-                e.printStackTrace();
-            }
-            */
-
-            //ensureViewPagerMode();
         } else {
-
-            Intent intent = new Intent();
-            intent.putExtras(data);
-            int resultCode=data.getInt(MyFragmentAPI.RESULT_EXTRA);
-            int requestCode=data.getInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA);
-            Log.e("flowzr","calling onActivityResult " + String .valueOf(resultCode) + " " + String.valueOf(requestCode));
-            target.onActivityResult(requestCode,resultCode,  intent);
-
-            Log.e("flowzr","target was " + target);
-            Log.e("flowzr","target was " + currentFragment);
-            showResultingFragment(target,currentFragment);
+            showHideFragment(fragment,fragment.getTargetFragment());
         }
     }
-
 
 
     private void showResultingFragment(Fragment target, Fragment fragment) {
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-
         if (!target.isAdded()) {
             transaction.add(R.id.fragment_container, target);
             activePaneFragments.add(target);
-            Log.e("flowzr","this should never happen Ek66E999");
         } else {
             transaction.show(target);
         }
-        Log.e("flowzr","show2" + target.getClass().getCanonicalName());
         //******
         if (fragment.isAdded()) {
             activePaneFragments.remove(fragment);
             transaction.remove( fragment);
         }
-        Log.e("flowzr","hide2" + fragment.getClass().getCanonicalName());
-        Log.e("flowzr", "paneCount " + String.valueOf(activePaneFragments.size()));
         transaction.addToBackStack(BACKSTACK);
         transaction.commit();
+        if (activePaneFragments.size()==0) {
+            ensureViewPagerMode();
+        }
+
     }
 
     private void showHideFragment(Fragment fragment, Fragment target) {
@@ -192,34 +212,23 @@ public class MainActivity  extends AbstractActionBarActivity
         } else {
             transaction.show(fragment);
         }
-        Log.e("flowzr","show" + fragment.getClass().getCanonicalName());
 
         if (!target.isAdded()) {
             transaction.add(R.id.fragment_container, target);
         }
-        Log.e("flowzr","hide" + target.getClass().getCanonicalName());
+
         transaction.hide(target);
         transaction.addToBackStack(BACKSTACK);
-        Log.e("flowzr", "paneCount " + String.valueOf(activePaneFragments.size()));
         transaction.commit();
     }
 
-
     private void replacePaneFragments(Fragment fragment) {
-
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-            // removePaneFragments();
-            // fragmentTransaction.replace(R.id.fragment_container, fragment);
-
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             activePaneFragments.add(fragment);
             fragmentTransaction.addToBackStack(BACKSTACK);
             fragmentTransaction.commit();
-            Log.e("flowzr", "paneCount " + String.valueOf(activePaneFragments.size()));
     }
-
-
 
     private void removePaneFragment(Fragment activeFragment) {
         if (activePaneFragments.size() > 0) {
@@ -227,36 +236,34 @@ public class MainActivity  extends AbstractActionBarActivity
             fragmentTransaction.remove(activeFragment);
             activePaneFragments.remove(activeFragment);
             fragmentTransaction.addToBackStack(BACKSTACK);
+            if (activePaneFragments.size() > 0) {
+                Fragment f2 = activePaneFragments.get(activePaneFragments.size()-1);
+                if (f2.isAdded()) {
+                    fragmentTransaction.show(f2);
+                } else {
+                    fragmentTransaction.add(R.id.fragment_container,f2);
+                }
+            }
             fragmentTransaction.commit();
-            Log.e("flowzr", "paneCount " + String.valueOf(activePaneFragments.size()));
         }
         if (activePaneFragments.size() ==0 ) {
             ensureViewPagerMode();
+            recreateViewPagerAdapter();
         }
     }
 
-
-
-
-
-    public void ensurePaneMode() {
-        // if (viewPager.getVisibility()==View.VISIBLE) {
+    private void ensurePaneMode() {
         viewPager.setVisibility(View.GONE);
-        findViewById(R.id.fragment_container).setVisibility(View.VISIBLE);
-        paneMode=true;
-        //}
-
-    }
-
-    public Fragment getFragmentForClass(String canonicalClassName) {
-        try {
-            Class clazz = Class.forName(canonicalClassName);
-            return (Fragment) clazz.newInstance();
-        } catch (Exception e) {
-            Log.e("flowzr", "UNHANDLED CLASS " + canonicalClassName);
-            e.printStackTrace();
-            return null;
+        if ( findViewById(R.id.fragment_container)!=null) {
+            findViewById(R.id.fragment_container).setVisibility(View.VISIBLE);
         }
+        if (isCompatible(14)) {
+            MyFloatingActionMenu menu1 = (MyFloatingActionMenu) findViewById(R.id.menu1);
+            menu1.hideMenu(true);
+        }
+
+
+        paneMode=true;
     }
 
 
@@ -381,12 +388,12 @@ public class MainActivity  extends AbstractActionBarActivity
                 super.onBackPressed();
 
             } else { // viewpager mode
-                if (viewPager.getCurrentItem() != 0 && !paneMode) {
+                if (viewPager.getCurrentItem() > 0 && !paneMode) {
                     ensureViewPagerMode();
-                    viewPager.setCurrentItem(0);
-                    //not needed returnreturn;
+                    viewPager.setCurrentItem(viewPager.getCurrentItem()-1);
+                    // return; (not needed)
                 } else if (viewPager.getCurrentItem() == 0) {
-                    // quit app ..
+                    // quit app ...
                     Log.e("flowzr", "======= quit app ?");
                     super.onBackPressed();
                 }
@@ -395,53 +402,14 @@ public class MainActivity  extends AbstractActionBarActivity
         }
     }
 
-/*
-    @Override
-    public void onBackPressed() {
-
-
-            if (mDrawerLayout!=null) {
-                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    mDrawerLayout.closeDrawers();
-                    return;
-                }
-            }
-
-            if (viewPager.getCurrentItem()!=0) {
-                ensureViewPagerMode();
-                viewPager.setCurrentItem(0);
-            } else {
-                super.onBackPressed();
-            }
-        }
-        super.onBackPressed();
-    }
-
-*/
-
-    @Override
-    public void onFragmentMessage(int requestCode, int resultCode, Intent data) {
-        Log.e("flowzr", "onFragmentMessage requestCode, resultCode " + String.valueOf(requestCode) + " " + String.valueOf(resultCode));
-        Log.e("flowzr", "data: " + data.toString());
-        Log.e("flowzr", "DO NOTHING ...");
-    }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("flowzr","Main got on activity result;" + data);
         PinProtection.unlock(this);
         if (requestCode == CHANGE_PREFERENCES) {
             scheduleNextAutoBackup(this);
             scheduleNextAutoSync(this);
         }
-        /*
-        if (resultCode != MainActivity.RESULT_CANCELED) {
-            onFragmentMessage(requestCode, resultCode, data);
-            setResult(RESULT_OK);
-        }
-        */
         mAdapter.notifyDataSetChanged();
     }
 
@@ -506,11 +474,13 @@ public class MainActivity  extends AbstractActionBarActivity
         Intent data = new Intent(this, BlotterFragment.class);
         data.putExtras(bundle);
         viewPager.setCurrentItem(tabId);
-
-        //View lv = findViewById(R.id.blotter);
-        //if (lv!=null) {
+        try {
             mAdapter.blotterFragment.onActivityResult(BlotterFragment.FILTER_REQUEST, MainActivity.RESULT_OK, data);
-        //}
+        } catch (Exception e) {
+            // java.lang.IllegalStateException: Content view not yet created
+            e.printStackTrace();
+        }
+
     }
 
     @Override

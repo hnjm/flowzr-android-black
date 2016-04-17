@@ -16,6 +16,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -75,11 +76,6 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
     private boolean isAccountFilter;
 
     @Override
-    public String getMyTag() {
-        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
-    }
-
-    @Override
     protected int getLayoutId() {
         return R.layout.blotter_filter;
     }
@@ -92,7 +88,7 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
 		sortBlotterEntries = getResources().getStringArray(R.array.sort_blotter_entries);
         filterValueNotFound = getString(R.string.filter_value_not_found);
 
-		LinearLayout layout = (LinearLayout)getActivity().findViewById(R.id.layout);
+		LinearLayout layout = (LinearLayout)getView().findViewById(R.id.layout);
 		period = x.addFilterNodeMinus(layout, R.id.period, R.id.period_clear, R.string.period, R.string.no_filter);
 		account = x.addFilterNodeMinus(layout, R.id.account, R.id.account_clear, R.string.account, R.string.no_filter);
 		currency = x.addFilterNodeMinus(layout, R.id.currency, R.id.currency_clear, R.string.currency, R.string.no_filter);
@@ -102,11 +98,10 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
 		location = x.addFilterNodeMinus(layout, R.id.location, R.id.location_clear, R.string.location, R.string.no_filter);
 		status = x.addFilterNodeMinus(layout, R.id.status, R.id.status_clear, R.string.transaction_status, R.string.no_filter);
 		sortOrder = x.addFilterNodeMinus(layout, R.id.sort_order, R.id.sort_order_clear, R.string.sort_order, sortBlotterEntries[0]);	
-		
-		Intent intent = getActivity().getIntent();
-		if (intent != null) {
-			filter = WhereFilter.fromIntent(intent);
-            getAccountIdFromFilter(intent);
+		Bundle bundle =getArguments();
+		if (bundle != null) {
+            filter=WhereFilter.fromBundle(bundle);
+            getAccountIdFromFilter(bundle);
             updatePeriodFromFilter();
 			updateAccountFromFilter();
 			updateCurrencyFromFilter();
@@ -126,13 +121,13 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
     public boolean finishAndClose(int result) {
         Bundle bundle = new  Bundle();
         bundle.putInt(MyFragmentAPI.RESULT_EXTRA,result);
-        activity.onFragmentMessage(MyFragmentAPI.REQUEST_BLOTTERFILTER_FINISH,bundle);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
         return true;
     }
 
     public boolean finishAndClose(Bundle bundle) {
-
-        activity.onFragmentMessage(MyFragmentAPI.REQUEST_BLOTTERFILTER_FINISH,bundle);
+        bundle.putInt(MyFragmentAPI.RESULT_EXTRA,AppCompatActivity.RESULT_OK);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
         return true;
     }
 
@@ -171,8 +166,8 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
         return isAccountFilter && accountId > 0;
     }
 
-    private void getAccountIdFromFilter(Intent intent) {
-        isAccountFilter = intent.getBooleanExtra(IS_ACCOUNT_FILTER, false);
+    private void getAccountIdFromFilter(Bundle bundle) {
+        isAccountFilter = bundle.getBoolean(IS_ACCOUNT_FILTER, false);
         accountId = filter.getAccountId();
     }
 

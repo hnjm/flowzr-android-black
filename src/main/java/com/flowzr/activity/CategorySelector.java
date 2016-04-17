@@ -194,10 +194,8 @@ public class CategorySelector {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("flowzr","category selector " + requestCode + " " + resultCode);
+
         if (resultCode == AppCompatActivity.RESULT_OK) {
-            Log.e("flowzr","category selector RESULT OK");
-            Log.e("flowzr",data.getExtras().toString());
             switch (requestCode) {
                 case  CategorySelectorFragment.CATEGORY_ADD: {
                     categoryCursor.requery();

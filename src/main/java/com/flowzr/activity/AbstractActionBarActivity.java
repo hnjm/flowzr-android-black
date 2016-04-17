@@ -49,9 +49,12 @@ import android.widget.FrameLayout;
 
 import com.flowzr.R;
 import com.flowzr.utils.PinProtection;
+import com.flowzr.view.MyFloatingActionMenu;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.flowzr.utils.AndroidUtils.isCompatible;
 
 
 public class AbstractActionBarActivity  extends AppCompatActivity {
@@ -65,7 +68,9 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
     protected NavigationView navigationView;
     protected boolean isDrawerLocked;
     private ActionBarDrawerToggle mDrawerToggle;
-
+    protected boolean paneMode=false;
+    protected static final String BACKSTACK = "BACKSTACK";
+    private String PANE_MODE="PANE_MODE";
 
     protected void attachBaseContext(Context base)
     {
@@ -77,29 +82,40 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Log.e("flowzr", "paneCount " + String.valueOf(activePaneFragments.size()));
         if (activePaneFragments.size()==0) {
             ensureViewPagerMode();
         }
         super.onBackPressed();
     }
 
-    public void setMyTitle(String t) {
-        SpannableString s = new SpannableString(t);
-        s.setSpan(new TypefaceSpan(String.valueOf(Typeface.DEFAULT)), 0, s.length(),
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        if (getSupportActionBar()!=null) {
-            getSupportActionBar().setTitle(s);
-        }
-    }
 
-
-    public boolean paneMode=false;
 
     public void ensureViewPagerMode() {
+
+        FragmentManager fm = getSupportFragmentManager();
+        int count = fm.getBackStackEntryCount();
+        for(int i = 0; i < count-1; ++i) {
+            fm.popBackStackImmediate();
+        }
         removePaneFragments();
-        findViewById(R.id.fragment_container).setVisibility(View.GONE);
+        if (findViewById(R.id.fragment_container)!=null) {
+            findViewById(R.id.fragment_container).setVisibility(View.GONE);
+        }
         viewPager.setVisibility(View.VISIBLE);
+        mAdapter.notifyDataSetChanged();
+        switch (viewPager.getCurrentItem()) {
+            case 0:
+                setTitle(R.string.accounts);
+                break;
+            case 1:
+                setTitle(R.string.blotter);
+                break;
+            case 2:
+                setTitle(R.string.budgets);
+                break;
+        }
+        recreateViewPagerAdapter();
+        supportInvalidateOptionsMenu();
         paneMode=false;
     }
 
@@ -112,7 +128,6 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
             activePaneFragments.clear();
             fragmentTransaction.addToBackStack(MainActivity.BACKSTACK);
             fragmentTransaction.commit();
-            Log.e("flowzr", "remove Pane Fragments paneCount " + String.valueOf(activePaneFragments.size()));
         }
     }
 
@@ -190,12 +205,15 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         setTitle(R.string.accounts);
+                        hideFab();
                         break;
                     case 1:
                         setTitle(R.string.blotter);
+                        showFab();
                         break;
                     case 2:
                         setTitle(R.string.budgets);
+                        hideFab();
                         break;
                 }
 
@@ -203,6 +221,24 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         });
         viewPager.setCurrentItem(pos);
         mAdapter.notifyDataSetChanged();
+    }
+
+    private void hideFab() {
+        if (isCompatible(14)) {
+            final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) findViewById(R.id.menu1);
+            if (menu1 != null) {
+                menu1.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void showFab() {
+        if (isCompatible(14)) {
+            final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) findViewById(R.id.menu1);
+            if (menu1 != null) {
+                menu1.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
 
@@ -297,6 +333,7 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putInt(STATE_TABID,viewPager.getCurrentItem());
+        savedInstanceState.putBoolean(PANE_MODE,paneMode);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -316,6 +353,22 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
     protected void onPostResume() {
         super.onPostResume();
         PinProtection.unlock(this);
+        //handle setting title after viewpager generate title at loading
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                switch (viewPager.getCurrentItem()) {
+                    case 0:
+                        setTitle(R.string.accounts);
+                        break;
+                    case 2:
+                        setTitle(R.string.budgets);
+                        break;
+                }
+            }
+        }, 800);
+
     }
 
     @Override

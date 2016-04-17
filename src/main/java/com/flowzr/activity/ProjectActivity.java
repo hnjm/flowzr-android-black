@@ -31,10 +31,6 @@ public class ProjectActivity extends AbstractEditorActivity {
 
     private Project project = new Project();
 
-    @Override
-    public String getMyTag() {
-        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
-    }
 
     @Override
     protected int getLayoutId() {

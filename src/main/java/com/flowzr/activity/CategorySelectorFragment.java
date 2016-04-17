@@ -121,12 +121,18 @@ public class CategorySelectorFragment extends AbstractListFragment {
             break;
             case R.id.action_add:
                 bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, getEditActivityClass());
-                activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+                Fragment fragment = new CategoryActivity();
+                fragment.setArguments(bundle);
+                fragment.setTargetFragment(this,CATEGORY_ADD);
+                activity.startFragmentForResult(fragment,this);
             break;
             case R.id.action_edit:
                 bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, getEditActivityClass());
                 bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, navigator.selectedCategoryId);
-                activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+                fragment = new CategoryActivity();
+                fragment.setArguments(bundle);
+                fragment.setTargetFragment(this,CATEGORY_PICK);
+                activity.startFragmentForResult(fragment,this);
                 break;
             case R.id.action_attributes:
                 bundle = new Bundle();
@@ -145,12 +151,11 @@ public class CategorySelectorFragment extends AbstractListFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("flowzr","in category selector");
         navigator = new CategoryTreeNavigator(db);
         recreateAdapter();
         navigator.selectedCategoryId=data.getLongExtra(MyFragmentAPI.ENTITY_ID_EXTRA, 0);
         navigator.selectCategory(data.getLongExtra(MyFragmentAPI.ENTITY_ID_EXTRA, 0));
-        confirmSelection();
+        //confirmSelection();
     }
 
 
@@ -241,7 +246,7 @@ public class CategorySelectorFragment extends AbstractListFragment {
         bundle.putBoolean(CategorySelectorFragment.INCLUDE_SPLIT_CATEGORY, includeSplitCategory);
         Fragment fragment = new CategorySelectorFragment();
         fragment.setArguments(bundle);
-        Log.e("flowzr","in category pickCategory");
+        fragment.setTargetFragment(target,CATEGORY_PICK);
         activity.startFragmentForResult(fragment,target);
         return true;
     }

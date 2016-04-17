@@ -72,11 +72,6 @@ public class CategoryActivity extends AbstractEditorActivity {
     private Category category = new Category(-1);
 
     @Override
-    public String getMyTag() {
-        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
-    }
-
-    @Override
     protected int getLayoutId() {
         return R.layout.category;
     }
@@ -90,13 +85,11 @@ public class CategoryActivity extends AbstractEditorActivity {
 
 		Bundle b = getArguments();
 		if (b != null) {
-            Log.e("flowzr","received args ");
 			long id = b.getLong(MyFragmentAPI.ENTITY_ID_EXTRA, -1);
 			if (id != -1) {
 				category = db.getCategory(id);
 			}
 		}
-        Log.e("flowzr","received categgory ID " + String.valueOf(category));
 
 		attributeCursor = db.getAllAttributes();
 		getActivity().startManagingCursor(attributeCursor);

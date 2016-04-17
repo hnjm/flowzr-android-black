@@ -63,11 +63,6 @@ public class ReportFilterActivity extends AbstractEditorActivity {
     private String filterValueNotFound;
 
     @Override
-    public String getMyTag() {
-        return MyFragmentAPI.REQUEST_REPORTFILTER_FINISH;
-    }
-
-    @Override
     protected int getLayoutId() {
         return R.layout.blotter_filter;
     }

@@ -126,7 +126,7 @@ public class PictureDriveTask extends ApiClientAsyncTask<String, String, Object>
         driveContents.commit(getGoogleApiClient(), null).await();
         Thread.sleep(10000); // wait for google to flush ...
         DriveResource.MetadataResult s = dFil.getMetadata(mClient).await();
-        Log.e("flowzr", "alt url is :" + s.getMetadata().getAlternateLink());
+
         String file_url= s.getMetadata().getAlternateLink();
         String uploadedId= s.getMetadata().getDriveId().encodeToString();
         String sql = "update transactions set blob_key='" + file_url + "' where remote_key='" + remote_key + "'";

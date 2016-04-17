@@ -16,6 +16,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -30,6 +34,7 @@ import com.flowzr.model.Category;
 import com.flowzr.model.Total;
 import com.flowzr.model.Transaction;
 import com.flowzr.utils.MyPreferences;
+import com.flowzr.utils.Utils;
 import com.flowzr.widget.AmountInput;
 
 public class TransferActivity extends AbstractTransactionActivity {
@@ -40,11 +45,6 @@ public class TransferActivity extends AbstractTransactionActivity {
 
 	private long selectedAccountFromId = -1;
 	private long selectedAccountToId = -1;
-
-    @Override
-    public String getMyTag() {
-        return MyFragmentAPI.REQUEST_TRANSFER_FINISH;
-    }
 
     protected int getLayoutId() {
         return R.layout.transfer_free;
@@ -61,8 +61,8 @@ public class TransferActivity extends AbstractTransactionActivity {
 				timeText.setEnabled(false);			
 			}			
 		}
-		ToggleButton toggleView = (ToggleButton) getView().findViewById(R.id.toggle);
-		toggleView.setBackgroundDrawable(getTransferIconDrawable());
+		SwitchCompat toggleView = (SwitchCompat) getView().findViewById(R.id.toggle);
+		toggleView.setVisibility(View.GONE); // .setBackgroundDrawable(getTransferIconDrawable());
 		if (getView().findViewById(R.id.saveAddButton)!=null) {
 			getView().findViewById(R.id.saveAddButton).setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -136,6 +136,14 @@ public class TransferActivity extends AbstractTransactionActivity {
 	
     @Override
     protected void editTransaction(Transaction transaction) {
+
+		Total t = new Total(rateView.getCurrencyFrom());
+		t.balance=transaction.fromAmount;
+		u = new Utils(getContext());
+		u.setTotal(totalText, t);
+		//totalText.setTextColor(getResources().getColor(R.color.f_blue_lighter1));
+		//amountInput.setAmount(transaction.fromAmount);
+
         if (transaction.fromAccountId > 0) {
             Account fromAccount = em.getAccount(transaction.fromAccountId);
             selectAccount(fromAccount, accountFromText, false);
@@ -154,15 +162,8 @@ public class TransferActivity extends AbstractTransactionActivity {
         selectPayee(transaction.payeeId);
     }
 
-	/**
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getActivity().getMenuInflater().inflate(R.menu.transaction_actions, menu);
-        return true;
-    }
-	**/
-    
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {

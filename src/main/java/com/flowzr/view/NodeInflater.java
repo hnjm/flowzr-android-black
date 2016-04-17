@@ -103,7 +103,7 @@ public class NodeInflater {
 
 		public View create() {
 			layout.addView(v);
-			if (divider) {
+			if (true) {
                 View dividerView = addDivider(layout);
                 v.setTag(dividerView);
             }

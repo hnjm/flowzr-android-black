@@ -273,7 +273,6 @@ public abstract class EntityManager {
 			    	row.put(DatabaseHelper.deleteLogColumns.REMOTE_KEY,cursor.getString(0));				
 			    	row.put(DatabaseHelper.deleteLogColumns.DELETED_ON, System.currentTimeMillis());
 			    	db().insert(DatabaseHelper.DELETE_LOG_TABLE, null, row);
-			    	//Log.e("flowzr","stored deleteLog " + ed.tableName + " "+ cursor.getString(0));
 			    }
 			}
 		}		

@@ -14,6 +14,7 @@ package com.flowzr.activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -168,12 +169,13 @@ public class SelectTemplateFragment extends TemplatesListFragment {
 	}
 
 	void returnResult(long id, boolean edit) {
-        //@TODO generate templates
         Bundle bundle = new Bundle();
         bundle.putLong(TEMPATE_ID,id);
         bundle.putInt(MULTIPLIER,multiplier);
-        bundle.putLong(MyFragmentAPI.ENTITY_CLASS_EXTRA,id);
-        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
+		bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
+        bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA,id);
+		bundle.putLong(MyFragmentAPI.RESULT_EXTRA, AppCompatActivity.RESULT_OK);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_BLOTTER,bundle);
     }
 
 }

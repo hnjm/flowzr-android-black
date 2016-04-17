@@ -17,49 +17,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
-            android:paddingTop="@dimen/actionBarSize"
-            android:id="@+id/fragment_container"
+        <LinearLayout
+            android:layout_marginTop="?attr/actionBarSize"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-
-        </FrameLayout>
-
-
-
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
-            android:paddingTop="@dimen/actionBarSize"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.v4.view.PagerTabStrip
-                android:id="@+id/pager_tab_strip"
+            <FrameLayout
+                android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:textColor="@color/text_primary"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp" />
+                android:layout_height="wrap_content">
+            </FrameLayout>
 
-        </android.support.v4.view.ViewPager>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v4.view.PagerTabStrip
+                    android:id="@+id/pager_tab_strip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_primary"
+                    android:paddingBottom="5dp" />
+
+            </android.support.v4.view.ViewPager>
+
+        </LinearLayout>
 
 
         <include layout="@layout/toolbar"/>
 
-        <!--
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab"
-                    android:layout_gravity="bottom|end"
-                    style="@style/FabStyle"/>
-        -->
+
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView

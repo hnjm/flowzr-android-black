@@ -17,7 +17,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 
 import com.flowzr.R;
 import com.flowzr.utils.Utils;
@@ -28,11 +33,40 @@ public class AboutActivity extends AbstractActionBarActivity  {
 	public MyAdapter mAdapter;
 
 	@Override
+	public void onBackPressed() {
+		finish();
+	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+            {
+                finish();
+                return true;
+            }
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void initToolbar() {
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+	@Override
     protected void onCreate(Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);    
 		setContentView(R.layout.main);
 		initToolbar();
-		setupDrawer();
         setTitle(getResources().getString(R.string.app_name) + " (" + Utils.getAppVersion(this) + ")");
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		mAdapter = new MyAdapter(getSupportFragmentManager(),new Intent());

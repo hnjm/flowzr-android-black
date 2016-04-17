@@ -68,7 +68,6 @@ public class TemplatesListFragment extends BlotterFragment {
 		blotterFilter = new WhereFilter("templates");
 		blotterFilter.eq(BlotterFilter.IS_TEMPLATE, String.valueOf(1));
 	    blotterFilter.eq(BlotterFilter.PARENT_ID, String.valueOf(0));
-		Log.e("flowzr","template list fragment on activity created");
 	}
     
     @Override
@@ -87,8 +86,6 @@ public class TemplatesListFragment extends BlotterFragment {
         if (getView().findViewById(R.id.container_V)!=null) {
             getView().findViewById(R.id.container_V).setVisibility(View.GONE);
         }
-		Log.e("flowzr","template list fragment on activity created");
-		Log.e("flowzr",String.valueOf(blotterFilter.isTemplate()));
         //recreateAdapter();
         recreateCursor();
 	}

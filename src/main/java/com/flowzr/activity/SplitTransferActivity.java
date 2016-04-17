@@ -42,11 +42,6 @@ public class SplitTransferActivity extends AbstractSplitActivity {
     }
 
     @Override
-    public String getMyTag() {
-        return MyFragmentAPI.REQUEST_SPLITTRANSFER_FINISH;
-    }
-
-    @Override
     protected int getLayoutId() {
         return R.layout.split_fixed;
     }

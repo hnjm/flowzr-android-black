@@ -5,63 +5,44 @@
   are made available under the terms of the GNU Public License v2.0
   which accompanies this distribution, and is available at
   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-  
+
   Contributors:
       Denis Solonenko - initial API and implementation
-      Emmanuel Florent - port to Android API 11+
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:padding="@dimen/space_small"
-	android:id="@+id/list_item"
-	android:minHeight="?listPreferredItemHeight">
+	android:layout_width="fill_parent" android:layout_height="?android:attr/listPreferredItemHeight"
+	android:paddingLeft="0dip" android:paddingRight="12dip">
 
 	<ImageView android:id="@+id/icon"
-		android:layout_width="24dp"
-		android:layout_height="24dp"
-		android:layout_marginTop="-8dp"
-		android:layout_alignParentRight="true"
-		android:layout_alignParentTop="true"/>
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_alignParentRight="true" android:layout_alignParentTop="true"/>
 
 	<TextView android:id="@+id/date" android:layout_width="wrap_content"
-	    android:textSize="@dimen/text_normal"
-		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true"
-		android:layout_marginRight="@dimen/space_small"
-		android:layout_alignParentBottom="true"
-		android:singleLine="true"
-		android:text="0.00 $"
-		tools:ignore="HardcodedText" />
+		android:layout_height="wrap_content" android:layout_alignParentRight="true"
+		android:layout_alignParentBottom="true" android:textAppearance="?android:attr/textAppearanceSmall"
+		android:singleLine="true" android:text="0.00 $" android:layout_marginBottom="9dip"/>
 
 	<TextView android:id="@+id/label" android:layout_width="wrap_content"
-		style="@style/TextView" android:textSize="@dimen/text_normal" 
 		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
-		android:layout_marginBottom="8dip"
-		android:singleLine="true"
-		android:ellipsize="marquee"
-
+		android:layout_alignParentBottom="true" android:layout_marginBottom="8dip"
+		android:layout_marginTop="-10dip" android:singleLine="true"
+		android:ellipsize="marquee" android:textAppearance="?android:attr/textAppearanceSmall"
 		android:visibility="invisible" android:layout_marginLeft="5dip"/>
-	<!-- top left -->
+
 	<TextView android:id="@+id/number" android:layout_width="wrap_content"
-	style="@style/TextView" android:textSize="@dimen/text_large" 
 		android:layout_height="wrap_content" android:layout_marginLeft="5dp"
 		android:layout_toRightOf="@id/label" android:layout_toLeftOf="@id/date"
 		android:layout_alignBaseline="@id/label"
 		android:layout_alignWithParentIfMissing="true" android:singleLine="true"
-		android:ellipsize="marquee"/>
+		android:ellipsize="marquee" android:textAppearance="?android:attr/textAppearanceSmall"/>
 
 	<TextView android:id="@+id/line1" android:layout_width="wrap_content"
-		style="@style/TextView" android:textSize="@dimen/text_large" 
 		android:layout_height="wrap_content"
-
 		android:layout_alignParentTop="true" android:layout_above="@id/label"
 		android:layout_alignWithParentIfMissing="true"
+		android:textAppearance="?android:attr/textAppearanceLarge"
 		android:singleLine="true" android:gravity="center_vertical"
 		android:text="line1" android:layout_marginLeft="11dp"
-		android:ellipsize="marquee" android:layout_toLeftOf="@id/icon"
-		tools:ignore="HardcodedText" />
+		android:ellipsize="marquee" android:layout_toLeftOf="@id/icon"/>
 
 </RelativeLayout>

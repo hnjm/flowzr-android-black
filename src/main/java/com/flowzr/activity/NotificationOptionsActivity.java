@@ -58,11 +58,6 @@ public class NotificationOptionsActivity extends AbstractEditorActivity implemen
 	private NotificationOptions options = NotificationOptions.createDefault();
 
 	@Override
-	public String getMyTag() {
-		return null;
-	}
-
-	@Override
 	protected int getLayoutId() {
 		return R.layout.recurrence;
 	}

@@ -109,6 +109,10 @@ public class Transaction extends TransactionBase {
         return (Transaction)intent.getSerializableExtra(SPLIT_BLOB);
 	}
 
+	public static Transaction fromBundleAsSplit(Bundle bundle) {
+		return (Transaction)bundle.getSerializable(SPLIT_BLOB); //.getSerializableExtra(SPLIT_BLOB);
+	}
+
 	public static Transaction fromBlotterCursor(Cursor c) {
 		long id = c.getLong(BlotterColumns._id.ordinal());
 		Transaction t = new Transaction();
@@ -162,7 +166,8 @@ public class Transaction extends TransactionBase {
         }
     }
 
-    @Override
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+	@Override
     public String toString() {
         String sb = new String();
         sb.concat(String.valueOf(new Date(dateTime))).concat(":");

@@ -76,10 +76,7 @@
             app:menu_colorPressed="@color/fabPressed"
             app:menu_colorRipple="@color/fabRipple"
             style="@style/FloatingActionButton"
-            app:menu_labels_style="@style/MenuLabelsStyle"
-            android:visibility="gone">
-
-
+            app:menu_labels_style="@style/MenuLabelsStyle">
 
 
             <com.flowzr.view.FloatingActionButton
@@ -104,8 +101,7 @@
                 app:menu_labels_style="@style/MenuLabelsStyle"
                 app:fab_colorNormal="@color/fabColor"
                 app:fab_colorPressed="@color/fabPressed"
-                app:fab_colorRipple="@color/fabRipple"
-                />
+                app:fab_colorRipple="@color/fabRipple" />
 
         </com.flowzr.view.MyFloatingActionMenu>
 

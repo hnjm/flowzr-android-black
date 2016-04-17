@@ -15,6 +15,8 @@ package com.flowzr.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +32,7 @@ import com.flowzr.model.Transaction;
 import com.flowzr.utils.CurrencyCache;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.Utils;
+import com.flowzr.view.NodeInflater;
 
 import static com.flowzr.utils.Utils.text;
 
@@ -57,18 +60,18 @@ public abstract class AbstractSplitActivity extends AbstractEditorActivity {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        getActivity().setTitle(getString(R.string.accounts));
-        return inflater.inflate(layoutId, container, false);
+
+        NodeInflater nodeInflater = new NodeInflater(inflater);
+        x = new ActivityLayout(nodeInflater, this);
+        return inflater.inflate(getLayoutId(), container, false);
     }
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         fetchData();
         projectSelector = new ProjectSelector(activity,this, em, x);
@@ -76,7 +79,7 @@ public abstract class AbstractSplitActivity extends AbstractEditorActivity {
 
         utils  = new Utils(getContext());
 
-        split = Transaction.fromIntentAsSplit(getActivity().getIntent());
+        split = Transaction.fromBundleAsSplit(getArguments());
         if (split.fromAccountId > 0) {
             fromAccount = db.em().getAccount(split.fromAccountId);
         }
@@ -92,7 +95,7 @@ public abstract class AbstractSplitActivity extends AbstractEditorActivity {
     }
 
     private void createCommonUI(LinearLayout layout) {
-        unsplitAmountText = x.addInfoNode(layout, R.id.add_split, R.string.unsplit_amount, "0");
+        unsplitAmountText = x.addInfoNode2(layout, R.id.add_split, R.string.unsplit_amount, "0");
         LayoutInflater layoutInflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         noteText = (EditText) layoutInflater.inflate(R.layout.edit_text, null);
 
@@ -138,7 +141,10 @@ public abstract class AbstractSplitActivity extends AbstractEditorActivity {
     }
 
     private void justFinish() {
-
+        Bundle bundle =new Bundle();
+        bundle.putInt(MyFragmentAPI.RESULT_EXTRA, AppCompatActivity.RESULT_CANCELED);
+        bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA, TransactionActivity.SPLIT_REQUEST);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH, bundle);
     }
 
     private void saveAndFinish() {
@@ -146,7 +152,9 @@ public abstract class AbstractSplitActivity extends AbstractEditorActivity {
         if (updateFromUI()) {
             split.toIntentAsSplit(data);
             Bundle bundle = data.getExtras();
-            activity.onFragmentMessage(MyFragmentAPI.REQUEST_SPLIT_FINISH, bundle);
+            bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA, TransactionActivity.SPLIT_REQUEST);
+            bundle.putInt(MyFragmentAPI.RESULT_EXTRA, AppCompatActivity.RESULT_OK);
+            activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH, bundle);
         }
     }
 

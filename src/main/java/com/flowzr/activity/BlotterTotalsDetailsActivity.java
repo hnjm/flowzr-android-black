@@ -50,7 +50,11 @@ public class BlotterTotalsDetailsActivity extends AbstractTotalsDetailsFragment 
     @Override
     protected void internalOnCreate() {
         Bundle b=getArguments();
-        blotterFilter = WhereFilter.fromBundle(b);
+        if (b!=null) {
+            blotterFilter = WhereFilter.fromBundle(b);
+        } else {
+            blotterFilter=new WhereFilter("");
+        }
         cleanupFilter(blotterFilter);
         totalCalculationTask = createTotalCalculationTask(blotterFilter);
     }

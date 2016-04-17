@@ -50,12 +50,6 @@ public class ExchangeRateActivity extends AbstractEditorActivity implements Rate
     private TextView dateNode;
     private RateNode rateNode;
 
-
-    @Override
-    public String getMyTag() {
-        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
-    }
-
     @Override
     protected int getLayoutId() {
         return R.layout.exchange_rate;

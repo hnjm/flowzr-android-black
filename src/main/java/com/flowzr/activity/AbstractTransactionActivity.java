@@ -32,6 +32,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -76,10 +78,14 @@ import com.flowzr.view.AttributeViewFactory;
 import com.flowzr.view.FloatingActionButton;
 import com.flowzr.view.MyFloatingActionMenu;
 import com.flowzr.view.NodeInflater;
+import com.flowzr.widget.AmountInput;
+import com.flowzr.widget.CalculatorInput;
 import com.flowzr.widget.RateLayoutView;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -105,8 +111,9 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 	protected static final int RECURRENCE_REQUEST = 4003;
 	private static final int NOTIFICATION_REQUEST = 4004;
 	private static final int PICTURE_REQUEST = 4005;
-    protected static final int CATEGORY_REQUEST = 4007;
-	protected static final int NEW_PROJECT_REQUEST = 4006;
+    protected static final int CATEGORY_REQUEST = 4006;
+	protected static final int NEW_PROJECT_REQUEST = 4007;
+    protected static final int CALCULATOR_REQUEST = 4008;
 
 	private static final TransactionStatus[] statuses = TransactionStatus.values();
 
@@ -188,12 +195,12 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 	protected TextView totalText;
 
 	private boolean locationShown=false;
+	//private AmountInput amountInput;
 
 	public AbstractTransactionActivity() {}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		Log.e("flowzr","on create view abstract transaction activity inflating layout : " + getLayoutId());
 		NodeInflater nodeInflater = new NodeInflater(inflater);
 		x = new ActivityLayout(nodeInflater, this);
 		return inflater.inflate(getLayoutId(), container, false);
@@ -248,12 +255,23 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
         }
         return -1;
     }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.transaction_actions, menu);
+        if (isCompatible(14)) {
+            menu.removeItem(R.id.saveAddButton);
+            menu.removeItem(R.id.saveButton);
+        }
+    }
+
+
 
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-        Log.e("flowzr","abstract transaction on activity created" );
+
 		u = new Utils(getContext());
 
 		df = DateUtils.getShortDateFormat(getContext());
@@ -372,11 +390,11 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			x.addEditNode(layout, R.string.template_name, templateName);
 		}
 
-		rateView = new RateLayoutView(this, x, layout);
-		Log.e("flowzr","rateview:");
-		Log.e("flowzr",rateView.toString());
-        Log.e("flowzr","layout:");
-        Log.e("flowzr",layout.toString());
+		//amountInput = new AmountInput(getContext());
+		//amountInput.setOwner(this);
+
+        rateView = new RateLayoutView(this, x, layout);
+
 		createListNodes(layout);
 		rateView.hideFromAmount();
 
@@ -465,28 +483,37 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			}
 		}
 
-		if (getView().findViewById(R.id.saveButton)!=null) {
-			getView().findViewById(R.id.saveButton).setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					onOKClicked();
-					saveAndFinish();
-				}
-			});
-		}
 
 
-		totalText = (TextView) getView().findViewById(R.id.total);
-		totalText.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				rateView.openFromAmountCalculator(accountText.getText().toString());
-			}
-		});
+        if (getView().findViewById(R.id.fab1)!=null) {
+            getView().findViewById(R.id.fab1).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onOKClicked();
+                    saveAndFinish();
+                }
+            });
+        }
 
-		Total t = new Total(rateView.getCurrencyFrom());
-		t.balance = transaction.fromAmount;
-		u.setTotal(totalText, t);
+
+        totalText = ( TextView ) getView().findViewById(R.id.total);
+        totalText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getContext(), CalculatorInput.class);
+                //if (budget.currencyId > -1) {
+                //    intent.putExtra(AmountInput.EXTRA_CURRENCY, budget.currencyId);
+                //}
+                //transaction.fromAmount
+                rateView.openFromAmountCalculator(transaction.toString()); //.openCalculator(transaction.toString());
+
+            }
+        });
+
+        Total t = new Total(rateView.getCurrencyFrom());
+        t.balance = transaction.fromAmount;
+        u.setTotal(totalText, t);
 
 
 		if (transactionId == -1) {
@@ -497,7 +524,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			if (transaction.isTemplate()) {
 				title=getResources().getString(R.string.template);
 			}
-			rateView.openFromAmountCalculator(title);
+			//rateView.openFromAmountCalculator(title);
 		}
             setupFab();
 			long t1 = System.currentTimeMillis();
@@ -506,16 +533,99 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 
     public void setupFab() {
         if (isCompatible(14)) {
-            final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) getView().findViewById(R.id.menu1);
+            final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) getActivity().findViewById(R.id.menu1);
             FloatingActionButton fab1 = (FloatingActionButton) activity.findViewById(R.id.fab1);
             FloatingActionButton fab2 = (FloatingActionButton) activity.findViewById(R.id.fab2);
-            //menu1.getMenuIconView().setImageResource(R.drawable.ic_add);
+            menu1.getMenuIconView().setImageResource(R.drawable.ic_check);
             fab1.setImageResource(R.drawable.ic_check);
             fab2.setImageResource(R.drawable.ic_add);
             fab1.setLabelText(getResources().getString(R.string.save));
             fab2.setLabelText(getResources().getString(R.string.save_and_new));
 
             if (menu1!=null) {
+                    menu1.setOnMenuButtonClickListener(
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    menu1.toggle(true);
+                                }
+                            });
+
+                    Handler mUiHandler = new Handler();
+                    List<MyFloatingActionMenu> menus = new ArrayList<>();
+                    menus.add(menu1);
+                    //menu1.showMenuButton(true);
+                    int delay = 400;
+                    for (final MyFloatingActionMenu menu : menus) {
+                        mUiHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                menu.showMenuButton(true);
+                            }
+                        }, delay);
+                        delay += 150;
+                    }
+                    menu1.setClosedOnTouchOutside(true);
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            menu1.showMenuButton(true);
+                        }
+                    }, delay + 150);
+
+                    menu1.setOnMenuToggleListener(new MyFloatingActionMenu.OnMenuToggleListener() {
+                        @Override
+                        public void onMenuToggle(boolean opened) {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    menu1.close(true);
+                                    menu1.close(true);
+                                }
+                            },3500);
+                        }
+                    });
+
+                    if (getActivity().findViewById(R.id.fab1)!=null) {
+                        getActivity().findViewById(R.id.fab1).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                onOKClicked();
+                                saveAndFinish();
+                            }
+                        });
+                    }
+
+                    if (getActivity().findViewById(R.id.fab2)!=null) {
+                        getActivity().findViewById(R.id.fab2).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                onOKClicked();
+                                Intent intent2= getActivity().getIntent();
+                                intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
+                                if (saveAndFinish()) {
+                                    intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
+                                    Bundle bundle = new Bundle();
+                                    if (transaction.isTransfer()) {
+                                        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,TransferActivity.class.getCanonicalName());
+
+                                    } else {
+                                        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,TransactionActivity.class.getCanonicalName());
+
+                                    }
+                                    bundle.putAll(intent2.getExtras());
+                                    activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+                                }
+                            }
+                        });
+                    }
+
+                }
+
+
+
+                menu1.showMenu(true);
                 getView().findViewById(R.id.scroll)
                         .setOnTouchListener(new View.OnTouchListener() {
                             @Override
@@ -535,7 +645,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
                                                 new Handler().postDelayed(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        //fab.hideMenu(true);
+                                                        //menu1.hideMenu(true);
                                                     }
                                                 }, 10000);
 
@@ -547,7 +657,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
                             }
                         });
             }
-        }
+
 
     }
 
@@ -738,7 +848,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
                 projectSelector.createNode(layout);
 			}
 		}
-        //@TODO permission denial picture API23+
+
 		if (isShowTakePicture && transaction.isNotTemplateLike()) {
 			pictureView = x.addPictureNodeMinus(getContext(), layout, R.id.attach_picture,R.drawable.ic_camera_alt, R.id.delete_picture, R.string.attach_picture, R.string.new_picture);
 		}
@@ -803,7 +913,8 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, 
 						Uri.fromFile(new File(PICTURES_DIR, pictureFileName)));
-                activity.onFragmentMessage(MyFragmentAPI.REQUEST_ACTIVITY,PICTURE_REQUEST,intent,this);
+                startActivityForResult(intent,PICTURE_REQUEST);
+                //activity.onFragmentMessage(MyFragmentAPI.REQUEST_ACTIVITY,PICTURE_REQUEST,intent,this);
 				break;
 			}
 			case R.id.delete_picture: {
@@ -877,7 +988,6 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 
     @Override
     public void onCategorySelected(Category category, boolean selectLast) {
-        Log.e("flowzr","on category selected");
         addOrRemoveSplits();
         categorySelector.addAttributes(transaction);
         switchIncomeExpenseButton(category);
@@ -939,11 +1049,21 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-        Log.e("flowzr","Abstract Tr onActivity result " + String.valueOf(requestCode) +" " + resultCode);
+
         projectSelector.onActivityResult(requestCode, resultCode, data);
         categorySelector.onActivityResult(requestCode, resultCode, data);
 
 		if (resultCode == AppCompatActivity.RESULT_OK) {
+
+            //rateView.onActivityResult(requestCode,resultCode);
+            //if (rateView.processActivityResult(requestCode, data)) {
+            //    transaction.fromAmount=amountInput.getAmount();
+            //    Total t = new Total(rateView.getCurrencyFrom());
+            //    t.balance=transaction.fromAmount;
+            //    u.setTotal(totalText,t);
+            //}
+
+
             rateView.onActivityResult(requestCode, data);
 			switch (requestCode) {
 				case NEW_LOCATION_REQUEST:

@@ -80,6 +80,13 @@ public class ActivityLayout {
 		View v = b.withId(id, listener).withLabel(labelId).withData(defaultValue).create();
 		return (TextView)v.findViewById(R.id.data);
 	}
+
+	public TextView addInfoNode2(LinearLayout layout, int id, int labelId, String defaultValue) {
+		Builder b = inflater.new Builder(layout, R.layout.select_entry_simple);
+		View v = b.withId(id, listener).withLabel(labelId).withData(defaultValue).create();
+		return (TextView)v.findViewById(R.id.data);
+	}
+
 	/**
 	 *
 	 public View addTitleNode(LinearLayout layout, int labelId) {
@@ -171,6 +178,7 @@ public class ActivityLayout {
 	public TextView addListNode2(LinearLayout layout, int id,int drawableId, int labelId, String defaultValue) {
 		Builder b = inflater.new Builder(layout, R.layout.select_entry_icontitle);
 		View v = b.withId(id, listener).withData(defaultValue).withIcon(drawableId).create();
+
 		return (TextView)v.findViewById(R.id.data);
 	}
 

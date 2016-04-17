@@ -592,7 +592,7 @@
     <string name="import_export">Import/Export</string>
     <string name="qif_import_disclaimer">*WARNING* Please note that all existing data will be removed!</string>
 	
-	<string name="flowzr_sync">Flowzr Sync</string>
+	<string name="flowzr_sync">Sync</string>
     <string name="flowzr_sync_error">Flowzr Sync error</string>
 	<string name="flowzr_sync_error_no_network">Network is not available</string>
     <string name="flowzr_sync_auth_inprogress">Checking authentification …</string>

@@ -62,6 +62,7 @@
 	<CheckBox android:id="@+id/checkbox"
 		android:layout_width="@dimen/recommended_touch_size"
 		android:layout_height="@dimen/recommended_touch_size"
+		android:layout_marginRight="-4dp"
 		android:focusable="false"
 		android:clickable="false" />
 

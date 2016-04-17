@@ -155,6 +155,7 @@
 
     <style name="EditTextUserInput" parent="EditText">
         <item name="android:textStyle">bold</item>
+
         <item name="android:textColor">@color/f_blue_lighter2</item>
     </style>
 
@@ -211,7 +212,6 @@
         <item name="android:paddingLeft">@dimen/space_small</item>
         <item name="android:paddingRight">@dimen/space_small</item>
         <item name="android:clipToPadding">false</item>
-        <item name="android:scrollbarStyle">outsideOverlay</item>
         <!-- <item name="android:listSelector">@drawable/activated_background2</item> -->
     </style>
 
@@ -340,6 +340,16 @@
         <item name="android:layout_margin">@dimen/space_normal</item>
         <item name="android:maxLines">2</item>
         <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="CustomWidgetSwitchCompat">
+
+        <!-- Active thumb color & Active track color(30% transparency) -->
+        <item name="colorControlActivated">@color/positive_amount</item>
+        <!-- Inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/negative_amount</item>
+
+
     </style>
 
 </resources>

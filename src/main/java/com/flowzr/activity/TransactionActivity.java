@@ -15,8 +15,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,8 +32,6 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-
 import com.flowzr.R;
 import com.flowzr.db.DatabaseHelper;
 import com.flowzr.model.Account;
@@ -81,40 +81,8 @@ public class TransactionActivity extends AbstractTransactionActivity {
 
     private long selectedOriginCurrencyId = -1;
 
-
-    @Override
-    public String getMyTag() {
-        return null;
-    }
-
     protected int getLayoutId() {
         return R.layout.transaction_free;
-    }
-
-
-
-/***
- @Override
- public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
- Log.e("flowzr","inflating layout : " + getLayoutId());
- return inflater.inflate(getLayoutId(), container, false);
- }
-
- @Override
- public boolean onCreateOptionsMenu(Menu menu)
- {
- getMenuInflater().inflate(R.menu.transaction_actions, menu);
- return true;
- }
-
-**/
-
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.transaction_actions, menu);
     }
 
 	@Override
@@ -145,9 +113,15 @@ public class TransactionActivity extends AbstractTransactionActivity {
 
         currencyAsAccount.name = getString(R.string.original_currency_as_account);
 
-        ToggleButton toggleView = (ToggleButton) getView().findViewById(R.id.toggle);
+        SwitchCompat toggleView = (SwitchCompat) getView().findViewById(R.id.toggle);
+
+        //
+
         if (transaction.fromAmount>0) {
+            //toggleView.setThumbResource(R.drawable.ic_toggle_income);
             toggleView.setChecked(true);
+        } else {
+            //toggleView.setThumbResource(R.drawable.ic_toggle_expense);
         }
         toggleView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -166,76 +140,12 @@ public class TransactionActivity extends AbstractTransactionActivity {
         });
 
 
-        final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) getView().findViewById(R.id.menu1);
-        if (menu1!=null) {
-            menu1.setOnMenuButtonClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    menu1.toggle(true);
-                }
-            });
-
-            Handler mUiHandler = new Handler();
-            List<MyFloatingActionMenu> menus = new ArrayList<>();
-            menus.add(menu1);
-            menu1.hideMenuButton(true);
-            int delay = 400;
-            for (final MyFloatingActionMenu menu : menus) {
-                mUiHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        menu.showMenuButton(true);
-                    }
-                }, delay);
-                delay += 150;
-            }
-            menu1.setClosedOnTouchOutside(true);
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    menu1.showMenuButton(true);
-                }
-            }, delay + 150);
-
-            menu1.setOnMenuToggleListener(new MyFloatingActionMenu.OnMenuToggleListener() {
-                @Override
-                public void onMenuToggle(boolean opened) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            menu1.close(true);
-                            menu1.close(true);
-                        }
-                    },3500);
-                }
-            });
-
-            if (getView().findViewById(R.id.saveAddButton)!=null) {
-                getView().findViewById(R.id.saveAddButton).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOKClicked();
-                        Bundle bundle = new Bundle();
-                        bundle.putLong(DATETIME_EXTRA, transaction.dateTime);
-                        bundle.putLong(ACCOUNT_ID_EXTRA, transaction.fromAccountId);
-                        if (saveAndFinish()) {
-                            bundle.putLong(DATETIME_EXTRA, transaction.dateTime);
-                            bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,Transaction.class.getCanonicalName());
-                            activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
-                        }
-                    }
-                });
-            }
-
-
-        }
 
 
 	}
 
     protected void switchIncomeExpenseButton(Category category) {
-        ToggleButton toggleView = (ToggleButton)  getView().findViewById(R.id.toggle);
+        SwitchCompat toggleView = (SwitchCompat)  getView().findViewById(R.id.toggle);
         if (category.isIncome()) {
             toggleView.setChecked(true);
         } else if (category.isExpense()) {
@@ -380,11 +290,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
             currencyText = new TextView(getContext());
         }
 
-		//account(LinearLayout layout, int id,int drawableId, int labelId, String defaultValue)
-        Log.e("flowzr","adding node account" + layout);
         layout=(LinearLayout)getView().findViewById(R.id.listlayout);
-        Log.e("flowzr","adding node account" + layout);
-        //Log.e("flowzr","adding node account" + layout.getBackground().getColorFilter().toString());
 		accountText = x.addListNode2(layout, R.id.account, R.drawable.ic_account_balance_wallet, R.string.account, getResources().getString(R.string.select_account));
 
         //payee
@@ -577,6 +483,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
                     activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
                     return true;
                 }
+                return true;
         	case R.id.action_cancel:
                 saveAndFinish();
                 return true;
@@ -693,12 +600,21 @@ public class TransactionActivity extends AbstractTransactionActivity {
         Bundle bundle= new Bundle();
         bundle.putAll(intent.getExtras());
         bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,splitActivityClass.getCanonicalName());
-        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+        Fragment fragment;
+        if (splitActivityClass == SplitTransferActivity.class) {
+            fragment= new SplitTransferActivity();
+        } else {
+            fragment= new SplitTransactionActivity();
+        }
+
+        fragment.setArguments(intent.getExtras());
+        fragment.setTargetFragment(this,SPLIT_REQUEST);
+        activity.startFragmentForResult(fragment,this);
+        //activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("flowzr","transaction activity on activity result !!!");
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SPLIT_REQUEST) {
             if (resultCode == AppCompatActivity.RESULT_OK) {
@@ -712,22 +628,24 @@ public class TransactionActivity extends AbstractTransactionActivity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         try {
-            if (categorySelector.isSplitCategorySelected()) {
-                ActivityState state = new ActivityState();
-                state.categoryId = categorySelector.getSelectedCategoryId();
-                state.idSequence = idSequence;
-                state.splits = new ArrayList<>(viewToSplitMap.values());
-                ByteArrayOutputStream s = new ByteArrayOutputStream();
-                //noinspection TryFinallyCanBeTryWithResources
-                try {
-                    ObjectOutputStream out = new ObjectOutputStream(s);
-                    out.writeObject(state);
-                    outState.putByteArray(ACTIVITY_STATE, s.toByteArray());
-                } finally {
-                    s.close();
-                }
+            if (categorySelector!=null) {
+                if (categorySelector.isSplitCategorySelected()) {
+                    ActivityState state = new ActivityState();
+                    state.categoryId = categorySelector.getSelectedCategoryId();
+                    state.idSequence = idSequence;
+                    state.splits = new ArrayList<>(viewToSplitMap.values());
+                    ByteArrayOutputStream s = new ByteArrayOutputStream();
+                    //noinspection TryFinallyCanBeTryWithResources
+                    try {
+                        ObjectOutputStream out = new ObjectOutputStream(s);
+                        out.writeObject(state);
+                        outState.putByteArray(ACTIVITY_STATE, s.toByteArray());
+                    } finally {
+                        s.close();
+                    }}
+
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e("Financisto", "Unable to save state", e);
         }
     }

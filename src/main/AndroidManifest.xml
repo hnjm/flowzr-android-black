@@ -25,8 +25,6 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
 
-
-
     <supports-screens
             android:smallScreens="true"
             android:normalScreens="true"
@@ -39,7 +37,9 @@
     <uses-feature android:name="android.hardware.location" android:required="false" />
     <uses-feature android:name="android.hardware.location.network" android:required="false" />
     <uses-feature android:name="android.hardware.location.gps" android:required="false" />
+    <!--
 	<permission android:name="android.permission.STATUS_BAR_SERVICE" android:protectionLevel="signature" />
+	-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.CAMERA" />
@@ -69,7 +69,7 @@
          -->
 
         <meta-data android:name="com.google.android.maps.v2.API_KEY"
-                    android:value="your_gmap_key"/>
+                    android:value="AIzaSyBD06B06eal5OrFtJwi58Zqsg_wsRq8jpo"/>
 
 
 		<receiver android:name=".activity.AccountWidget" android:label="@string/widget_2x1" >
@@ -123,7 +123,7 @@
 			</intent-filter>
   		</receiver>		
 
-		<service android:name=".service.FinancistoService">
+		<service android:name=".service.FinancistoService" android:exported="false">
             <intent-filter>
                 <action android:name="com.flowzr.SCHEDULE_ONE" />
                 <action android:name="com.flowzr.SCHEDULE_ALL" />
@@ -136,127 +136,30 @@
 
 		<activity android:name=".activity.MainActivity" android:label="@string/app_name"
             android:configChanges="orientation|keyboardHidden|screenSize">
-            <!-- android:launchMode="singleTop" -->
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.flowzr.NEW_TRANSACTION" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.flowzr.NEW_TRANSFER" />
+                <category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
-		</activity>
-		
-		<activity 
-			android:name=".activity.TransactionActivity" android:label="@string/transaction"
-			android:configChanges="orientation|keyboardHidden|screenSize"
-			android:taskAffinity=".TransactionActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<action android:name="com.flowzr.NEW_TRANSACTION" />
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-		</activity>
-		
-		<activity 
-			android:name=".activity.TransferActivity" android:label="@string/transfer"
-			android:configChanges="orientation|keyboardHidden|screenSize"
-			android:windowSoftInputMode="stateAlwaysHidden|adjustResize" 
-			android:taskAffinity=".TransferActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<action android:name="com.flowzr.NEW_TRANSFER" />
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-		</activity>
-
-		<activity android:name=".activity.PinActivity" android:label="@string/enter_pin"
-			android:launchMode="singleTop"/>
-
-        <!--
-        <activity android:name=".activity.PlannerFragment" android:label="@string/planner" >
         </activity>
 
-        <activity android:name=".activity.MassOpFragment" android:label="@string/mass_operations" >
-        </activity>
-    -->
+		<activity android:name=".activity.PinActivity" android:label="@string/enter_pin" android:launchMode="singleTop"/>
 		<activity android:name=".activity.LocationActivity" android:label="@string/location"/>
-
-        <activity android:name=".activity.ExchangeRateActivity" android:label="@string/exchange_rate"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
-        </activity>
-		
-				<activity android:name=".activity.RecurrenceActivity" android:label="@string/recur"		 
-		 				android:configChanges="orientation|keyboardHidden">
-                </activity>
-
-				<activity android:name=".activity.RecurActivity" android:label="@string/recur"		 
-		 android:configChanges="orientation|keyboardHidden">
-		 		</activity>
-		 
-		<activity android:name=".activity.NotificationOptionsActivity" android:label="@string/notification"		 
-			 android:configChanges="orientation|keyboardHidden">
-		 </activity>
-		
-		<activity android:name=".activity.AccountActivity" android:label="@string/account"
-			android:configChanges="orientation|keyboardHidden|screenSize">
-		</activity>
-
-		
-		<activity android:name=".activity.ReportActivity" android:label="@string/report"
-			android:configChanges="orientation|keyboardHidden|screenSize"/>
-
-		<activity android:name=".activity.CurrencyActivity" android:label="@string/currency"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
-        </activity>
-		
-		<activity android:name=".activity.AttributeActivity" android:label="@string/attribute"
-			 android:configChanges="orientation|keyboardHidden|screenSize">
-		</activity>
-		
-		<activity android:name=".activity.DateFilterActivity" android:label="@string/filter"
-			 android:configChanges="orientation|keyboardHidden|screenSize">
-		</activity>
-		
-		<activity android:name=".activity.BlotterFilterActivity" android:label="@string/filter"
-            android:configChanges="orientation|keyboardHidden|screenSize">
-			</activity>
-
-        <activity android:name=".activity.ReportFilterActivity" android:label="@string/filter"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
-        </activity>
-
-		<activity android:name=".activity.CategoryActivity" android:label="@string/category"
-			android:configChanges="orientation|keyboardHidden|screenSize">
-		</activity>
-		
-
 		<activity android:name=".widget.CalculatorInput" android:label="@string/calculator" />
-		
-		<activity android:name=".activity.BudgetActivity" android:label="@string/budgets"
-			android:configChanges="orientation|keyboardHidden|screenSize"  >
-		</activity>		
-		
-
-						
-		<activity android:name=".activity.ProjectActivity" android:label="@string/project" 
-			android:configChanges="orientation|keyboardHidden|screenSize">
-		</activity>
-				
-        <activity android:name=".activity.PayeeActivity" android:label="@string/payee" 
-            android:configChanges="orientation|keyboardHidden|screenSize">
-        </activity>
-			
-
 		<activity android:name=".activity.CsvExportActivity" android:label="@string/csv_export" />
         <activity android:name=".activity.CsvImportActivity" android:label="@string/csv_import" />
 
         <activity android:name=".activity.QifExportActivity" android:label="@string/qif_export"/>
         <activity android:name=".activity.QifImportActivity" android:label="@string/qif_import"/>
 
-		<activity android:name=".activity.MonthlyViewActivity" android:label="@string/monthly_view"/>
+
 		<activity android:name=".activity.CCardStatementClosingDayActivity" android:label="@string/closing_day" />
-		<!--
-		<activity 	android:name=".activity.Report2DChartFragment"
-					android:label="@string/report" >
-		</activity>
-        -->
+
 
         <activity android:name=".activity.TransactionPreferencesActivity"
             android:theme="@android:style/Theme.Black"
@@ -268,19 +171,7 @@
         <activity android:name=".activity.AboutActivity" android:label="@string/about"/>
         <activity android:name=".activity.WebViewActivity" android:label="@string/about"/>
 
-        <activity android:name=".activity.SplitTransactionActivity" 
-        			android:label="@string/split_transaction">
-        </activity>
-        <activity android:name=".activity.SplitTransferActivity" 
-        			android:label="@string/split_transfer">
-        </activity>
-
         <activity android:name=".dialog.FolderBrowser" android:label="@string/select_folder"/>
-        <activity android:name=".activity.CategorySelectorActivity" 
-            android:label="@string/select_category">
-        </activity>
-
-        <activity android:name=".activity.PurgeAccountActivity" android:label="@string/delete_old_transactions"/>
 
         <activity android:name=".activity.FlowzrSyncActivity" android:label="@string/flowzr_sync" 
         android:configChanges="keyboardHidden|orientation|screenLayout" android:launchMode="singleTop">
@@ -303,7 +194,7 @@
                   android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <!-- Change this to be db- followed by your app key -->
-                <data android:scheme="db-your_drop_box_account_id" />
+                <data android:scheme="db-n4li1bbi9l4rn49" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -322,20 +213,7 @@
                 <data android:mimeType="application/vnd.google-apps.drive-sdk.1047129956322" />
             </intent-filter>
 
-
-
 		</activity>
-<!--             android:configChanges="keyboardHidden|screenSize" -->
-		<activity android:name=".activity.EntityListActivity"
-
-			android:label="@string/entities"
-			android:theme="@style/Theme.Financisto">			
-
-		    <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".activity.MainActivity" />
-		</activity>
-
 
         <activity
             android:label="@string/about"

@@ -40,10 +40,6 @@ public class AttributeActivity extends AbstractEditorActivity implements OnItemS
 	private CheckBox defaultValueCheckBox;
 	private Attribute attribute = new Attribute();
 
-    @Override
-    public String getMyTag() {
-        return MyFragmentAPI.REQUEST_MYENTITY_FINISH;
-    }
 
     @Override
     protected int getLayoutId() {

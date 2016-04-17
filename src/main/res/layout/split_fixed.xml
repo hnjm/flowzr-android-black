@@ -13,21 +13,24 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_marginTop="@dimen/space_xlarge"
-              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
               android:orientation="vertical">
-    <View android:layout_height="1dp" android:background="@drawable/divider_horizontal_dark"
-        android:layout_width="wrap_content" android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
     <ScrollView android:layout_width="wrap_content"
-        android:layout_height="0dp" android:layout_weight="1">
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <LinearLayout
-				android:paddingTop="@dimen/dynamic_margin_narrow_vertical"
-				android:paddingBottom="@dimen/dynamic_margin_narrow_vertical"
-    			android:paddingLeft="@dimen/dynamic_margin_narrow_horizontal"
-    			android:paddingRight="@dimen/dynamic_margin_narrow_horizontal"		        
                 android:id="@+id/list"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"/>
     </ScrollView>
-
+    <ListView
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:paddingBottom="@dimen/space_large"
+        android:paddingTop="@dimen/space_large"
+        android:id="@android:id/list"
+        style="@style/ListView" />
 </LinearLayout>

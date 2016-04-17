@@ -26,9 +26,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-/**
- * Created by emmanuelflorent on 02/04/16.
- */
+
 public class AbstractDBTest extends MyFragmentTest {
 
     protected DatabaseAdapter db;

@@ -12,6 +12,7 @@ package com.flowzr.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.View;
 
 import com.flowzr.R;
@@ -30,14 +31,18 @@ public class AttributeListAdapter extends AbstractGenericListAdapter {
 	@Override
 	protected void bindView(GenericViewHolder v, Context context, Cursor cursor) {
 		Attribute a = Attribute.fromCursor(cursor);
-		v.lineView.setText(a.name);
-		v.numberView.setText(attributeTypes[a.type-1]);
+        //v.lineView.setVisibility(View.VISIBLE);
+        v.lineView.setText(a.name);
+        //v.amountView.setText(a.name);
+        //v.labelView.setVisibility(View.VISIBLE);
+		//v.labelView.setText(attributeTypes[a.type-1]);
+		//v.labelView.setText(attributeTypes[a.type-1]);
 		String defaultValue = a.getDefaultValue();
 		if (defaultValue != null) {
 			v.amountView.setVisibility(View.VISIBLE);
 			v.amountView.setText(defaultValue);
 		} else {
-			v.amountView.setVisibility(View.GONE);
+			//v.amountView.setVisibility(View.GONE);
 		}
 	}
 

@@ -33,6 +33,12 @@
         android:icon="@drawable/ic_label"
         app:showAsAction="ifRoom"  />
 
+    <item android:id="@+id/action_add"
+        android:title="@string/add_category"
+        android:icon="@drawable/ic_add"
+        app:showAsAction="ifRoom"  />
+
+
     <item android:id="@+id/action_edit"
         android:title="@string/edit"
         android:icon="@drawable/ic_edit"

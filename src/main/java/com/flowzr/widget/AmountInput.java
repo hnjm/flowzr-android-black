@@ -14,7 +14,9 @@ package com.flowzr.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.Spanned;
@@ -33,6 +35,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.flowzr.R;
+import com.flowzr.activity.MainActivity;
 import com.flowzr.model.Currency;
 import com.flowzr.utils.Utils;
 
@@ -42,7 +45,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class AmountInput extends LinearLayout {
 
-	protected static final String EXTRA_TITLE = "title";
+	public static final String EXTRA_TITLE = "title";
 
 	public interface OnAmountChangedListener {
 		void onAmountChanged(long oldAmount, long newAmount);
@@ -53,11 +56,11 @@ public class AmountInput extends LinearLayout {
 
 	private static final AtomicInteger EDIT_AMOUNT_REQUEST = new AtomicInteger(2000);
 
-	protected AppCompatActivity owner;
+	protected Fragment owner;
 	private Currency currency;
 	private int decimals;
 
-    private ToggleButton toggleView;
+    private SwitchCompat toggleView;
 	private EditText primary;
 	private EditText secondary;
 	
@@ -152,7 +155,7 @@ public class AmountInput extends LinearLayout {
 				startInputActivity(CalculatorInput.class,((Activity) context).getTitle().toString());
 			}
 		});
-		toggleView = (ToggleButton) findViewById(R.id.toggle);
+		toggleView = (SwitchCompat) findViewById(R.id.toggle);
         toggleView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -259,8 +262,9 @@ public class AmountInput extends LinearLayout {
 		}
 		intent.putExtra(EXTRA_TITLE,title);
 		intent.putExtra(EXTRA_AMOUNT, getAbsAmountString());
-        Log.e("flowzr","start " + intent);
-		//owner.startActivityForResult(intent, requestId);
+		owner.startActivityForResult(intent, requestId);
+
+
 	}
 
 	protected void onDotOrComma() {
@@ -279,12 +283,14 @@ public class AmountInput extends LinearLayout {
 		this.currency = currency;
 	}
 
-	public void setOwner(AppCompatActivity owner) {
+	public void setOwner(Fragment owner) {
 		this.owner = owner;
 	}
 
 	public boolean processActivityResult(int p_requestCode, Intent data) {
-
+		if (data==null) {
+			return false;
+		}
 		String amount = data.getStringExtra(EXTRA_AMOUNT);
 
 		if (amount != null && requestId==p_requestCode) {

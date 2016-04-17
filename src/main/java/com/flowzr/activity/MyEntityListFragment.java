@@ -126,8 +126,6 @@ public abstract class MyEntityListFragment<T extends MyEntity> extends AbstractL
 		Criteria blotterFilter = createBlotterCriteria(e);
 		Bundle bundle = new Bundle();
 		blotterFilter.toBundle(e.title,bundle);
-		Log.e("flowzr",blotterFilter.toWhereExpression().toString());
-
 		activity.onFragmentMessage(MyFragmentAPI.REQUEST_BLOTTER,bundle);
 	}
 

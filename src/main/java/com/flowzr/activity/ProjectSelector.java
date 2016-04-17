@@ -93,7 +93,7 @@ public class ProjectSelector {
             case R.id.project_add: {
                 Intent intent = new Intent(activity, ProjectActivity.class);
                 Fragment fragment = new ProjectActivity();
-
+                fragment.setTargetFragment(myFragment,AbstractTransactionActivity.NEW_PROJECT_REQUEST);
                 activity.startFragmentForResult(fragment,myFragment);
                 break;
             }

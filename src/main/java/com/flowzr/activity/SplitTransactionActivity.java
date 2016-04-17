@@ -33,11 +33,6 @@ public class SplitTransactionActivity extends AbstractSplitActivity implements C
     }
 
     @Override
-    public String getMyTag() {
-        return MyFragmentAPI.REQUEST_SPLITTRANSACTION_FINISH;
-    }
-
-    @Override
     protected int getLayoutId() {
         return R.layout.split_fixed;
     }
@@ -48,14 +43,14 @@ public class SplitTransactionActivity extends AbstractSplitActivity implements C
         categorySelector.createNode(layout, false);
 
         amountInput = new AmountInput(getContext());
-        amountInput.setOwner(activity);
+        amountInput.setOwner(this);
         amountInput.setOnAmountChangedListener(new AmountInput.OnAmountChangedListener() {
             @Override
             public void onAmountChanged(long oldAmount, long newAmount) {
                 setUnsplitAmount(split.unsplitAmount - newAmount);
             }
         });
-        View v = x.addEditNode(layout, R.string.amount, amountInput);
+        View v = x.addEditNode2(layout, R.drawable.ic_swap_vert, amountInput);
         amountTitle = (TextView) v.findViewById(R.id.label);
         categorySelector.createAttributesLayout(layout);
 

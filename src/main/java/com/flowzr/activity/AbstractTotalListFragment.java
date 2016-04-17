@@ -81,16 +81,7 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
         setHasOptionsMenu(true);
         activity=(MainActivity)a;
     }
-/**
 
-	//@TODO delete getScaleUpOption()
-	public Bundle getScaleUpOption() {
-		return ActivityOptionsCompat.makeScaleUpAnimation(
-				getView(), 0, 0,
-				getView().findViewById(android.R.id.content).getWidth(),
-				getView().findViewById(android.R.id.content).getHeight()).toBundle();
-	}
-*/
 
     public void onCreate(Bundle savedInstanceState)
     {
@@ -195,15 +186,6 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
         }
 	}
 
-	@Override
-	public void onResume() {
-		super.onResume();
-
-	}
-	@Override
-	public void onPause() {
-		super.onPause();
-	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
