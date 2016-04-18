@@ -167,6 +167,7 @@ public class PlannerFragment extends BlotterFragment {
         bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,FILTER_REQUEST);
         Fragment fragment = new DateFilterActivity();
         fragment.setArguments(bundle);
+        fragment.setTargetFragment(this,FILTER_REQUEST);
         activity.startFragmentForResult(fragment,this);
     }
 

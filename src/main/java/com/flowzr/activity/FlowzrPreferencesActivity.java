@@ -39,6 +39,12 @@ public class FlowzrPreferencesActivity extends PreferenceActivity {
     GoogleAccountManager googleAccountManager;
 
     @Override
+    public void onBackPressed() {
+        setResult(MainActivity.RESULT_OK);
+        finish();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.flowzr_preferences);

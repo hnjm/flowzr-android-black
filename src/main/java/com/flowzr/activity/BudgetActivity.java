@@ -106,6 +106,7 @@ public class BudgetActivity extends AbstractEditorActivity {
 		periodRecurText = x.addListNode2(layout, R.id.period_recur,R.drawable.ic_repeat, R.string.period_recur,  getResources().getString(R.string.no_recur));
 		accountText = x.addListNode2(layout, R.id.account, R.drawable.ic_account_balance_wallet, R.string.account, getResources().getString(R.string.select_account));
 		categoryText=x.addListNodeCategory(layout);
+
 		projectText = x.addListNode2(layout, R.id.project, R.drawable.ic_star_border, R.string.project, getResources().getString(R.string.no_projects));
 
 		cbIncludeSubCategories = x.addCheckboxNode(layout,
@@ -140,15 +141,22 @@ public class BudgetActivity extends AbstractEditorActivity {
 		if (bundle != null) {
 			long id = bundle.getLong(MyFragmentAPI.ENTITY_ID_EXTRA, -1);
 			if (id != -1) {
-				budget = em.load(Budget.class, id);
-				editBudget();
+				try {
+					budget = em.load(Budget.class, id);
+					editBudget();
+				} catch (javax.persistence.EntityNotFoundException e) {
+					// budget have been re-numbered
+					e.printStackTrace();
+					totalText.setText("0.00");
+					selectRecur(RecurUtils.createDefaultRecur().toString());
+				}
+
 			} else {
 				totalText.setText("0.00");
 				selectRecur(RecurUtils.createDefaultRecur().toString());
 			}
 		}
 		titleText.requestFocus();
-		//ImageButton toggle = (ImageButton) findViewById(R.id.toggle);
 	}
 
     public boolean finishAndClose(int result) {
@@ -286,6 +294,7 @@ public class BudgetActivity extends AbstractEditorActivity {
             bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,NEW_CATEGORY_REQUEST);
             Fragment fragment = new CategoryActivity();
             fragment.setArguments(bundle);
+            fragment.setTargetFragment(this,NEW_CATEGORY_REQUEST);
             activity.startFragmentForResult(fragment,this);
             break;
 		case R.id.project:
@@ -296,6 +305,7 @@ public class BudgetActivity extends AbstractEditorActivity {
             fragment = new ProjectActivity();
             bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,NEW_PROJECT_REQUEST);
             fragment.setArguments(bundle);
+            fragment.setTargetFragment(this,NEW_PROJECT_REQUEST);
             activity.startFragmentForResult(fragment,this);
 			} break;
 		case R.id.account:
@@ -309,7 +319,7 @@ public class BudgetActivity extends AbstractEditorActivity {
 			}
             bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,RECUR_REQUEST);
             fragment.setArguments(bundle);
-
+            fragment.setTargetFragment(this,RECUR_REQUEST);
             activity.startFragmentForResult(fragment,this);
 
 			} break;

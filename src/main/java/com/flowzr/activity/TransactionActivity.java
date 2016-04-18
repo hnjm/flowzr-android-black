@@ -473,13 +473,10 @@ public class TransactionActivity extends AbstractTransactionActivity {
         		return true;
         	case R.id.saveAddButton:
         		onOKClicked();
-                Intent intent2= getActivity().getIntent();
-        		intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
-        		if (saveAndFinish()) { 
-                    intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
+        		if (saveAndFinish()) {
                     Bundle bundle = new Bundle();
+                    bundle.putLong(DATETIME_EXTRA, transaction.dateTime);
                     bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,TransactionActivity.class.getCanonicalName());
-                    bundle.putAll(intent2.getExtras());
                     activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
                     return true;
                 }
@@ -610,7 +607,6 @@ public class TransactionActivity extends AbstractTransactionActivity {
         fragment.setArguments(intent.getExtras());
         fragment.setTargetFragment(this,SPLIT_REQUEST);
         activity.startFragmentForResult(fragment,this);
-        //activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
     }
 
     @Override

@@ -68,14 +68,13 @@ public class TransferActivity extends AbstractTransactionActivity {
 				@Override
 				public void onClick(View v) {
 					onOKClicked();
-					Bundle bundle = new Bundle();
-					bundle.putLong(DATETIME_EXTRA, transaction.dateTime);
-					bundle.putLong(ACCOUNT_ID_EXTRA, transaction.fromAccountId);
 					if (saveAndFinish()) {
+						Bundle bundle = new Bundle();
 						bundle.putLong(DATETIME_EXTRA, transaction.dateTime);
-						Fragment fragment= new TransferActivity();
-						fragment.setArguments(bundle);
-						activity.startFragmentForResult(fragment,TransferActivity.this);
+						bundle.putLong(ACCOUNT_ID_EXTRA, transaction.fromAccountId);
+						bundle.putLong(DATETIME_EXTRA, transaction.dateTime);
+						bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,TransferActivity.class.getCanonicalName());
+						activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
 					}
 				}
 			});

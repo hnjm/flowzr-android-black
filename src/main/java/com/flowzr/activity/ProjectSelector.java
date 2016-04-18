@@ -120,6 +120,7 @@ public class ProjectSelector {
             bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,ProjectActivity.class.getCanonicalName());
             Fragment fragment = new ProjectActivity();
             fragment.setArguments(bundle);
+            fragment.setTargetFragment(this.myFragment,AbstractTransactionActivity.NEW_PROJECT_REQUEST);
             activity.startFragmentForResult(fragment,myFragment);
         }else {
             Project p = projects.get(selectedPos);

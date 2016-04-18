@@ -32,6 +32,12 @@ public class PreferencesActivity extends PreferenceActivity {
     Preference pOpenExchangeRatesAppId;
 
     @Override
+    public void onBackPressed() {
+        setResult(MainActivity.RESULT_OK);
+        finish();
+    }
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
         this.setTheme(R.style.CheckBox);
         super.onCreate(savedInstanceState);

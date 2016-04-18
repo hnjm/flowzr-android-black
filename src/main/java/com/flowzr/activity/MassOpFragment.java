@@ -72,6 +72,7 @@ public class MassOpFragment extends BlotterFragment {
 				blotterFilter.toBundle(bundle);
 				bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,FILTER_REQUEST);
                 fragment.setArguments(bundle);
+				fragment.setTargetFragment(this,FILTER_REQUEST);
 				activity.startFragmentForResult(fragment,this);
 				return true;
 		}

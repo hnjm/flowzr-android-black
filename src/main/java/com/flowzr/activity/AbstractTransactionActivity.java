@@ -484,30 +484,11 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		}
 
 
-
-        if (getView().findViewById(R.id.fab1)!=null) {
-            getView().findViewById(R.id.fab1).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onOKClicked();
-                    saveAndFinish();
-                }
-            });
-        }
-
-
         totalText = ( TextView ) getView().findViewById(R.id.total);
         totalText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(getContext(), CalculatorInput.class);
-                //if (budget.currencyId > -1) {
-                //    intent.putExtra(AmountInput.EXTRA_CURRENCY, budget.currencyId);
-                //}
-                //transaction.fromAmount
-                rateView.openFromAmountCalculator(transaction.toString()); //.openCalculator(transaction.toString());
-
+                    rateView.openFromAmountCalculator(transaction.toString());
             }
         });
 
@@ -530,6 +511,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			long t1 = System.currentTimeMillis();
 			Log.i("TransactionActivity","onCreate "+(t1-t0)+"ms");
 		}
+
 
     public void setupFab() {
         if (isCompatible(14)) {
@@ -554,7 +536,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
                     Handler mUiHandler = new Handler();
                     List<MyFloatingActionMenu> menus = new ArrayList<>();
                     menus.add(menu1);
-                    //menu1.showMenuButton(true);
+                    menu1.showMenuButton(true);
                     int delay = 400;
                     for (final MyFloatingActionMenu menu : menus) {
                         mUiHandler.postDelayed(new Runnable() {
@@ -587,36 +569,43 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
                         }
                     });
 
-                    if (getActivity().findViewById(R.id.fab1)!=null) {
-                        getActivity().findViewById(R.id.fab1).setOnClickListener(new View.OnClickListener() {
+                    if (fab1!=null) {
+                        fab1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+
                                 onOKClicked();
-                                saveAndFinish();
+                                if (saveAndFinish()) {
+                                    menu1.hideMenu(true);
+                                }
                             }
                         });
                     }
 
-                    if (getActivity().findViewById(R.id.fab2)!=null) {
-                        getActivity().findViewById(R.id.fab2).setOnClickListener(new View.OnClickListener() {
+                    if (fab2!=null) {
+                        fab2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                onOKClicked();
-                                Intent intent2= getActivity().getIntent();
-                                intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
-                                if (saveAndFinish()) {
-                                    intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
-                                    Bundle bundle = new Bundle();
-                                    if (transaction.isTransfer()) {
-                                        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,TransferActivity.class.getCanonicalName());
+                                if (onOKClicked()) {
+                                    if (saveAndFinish()) {
+                                        menu1.hideMenu(true);
+                                        Intent intent2= getActivity().getIntent();
+                                        intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
+                                        menu1.hideMenu(true);
+                                        intent2.putExtra(DATETIME_EXTRA, transaction.dateTime);
+                                        Bundle bundle = new Bundle();
+                                        if (transaction.isTransfer()) {
+                                            bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,TransferActivity.class.getCanonicalName());
 
-                                    } else {
-                                        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,TransactionActivity.class.getCanonicalName());
+                                        } else {
+                                            bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,TransactionActivity.class.getCanonicalName());
 
+                                        }
+                                        bundle.putAll(intent2.getExtras());
+                                        activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
                                     }
-                                    bundle.putAll(intent2.getExtras());
-                                    activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
                                 }
+
                             }
                         });
                     }
@@ -637,7 +626,6 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
                                         break;
                                     case MotionEvent.ACTION_CANCEL:
                                     case MotionEvent.ACTION_UP:
-
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
@@ -647,7 +635,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
                                                     public void run() {
                                                         //menu1.hideMenu(true);
                                                     }
-                                                }, 10000);
+                                                }, 3000);
 
                                             }
                                         }, 3000);
@@ -893,6 +881,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
                 bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,RECURRENCE_REQUEST);
                 Fragment fragment = new RecurrenceActivity();
                 fragment.setArguments(bundle);
+				fragment.setTargetFragment(this,RECURRENCE_REQUEST);
                 activity.startFragmentForResult(fragment,this);
 				break;
 			}

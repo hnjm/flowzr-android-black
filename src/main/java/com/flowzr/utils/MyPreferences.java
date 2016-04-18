@@ -647,7 +647,7 @@ public class MyPreferences {
     }
     
     public static boolean isAutoSync(Context context) {
-        return getBoolean(context, "auto_sync_enabled", false);
+        return getBoolean(context, "auto_sync_enabled", true);
     }
 
     public static long getFlowzrLastSync(Context context) {

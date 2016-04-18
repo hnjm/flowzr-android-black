@@ -43,7 +43,6 @@ public abstract class AbstractEditorActivity extends ListFragment implements Act
     protected Utils u;
     protected MainActivity activity;
 
-
     protected abstract int getLayoutId();
 
     @Override

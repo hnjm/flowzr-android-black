@@ -235,6 +235,7 @@ public class ReportFilterActivity extends AbstractEditorActivity {
                 Bundle bundle= new Bundle();
                 filter.toBundle(bundle);
                 fragment.setArguments(bundle);
+                fragment.setTargetFragment(this,1);
                 activity.startFragmentForResult(fragment,this);
                 break;
             case R.id.period_clear:

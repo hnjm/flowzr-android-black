@@ -315,7 +315,7 @@ public class MainActivity  extends AbstractActionBarActivity
                         break;
                     // activities ...
                     case R.id.drawer_item_preferences:
-                        startActivityForResult(new Intent(getApplicationContext(), PreferencesActivity.class), CHANGE_PREFERENCES);
+                        startActivityForResult(new Intent(MainActivity.this, PreferencesActivity.class), CHANGE_PREFERENCES);
                         break;
                     case R.id.drawer_item_about:
                         startActivity(new Intent(getApplicationContext(), AboutActivity.class));
@@ -409,6 +409,7 @@ public class MainActivity  extends AbstractActionBarActivity
         if (requestCode == CHANGE_PREFERENCES) {
             scheduleNextAutoBackup(this);
             scheduleNextAutoSync(this);
+
         }
         mAdapter.notifyDataSetChanged();
     }

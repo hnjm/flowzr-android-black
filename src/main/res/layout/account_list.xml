@@ -19,7 +19,7 @@
 
     <ListView
         android:layout_marginRight="@dimen/space_small"
-        android:layout_marginEnd="@dimen/space_small"
+        android:layout_marginEnd="@dimen/space_normal"
         android:layout_height="wrap_content"
         android:id="@android:id/list"
         style="@style/ListView"/>
