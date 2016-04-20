@@ -507,7 +507,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			}
 			//rateView.openFromAmountCalculator(title);
 		}
-            setupFab();
+
 			long t1 = System.currentTimeMillis();
 			Log.i("TransactionActivity","onCreate "+(t1-t0)+"ms");
 		}
@@ -614,36 +614,36 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 
 
 
-                menu1.showMenu(true);
-                getView().findViewById(R.id.scroll)
-                        .setOnTouchListener(new View.OnTouchListener() {
-                            @Override
-                            public boolean onTouch(View v, MotionEvent event) {
-                                switch (event.getAction()) {
-                                    case MotionEvent.ACTION_SCROLL:
-                                    case MotionEvent.ACTION_MOVE:
-                                        menu1.hideMenu(true);
-                                        break;
-                                    case MotionEvent.ACTION_CANCEL:
-                                    case MotionEvent.ACTION_UP:
-                                        new Handler().postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                menu1.showMenu(true);
-                                                new Handler().postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        //menu1.hideMenu(true);
-                                                    }
-                                                }, 3000);
+			menu1.showMenu(true);
+			getView().findViewById(R.id.scroll)
+					.setOnTouchListener(new View.OnTouchListener() {
+						@Override
+						public boolean onTouch(View v, MotionEvent event) {
+							switch (event.getAction()) {
+								case MotionEvent.ACTION_SCROLL:
+								case MotionEvent.ACTION_MOVE:
+									menu1.hideMenu(true);
+									break;
+								case MotionEvent.ACTION_CANCEL:
+								case MotionEvent.ACTION_UP:
+									new Handler().postDelayed(new Runnable() {
+										@Override
+										public void run() {
+											menu1.showMenu(true);
+											new Handler().postDelayed(new Runnable() {
+												@Override
+												public void run() {
+													//menu1.hideMenu(true);
+												}
+											}, 2000);
 
-                                            }
-                                        }, 3000);
-                                        break;
-                                }
-                                return false;
-                            }
-                        });
+										}
+									}, 2000);
+									break;
+							}
+							return false;
+						}
+					});
             }
 
 
@@ -770,6 +770,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		if (lastFix != null) {
 			connectGps(false);
 		}
+		setupFab();
 	}
 
 	private class DefaultLocationListener implements LocationListener {
@@ -1086,6 +1087,10 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 				removePicture();
 			}
 		}
+        final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) getActivity().findViewById(R.id.menu1);
+        if (menu1!=null) {
+            menu1.showMenu(true);
+        }
 	}
 	
 	private void selectPicture(String pictureFileName) {

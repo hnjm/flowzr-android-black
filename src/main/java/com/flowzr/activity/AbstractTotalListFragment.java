@@ -101,8 +101,10 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
 	    db = new DatabaseAdapter(getActivity());
+
 		db.open();
 		em = db.em();
+
 		cursor = createCursor();
 		if (cursor != null) {
 			getActivity().startManagingCursor(cursor);
@@ -111,12 +113,6 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
 		registerForContextMenu(getListView());
 	}
 
-	public boolean showContextMenu(AdapterView<?> parent, View view,final int pos, final long id) {
-        selectedId = id;
-        //TODO context menu ?
-		//actionGrid.show(view);
-		return true;
-	}
 
     public void recreateAdapter() {           		
 			getListView().setEmptyView(getView().findViewById(R.id.emptyView));	 	
@@ -124,8 +120,6 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
 	        setListAdapter(adapter);
     }
 
-    //protected abstract void prepareActionGrid();
-    
     protected abstract Cursor createCursor();
 
 	protected abstract ListAdapter createAdapter(Cursor cursor);
@@ -138,16 +132,10 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
 		super.onDestroy();
 	}
 
-	public void onItemClick( View v, int position, long id)  {
-		 viewItem(v, position, id);
-	}
-
 	private boolean clickable = true;
 
     @Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		//v.setClickable(false);
-		//v.setEnabled(false);
 		if (clickable) {
 			clickable=false;
 			viewItem(v, position, id);
@@ -200,11 +188,9 @@ public abstract class AbstractTotalListFragment extends ListFragment implements 
 
     @Override
     public void integrityCheck() {
-        //new IntegrityCheckTask(this.getActivity()).execute();
         new IntegrityFixTask().execute();
         recreateAdapter();
         recreateCursor();
-        //((MainActivity)getActivity()).refreshCurrentTab();
     }
 
 

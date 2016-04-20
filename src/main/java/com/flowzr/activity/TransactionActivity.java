@@ -112,17 +112,8 @@ public class TransactionActivity extends AbstractTransactionActivity {
         }
 
         currencyAsAccount.name = getString(R.string.original_currency_as_account);
-
         SwitchCompat toggleView = (SwitchCompat) getView().findViewById(R.id.toggle);
-
-        //
-
-        if (transaction.fromAmount>0) {
-            //toggleView.setThumbResource(R.drawable.ic_toggle_income);
-            toggleView.setChecked(true);
-        } else {
-            //toggleView.setThumbResource(R.drawable.ic_toggle_expense);
-        }
+        toggleView.setChecked(transaction.fromAmount>0);
         toggleView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean income) {
@@ -131,17 +122,12 @@ public class TransactionActivity extends AbstractTransactionActivity {
                 } else {
                     transaction.fromAmount = -Math.abs(rateView.getFromAmount());
                 }
-
                 rateView.setFromAmount(transaction.fromAmount);
                 Total t = new Total(rateView.getCurrencyFrom());
                 t.balance = transaction.fromAmount;
                 u.setTotal(totalText, t);
             }
         });
-
-
-
-
 	}
 
     protected void switchIncomeExpenseButton(Category category) {

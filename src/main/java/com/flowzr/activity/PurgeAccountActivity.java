@@ -10,14 +10,16 @@ package com.flowzr.activity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.v7.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -27,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.flowzr.R;
+import com.flowzr.backup.DatabaseExport;
 import com.flowzr.datetime.DateUtils;
 import com.flowzr.model.Account;
 
@@ -57,7 +60,7 @@ public class PurgeAccountActivity extends AbstractEditorActivity {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onActivityCreated(savedInstanceState);
 
         df = DateUtils.getLongDateFormat(getContext());
 
@@ -88,13 +91,22 @@ public class PurgeAccountActivity extends AbstractEditorActivity {
     }
 
     private void deleteOldTransactions() {
+
+
+
+
         new AlertDialog.Builder(getContext())
             .setTitle(R.string.purge_account_confirm_title)
             .setMessage(getString(R.string.purge_account_confirm_message, new Object[]{account.title, getDateString()}))
             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    new PurgeAccountTask().execute();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            new PurgeAccountTask().execute();
+                        }
+                    });
                 }
             })
             .setNegativeButton(R.string.cancel, null)
@@ -102,15 +114,15 @@ public class PurgeAccountActivity extends AbstractEditorActivity {
     }
 
     private void loadAccount() {
-        Intent intent = getActivity().getIntent();
-        if (intent == null) {
+        Bundle bundle = getArguments();
+        if (bundle == null) {
             //TODO send message to activity
             Toast.makeText(getContext(), "No account specified", Toast.LENGTH_SHORT).show();
             finishAndClose(AppCompatActivity.RESULT_CANCELED);
             return;
         }
 
-        long accountId = intent.getLongExtra(ACCOUNT_ID, -1);
+        long accountId = bundle.getLong(MyFragmentAPI.ENTITY_ID_EXTRA, -1);
         if (accountId <= 0) {
             Toast.makeText(getContext(), "Invalid account specified", Toast.LENGTH_SHORT).show();
             finishAndClose(AppCompatActivity.RESULT_CANCELED);
@@ -181,20 +193,30 @@ public class PurgeAccountActivity extends AbstractEditorActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            /**
-            if (databaseBackup.isChecked()) {
-                DatabaseExport export = new DatabaseExport(context, db.db(), true);
-                try {
-                    export.export();
-                } catch (Exception e) {
-                    Log.e("Financisto", "Unexpected error", e);
-                    Toast.makeText(context, R.string.purge_account_unable_to_do_backup, Toast.LENGTH_LONG).show();
-                    return null;
+
+
+
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    if (databaseBackup.isChecked()) {
+                        DatabaseExport export = new DatabaseExport(context, db.db(), true);
+                        try {
+                            export.export();
+                        } catch (Exception e) {
+                            Log.e("Financisto", "Unexpected error", e);
+                            Toast.makeText(context, R.string.purge_account_unable_to_do_backup, Toast.LENGTH_LONG).show();
+
+                        }
+                    }
                 }
-            }
-            **/
+            });
+
+
+
             db.purgeAccountAtDate(account, date.getTimeInMillis());
-            finishAndClose(AppCompatActivity.RESULT_OK);
+            //finishAndClose(AppCompatActivity.RESULT_OK);
+            Toast.makeText(context, R.string.ok, Toast.LENGTH_LONG).show();
             return null;
         }
 

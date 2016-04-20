@@ -118,7 +118,14 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
         viewItem(v, position, id);
 	}
-    
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        filter.clear();
+        saveFilter();
+    }
+
     @Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -149,12 +156,11 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 	        });
 	        calculateTotals();
         }
+
 		if (getView().findViewById(R.id.bAdd)!=null) {
 			getView().findViewById(R.id.bAdd).setVisibility(View.GONE);
 			//getView().findViewById(R.id.bAddTransfer).setVisibility(View.GONE);
 		}
-
-
 
 		if (getView().findViewById(R.id.bAddBudget)!=null) {
 			getView().findViewById(R.id.bAddBudget).setOnClickListener(new View.OnClickListener() {
@@ -164,7 +170,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 				}
 			});
 		}
-
+		/**
 		getListView()
 				.setOnTouchListener(new View.OnTouchListener() {
 					@Override
@@ -187,6 +193,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 						return false;
 					}
 				});
+		 */
     }
 
     private void showTotals() {
@@ -226,9 +233,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 				}
 			}
 
-
-
-            saveFilter();
+            //saveFilter();
 		}
 
 		if (resultCode != MainActivity.RESULT_CANCELED ) {
@@ -344,7 +349,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 			.toBundle(b.title, bundle);
 		bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, id);
 		bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, BudgetBlotterFragment.class.getCanonicalName());
-		activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+		activity.onFragmentMessage(MyFragmentAPI.REQUEST_BLOTTER,bundle);
 	}	
 	
 	public class BudgetTotalsCalculationTask extends AsyncTask<Void, Total, Total> {

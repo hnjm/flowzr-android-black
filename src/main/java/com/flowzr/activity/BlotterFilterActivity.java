@@ -54,6 +54,7 @@ import java.util.List;
 public class BlotterFilterActivity extends AbstractEditorActivity {	
 	
     public static final String IS_ACCOUNT_FILTER = "IS_ACCOUNT_FILTER";
+
 	private static final TransactionStatus[] statuses = TransactionStatus.values();
 
 	private WhereFilter filter = WhereFilter.empty();
@@ -74,6 +75,7 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
     private String filterValueNotFound;
     private long accountId;
     private boolean isAccountFilter;
+    private int REQUEST_DATEFILTER=6767;
 
     @Override
     protected int getLayoutId() {
@@ -315,6 +317,7 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
 			Bundle bundle= new Bundle();
 			filter.toBundle(bundle);
 			fragment.setArguments(bundle);
+			bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,REQUEST_DATEFILTER);
 			fragment.setTargetFragment(this,1);
 			activity.startFragmentForResult(fragment,this);
 			break;
@@ -502,7 +505,8 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 1) {
+
+		if (requestCode == REQUEST_DATEFILTER) {
 			if (resultCode == AppCompatActivity.RESULT_FIRST_USER) {
 				onClick(period, R.id.period_clear);
 			} else if (resultCode == AppCompatActivity.RESULT_OK ) {

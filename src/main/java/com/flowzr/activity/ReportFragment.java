@@ -90,8 +90,10 @@ public class ReportFragment extends AbstractListFragment implements RefreshSuppo
     public void onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		MenuItem item= menu.findItem(R.id.bFilter);
-		item.setIcon(filter.isEmpty() ? R.drawable.ic_filter_list : R.drawable.ic_menu_filter_on);	
-		if (currentReport!=null && incomeExpenseState!=null && getView().findViewById(R.id.total_V)!=null) {
+        if (item!=null) {
+            item.setIcon(filter.isEmpty() ? R.drawable.ic_filter_list : R.drawable.ic_menu_filter_on);
+        }
+        if (currentReport!=null && incomeExpenseState!=null && getView().findViewById(R.id.total_V)!=null) {
         	item= menu.findItem(R.id.bToggle);
 			if (currentReport instanceof PeriodReport) {
 				getView().findViewById(R.id.total_V).setVisibility(View.GONE);

@@ -92,6 +92,7 @@ public class PlannerFragment extends BlotterFragment {
     
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
+
         if (menu.findItem(R.id.action_list_template)!=null) {
             menu.findItem(R.id.action_list_template).setVisible(false);
         }
@@ -168,7 +169,7 @@ public class PlannerFragment extends BlotterFragment {
         Fragment fragment = new DateFilterActivity();
         fragment.setArguments(bundle);
         fragment.setTargetFragment(this,FILTER_REQUEST);
-        activity.startFragmentForResult(fragment,this);
+        //activity.startFragmentForResult(fragment,this);
     }
 
     private void saveFilter() {

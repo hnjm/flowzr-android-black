@@ -165,9 +165,9 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 		super.onContextItemSelected(item);
         AdapterView.AdapterContextMenuInfo mi = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         switch (item.getItemId()) {
-            case R.id.context_account_delete_old: { 
-            	deleteOldTransaction(mi.id);
-            }
+            //case R.id.context_account_delete_old: {
+            //	deleteOldTransaction(mi.id);
+            //}
 			case R.id.context_account_close: {
 				closeAccount(mi.id);
                 break;

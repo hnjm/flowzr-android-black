@@ -149,11 +149,6 @@ public class SelectTemplateFragment extends TemplatesListFragment {
 	}
 
     @Override
-    public void onItemClick(View v, int position, long id) {
-        returnResult(id, false);
-    }
-
-    @Override
 	protected void viewItem(View v, int position, long id) {
 		returnResult(id, false);
 	}

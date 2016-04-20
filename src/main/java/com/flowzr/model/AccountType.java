@@ -15,9 +15,9 @@ import com.flowzr.R;
 import com.flowzr.utils.EntityEnum;
 
 public enum AccountType implements EntityEnum {
-	
-	CASH(R.string.account_type_cash, R.drawable.account_type_cash, false, false, false, false), 
-	BANK(R.string.account_type_bank, R.drawable.account_type_bank, true, false, false, false), 
+
+	CASH(R.string.account_type_cash, R.drawable.account_type_cash, false, false, false, false),
+	BANK(R.string.account_type_bank, R.drawable.account_type_bank, true, false, false, false),
 	DEBIT_CARD(R.string.account_type_debit_card, R.drawable.account_type_debit_card, true, true, true, false), 
 	CREDIT_CARD(R.string.account_type_credit_card, R.drawable.account_type_credit_card, true, true, true, true), 
 	PAYPAL(R.string.account_type_paypal, R.drawable.account_type_paypal, false, false, false, false),

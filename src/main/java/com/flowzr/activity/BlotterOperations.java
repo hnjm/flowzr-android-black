@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 
 import com.flowzr.R;
@@ -57,20 +58,22 @@ public class BlotterOperations {
     }
 
     public void editTransaction() {
-        if (targetTransaction.isTransfer()) {
-            startEditTransactionActivity(TransferActivity.class, EDIT_TRANSFER_REQUEST);
-        } else {
-            startEditTransactionActivity(TransactionActivity.class, EDIT_TRANSACTION_REQUEST);
-        }
-    }
-
-    private void startEditTransactionActivity(Class<? extends AbstractTransactionActivity> activityClass, int requestCode) {
         Bundle bundle = new Bundle();
-        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, activityClass.getCanonicalName());
         bundle.putLong(AbstractTransactionActivity.TRAN_ID_EXTRA, targetTransaction.id);
-        bundle.putBoolean(AbstractTransactionActivity.DUPLICATE_EXTRA, false);
-        bundle.putBoolean(AbstractTransactionActivity.NEW_FROM_TEMPLATE_EXTRA, newFromTemplate);
-        blotterFragment.activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
+        bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA, targetTransaction.id);
+        Fragment fragment;
+
+        if (targetTransaction.isTransfer()) {
+            bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, TransferActivity.class.getCanonicalName());
+            fragment=new TransferActivity();
+            fragment.setTargetFragment(blotterFragment,EDIT_TRANSFER_REQUEST);
+        } else {
+            bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, TransactionActivity.class.getCanonicalName());
+            fragment=new TransactionActivity();
+            fragment.setTargetFragment(blotterFragment,EDIT_TRANSACTION_REQUEST);
+        }
+        fragment.setArguments(bundle);
+        blotterFragment.activity.startFragmentForResult(fragment,blotterFragment);
     }
 
     public void deleteTransaction() {

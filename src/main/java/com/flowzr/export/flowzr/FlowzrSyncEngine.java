@@ -308,7 +308,7 @@ public class FlowzrSyncEngine  {
             notifyUser(context.getString(R.string.flowzr_sync_sending) + " Google Drive",95);
             pushAllBlobs();
         }  else {
-            Log.e("flowzr","picture upload desactivated in prefs");
+            Log.i("flowzr","picture upload desactivated in prefs");
         }
         notifyUser(context.getString(R.string.flowzr_sync_success),100);
         if (!isCanceled) {

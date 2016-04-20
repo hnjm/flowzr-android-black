@@ -1,10 +1,12 @@
 package com.flowzr.activity;
 
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -14,11 +16,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -98,13 +102,39 @@ public class CategorySelectorFragment extends AbstractListFragment {
          super.onCreateOptionsMenu(menu, inflater);
          menu.clear();
 		inflater.inflate(R.menu.category_selector_actions, menu);
-        //if (!navigator.canGoBack()) {
-        //    menu.removeItem(R.id.action_back);
-        //}
-
+        if (!navigator.canGoBack()) {
+            menu.removeItem(R.id.action_back);
+        }
 	}
 
+    protected void deleteItem(final long id) {
+        if (id>0) {
+            Category c = db.getCategory(id);
+            if (c!=null) {
+                new AlertDialog.Builder(this.getActivity())
+                        .setTitle(c.getTitle())
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setMessage(R.string.delete_category_dialog)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                db.deleteCategory(id);
+                                navigator = new CategoryTreeNavigator(db);
+                                navigator.selectCategory(0);
+                                recreateAdapter();
+                                getActivity().supportInvalidateOptionsMenu();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, null)
+                        .show();
+            }
+        }
+    }
 
+    @Override
+    protected void deleteItem(View v, int position, final long id) {
+
+    }
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
         Bundle bundle = new Bundle();
@@ -139,6 +169,10 @@ public class CategorySelectorFragment extends AbstractListFragment {
                 bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, AttributeListFragment.class.getCanonicalName());
                 activity.onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,bundle);
                 break;
+            case R.id.action_delete:
+                deleteItem(navigator.selectedCategoryId);
+                break;
+
         }
         //action_sort_by_title
         //action_re_index
@@ -173,6 +207,17 @@ public class CategorySelectorFragment extends AbstractListFragment {
             navigator.selectCategory(0);
         }
 
+        //ListView listView = ;
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            public boolean onItemLongClick(AdapterView<?> arg0, View v,
+                                           int index, long arg3) {
+                confirmSelection();
+                return true;
+            }
+        });
+
+
 	}
 
     @Override
@@ -206,14 +251,15 @@ public class CategorySelectorFragment extends AbstractListFragment {
         return new CategoryAdapter(navigator.categories);
     }
 
-    @Override
-    protected void deleteItem(View v, int position, long id) {
-    }
+
+
+
 
     @Override
     protected void editItem(View v, int position, long id) {
 
     }
+
 
     @Override
     protected void viewItem(View v, int position, long id) {
@@ -222,7 +268,8 @@ public class CategorySelectorFragment extends AbstractListFragment {
     	navigator.selectedCategoryId=id;
         navigator.navigateTo(id);
         recreateAdapter();
-        //getActivity().supportInvalidateOptionsMenu();
+        getActivity().supportInvalidateOptionsMenu();
+
         // @TODO category selector navigation and consider longpress doublick
         //if (!navigator.canGoBack()) {
         //    confirmSelection();

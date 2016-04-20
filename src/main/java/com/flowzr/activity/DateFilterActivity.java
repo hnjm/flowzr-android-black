@@ -153,7 +153,7 @@ public class DateFilterActivity extends AbstractEditorActivity {
 					bundle.putLong(EXTRA_FILTER_PERIOD_FROM, cFrom.getTimeInMillis());
 					bundle.putLong(EXTRA_FILTER_PERIOD_TO, cTo.getTimeInMillis());
 				}
-				bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,getArguments().getInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA));
+				//bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,getArguments().getInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA));
                 finishAndClose(bundle);
         		return true;
         	case R.id.action_cancel:
@@ -165,8 +165,8 @@ public class DateFilterActivity extends AbstractEditorActivity {
                 return true;
             }
         }
-		//return true;
-        return super.onOptionsItemSelected(item);
+		return true;
+        //return super.onOptionsItemSelected(item);
     }
 
     private void setCorrectPeriods(Bundle bundle) {

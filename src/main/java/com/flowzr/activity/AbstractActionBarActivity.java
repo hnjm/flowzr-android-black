@@ -80,29 +80,18 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
 
     List<Fragment> activePaneFragments = new ArrayList<Fragment>();
 
-    @Override
-    public void onBackPressed() {
-        if (activePaneFragments.size()==0) {
-            ensureViewPagerMode();
-        }
-        super.onBackPressed();
-    }
-
-
-
     public void ensureViewPagerMode() {
-
+        removePaneFragments();
         FragmentManager fm = getSupportFragmentManager();
         int count = fm.getBackStackEntryCount();
-        for(int i = 0; i < count-1; ++i) {
-            fm.popBackStackImmediate();
+        for(int i = 0; i < count; ++i) {
+            fm.popBackStackImmediate(BACKSTACK,FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
-        removePaneFragments();
         if (findViewById(R.id.fragment_container)!=null) {
             findViewById(R.id.fragment_container).setVisibility(View.GONE);
         }
+
         viewPager.setVisibility(View.VISIBLE);
-        mAdapter.notifyDataSetChanged();
         switch (viewPager.getCurrentItem()) {
             case 0:
                 setTitle(R.string.accounts);
@@ -114,6 +103,7 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
                 setTitle(R.string.budgets);
                 break;
         }
+
         recreateViewPagerAdapter();
         supportInvalidateOptionsMenu();
         paneMode=false;
@@ -124,9 +114,10 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             for (Fragment activeFragment : activePaneFragments) {
                 fragmentTransaction.remove(activeFragment);
+                activePaneFragments.remove(activeFragment);
             }
             activePaneFragments.clear();
-            fragmentTransaction.addToBackStack(MainActivity.BACKSTACK);
+            //fragmentTransaction.addToBackStack(MainActivity.BACKSTACK);
             fragmentTransaction.commit();
         }
     }
@@ -271,7 +262,8 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
                 return  accountListFragment;
             }
             if (position==1) {
-                blotterFragment = (BlotterFragment) BlotterFragment.newInstance(bundle);
+                //blotterFragment = (BlotterFragment) BlotterFragment.newInstance(bundle);
+                blotterFragment = new BlotterFragment();
                 return blotterFragment;
             }
             if (position==2) {

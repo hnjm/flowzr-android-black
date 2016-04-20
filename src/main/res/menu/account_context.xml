@@ -26,12 +26,12 @@
           android:icon="@drawable/ic_functions"
 			android:title="@string/update_balance"           
           app:showAsAction="ifRoom"  />
-
+<!--
     <item android:id="@+id/context_account_delete_old"
           android:icon="@drawable/ic_delete"
 			android:title="@string/delete_old_transactions"           
           app:showAsAction="ifRoom"  />
-
+-->
     <item android:id="@+id/context_account_delete"
         android:icon="@drawable/ic_delete"
         android:title="@string/delete"

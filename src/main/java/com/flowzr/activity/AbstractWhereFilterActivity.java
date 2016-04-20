@@ -88,12 +88,12 @@ public abstract class AbstractWhereFilterActivity extends AbstractEditorActivity
     public boolean finishAndClose(int result) {
         Bundle bundle = new  Bundle();
         bundle.putInt(MyFragmentAPI.RESULT_EXTRA,result);
-        activity.onFragmentMessage(MyFragmentAPI.REQUEST_WHEREFILTER_FINISH,bundle);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
         return true;
     }
 
     public boolean finishAndClose(Bundle bundle) {
-        activity.onFragmentMessage(MyFragmentAPI.REQUEST_WHEREFILTER_FINISH,bundle);
+        activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
         return true;
     }
 

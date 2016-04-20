@@ -90,12 +90,7 @@ public class AccountActivity extends AbstractEditorActivity {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.account);
-        //initToolbar();
-
         LinearLayout layout = (LinearLayout)getView().findViewById(R.id.layout);
-
-        //LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         accountTitle= (EditText) getView().findViewById(R.id.title);
         accountTitle.setSingleLine();
         accountTypeAdapter = new EntityEnumAdapter<AccountType>(getContext(), AccountType.values());

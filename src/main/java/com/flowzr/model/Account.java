@@ -30,7 +30,7 @@ public class Account extends MyEntity {
 	public Currency currency;
 
 	@Column(name = "type")
-	public String type = AccountType.CASH.name();
+	public String type = AccountType.BANK.name();
 	
 	@Column(name = "card_issuer")
 	public String cardIssuer;

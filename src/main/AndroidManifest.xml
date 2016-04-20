@@ -69,7 +69,7 @@
          -->
 
         <meta-data android:name="com.google.android.maps.v2.API_KEY"
-                    android:value="AIzaSyBD06B06eal5OrFtJwi58Zqsg_wsRq8jpo"/>
+                    android:value="your_gmap_key"/>
 
 
 		<receiver android:name=".activity.AccountWidget" android:label="@string/widget_2x1" >
@@ -194,7 +194,7 @@
                   android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <!-- Change this to be db- followed by your app key -->
-                <data android:scheme="db-n4li1bbi9l4rn49" />
+                <data android:scheme="db-your_drop_box_account_id" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <category android:name="android.intent.category.DEFAULT" />

@@ -544,15 +544,6 @@ public class BackupListActivity extends AbstractActionBarActivity implements Goo
             GoogleApiAvailability.getInstance().getErrorDialog(this, result.getErrorCode(), 0).show();
             return;
         }
-        /**
-        try {
-            //result.startResolutionForResult(this, REQUEST_CODE_RESOLUTION);
-        } catch (IntentSender.SendIntentException e) {
-            Log.e("flowzr", "Exception while starting resolution activity", e);
-            e.printStackTrace();
-        }
-         **/
-        //showErrorPopup(this, R.string.gdocs_connection_failed);
         Toast.makeText(this,R.string.gdocs_connection_failed,Toast.LENGTH_LONG).show();
     }
 

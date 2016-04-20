@@ -196,7 +196,7 @@ public class FinancistoService extends WakefulIntentService {
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
 		notification.defaults = Notification.DEFAULT_ALL;
 		Intent notificationIntent = new Intent(this, MainActivity.class);
-        notificationIntent.putExtra(MyFragmentAPI.REQUEST_MASS_OP, true);
+        notificationIntent.putExtra(MyFragmentAPI.REQUEST_BLOTTER, true);
 		WhereFilter filter = new WhereFilter("");
 		filter.eq(BlotterFilter.STATUS, TransactionStatus.RS.name());
 		filter.toIntent(notificationIntent);

@@ -9,6 +9,7 @@
 package com.flowzr.dialog;
 
 import android.app.Dialog;
+import android.support.v7.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
