@@ -55,7 +55,6 @@ public class MainActivity  extends AbstractActionBarActivity
 
     public static Activity activity;
 
-
     @Override
     public void onFragmentMessage(String TAG, Bundle data) {
         switch (TAG) {
@@ -170,6 +169,8 @@ public class MainActivity  extends AbstractActionBarActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         if (!target.isAdded()) {
+            //return;
+            Log.e("flowzr","adding " + target);
             transaction.add(R.id.fragment_container, target);
             activePaneFragments.add(target);
         } else {
@@ -177,16 +178,16 @@ public class MainActivity  extends AbstractActionBarActivity
         }
 
         if (fragment.isAdded()) {
+            Log.e("flowzr","remove2" + fragment.getView().getParent().getClass().getCanonicalName());
             activePaneFragments.remove(fragment);
             transaction.remove( fragment);
         }
-        //transaction.addToBackStack(BACKSTACK);
+        transaction.addToBackStack(BACKSTACK);
         transaction.commit();
         if (activePaneFragments.size()==0) {
             ensureViewPagerMode();
-            ensureViewPagerMode();
         }
-        mAdapter.notifyDataSetChanged();
+        //mAdapter.notifyDataSetChanged();
 
     }
 
@@ -206,7 +207,7 @@ public class MainActivity  extends AbstractActionBarActivity
         }
 
         transaction.hide(target);
-        //transaction.addToBackStack(BACKSTACK);
+        transaction.addToBackStack(BACKSTACK);
         transaction.commit();
 
     }
@@ -222,6 +223,7 @@ public class MainActivity  extends AbstractActionBarActivity
     private void removePaneFragment(Fragment activeFragment) {
         if (activePaneFragments.size() > 0) {
             FragmentTransaction  fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            Log.e("flowzr","remove1" + activeFragment.getView().getParent().getClass().getCanonicalName());
             fragmentTransaction.remove(activeFragment);
             activePaneFragments.remove(activeFragment);
 
@@ -371,10 +373,11 @@ public class MainActivity  extends AbstractActionBarActivity
                         ensureViewPagerMode();
                         break;
                     default:
+                        Log.e("flowzr",String.valueOf(activePaneFragments.size()));
                         super.onBackPressed();
+                        activePaneFragments.remove(f);
                         break;
-                        //activePaneFragments.remove(f);
-
+                        //
                 }
 
 
@@ -462,7 +465,7 @@ public class MainActivity  extends AbstractActionBarActivity
 
     // out of listener
     public void loadTabFragment(int rId, Bundle bundle, final int tabId) {
-        ensureViewPagerMode();
+        //ensureViewPagerMode();
         bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, rId);
         Intent data = new Intent(this, BlotterFragment.class);
         data.putExtras(bundle);

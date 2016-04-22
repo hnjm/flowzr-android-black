@@ -532,6 +532,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
             try {
                 recreateCursor();
                 calculateTotals();
+
             } catch (Exception e) {
                 Log.e("flowzr","catch1");
                 blotterFilter.clear();

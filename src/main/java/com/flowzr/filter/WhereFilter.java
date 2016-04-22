@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.flowzr.activity.DateFilterActivity;
 import com.flowzr.blotter.BlotterFilter;
@@ -197,7 +198,13 @@ public class WhereFilter {
 		String title = bundle.getString(TITLE_EXTRA);
 		WhereFilter filter = new WhereFilter(title);
 		String[] a = bundle.getStringArray(FILTER_EXTRA);
+
+
 		if (a != null) {
+            for (int i=0;i<a.length;i++) {
+                Log.e("flowzr",a[i]);
+            }
+
             for (String s : a) {
                 filter.put(Criteria.fromStringExtra(s));
             }
