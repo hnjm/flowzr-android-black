@@ -12,7 +12,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flowzr" android:versionName="1.7.6" android:versionCode="240"
+    package="com.flowzr" android:versionName="1.7.6" android:versionCode="241"
     android:installLocation="internalOnly">
 
     <!-- Maps API needs OpenGL ES 2.0. -->
@@ -62,9 +62,9 @@
 		    android:description="@string/app_description"
             android:name="android.support.multidex.MultiDexApplication">
 
-        <!-- release key   -->
 
-		<uses-library android:name="com.google.android.maps" />
+        <!-- release key   -->
+        <uses-library android:name="com.google.android.maps" />
 
 
 

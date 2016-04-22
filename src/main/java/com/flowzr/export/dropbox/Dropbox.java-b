@@ -36,7 +36,7 @@ import java.util.List;
 public class Dropbox {
 
     public static final String APP_KEY = "your_drop_box_account_id";
-    public static final String APP_SECRET = "nn94nymigkkbhgk";
+    public static final String APP_SECRET = "your_drop_box_account_key";
 
     public static final Session.AccessType ACCESS_TYPE = Session.AccessType.APP_FOLDER;
 
