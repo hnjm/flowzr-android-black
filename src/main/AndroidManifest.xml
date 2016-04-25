@@ -12,7 +12,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flowzr" android:versionName="1.7.6" android:versionCode="241"
+    package="com.flowzr" android:versionName="1.7.7 build 246" android:versionCode="247"
     android:installLocation="internalOnly">
 
     <!-- Maps API needs OpenGL ES 2.0. -->
@@ -63,13 +63,13 @@
             android:name="android.support.multidex.MultiDexApplication">
 
 
-        <!-- release key   -->
+        <!--
+
         <uses-library android:name="com.google.android.maps" />
-
-
+-->
 
         <meta-data android:name="com.google.android.maps.v2.API_KEY"
-                    android:value="your_gmap_key"/>
+                    android:value="AIzaSyBD06B06eal5OrFtJwi58Zqsg_wsRq8jpo"/>
 
 
 		<receiver android:name=".activity.AccountWidget" android:label="@string/widget_2x1" >
@@ -162,7 +162,7 @@
 
 
         <activity android:name=".activity.TransactionPreferencesActivity"
-            android:theme="@android:style/Theme.Black"
+            android:theme="@style/Theme.AppCompat"
             android:label="@string/transaction_screen"/>
 
 		<activity android:name=".activity.ReportPreferencesActivity"
@@ -177,14 +177,15 @@
         android:configChanges="keyboardHidden|orientation|screenLayout" android:launchMode="singleTop">
         </activity>
 
-        <activity android:name=".activity.PreferencesActivity" android:label="@string/preferences"
-            android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity android:name=".activity.PreferencesActivity"
+            android:label="@string/preferences"
+            android:theme="@style/Theme.AppCompat" />
 
         <activity android:name=".activity.FlowzrPreferencesActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:theme="@style/Theme.AppCompat"
             android:label="@string/preferences"/>
         <activity android:name=".activity.BackupPreferencesActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:theme="@style/Theme.AppCompat"
             android:label="@string/preferences"/>
 
         <activity android:name="org.achartengine.GraphicalActivity"/>
@@ -194,7 +195,7 @@
                   android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <!-- Change this to be db- followed by your app key -->
-                <data android:scheme="db-your_drop_box_account_id" />
+                <data android:scheme="db-n4li1bbi9l4rn49" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <category android:name="android.intent.category.DEFAULT" />

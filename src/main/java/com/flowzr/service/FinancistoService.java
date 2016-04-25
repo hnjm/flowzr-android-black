@@ -165,7 +165,8 @@ public class FinancistoService extends WakefulIntentService {
                     Export.uploadBackupFileToDropbox(this, fileName);
                 }
                 if (MyPreferences.isDriveUploadAutoBackups(this)) {
-                    new DriveBackupTask(this,null).execute();
+
+                    //new DriveBackupTask(this,fileName).execute();
                 }
                 Log.e(TAG, "Auto-backup completed in " +(System.currentTimeMillis()-t0)+"ms");
             } catch (Exception e) {

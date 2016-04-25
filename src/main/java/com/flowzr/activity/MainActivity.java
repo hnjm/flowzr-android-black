@@ -105,6 +105,7 @@ public class MainActivity  extends AbstractActionBarActivity
 
 
     private void editEntityRequest(Bundle data) {
+        Log.e("flowzr","edit entity request");
         if (data.containsKey(ENTITY_CLASS_EXTRA)) {
             Fragment fragment = getFragmentForClass(data.getString(ENTITY_CLASS_EXTRA));
             fragment.setArguments(data);
@@ -117,6 +118,7 @@ public class MainActivity  extends AbstractActionBarActivity
 
     private void requestBlotter(Bundle data) {
         Fragment fragment;
+        Log.e("flowzr","request blotter");
         if (data.containsKey(MyFragmentAPI.ENTITY_CLASS_EXTRA)) {
             if (data.getString(MyFragmentAPI.ENTITY_CLASS_EXTRA).equals(ReportFragment.class.getCanonicalName())) {
                 fragment = getFragmentForClass(BlotterFragment.class.getCanonicalName());
@@ -151,7 +153,6 @@ public class MainActivity  extends AbstractActionBarActivity
             target.onActivityResult(requestCode,resultCode , intent);
             showResultingFragment(target,currentFragment);
         }
-        //manager.popBackStackImmediate();
     }
 
     private void loadFragment(Fragment fragment) {
@@ -223,7 +224,6 @@ public class MainActivity  extends AbstractActionBarActivity
     private void removePaneFragment(Fragment activeFragment) {
         if (activePaneFragments.size() > 0) {
             FragmentTransaction  fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            Log.e("flowzr","remove1" + activeFragment.getView().getParent().getClass().getCanonicalName());
             fragmentTransaction.remove(activeFragment);
             activePaneFragments.remove(activeFragment);
 
@@ -352,6 +352,22 @@ public class MainActivity  extends AbstractActionBarActivity
                     viewPager.setCurrentItem(startupScreen.ordinal());
             }
         }
+        Intent intent= getIntent();
+        if (intent.getIntExtra(ENTITY_REQUEST_EXTRA,-1)==AccountWidget.WIDGET_REQUEST) {
+                if (intent.getExtras().containsKey(REQUEST_BLOTTER)) {
+                    onFragmentMessage(REQUEST_BLOTTER,intent.getExtras());
+
+                } else if (intent.getExtras().containsKey(EDIT_ENTITY_REQUEST)) {
+                    onFragmentMessage(EDIT_ENTITY_REQUEST,intent.getExtras());
+
+                }
+
+        }
+
+        if (intent.getExtras()!=null && intent.getExtras().containsKey(Intent.EXTRA_SHORTCUT_INTENT)) {
+            onFragmentMessage(EDIT_ENTITY_REQUEST,intent.getExtras());
+        }
+
 
     }
 
@@ -373,7 +389,6 @@ public class MainActivity  extends AbstractActionBarActivity
                         ensureViewPagerMode();
                         break;
                     default:
-                        Log.e("flowzr",String.valueOf(activePaneFragments.size()));
                         super.onBackPressed();
                         activePaneFragments.remove(f);
                         break;
@@ -400,11 +415,13 @@ public class MainActivity  extends AbstractActionBarActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //Log.e("flowzr","mainOnactivityResult " + requestCode + " " + resultCode + " " + data.getExtras());
         PinProtection.unlock(this);
-        if (requestCode == CHANGE_PREFERENCES) {
-            scheduleNextAutoBackup(this);
-            scheduleNextAutoSync(this);
-
+        switch (requestCode) {
+            case CHANGE_PREFERENCES:
+                scheduleNextAutoBackup(this);
+                scheduleNextAutoSync(this);
+                break;
         }
         mAdapter.notifyDataSetChanged();
     }

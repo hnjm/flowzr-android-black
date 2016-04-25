@@ -14,6 +14,7 @@ package com.flowzr.backup;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.util.Log;
 
 import com.flowzr.db.Database;
 import com.flowzr.db.DatabaseAdapter;
@@ -23,6 +24,9 @@ import com.flowzr.export.dropbox.Dropbox;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.DriveApi.DriveContentsResult;
 import com.google.android.gms.drive.DriveFile;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpResponse;
+import com.google.api.services.drive.Drive;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -48,10 +52,10 @@ public class DatabaseImport extends FullDatabaseImport {
         return new DatabaseImport(context, dbAdapter, inputStream);
     }
 
-    public static DatabaseImport createFromGoogleDriveBackup(Context context, DatabaseAdapter dbAdapter, GoogleApiClient mGoogleApiClient, DriveFile file)
+    public static DatabaseImport createFromGoogleDriveBackup(Context context, DatabaseAdapter dbAdapter, Drive drive, com.google.api.services.drive.model.File file)
             throws IOException {
-        DriveContentsResult h= file.open(mGoogleApiClient, DriveFile.MODE_READ_ONLY, null).await();
-        InputStream inputStream = h.getDriveContents().getInputStream();
+        HttpResponse response = drive.getRequestFactory().buildGetRequest(new GenericUrl(file.getDownloadUrl())).execute();
+        InputStream inputStream = response.getContent();
         InputStream in = new GZIPInputStream(inputStream);
         return new DatabaseImport(context, dbAdapter, in);
     }

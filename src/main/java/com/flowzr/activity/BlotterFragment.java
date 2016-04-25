@@ -127,8 +127,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
             saveFilter=false;
         }
         Bundle args=this.getArguments();
-        if (args != null   ) {
-            Log.e("flowzr","from args " + args);
+        if (args != null   ) {;
             blotterFilter = WhereFilter.fromBundle(args);
             saveFilter = args.getBoolean(SAVE_FILTER, false);
             long budgetId = blotterFilter.getBudgetId();
@@ -526,20 +525,12 @@ public class BlotterFragment extends AbstractTotalListFragment {
             createTransactionFromTemplate(data);
         }
 
-        if (resultCode != MainActivity.RESULT_CANCELED
-                && getListView()!=null) {
-
+        if (resultCode != MainActivity.RESULT_CANCELED) {
             try {
                 recreateCursor();
                 calculateTotals();
-
-            } catch (Exception e) {
-                Log.e("flowzr","catch1");
-                blotterFilter.clear();
-                recreateCursor();
-                calculateTotals();
+            } catch (java.lang.IllegalStateException e) {
                 e.printStackTrace();
-                activity.ensureViewPagerMode();
             }
        }
 

@@ -35,6 +35,6 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="@dimen/space_normal"
         android:layout_marginRight="@dimen/space_normal"
-        app:theme="@style/CustomWidgetSwitchCompat" />
+        android:theme="@style/CustomWidgetSwitchCompat" />
 
     </LinearLayout>

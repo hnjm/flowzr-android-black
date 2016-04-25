@@ -21,10 +21,13 @@ import com.flowzr.R;
 import com.flowzr.activity.BackupListActivity;
 import com.flowzr.backup.DatabaseImport;
 import com.flowzr.db.DatabaseAdapter;
+import com.flowzr.export.ImportExportAsyncTask;
 import com.flowzr.export.ImportExportAsyncTaskListener;
-import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveFile;
-import com.google.android.gms.drive.DriveId;
+import com.flowzr.export.ImportExportException;
+import com.flowzr.utils.MyPreferences;
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.File;
 
 import java.io.IOException;
 
@@ -34,46 +37,37 @@ import java.io.IOException;
  * User: Denis Solonenko
  * Date: 11/9/11 2:16 AM
  */
-public class DriveRestoreTask  extends  ApiClientAsyncTask<Void, Void, Object> {
+public class DriveRestoreTask extends ImportExportAsyncTask {
 
-    private final String strDriveId;
+    private final com.google.api.services.drive.model.File entry;
 
-    public DriveRestoreTask(final BackupListActivity backupListActivity, ProgressDialog dialog, String pStrDriveId) {
+    public DriveRestoreTask(final BackupListActivity backupListActivity, ProgressDialog dialog, File entry) {
         super(backupListActivity, dialog);
         setListener(new ImportExportAsyncTaskListener() {
             @Override
             public void onCompleted() {
                 backupListActivity.finish();
-
-
             }
         });
-        this.strDriveId = pStrDriveId;
+        this.entry = entry;
     }
 
     @Override
     protected Object work(Context context, DatabaseAdapter db, String... params) throws Exception {
-        return true;
-    }
-
-    @Override
-    protected Object doInBackgroundConnected(String... params) {
-        DatabaseAdapter db = new DatabaseAdapter(context);
-        db.open();
         try {
-            DriveFile file= Drive.DriveApi.getFile(mClient, DriveId.decodeFromString(strDriveId));
-            try {
-                DatabaseImport.createFromGoogleDriveBackup(context, db,mClient, file).importDatabase();
-                return true;
-            } catch (IOException e) {
-                return e;
-            }
-        } catch(Exception ex){
-            Log.e("Financisto", "Unable to do import/export", ex);
-            return ex;
-        } finally {
-            db.close();
+            String googleDriveAccount = MyPreferences.getGoogleDriveAccount(context);
+            Drive drive = GoogleDriveClient.create(context,googleDriveAccount);
+            DatabaseImport.createFromGoogleDriveBackup(context, db, drive, entry).importDatabase();
+        } catch (ImportExportException e) {
+            throw e;
+        } catch (GoogleAuthException e) {
+            throw new ImportExportException(R.string.gdocs_connection_failed);
+        } catch (IOException e) {
+            throw new ImportExportException(R.string.gdocs_service_error);
+        } catch (Exception e) {
+            throw new ImportExportException(R.string.gdocs_service_error, e);
         }
+        return true;
     }
 
     @Override

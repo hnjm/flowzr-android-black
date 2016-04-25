@@ -25,6 +25,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,8 @@ import com.flowzr.utils.Utils;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import static com.flowzr.utils.AndroidUtils.isCompatible;
 
 /**
  * Created by IntelliJ IDEA.
@@ -85,53 +88,33 @@ public class PlannerFragment extends BlotterFragment {
         setupFilter();
         totalText = (TextView)getView().findViewById(R.id.total);
         filterText = (TextView)getView().findViewById(R.id.period);
-        //recreateCursor();
         recreateAdapter();
         getActivity().supportInvalidateOptionsMenu();
     }
-    
+
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.blotter_actions, menu);
+        menu.findItem(R.id.bAdd).setVisible(false);
+        menu.findItem(R.id.bTransfer).setVisible(false);
+        menu.findItem(R.id.action_mass_op).setVisible(false);
+        menu.findItem(R.id.action_list_template).setVisible(false);
+        menu.findItem(R.id.opt_menu_bill).setVisible(false);
+        menu.findItem(R.id.opt_menu_month).setVisible(false);
 
-        if (menu.findItem(R.id.action_list_template)!=null) {
-            menu.findItem(R.id.action_list_template).setVisible(false);
-        }
-        if (menu.findItem(R.id.action_mass_op)!=null) {
-            menu.findItem(R.id.action_mass_op).setVisible(false);
-        }
-        if (menu.findItem(R.id.opt_menu_bill)!=null) {
-            menu.findItem(R.id.opt_menu_bill).setVisible(false);
-        }
-        if (menu.findItem(R.id.opt_menu_month)!=null) {
-            menu.findItem(R.id.opt_menu_month).setVisible(false);
-        }
-
-        if (menu.findItem(R.id.action_filter)!=null) {
-            menu.findItem(R.id.action_filter).setIcon(R.drawable.ic_menu_filter_on);
-            menu.findItem(R.id.action_filter).setOnMenuItemClickListener(
-                    new MenuItem.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            showFilter();
-                            return false;
-                        }
-                    }
-            );
-        }
     }
-/*
+
     @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // caught by parent but needed
 	    switch (item.getItemId()) {
 	        case R.id.action_filter: 
-	        	//showFilter(); #shown by parent
+	        	showFilter();
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
-    */
 
     private void loadFilter() {
         SharedPreferences preferences = getActivity().getPreferences(PreferenceActivity.MODE_PRIVATE);
@@ -169,7 +152,7 @@ public class PlannerFragment extends BlotterFragment {
         Fragment fragment = new DateFilterActivity();
         fragment.setArguments(bundle);
         fragment.setTargetFragment(this,FILTER_REQUEST);
-        //activity.startFragmentForResult(fragment,this);
+        activity.startFragmentForResult(fragment,this);
     }
 
     private void saveFilter() {

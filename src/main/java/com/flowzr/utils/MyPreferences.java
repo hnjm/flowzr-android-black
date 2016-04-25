@@ -667,4 +667,8 @@ public class MyPreferences {
         sharedPreferences.edit().putString("google_drive_backup_account", accountName).apply();
     }
 
+	public static boolean isGoogleDriveFullReadonly(Context context) {
+		return getBoolean(context, "google_drive_backup_full_readonly", false);
+	}
+
 }

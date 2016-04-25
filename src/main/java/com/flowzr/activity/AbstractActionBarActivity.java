@@ -85,33 +85,35 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         int count = fm.getBackStackEntryCount();
         for(int i = 0; i < count; ++i) {
-            fm.popBackStackImmediate(BACKSTACK,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            try {
+                fm.popBackStackImmediate(BACKSTACK, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         if (findViewById(R.id.fragment_container)!=null) {
             findViewById(R.id.fragment_container).setVisibility(View.GONE);
         }
         viewPager.setVisibility(View.VISIBLE);
 
-
+        fm.executePendingTransactions();
         if (mAdapter !=null && mAdapter.blotterFragment!=null) {
             if (!mAdapter.blotterFragment.isAdded()) {
-                Log.e("flowzr","isAdded" + String.valueOf(mAdapter.blotterFragment.isVisible()));
                 FragmentTransaction transaction = fm.beginTransaction();
                 transaction.add(mAdapter.blotterFragment,"");
                 transaction.commit();
-
-                //
                 viewPager.setCurrentItem(1);
             } else if (!mAdapter.blotterFragment.isVisible()) {
-                Log.e("flowzr","isVisible2" + String.valueOf(mAdapter.blotterFragment.isVisible()));
                 FragmentTransaction transaction = fm.beginTransaction();
                 transaction.show(mAdapter.blotterFragment);
                 transaction.commit();
             }
         }
-        recreateViewPagerAdapter();
-        //viewPager.setCurrentItem(viewPager.getCurrentItem());
-        //supportInvalidateOptionsMenu();
+        try {
+            recreateViewPagerAdapter();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         paneMode=false;
     }
 
@@ -119,7 +121,6 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         if (activePaneFragments.size() > 0) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             for (Fragment activeFragment : activePaneFragments) {
-                //Log.e("flowzr","remove removePaneFragments" + activeFragment.getView().getParent().getClass().getCanonicalName());
                 fragmentTransaction.remove(activeFragment);
                 activePaneFragments.remove(activeFragment);
             }
@@ -271,6 +272,7 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
             if (position==1) {
                 //blotterFragment = (BlotterFragment) BlotterFragment.newInstance(bundle);
                 blotterFragment = new BlotterFragment();
+                Log.e("flowzr","TAG:" + blotterFragment.getTag());
                 return blotterFragment;
             }
             if (position==2) {

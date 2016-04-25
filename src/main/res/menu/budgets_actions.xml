@@ -4,7 +4,7 @@
 
 
     <item android:id="@+id/action_integrity_fix"
-        android:title="@string/filter"
+        android:title="@string/integrity_fix"
         android:icon="@drawable/ic_functions"
         app:showAsAction="ifRoom"  />
 

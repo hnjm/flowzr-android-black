@@ -255,6 +255,8 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
         }
         return -1;
     }
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();

@@ -10,10 +10,10 @@
 
 <LinearLayout
 	    xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_height="72dp"
+        android:layout_height="60dp"
         android:id="@+id/total_layout"
         android:padding="@dimen/space_small"
-    android:elevation="4dp"
+        android:elevation="4dp"
         android:layout_margin="0dp"
         android:layout_width="match_parent"
         android:background="@color/total_bg_color"
@@ -30,13 +30,13 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:focusable="true"
-            android:textSize="@dimen/text_xlarge" />
+            android:textSize="@dimen/text_large" />
 
         <TextView
             android:layout_marginRight="@dimen/space_normal"
             android:id="@+id/total"
             style="@style/TextView"
-            android:textSize="@dimen/text_xxxlarge" />
+            android:textSize="@dimen/text_xxlarge" />
 
     </LinearLayout>
 </LinearLayout>

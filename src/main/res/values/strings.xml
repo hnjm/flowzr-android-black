@@ -15,10 +15,10 @@
 <resources>
 	<!-- List Item Icons(Images) with strings(text of company name) -->
 <!-- Keep them with titles array accordingly -->
-    <string name="widget_2x1">Flowzr</string>
-    <string name="widget_3x1">Flowzr</string>
-    <string name="widget_4x1">Flowzr</string>
-	<string name="backup">Backup</string>
+    <string name="widget_2x1" translatable="false">Flowzr</string>
+    <string name="widget_3x1" translatable="false">Flowzr</string>
+    <string name="widget_4x1" translatable="false">Flowzr</string>
+	<string name="backup" translatable="false">Backup</string>
 	<string name="accounts">Accounts</string>
 	<string name="blotter">Transactions</string>
 	<string name="currencies">Currencies</string>
@@ -121,8 +121,8 @@
 	<string name="report">Report</string>
 	<string name="reports">Reports</string>	
 	<string name="pie_chart">Pie chart</string>	
-	<string name="zoom_in">Zoom In</string>	
-	<string name="zoom_out">Zoom Out</string>
+	<string name="zoom_in" translatable="false">Zoom In</string>
+	<string name="zoom_out" translatable="false">Zoom Out</string>
 	<string name="report_by_period">By Period</string>
 	<string name="report_by_period_summary">Transactions report by period</string>
 	<string name="report_by_category">By Category</string>
@@ -720,7 +720,7 @@
     <string name="blotter_screen_summary">Preferences for blotter screen</string>
     <string name="hide_closed_accounts">Hide closed accounts</string>
     <string name="hide_closed_accounts_summary">Hide or show closed accounts in the accounts list (requires restart)</string>
-    <string name="re_index_categories">Re-index</string>
+    <string name="re_index_categories" translatable="false">Re-index</string>
     <string name="startup_screen">Startup screen</string>
     <string name="startup_screen_summary">Select tab which will be selected on startup</string>
     <string-array name="startup_screen_entities">
@@ -796,5 +796,8 @@
 
 	<string name="use_today_for_total">Today\'s totals</string>
 	<string name="use_today_for_total_sumary">Show total in date of today</string>
+	<string name="google_drive_permission_required">Google Drive permission required</string>
+	<string name="google_drive_permission_requested">Google Drive permission requested</string>
+	<string name="google_drive_permission_requested_for_account">Google Drive permission requested for account</string>
 
 </resources>

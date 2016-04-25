@@ -20,10 +20,13 @@
  <RelativeLayout  android:layout_width="wrap_content" android:layout_height="wrap_content"
   android:layout_alignParentLeft="true" style="@style/Widget.Action.Left">
 
-        <ImageView android:id="@+id/account_icon" android:layout_alignParentLeft="true" android:layout_centerVertical="true"
-         style="@style/Widget.Logo"  android:src="@drawable/ic_launcher"
-         android:layout_width="@dimen/recommended_touch_size" android:layout_height="@dimen/recommended_touch_size"
-         />
+        <ImageView android:id="@+id/account_icon"
+            android:layout_marginLeft="@dimen/space_normal"
+            android:layout_marginTop="@dimen/space_normal"
+            android:layout_marginRight="@dimen/space_normal"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            style="@style/Widget.Logo" />
 
             <LinearLayout android:orientation="vertical"
             android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toRightOf="@id/account_icon"

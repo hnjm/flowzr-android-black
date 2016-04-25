@@ -14,75 +14,86 @@
 package com.flowzr.export.docs;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
+import android.os.AsyncTask;
+
 
 import com.flowzr.R;
 import com.flowzr.activity.BackupListActivity;
-import com.flowzr.db.DatabaseAdapter;
+
+import com.flowzr.export.Export;
 import com.flowzr.export.ImportExportException;
 import com.flowzr.utils.MyPreferences;
-import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi;
-import com.google.android.gms.drive.DriveFolder;
-import com.google.android.gms.drive.DriveId;
-import com.google.android.gms.drive.MetadataBuffer;
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.File;
+import com.google.api.services.drive.model.FileList;
 
-public class DriveListFilesTask extends  ApiClientAsyncTask<Void, Void, Object>   {
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DriveListFilesTask extends AsyncTask<Void, Void, File[]> {
 
     private final BackupListActivity context;
     private final Dialog dialog;
+
     private volatile int error = 0;
 
-    public DriveListFilesTask(BackupListActivity context, ProgressDialog dialog) {
-        super(context, dialog);
-        this.context = context;
+    public DriveListFilesTask(BackupListActivity backupListActivity, Dialog dialog) {
+        this.context = backupListActivity;
         this.dialog = dialog;
     }
 
     @Override
-    protected Object doInBackgroundConnected(String... params) {
-
-        String folderName= MyPreferences.getBackupFolder(context);
+    protected File[] doInBackground(Void... contexts) {
         try {
-            DriveId folderId= ApiClientAsyncTask.getOrCreateDriveFolder(this.getGoogleApiClient(), folderName);
-            DriveFolder folder = Drive.DriveApi.getFolder(getGoogleApiClient(), folderId);
+            String googleDriveAccount = MyPreferences.getGoogleDriveAccount(context);
+            Drive drive = GoogleDriveClient.create(context,googleDriveAccount);
 
-            DriveApi.MetadataBufferResult result = folder.listChildren(getGoogleApiClient()).await();
-            if (!result.getStatus().isSuccess()) {
-                return new ImportExportException(R.string.gdocs_service_error);
+            String targetFolder = MyPreferences.getBackupFolder(context);
+
+            if (targetFolder == null || targetFolder.equals("")) {
+                error = R.string.gdocs_folder_not_configured;
+                return null;
             }
-            return result.getMetadataBuffer();
+
+            String folderId = GoogleDriveClient.getOrCreateDriveFolder(drive, targetFolder);
+
+            List<File> backupFiles = new ArrayList<File>();
+            FileList files = drive.files().list().setQ("mimeType='" + Export.BACKUP_MIME_TYPE + "' and '" + folderId + "' in parents").execute();
+            for (com.google.api.services.drive.model.File f : files.getItems()) {
+                if ((f.getExplicitlyTrashed() == null || !f.getExplicitlyTrashed()) && f.getDownloadUrl() != null && f.getDownloadUrl().length() > 0) {
+                    if (f.getFileExtension().equals("backup")) {
+                        backupFiles.add(f);
+                    }
+                }
+            }
+            return backupFiles.toArray(new File[backupFiles.size()]);
 
         } catch (ImportExportException e) {
-            return e;
+            error = e.errorResId;
+            return null;
+        } catch (GoogleAuthException e) {
+            error = R.string.gdocs_connection_failed;
+            return null;
+        } catch (IOException e) {
+            error = R.string.gdocs_service_error;
+            return null;
+        } catch (Exception e) {
+            error = R.string.gdocs_service_error;
+            return null;
         }
     }
 
     @Override
-    protected Object work(Context context, DatabaseAdapter db, String... params) throws Exception {
-        return null;
-    }
-
-    @Override
-    protected String getSuccessMessage(Object result) {
-        return null;
-    }
-
-
-    @Override
-    protected void onPostExecute(Object result) {
+    protected void onPostExecute(File[] backupFiles) {
         dialog.dismiss();
-        if (result instanceof ImportExportException) {
-            context.showErrorPopup(context, ((ImportExportException)result).errorResId);
+        if (error != 0) {
+            context.showErrorPopup(context, error);
             return;
         }
-
-        // com.google.android.gms.drive.MetadataBuffer c
-        // annot be cast to
-        // com.google.android.gms.drive.DriveApi$MetadataBufferResult
-        //DriveApi.MetadataBuffer backupFiles = (DriveApi.MetadataBuffer) result;
-        context.doImportFromGoogleDrive((MetadataBuffer) result);
+        context.doImportFromGoogleDrive(backupFiles);
     }
+
 
 }

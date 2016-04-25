@@ -201,10 +201,6 @@ public class WhereFilter {
 
 
 		if (a != null) {
-            for (int i=0;i<a.length;i++) {
-                Log.e("flowzr",a[i]);
-            }
-
             for (String s : a) {
                 filter.put(Criteria.fromStringExtra(s));
             }

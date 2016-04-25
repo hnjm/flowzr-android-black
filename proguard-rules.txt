@@ -6,6 +6,11 @@
 -keep class greendroid.widget.** { *; }
 -dontwarn org.joda.**
 -dontwarn javax.annotation.**
+-dontwarn com.google.api.client.json.jackson2.**
+
+#Warning:com.google.api.client.json.jackson2.JacksonFactory:
+#can't find referenced class com.fasterxml.jackson.core.JsonToken
+
 -keepattributes *Signature*
 -keepattributes *Annotation*
 -dontnote android.net.http.*

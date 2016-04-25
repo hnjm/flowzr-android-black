@@ -47,7 +47,7 @@
 
     <item android:id="@+id/action_done"
         android:title="@string/select"
-        android:icon="@drawable/ic_check"
+        android:icon="@drawable/ic_check_on"
         app:showAsAction="always"  />
 
     <item android:id="@+id/action_delete"

@@ -22,11 +22,4 @@
           android:icon="@drawable/ic_select_all"
 		app:showAsAction="ifRoom" />
 
-
-
-    <item android:id="@+id/action_cancel"
-          android:icon="@drawable/ic_cancel"
-			android:title="@string/cancel"           
-          app:showAsAction="ifRoom"  />
-
 </menu>

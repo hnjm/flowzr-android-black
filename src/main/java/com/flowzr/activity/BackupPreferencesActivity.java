@@ -11,6 +11,9 @@
  ******************************************************************************/
 package com.flowzr.activity;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
@@ -28,11 +31,14 @@ import com.flowzr.export.Export;
 import com.flowzr.export.dropbox.Dropbox;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.PinProtection;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.common.AccountPicker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.plus.Plus;
+import com.google.api.client.googleapis.extensions.android.accounts.GoogleAccountManager;
 
 public class BackupPreferencesActivity extends PreferenceActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -45,20 +51,19 @@ public class BackupPreferencesActivity extends PreferenceActivity implements Goo
     private static final int UNLINK_DRIVE = 102;
     private static int drive_action=0; // to fw to onConnect
     private GoogleApiClient mGoogleApiClient;
+    GoogleAccountManager googleAccountManager;
+    private static final String[] ACCOUNT_TYPE = new String[] {GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE};
+    private static final int CHOOSE_ACCOUNT = 101;
+
+
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);   
 		addPreferencesFromResource(R.xml.backup_preferences);
 
-        mGoogleApiClient= new GoogleApiClient.Builder(this)
-                .addApi(Plus.API)
-                .addApi(Drive.API)
-                .addScope(Drive.SCOPE_FILE)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-        mGoogleApiClient.connect();
+        googleAccountManager = new GoogleAccountManager(this);
+
         PreferenceScreen preferenceScreen = getPreferenceScreen();
 
         Preference pDatabaseBackupFolder = preferenceScreen.findPreference("database_backup_folder");
@@ -90,27 +95,50 @@ public class BackupPreferencesActivity extends PreferenceActivity implements Goo
         pDriveAccount.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference arg0) {
-                chooseDriveAccount();
+                //chooseDriveAccount();
+                chooseAccount();
                 return true;
             }
         });
-        Preference pDriveAccountUnlink = preferenceScreen.findPreference("google_unlink");
-        pDriveAccountUnlink.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference arg0) {
-                deAuthDrive();
-                return true;
-            }
-        });
-
 
         linkToDropbox();
         setCurrentDatabaseBackupFolder();
-        renderDriveAccount();
-        // @TODO enable google drive autobackup
-        Preference pDriveAutoUpload = preferenceScreen.findPreference("google_drive_upload_autobackup");
-        pDriveAutoUpload.setEnabled(false);
+        //enableOpenExchangeApp();
+        selectAccount();
 	}
+
+
+
+    private void selectAccount() {
+        Preference pDriveAccount = getPreferenceScreen().findPreference("google_drive_backup_account");
+        Account account = getSelectedAccount();
+        if (account != null) {
+            pDriveAccount.setSummary(account.name);
+        }
+    }
+
+
+    private void chooseAccount() {
+        try {
+            Account selectedAccount = getSelectedAccount();
+            Intent intent = AccountPicker.newChooseAccountIntent(selectedAccount, null, ACCOUNT_TYPE, true,
+                    null, null, null, null);
+            startActivityForResult(intent, CHOOSE_ACCOUNT);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, R.string.google_drive_account_select_error, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private Account getSelectedAccount() {
+        Account selectedAccount = null;
+        String account = MyPreferences.getGoogleDriveAccount(this);
+        if (account != null) {
+            selectedAccount = googleAccountManager.getAccountByName(account);
+        }
+        return selectedAccount;
+    }
+
+
 
     private String getDriveAccountAndStoreInPrefs() {
         if (mGoogleApiClient!=null) {
@@ -248,6 +276,18 @@ public class BackupPreferencesActivity extends PreferenceActivity implements Goo
                     String databaseBackupFolder = data.getStringExtra(FolderBrowser.PATH);
                     MyPreferences.setDatabaseBackupFolder(this, databaseBackupFolder);
                     setCurrentDatabaseBackupFolder();
+                    break;
+                case CHOOSE_ACCOUNT:
+                    if (data != null) {
+                        Bundle b = data.getExtras();
+                        String accountName = b.getString(AccountManager.KEY_ACCOUNT_NAME);
+                        Log.d("Preferences", "Selected account: " + accountName);
+                        if (accountName != null && accountName.length() > 0) {
+                            Account account = googleAccountManager.getAccountByName(accountName);
+                            MyPreferences.setGoogleDriveAccount(this, account.name);
+                            selectAccount();
+                        }
+                    }
                     break;
             }
         }

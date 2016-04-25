@@ -41,6 +41,7 @@
             android:title="@string/google_drive_upload_backup" android:summary="@string/google_drive_upload_backup_summary"
             android:defaultValue="false"/>
         <CheckBoxPreference android:key="google_drive_upload_autobackup"
+            android:enabled="false"
             android:title="@string/dropbox_upload_autobackup" android:summary="@string/google_drive_upload_autobackup_summary"
             android:defaultValue="false"/>
     </PreferenceCategory>

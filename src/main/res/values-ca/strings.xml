@@ -651,4 +651,5 @@
     <item>Pressupostos</item>
     <item>Informes</item>
   </string-array>
+  <string name="account_by_currency"></string>
 </resources>

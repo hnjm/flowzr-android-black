@@ -76,7 +76,6 @@ public class AccountWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("FlowzrWidget", "onReceive intent "+intent);
         String action = intent.getAction();
         if (WIDGET_UPDATE_ACTION.equals(action)) {
             int widgetId = intent.getIntExtra(WIDGET_ID, INVALID_APPWIDGET_ID);
@@ -95,7 +94,7 @@ public class AccountWidget extends AppWidgetProvider {
     }
 
     private static void updateWidgets(Context context, AppWidgetManager manager, int[] appWidgetIds, boolean nextAccount) {
-        Log.d("FlowzrWidget", "updateWidgets " + Arrays.toString(appWidgetIds) + " -> " + nextAccount);
+
         for (int id : appWidgetIds) {
             AppWidgetProviderInfo appWidgetInfo = manager.getAppWidgetInfo(id);
             if (appWidgetInfo != null) {
@@ -103,7 +102,7 @@ public class AccountWidget extends AppWidgetProvider {
                 if (MyPreferences.isWidgetEnabled(context)) {
                     long accountId = loadAccountForWidget(context, id);
                     Class providerClass = getProviderClass(appWidgetInfo);
-                    Log.d("FlowzrWidget", "using provider " + providerClass);
+
                     RemoteViews remoteViews = nextAccount || accountId == -1
                             ? buildUpdateForNextAccount(context, id, layoutId, providerClass, accountId)
                             : buildUpdateForCurrentAccount(context, id, layoutId, providerClass, accountId);
@@ -174,6 +173,7 @@ public class AccountWidget extends AppWidgetProvider {
         Criteria blotterFilter = Criteria.eq(BlotterFilter.FROM_ACCOUNT_ID, String.valueOf(a.id));
         blotterFilter.toIntent(a.title, intent);
         intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
+        intent.putExtra(MyFragmentAPI.ENTITY_REQUEST_EXTRA, WIDGET_REQUEST);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, request++, intent, 0);
         updateViews.setOnClickPendingIntent(R.id.note, pendingIntent);
         updateViews.setOnClickPendingIntent(R.id.line1, pendingIntent);
@@ -181,31 +181,39 @@ public class AccountWidget extends AppWidgetProvider {
 
     private static int request = 0;
 
+    public static final int WIDGET_REQUEST = 10000;
+
     private static void addButtonsClick(Context context, RemoteViews updateViews,Account a) {
 
         //add transaction
-        Intent intent = new Intent(context, TransactionActivity.class);
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(MyFragmentAPI.ENTITY_REQUEST_EXTRA, WIDGET_REQUEST);
         intent.putExtra(TransactionActivity.ACCOUNT_ID_EXTRA, a.id);
+        intent.putExtra(MyFragmentAPI.EDIT_ENTITY_REQUEST, true);
+        intent.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, TransactionActivity.class.getCanonicalName());
         PendingIntent pendingIntent = PendingIntent.getActivity(context, request++, intent, 0);
         updateViews.setOnClickPendingIntent(R.id.add_transaction, pendingIntent);
 
         //add transfer
-        intent = new Intent(context, TransferActivity.class);
+        intent = new Intent(context, MainActivity.class);
+        intent.putExtra(MyFragmentAPI.ENTITY_REQUEST_EXTRA, WIDGET_REQUEST);
         intent.putExtra(TransactionActivity.ACCOUNT_ID_EXTRA, a.id);
+        intent.putExtra(MyFragmentAPI.EDIT_ENTITY_REQUEST, true);
+        intent.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, TransferActivity.class.getCanonicalName());
         pendingIntent = PendingIntent.getActivity(context, request++, intent, 0);
         updateViews.setOnClickPendingIntent(R.id.add_transfer, pendingIntent);
 
+
         //add template
-        intent = new Intent(context, MainActivity.class);
-        intent.putExtra(MyFragmentAPI.EDIT_ENTITY_REQUEST, true);
-        intent.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, ScheduledListFragment.class.getCanonicalName());
+        Intent intent2 = new Intent(context, MainActivity.class);
+        intent2.putExtra(MyFragmentAPI.ENTITY_REQUEST_EXTRA, WIDGET_REQUEST);
+        intent2.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, ScheduledListFragment.class.getCanonicalName());
         Criteria blotterFilter = Criteria.eq(BlotterFilter.FROM_ACCOUNT_ID, String.valueOf(a.id));
-        blotterFilter.toIntent(a.title, intent);
-        intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
-        intent.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, BlotterFragment.class.getCanonicalName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        pendingIntent = PendingIntent.getActivity(context, request++, intent, 0);
-        updateViews.setOnClickPendingIntent(R.id.action_list_template, pendingIntent);
+        blotterFilter.toIntent(a.title, intent2);
+        intent2.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, BlotterFragment.class.getCanonicalName());
+        intent2.putExtra(MainActivity.REQUEST_BLOTTER, true);
+        PendingIntent pendingIntent2 = PendingIntent.getActivity(context, request++, intent2, 0);
+        updateViews.setOnClickPendingIntent(R.id.action_list_template, pendingIntent2);
     }
 
     private static RemoteViews buildUpdateForCurrentAccount(Context context, int widgetId, int layoutId, Class providerClass, long accountId) {
@@ -215,10 +223,8 @@ public class AccountWidget extends AppWidgetProvider {
             MyEntityManager em = db.em();
             Account a = em.getAccount(accountId);
             if (a != null) {
-                Log.d("FlowzrWidget", "buildUpdateForCurrentAccount building update for "+widgetId+" -> "+accountId);
                 return updateWidgetFromAccount(context, widgetId, layoutId, providerClass, a);
             } else {
-                Log.d("FlowzrWidget", "buildUpdateForCurrentAccount not found "+widgetId+" -> "+accountId);
                 return buildUpdateForNextAccount(context, widgetId, layoutId, providerClass, -1);
             }
         } catch (Exception ex) {

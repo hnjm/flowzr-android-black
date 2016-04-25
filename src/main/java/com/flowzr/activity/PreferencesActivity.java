@@ -57,7 +57,7 @@ public class PreferencesActivity extends PreferenceActivity {
 		pNewTransactionShortcut.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference arg0) {
-                addShortcut(".activity.TransactionActivity", R.string.transaction, R.drawable.ic_edit);
+                addShortcut("com.flowzr.activity.MainActivity", TransactionActivity.class.getCanonicalName(),R.string.transaction, R.drawable.widget_add_transaction);
                 return true;
             }
 
@@ -66,7 +66,7 @@ public class PreferencesActivity extends PreferenceActivity {
 		pNewTransferShortcut.setOnPreferenceClickListener(new OnPreferenceClickListener(){
 			@Override
 			public boolean onPreferenceClick(Preference arg0) {
-				addShortcut(".activity.TransferActivity", R.string.transfer, R.drawable.ic_swap_vert);
+				addShortcut("com.flowzr.activity.MainActivity",TransferActivity.class.getCanonicalName(), R.string.transfer, R.drawable.widget_add_transfer);
 				return true;
 			}
 		});
@@ -91,21 +91,27 @@ public class PreferencesActivity extends PreferenceActivity {
         pOpenExchangeRatesAppId.setEnabled(MyPreferences.isOpenExchangeRatesProviderSelected(this));
     }
 
-    private void addShortcut(String activity, int nameId, int iconId) {
-		Intent intent = createShortcutIntent(activity, getString(nameId), Intent.ShortcutIconResource.fromContext(this, iconId), 
+    private void addShortcut(String activity,String fragment, int nameId, int iconId) {
+		Intent intent = createShortcutIntent(activity,fragment, getString(nameId), Intent.ShortcutIconResource.fromContext(this, iconId),
 				"com.android.launcher.action.INSTALL_SHORTCUT");
 		sendBroadcast(intent);
 	}
 
-	private Intent createShortcutIntent(String activity, String shortcutName, ShortcutIconResource shortcutIcon, String action) {
+	private Intent createShortcutIntent(String activity,String fragmentClassName, String shortcutName, ShortcutIconResource shortcutIcon, String action) {
 		Intent shortcutIntent = new Intent();
 		shortcutIntent.setComponent(new ComponentName(this.getPackageName(), activity));
 		shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        shortcutIntent.putExtra(MyFragmentAPI.EDIT_ENTITY_REQUEST, true);
+        shortcutIntent.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, fragmentClassName);
+        shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, true);
+
 		Intent intent = new Intent();
 		intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
 		intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortcutName);
 		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, shortcutIcon);
+
+
 		intent.setAction(action);
 		return intent;
 	}
@@ -120,7 +126,7 @@ public class PreferencesActivity extends PreferenceActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        //PinProtection.lock(this.getApplicationContext());
+        PinProtection.lock(this.getApplicationContext());
     }
     	
 }

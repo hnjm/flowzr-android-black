@@ -10,8 +10,8 @@
 	  Denis Solonenko - initial API and implementation
 -->
 <resources>
-	<string name="app_name">Flowzr</string>
-	<string name="app_description">Budget Expense Tracker</string>
+	<string name="app_name" translatable="false">Flowzr</string>
+	<string name="app_description" translatable="false">Budget Expense Tracker</string>
 	<string name="google_app_id">132167280001</string>
 
 	<dimen name="pin_button_width">70dp</dimen>
@@ -125,7 +125,7 @@
 	<string name="card_issuer_diners">Diners Club</string>	
 	<string name="card_issuer_discover">Discover</string>	
 	<string name="card_issuer_nets">NETS</string>	
-	<string name="recur_rrule">RFC-2445 RRULE</string>
+	<string name="recur_rrule" translatable="false">RFC-2445 RRULE</string>
 	<dimen name="category_padding">10dp</dimen>
     <dimen name="transaction_icon_padding">10dp</dimen>
 

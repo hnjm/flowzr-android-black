@@ -146,7 +146,6 @@ public class AccountListFragment extends AbstractTotalListFragment  {
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.clear();		
 		inflater.inflate(R.menu.accounts_actions, menu);
-        //getActivity().setTitle(getString(R.string.accounts));
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 

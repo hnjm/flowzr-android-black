@@ -12,7 +12,7 @@ package com.flowzr.activity;
  *     Rodrigo Sousa
  *******************************************************************************/
 
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -104,9 +104,9 @@ public class ReportPreferencesActivity extends PreferenceActivity {
 		})
 		.show();
 
-		Dialog dialog = pReportReferenceCurrency.getDialog();
-		if(dialog!=null)
-			dialog.cancel();
+		//Dialog dialog = pReportReferenceCurrency.getDialog();
+		//if(dialog!=null)
+		//	dialog.cancel();
 		return true;
 	}
 	

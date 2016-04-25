@@ -11,35 +11,55 @@
   -->
 
 
-<FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+  >
 
 
  <RelativeLayout  style="@style/Widget.Container">
 
-    <ImageView android:id="@+id/add_transaction" android:layout_alignParentRight="true"
-               android:src="@drawable/ic_edit" style="@style/Widget.Action.Right"/>
+    <ImageView android:id="@+id/add_transaction"
+        android:layout_alignParentRight="true"
+               android:src="@drawable/ic_add"
+        style="@style/Widget.Action.Right"/>
 
- <RelativeLayout  android:layout_width="wrap_content" android:layout_height="wrap_content"
- android:layout_toLeftOf="@id/add_transaction" android:layout_alignParentLeft="true" style="@style/Widget.Action.Left">
+ <RelativeLayout
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+    android:layout_toLeftOf="@id/add_transaction"
+     android:layout_alignParentLeft="true"
+     style="@style/Widget.Action.Left">
 
-        <ImageView android:id="@+id/account_icon" android:layout_alignParentLeft="true" android:layout_centerVertical="true"
-         style="@style/Widget.Logo"  android:src="@drawable/ic_launcher"
-         android:layout_width="@dimen/recommended_touch_size" android:layout_height="@dimen/recommended_touch_size"
-         />
+        <ImageView android:id="@+id/account_icon"
+            android:layout_marginLeft="@dimen/space_small"
+            android:layout_marginTop="@dimen/space_normal"
+            android:layout_marginRight="@dimen/space_normal"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            style="@style/Widget.Logo" />
 
             <LinearLayout android:orientation="vertical"
-            android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toRightOf="@id/account_icon"
-            android:layout_centerVertical="true">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/account_icon"
+                android:layout_centerVertical="true">
 
 
-        <TextView android:id="@+id/line1" android:layout_width="wrap_content"
-                  android:layout_height="wrap_content" android:singleLine="true"
-                  android:textColor="@color/f_light" android:ellipsize="end" android:textSize="@dimen/text_xsmall"
-                  style="@style/TextView"/>
+        <TextView android:id="@+id/line1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/f_light"
+            android:ellipsize="end"
+            android:textSize="@dimen/text_xsmall"
+            style="@style/TextView"/>
 
-        <TextView android:layout_width="wrap_content" android:singleLine="true" android:ellipsize="end"
-                  android:layout_height="wrap_content" android:id="@+id/note"  style="@style/TextView"
+        <TextView android:layout_width="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
+                  android:layout_height="wrap_content"
+            android:id="@+id/note"  style="@style/TextView"
                   android:textSize="@dimen/text_large"/>
 
 

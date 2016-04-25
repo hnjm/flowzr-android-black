@@ -63,6 +63,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.MetadataBuffer;
+
 import com.google.android.gms.plus.Plus;
 
 import java.io.File;
@@ -315,7 +316,7 @@ public class BackupListActivity extends AbstractActionBarActivity implements Goo
     }
 
     private String selectedBackupFile;
-
+    private com.google.api.services.drive.model.File selectedDriveFile;
 
     private void doImport() {
         final String[] backupFiles = Backup.listBackups(this);
@@ -341,47 +342,40 @@ public class BackupListActivity extends AbstractActionBarActivity implements Goo
                 .show();
     }
 
-    public void doBackupOnGoogleDrive() {
-        String folder = MyPreferences.getBackupFolder(this);
-        String accountName=Plus.AccountApi.getAccountName(mClient);
-        ProgressDialog d = ProgressDialog.show(this, null, getString(R.string.gdocs_backup) + accountName + " " + folder, true);
-        new DriveBackupTask(this,d).execute();
-        mClient.disconnect();
+    private void doBackupOnGoogleDrive() {
+        ProgressDialog d = ProgressDialog.show(this, null, getString(R.string.backup_database_inprogress), true);
+        new DriveBackupTask(this, d).execute();
     }
 
-    public void doRestoreFromGoogleDrive() {
+    private void doRestoreFromGoogleDrive() {
         ProgressDialog d = ProgressDialog.show(this, null, getString(R.string.google_drive_loading_files), true);
         new DriveListFilesTask(this, d).execute();
     }
 
-    public void doImportFromGoogleDrive(final MetadataBuffer bufferResult) {
-        //convert to string[] for dialog
-        final String[] backupFiles=new String[bufferResult.getCount()];
-        for (int i=0;i<backupFiles.length;i++) {
-            backupFiles[i]=bufferResult.get(i).getTitle();
+    public void doImportFromGoogleDrive(final com.google.api.services.drive.model.File[]  backupFiles) {
+        if (backupFiles != null) {
+            String[] backupFilesNames = getBackupFilesTitles(backupFiles);
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.restore_database)
+                    .setPositiveButton(R.string.restore, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (selectedDriveFile != null) {
+                                ProgressDialog d = ProgressDialog.show(BackupListActivity.this, null, getString(R.string.restore_database_gdocs), true);
+                                new DriveRestoreTask(BackupListActivity.this, d, selectedDriveFile).execute();
+                            }
+                        }
+                    })
+                    .setSingleChoiceItems(backupFilesNames, -1, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (which >= 0 && which < backupFiles.length) {
+                                selectedDriveFile = backupFiles[which];
+                            }
+                        }
+                    })
+                    .show();
         }
-        new AlertDialog.Builder(BackupListActivity.this)
-                .setTitle(R.string.restore_database)
-                .setPositiveButton(R.string.restore, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (selectedFile != null) {
-
-                            ProgressDialog d = ProgressDialog.show(BackupListActivity.this, null, getString(R.string.restore_database_inprogress_dropbox), true);
-                            new DriveRestoreTask(BackupListActivity.this, d, selectedFile).execute();
-                            bufferResult.release();
-                        }
-                    }
-                })
-                .setSingleChoiceItems(backupFiles, -1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which >= 0 && which < backupFiles.length) {
-                            selectedFile = bufferResult.get(which).getDriveId().encodeToString();
-                        }
-                    }
-                })
-                .show();
     }
 
 
@@ -419,11 +413,11 @@ public class BackupListActivity extends AbstractActionBarActivity implements Goo
     }
 
 
-    private String[] getBackupFilesTitles(com.google.android.gms.drive.DriveFile[] backupFiles) {
+    private String[] getBackupFilesTitles(com.google.api.services.drive.model.File[] backupFiles) {
         int count = backupFiles.length;
         String[] titles = new String[count];
         for (int i = 0; i < count; i++) {
-            titles[i] = backupFiles[i].toString();
+            titles[i] = backupFiles[i].getOriginalFilename(); //.toString();
         }
         return titles;
     }
