@@ -68,8 +68,8 @@ public class ReportFilterActivity extends AbstractEditorActivity {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         df = DateUtils.getShortDateFormat(getContext());
         filterValueNotFound = getString(R.string.filter_value_not_found);

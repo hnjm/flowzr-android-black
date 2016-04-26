@@ -353,9 +353,16 @@ public class MainActivity  extends AbstractActionBarActivity
             }
         }
         Intent intent= getIntent();
+
         if (intent.getIntExtra(ENTITY_REQUEST_EXTRA,-1)==AccountWidget.WIDGET_REQUEST) {
+            Log.e("flowzr",getIntent().getExtras().toString());
                 if (intent.getExtras().containsKey(REQUEST_BLOTTER)) {
-                    onFragmentMessage(REQUEST_BLOTTER,intent.getExtras());
+                    Bundle bundle = new Bundle();
+                    bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,SelectTemplateFragment.class.getCanonicalName());
+                    Fragment fragment= new SelectTemplateFragment();
+                    fragment.setArguments(bundle);
+                    fragment.setTargetFragment(mAdapter.blotterFragment,BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
+                    startFragmentForResult(fragment,mAdapter.blotterFragment);
 
                 } else if (intent.getExtras().containsKey(EDIT_ENTITY_REQUEST)) {
                     onFragmentMessage(EDIT_ENTITY_REQUEST,intent.getExtras());

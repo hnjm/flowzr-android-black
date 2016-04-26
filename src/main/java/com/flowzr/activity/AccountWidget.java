@@ -35,6 +35,7 @@ import com.flowzr.model.Account;
 import com.flowzr.model.AccountType;
 import com.flowzr.model.CardIssuer;
 import com.flowzr.orb.EntityManager;
+import com.flowzr.orb.Selection;
 import com.flowzr.utils.MyPreferences;
 import com.flowzr.utils.Utils;
 
@@ -207,7 +208,7 @@ public class AccountWidget extends AppWidgetProvider {
         //add template
         Intent intent2 = new Intent(context, MainActivity.class);
         intent2.putExtra(MyFragmentAPI.ENTITY_REQUEST_EXTRA, WIDGET_REQUEST);
-        intent2.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, ScheduledListFragment.class.getCanonicalName());
+        intent2.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, SelectTemplateFragment.class.getCanonicalName());
         Criteria blotterFilter = Criteria.eq(BlotterFilter.FROM_ACCOUNT_ID, String.valueOf(a.id));
         blotterFilter.toIntent(a.title, intent2);
         intent2.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, BlotterFragment.class.getCanonicalName());

@@ -104,9 +104,9 @@ public class PreferencesActivity extends PreferenceActivity {
 		shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         shortcutIntent.putExtra(MyFragmentAPI.EDIT_ENTITY_REQUEST, true);
         shortcutIntent.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, fragmentClassName);
+        
         shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, true);
-
-		Intent intent = new Intent();
+        Intent intent = new Intent();
 		intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
 		intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortcutName);
 		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, shortcutIcon);
