@@ -22,14 +22,12 @@ import android.preference.PreferenceActivity;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.flowzr.R;
@@ -41,15 +39,12 @@ import com.flowzr.filter.Criteria;
 import com.flowzr.filter.DateTimeCriteria;
 import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Total;
-import com.flowzr.model.Transaction;
 import com.flowzr.utils.FuturePlanner;
 import com.flowzr.utils.TransactionList;
 import com.flowzr.utils.Utils;
 
 import java.util.Calendar;
 import java.util.Date;
-
-import static com.flowzr.utils.AndroidUtils.isCompatible;
 
 /**
  * Created by IntelliJ IDEA.
@@ -145,11 +140,11 @@ public class PlannerFragment extends BlotterFragment {
 
     private void showFilter() {
         Bundle bundle = new Bundle();
-        bundle.putBoolean(DateFilterActivity.EXTRA_FILTER_DONT_SHOW_NO_FILTER, true);
-        bundle.putBoolean(DateFilterActivity.EXTRA_FILTER_SHOW_PLANNER, true);
+        bundle.putBoolean(DateFilterFragment.EXTRA_FILTER_DONT_SHOW_NO_FILTER, true);
+        bundle.putBoolean(DateFilterFragment.EXTRA_FILTER_SHOW_PLANNER, true);
         filter.toBundle(bundle);
         bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,FILTER_REQUEST);
-        Fragment fragment = new DateFilterActivity();
+        Fragment fragment = new DateFilterFragment();
         fragment.setArguments(bundle);
         fragment.setTargetFragment(this,FILTER_REQUEST);
         activity.startFragmentForResult(fragment,this);
@@ -171,7 +166,7 @@ public class PlannerFragment extends BlotterFragment {
     @Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == AppCompatActivity.RESULT_OK && data!=null) {
-            if (data.getStringExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TYPE)!=null) {
+            if (data.getStringExtra(DateFilterFragment.EXTRA_FILTER_PERIOD_TYPE)!=null) {
                 DateTimeCriteria c = WhereFilter.dateTimeFromIntent(data);
                 applyDateTimeCriteria(c);
                 saveFilter();

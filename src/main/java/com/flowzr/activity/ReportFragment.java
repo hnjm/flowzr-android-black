@@ -41,6 +41,7 @@ import com.flowzr.db.DatabaseHelper.ReportColumns;
 import com.flowzr.filter.Criteria;
 import com.flowzr.filter.WhereFilter;
 import com.flowzr.graph.GraphUnit;
+import com.flowzr.model.MyEntity;
 import com.flowzr.model.Total;
 import com.flowzr.report.IncomeExpense;
 import com.flowzr.report.PeriodReport;
@@ -55,6 +56,8 @@ import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
 
 import java.math.BigDecimal;
+
+import javax.persistence.Entity;
 
 import static com.flowzr.utils.AndroidUtils.isGreenDroidSupported;
 
@@ -146,12 +149,12 @@ public class ReportFragment extends AbstractListFragment implements RefreshSuppo
 	            }
 	            return true;
 	        case R.id.zoomin: 
-	        	//if (mChartView!=null)
-	        	mChartView.zoomIn();
+	        	if (mChartView!=null)
+	        	    mChartView.zoomIn();
 	            return true;
 	        case R.id.zoomout: 
-	        	//if (mChartView!=null)
-	        	mChartView.zoomOut();	        	
+	        	if (mChartView!=null)
+	        	    mChartView.zoomOut();
 	            return true;	            
 	        
 	        case R.id.settings:
@@ -494,6 +497,7 @@ public class ReportFragment extends AbstractListFragment implements RefreshSuppo
 
 	@Override
 	protected void viewItem(View v, int position, long id) {
+
 		if (currentReport != null) {
             Bundle bundle = currentReport.createFragmentBundle(getContext(), db, WhereFilter.copyOf(filter), id);
             activity.onFragmentMessage(MyFragmentAPI.REQUEST_BLOTTER,bundle);

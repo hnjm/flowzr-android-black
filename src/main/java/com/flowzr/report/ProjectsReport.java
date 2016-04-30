@@ -16,10 +16,13 @@ import android.content.Context;
 import com.flowzr.activity.BlotterFragment;
 import com.flowzr.activity.SplitsBlotterFragment;
 import com.flowzr.blotter.BlotterFilter;
+import com.flowzr.datetime.PeriodType;
 import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.filter.Criteria;
 import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Currency;
+import com.flowzr.model.Payee;
+import com.flowzr.model.Project;
 
 import static com.flowzr.db.DatabaseHelper.V_REPORT_PROJECTS;
 
@@ -40,7 +43,12 @@ public class ProjectsReport extends Report {
 		return Criteria.eq(BlotterFilter.PROJECT_ID, String.valueOf(id));
 	}
 
-    @Override
+	@Override
+	protected String getTitleForId(DatabaseAdapter db, long id) {
+		return db.em().load(Project.class,id).getTitle();
+	}
+
+	@Override
     public Class<? extends BlotterFragment> getBlotterActivityClass() {
         return SplitsBlotterFragment.class;
     }

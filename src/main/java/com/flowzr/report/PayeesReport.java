@@ -17,6 +17,7 @@ import com.flowzr.db.DatabaseAdapter;
 import com.flowzr.filter.Criteria;
 import com.flowzr.filter.WhereFilter;
 import com.flowzr.model.Currency;
+import com.flowzr.model.Payee;
 
 import static com.flowzr.db.DatabaseHelper.V_REPORT_PAYEES;
 
@@ -35,6 +36,11 @@ public class PayeesReport extends Report {
 	@Override
 	public Criteria getCriteriaForId(DatabaseAdapter db, long id) {
 		return Criteria.eq(BlotterFilter.PAYEE_ID, String.valueOf(id));
-	}		
-	
+	}
+
+	@Override
+	protected String getTitleForId(DatabaseAdapter db, long id) {
+		return db.em().load(Payee.class,id).getTitle();
+	}
+
 }

@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.flowzr.activity.BlotterFragment;
 
@@ -168,9 +169,7 @@ public abstract class Report {
     public Bundle createFragmentBundle(Context context, DatabaseAdapter db, WhereFilter parentFilter, long id) {
         Bundle bundle= new Bundle();
         WhereFilter filter = createActivityFilter(context,db,parentFilter,id);
-        filter.eq("from_account_is_include_into_totals", "1");
         filter.toBundle(bundle);
-        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, ReportFragment.class.getCanonicalName());
         return bundle;
     }
 
@@ -181,15 +180,19 @@ public abstract class Report {
         if (c != null) {
             filter.put(c);
         }
+
         c = getCriteriaForId(db, id);
         if (c != null) {
             filter.put(c);
         }
+        filter.setTitle(getTitleForId(db,id));
         return filter;
     }
 
 
     protected abstract Criteria getCriteriaForId(DatabaseAdapter db, long id);
+
+    protected abstract String getTitleForId(DatabaseAdapter db, long id);
 
     public Class<? extends BlotterFragment> getBlotterActivityClass() {
         return BlotterFragment.class;

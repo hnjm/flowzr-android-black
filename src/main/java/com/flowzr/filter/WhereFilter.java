@@ -14,9 +14,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.flowzr.activity.DateFilterActivity;
+import com.flowzr.activity.DateFilterFragment;
 import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.datetime.PeriodType;
 import com.flowzr.orb.Expression;
@@ -311,7 +310,11 @@ public class WhereFilter {
 	public String getTitle() {
 		return title;
 	}
-	
+
+	public void setTitle(String t) {
+		title=t;
+	}
+
 	public boolean isEmpty() {
 		return criterias.isEmpty();
 	}
@@ -331,11 +334,11 @@ public class WhereFilter {
 	}
 	
 	public static DateTimeCriteria dateTimeFromIntent(Intent data) {
-		String periodType = data.getStringExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TYPE);
+		String periodType = data.getStringExtra(DateFilterFragment.EXTRA_FILTER_PERIOD_TYPE);
 		PeriodType p = PeriodType.valueOf(periodType);
 		if (PeriodType.CUSTOM == p) {
-			long periodFrom = data.getLongExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_FROM, 0);
-			long periodTo = data.getLongExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TO, 0);
+			long periodFrom = data.getLongExtra(DateFilterFragment.EXTRA_FILTER_PERIOD_FROM, 0);
+			long periodTo = data.getLongExtra(DateFilterFragment.EXTRA_FILTER_PERIOD_TO, 0);
 			return new DateTimeCriteria(periodFrom, periodTo);
 		} else {
 			return new DateTimeCriteria(p);

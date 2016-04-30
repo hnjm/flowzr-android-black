@@ -7,9 +7,9 @@
   ~ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="76dp"
+    android:layout_height="60dp"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/total_layout"
     android:background="@color/total_bg_color">
 
 
@@ -30,10 +30,8 @@
         android:id="@+id/toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_normal"
-        android:layout_marginStart="@dimen/space_normal"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="@dimen/space_normal"
+        android:layout_gravity="center_vertical"
+        android:gravity="end|center_vertical"
         android:layout_marginRight="@dimen/space_normal"
         android:theme="@style/CustomWidgetSwitchCompat" />
 

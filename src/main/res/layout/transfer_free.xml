@@ -21,7 +21,9 @@
 
     <include layout="@layout/transaction_total_text"/>
 
-    <LinearLayout android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/status_layout"
+        android:layout_height="wrap_content"
         android:background="@color/date_sel_bg_color"
         android:paddingTop="@dimen/space_normal"
         android:paddingBottom="@dimen/space_normal"

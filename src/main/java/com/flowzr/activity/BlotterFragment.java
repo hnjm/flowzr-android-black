@@ -173,7 +173,6 @@ public class BlotterFragment extends AbstractTotalListFragment {
         if (isCompatible(14)) {
             final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) activity.findViewById(R.id.menu1);
             if (menu1 != null) {
-
                 FloatingActionButton fab1 = (FloatingActionButton) activity.findViewById(R.id.fab1);
                 FloatingActionButton fab2 = (FloatingActionButton) activity.findViewById(R.id.fab2);
                 menu1.getMenuIconView().setImageResource(R.drawable.ic_add);
@@ -417,7 +416,6 @@ public class BlotterFragment extends AbstractTotalListFragment {
         }
 
         if ( blotterFilter.get(BlotterFilter.PROJECT_ID)!=null) {
-            Log.e("flowzr", "entity id:" + String.valueOf(blotterFilter.get(BlotterFilter.PROJECT_ID).getIntValue()));
             intent.putExtra(TransactionActivity.PROJECT_ID_EXTRA, (long) blotterFilter.get(BlotterFilter.PROJECT_ID).getIntValue());
         }
 
@@ -428,17 +426,14 @@ public class BlotterFragment extends AbstractTotalListFragment {
 
 
         if ( blotterFilter.get(BlotterFilter.LOCATION_ID)!=null) {
-            Log.e("flowzr", "location id:" + String.valueOf(blotterFilter.get(BlotterFilter.LOCATION_ID).getLongValue1()));
             intent.putExtra(TransactionActivity.LOCATION_ID_EXTRA, blotterFilter.get(BlotterFilter.LOCATION_ID).getLongValue1());
         }
 
         if ( blotterFilter.get(BlotterFilter.PAYEE_ID)!=null) {
-            Log.e("flowzr", "payee id:" + String.valueOf(blotterFilter.get(BlotterFilter.PAYEE_ID).getLongValue1()));
             intent.putExtra(TransactionActivity.PAYEE_ID_EXTRA,blotterFilter.get(BlotterFilter.PAYEE_ID).getLongValue1());
         }
 
         if ( blotterFilter.get(BlotterFilter.STATUS)!=null) {
-            Log.e("flowzr", "status:" + blotterFilter.get(BlotterFilter.STATUS).getStringValue());
             intent.putExtra(TransactionActivity.STATUS_EXTRA, blotterFilter.get(BlotterFilter.STATUS).getStringValue());
         }
 

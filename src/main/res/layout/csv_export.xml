@@ -23,15 +23,25 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <ScrollView android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <LinearLayout
-                android:layout_width="wrap_content" android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:orientation="vertical">
+
             <TextView android:layout_height="wrap_content"
-                      android:layout_width="wrap_content" android:layout_marginLeft="3dp"
+                      android:layout_width="wrap_content"
+                    android:layout_marginLeft="3dp"
                       android:text="@string/period"/>
-            <Button android:layout_height="wrap_content" android:id="@+id/bPeriod"
-                    android:layout_width="wrap_content"/>
+
+            <Button android:id="@+id/bPeriod"
+                android:layout_margin="@dimen/space_normal"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
             <include layout="@layout/list_divider"/>
             <TableLayout android:layout_height="wrap_content"
                          android:layout_width="wrap_content"

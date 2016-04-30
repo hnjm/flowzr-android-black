@@ -319,7 +319,7 @@ public abstract class AbstractWhereFilterActivity extends AbstractEditorActivity
 	protected void onClick(View v, int id) {
 		switch (id) {
 		case R.id.period:
-			Fragment fragment = new DateFilterActivity();
+			Fragment fragment = new DateFilterFragment();
 			Bundle bundle = new Bundle();
 			filter.toBundle(bundle);
 			fragment.setArguments(bundle);

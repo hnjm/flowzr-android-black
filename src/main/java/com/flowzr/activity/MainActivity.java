@@ -12,7 +12,6 @@
 package com.flowzr.activity;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,11 +19,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.app.ListFragment;
 import android.support.v4.view.GravityCompat;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -38,7 +33,6 @@ import com.flowzr.db.DatabaseHelper;
 import com.flowzr.dialog.WebViewDialog;
 import com.flowzr.export.flowzr.FlowzrSyncEngine;
 import com.flowzr.filter.Criteria;
-import com.flowzr.filter.WhereFilter;
 import com.flowzr.utils.*;
 import com.flowzr.utils.MyPreferences.StartupScreen;
 import com.flowzr.view.MyFloatingActionMenu;
@@ -89,14 +83,14 @@ public class MainActivity  extends AbstractActionBarActivity
         try {
             clazz = Class.forName(canonicalClassName);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         try {
             return (Fragment) clazz.newInstance();
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         return null;
@@ -105,12 +99,10 @@ public class MainActivity  extends AbstractActionBarActivity
 
 
     private void editEntityRequest(Bundle data) {
-        Log.e("flowzr","edit entity request");
         if (data.containsKey(ENTITY_CLASS_EXTRA)) {
             Fragment fragment = getFragmentForClass(data.getString(ENTITY_CLASS_EXTRA));
             fragment.setArguments(data);
             loadFragment(fragment);
-
         } else {
             Log.e("flowzr", "Unhandled message (no ENTITY_CLASS_EXTRA) " + data);
         }
@@ -118,10 +110,10 @@ public class MainActivity  extends AbstractActionBarActivity
 
     private void requestBlotter(Bundle data) {
         Fragment fragment;
-        Log.e("flowzr","request blotter");
         if (data.containsKey(MyFragmentAPI.ENTITY_CLASS_EXTRA)) {
             if (data.getString(MyFragmentAPI.ENTITY_CLASS_EXTRA).equals(ReportFragment.class.getCanonicalName())) {
-                fragment = getFragmentForClass(BlotterFragment.class.getCanonicalName());
+                //fragment = getFragmentForClass(BlotterFragment.class.getCanonicalName());
+                fragment = getFragmentForClass(data.getString(MyFragmentAPI.ENTITY_CLASS_EXTRA));
             } else {
                 fragment = getFragmentForClass(data.getString(MyFragmentAPI.ENTITY_CLASS_EXTRA));
             }
@@ -166,20 +158,14 @@ public class MainActivity  extends AbstractActionBarActivity
 
 
     private void showResultingFragment(Fragment target, Fragment fragment) {
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         if (!target.isAdded()) {
-            //return;
-            Log.e("flowzr","adding " + target);
             transaction.add(R.id.fragment_container, target);
             activePaneFragments.add(target);
         } else {
             transaction.show(target);
         }
-
         if (fragment.isAdded()) {
-            Log.e("flowzr","remove2" + fragment.getView().getParent().getClass().getCanonicalName());
             activePaneFragments.remove(fragment);
             transaction.remove( fragment);
         }
@@ -188,12 +174,9 @@ public class MainActivity  extends AbstractActionBarActivity
         if (activePaneFragments.size()==0) {
             ensureViewPagerMode();
         }
-        //mAdapter.notifyDataSetChanged();
-
     }
 
     private void showHideFragment(Fragment fragment, Fragment target) {
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (!fragment.isAdded()) {
             transaction.add(R.id.fragment_container, fragment);
@@ -201,16 +184,13 @@ public class MainActivity  extends AbstractActionBarActivity
         } else {
             transaction.show(fragment);
         }
-
         if (!target.isAdded()) {
             transaction.add(R.id.fragment_container, target);
             activePaneFragments.add(target);
         }
-
         transaction.hide(target);
         transaction.addToBackStack(BACKSTACK);
         transaction.commit();
-
     }
 
     private void replacePaneFragments(Fragment fragment) {
@@ -240,7 +220,6 @@ public class MainActivity  extends AbstractActionBarActivity
         }
         if (activePaneFragments.size() ==0 ) {
             ensureViewPagerMode();
-            recreateViewPagerAdapter();
         }
     }
 
@@ -352,32 +331,33 @@ public class MainActivity  extends AbstractActionBarActivity
                     viewPager.setCurrentItem(startupScreen.ordinal());
             }
         }
-        Intent intent= getIntent();
-
-        if (intent.getIntExtra(ENTITY_REQUEST_EXTRA,-1)==AccountWidget.WIDGET_REQUEST) {
-            Log.e("flowzr",getIntent().getExtras().toString());
-                if (intent.getExtras().containsKey(REQUEST_BLOTTER)) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,SelectTemplateFragment.class.getCanonicalName());
-                    Fragment fragment= new SelectTemplateFragment();
-                    fragment.setArguments(bundle);
-                    fragment.setTargetFragment(mAdapter.blotterFragment,BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
-                    startFragmentForResult(fragment,mAdapter.blotterFragment);
-
-                } else if (intent.getExtras().containsKey(EDIT_ENTITY_REQUEST)) {
-                    onFragmentMessage(EDIT_ENTITY_REQUEST,intent.getExtras());
-
-                }
-
-        }
-
-        if (intent.getExtras()!=null && intent.getExtras().containsKey(Intent.EXTRA_SHORTCUT_INTENT)) {
-            onFragmentMessage(EDIT_ENTITY_REQUEST,intent.getExtras());
-        }
-
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Intent intent=getIntent();
+        if (intent.getExtras()!=null && intent.getExtras().containsKey(Intent.EXTRA_SHORTCUT_INTENT)) {
+            onFragmentMessage(EDIT_ENTITY_REQUEST,intent.getExtras());
+        }
+        if (intent.getIntExtra(ENTITY_REQUEST_EXTRA,-1)==AccountWidget.WIDGET_REQUEST) {
+
+            if (intent.getExtras().containsKey(REQUEST_BLOTTER)) {
+                Bundle bundle = new Bundle();
+                bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,SelectTemplateFragment.class.getCanonicalName());
+                Fragment fragment= new SelectTemplateFragment();
+                fragment.setArguments(bundle);
+                fragment.setTargetFragment(mAdapter.blotterFragment,BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
+                startFragmentForResult(fragment,mAdapter.blotterFragment);
+
+            } else if (intent.getExtras().containsKey(EDIT_ENTITY_REQUEST)) {
+                onFragmentMessage(EDIT_ENTITY_REQUEST,intent.getExtras());
+
+            }
+        }
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -422,7 +402,6 @@ public class MainActivity  extends AbstractActionBarActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //Log.e("flowzr","mainOnactivityResult " + requestCode + " " + resultCode + " " + data.getExtras());
         PinProtection.unlock(this);
         switch (requestCode) {
             case CHANGE_PREFERENCES:
@@ -489,7 +468,7 @@ public class MainActivity  extends AbstractActionBarActivity
 
     // out of listener
     public void loadTabFragment(int rId, Bundle bundle, final int tabId) {
-        //ensureViewPagerMode();
+
         bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, rId);
         Intent data = new Intent(this, BlotterFragment.class);
         data.putExtras(bundle);

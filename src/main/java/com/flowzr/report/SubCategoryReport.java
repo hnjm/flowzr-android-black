@@ -12,8 +12,12 @@ package com.flowzr.report;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Bundle;
+import android.util.Log;
 
 import com.flowzr.activity.BlotterFragment;
+import com.flowzr.activity.MyFragmentAPI;
+import com.flowzr.activity.ReportFragment;
 import com.flowzr.activity.SplitsBlotterFragment;
 import com.flowzr.blotter.BlotterFilter;
 import com.flowzr.db.DatabaseAdapter;
@@ -22,6 +26,7 @@ import com.flowzr.db.MyEntityManager;
 import com.flowzr.db.TransactionsTotalCalculator;
 import com.flowzr.db.UnableToCalculateRateException;
 import com.flowzr.filter.Criteria;
+import com.flowzr.filter.SingleCategoryCriteria;
 import com.flowzr.filter.WhereFilter;
 import com.flowzr.graph.GraphStyle;
 import com.flowzr.graph.GraphUnit;
@@ -49,6 +54,27 @@ public class SubCategoryReport extends Report {
 		super(ReportType.BY_CATEGORY, context, currency);
         createStyles(context);
 	}
+
+    @Override
+    public Bundle createFragmentBundle(Context context, DatabaseAdapter db, WhereFilter parentFilter, long id) {
+        Bundle bundle= new Bundle();
+        WhereFilter filter = createFilterForSubCategory(db, parentFilter, id);
+        filter.toBundle(bundle);
+        bundle.putString(ReportFragment.FILTER_INCOME_EXPENSE, incomeExpense.name());
+        bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA, BlotterFragment.class.getCanonicalName());
+        return bundle;
+    }
+
+    public WhereFilter createFilterForSubCategory(DatabaseAdapter db, WhereFilter parentFilter, long id) {
+        WhereFilter filter = WhereFilter.empty();
+        filter.put( new SingleCategoryCriteria(id));
+        filter.setTitle(db.getCategory(id).getTitle().replace("-",""));
+        Criteria c2 = parentFilter.get(BlotterFilter.DATETIME);
+        if (c2 != null) {
+            filter.put(c2);
+        }
+        return filter;
+    }
 
     private void createStyles(Context context) {
         styles[0] = new GraphStyle.Builder(context).dy(2).textDy(5).lineHeight(30).nameTextSize(14).amountTextSize(12).indent(0).build();
@@ -147,6 +173,11 @@ public class SubCategoryReport extends Report {
 		Category c = db.getCategory(id);
 		return Criteria.btw(BlotterFilter.CATEGORY_LEFT, String.valueOf(c.left), String.valueOf(c.right));
 	}
+
+    @Override
+    protected String getTitleForId(DatabaseAdapter db, long id) {
+        return db.getCategory(id).getTitle();
+    }
 
     @Override
     public Class<? extends BlotterFragment> getBlotterActivityClass() {

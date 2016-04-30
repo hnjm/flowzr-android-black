@@ -16,7 +16,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -313,7 +312,7 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
 	protected void onClick(View v, int id) {
 		switch (id) {
 		case R.id.period:
-			Fragment fragment = new DateFilterActivity();
+			Fragment fragment = new DateFilterFragment();
 			Bundle bundle= new Bundle();
 			filter.toBundle(bundle);
 			fragment.setArguments(bundle);
@@ -510,7 +509,7 @@ public class BlotterFilterActivity extends AbstractEditorActivity {
 			if (resultCode == AppCompatActivity.RESULT_FIRST_USER) {
 				onClick(period, R.id.period_clear);
 			} else if (resultCode == AppCompatActivity.RESULT_OK ) {
-				if (data.getStringExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TYPE)!=null) {
+				if (data.getStringExtra(DateFilterFragment.EXTRA_FILTER_PERIOD_TYPE)!=null) {
 					DateTimeCriteria c = WhereFilter.dateTimeFromIntent(data);
 					filter.put(c);
 				}

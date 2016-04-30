@@ -23,50 +23,49 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/toolbar"/>
+
 
         <LinearLayout
+            android:id="@+id/main_main_layout"
             android:layout_marginTop="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <FrameLayout
-
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </FrameLayout>
-
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.v4.view.PagerTabStrip
-                android:id="@+id/pager_tab_strip"
+            <FrameLayout
+                android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_primary"
-                android:paddingBottom="5dp" />
+                android:layout_height="wrap_content">
+            </FrameLayout>
 
-        </android.support.v4.view.ViewPager>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v4.view.PagerTabStrip
+                    android:id="@+id/pager_tab_strip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_primary"
+                    android:paddingBottom="5dp" />
+
+            </android.support.v4.view.ViewPager>
 
         </LinearLayout>
 
+        <include layout="@layout/toolbar"/>
 
 
-
-<!--             style="@style/FloatingActionMenu" -->
+        <!--             style="@style/FloatingActionMenu" -->
 
         <com.flowzr.view.MyFloatingActionMenu
             android:id="@+id/menu1"
-            app:layout_anchor="@id/pager"
+            app:layout_anchor="@id/main_main_layout"
             app:layout_anchorGravity="bottom|right|end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_xlarge"
             android:paddingBottom="10dp"
             android:paddingRight="10dp"
             android:src="@drawable/ic_check"
@@ -107,7 +106,6 @@
                 app:fab_colorRipple="@color/fabRipple" />
 
         </com.flowzr.view.MyFloatingActionMenu>
-
 
 
 

@@ -72,6 +72,13 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
     protected static final String BACKSTACK = "BACKSTACK";
     private String PANE_MODE="PANE_MODE";
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
     protected void attachBaseContext(Context base)
     {
         super.attachBaseContext(base);
@@ -100,7 +107,7 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         if (mAdapter !=null && mAdapter.blotterFragment!=null) {
             if (!mAdapter.blotterFragment.isAdded()) {
                 FragmentTransaction transaction = fm.beginTransaction();
-                transaction.add(mAdapter.blotterFragment,"");
+                transaction.add(mAdapter.blotterFragment,mAdapter.blotterFragment.getTag());
                 transaction.commit();
                 viewPager.setCurrentItem(1);
             } else if (!mAdapter.blotterFragment.isVisible()) {
@@ -114,20 +121,29 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (mAdapter.blotterFragment!=null && mAdapter.blotterFragment.isAdded()) {
+            mAdapter.blotterFragment.setUpFab();
+        }
+
         paneMode=false;
     }
 
     private void removePaneFragments() {
-        if (activePaneFragments.size() > 0) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            for (Fragment activeFragment : activePaneFragments) {
-                fragmentTransaction.remove(activeFragment);
-                activePaneFragments.remove(activeFragment);
+        try {
+            if (activePaneFragments.size() > 0) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                for (Fragment activeFragment : activePaneFragments) {
+                    fragmentTransaction.remove(activeFragment);
+                    activePaneFragments.remove(activeFragment);
+                }
+                activePaneFragments.clear();
+                fragmentTransaction.addToBackStack(MainActivity.BACKSTACK);
+                fragmentTransaction.commit();
             }
-            activePaneFragments.clear();
-            fragmentTransaction.addToBackStack(MainActivity.BACKSTACK);
-            fragmentTransaction.commit();
+        }catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     public static Intent createExplicitFromImplicitIntent(Context context, Intent implicitIntent) {
@@ -270,9 +286,7 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
                 return  accountListFragment;
             }
             if (position==1) {
-                //blotterFragment = (BlotterFragment) BlotterFragment.newInstance(bundle);
                 blotterFragment = new BlotterFragment();
-                Log.e("flowzr","TAG:" + blotterFragment.getTag());
                 return blotterFragment;
             }
             if (position==2) {
@@ -281,13 +295,6 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
             }
             return null;
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     protected void initToolbar() {

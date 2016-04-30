@@ -113,6 +113,7 @@ public class GraphStyle {
 			amountPaint.getTextBounds("8", 0, 1, rect);		
 			int amountHeight = rect.height();
 			linePaint.setStyle(Style.FILL);
+
 			return new GraphStyle(
 					spToPx(dy, density),
                     spToPx(textDy, density),

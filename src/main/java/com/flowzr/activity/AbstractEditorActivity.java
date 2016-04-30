@@ -60,7 +60,6 @@ public abstract class AbstractEditorActivity extends ListFragment implements Act
         x = new ActivityLayout(nodeInflater, this);
         final Bundle args = getArguments();
         contentId = args != null ? args.getInt("EXTRA_LAYOUT", this.getLayoutId()) : this.getLayoutId();
-        Log.e("flowzr","loaded layout " + contentId);
         return inflater.inflate(getLayoutId(), container, false);
     }
 

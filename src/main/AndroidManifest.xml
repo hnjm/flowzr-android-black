@@ -12,7 +12,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flowzr" android:versionName="1.7.7 build 249" android:versionCode="249"
+    package="com.flowzr" android:versionName="1.7.7 build 251" android:versionCode="251"
     android:installLocation="internalOnly">
 
     <!-- Maps API needs OpenGL ES 2.0. -->
@@ -69,7 +69,7 @@
 
 
         <meta-data android:name="com.google.android.maps.v2.API_KEY"
-                    android:value="AIzaSyBD06B06eal5OrFtJwi58Zqsg_wsRq8jpo"/>
+                    android:value="your_gmap_key"/>
 
 
 		<receiver android:name=".activity.AccountWidget" android:label="@string/widget_2x1" >
@@ -159,7 +159,7 @@
 
 
 		<activity android:name=".activity.CCardStatementClosingDayActivity" android:label="@string/closing_day" />
-
+        <activity android:name=".activity.DateFilterActivity" android:label="@string/filter" />
 
         <activity android:name=".activity.TransactionPreferencesActivity"
             android:theme="@style/Theme.AppCompat"
@@ -195,7 +195,7 @@
                   android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <!-- Change this to be db- followed by your app key -->
-                <data android:scheme="db-n4li1bbi9l4rn49" />
+                <data android:scheme="db-your_drop_box_account_id" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <category android:name="android.intent.category.DEFAULT" />

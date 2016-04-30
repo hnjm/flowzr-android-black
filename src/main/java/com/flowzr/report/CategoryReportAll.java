@@ -26,6 +26,12 @@ import static com.flowzr.db.DatabaseHelper.V_REPORT_CATEGORY;
 
 public class CategoryReportAll extends Report {
 
+
+	@Override
+	protected String getTitleForId(DatabaseAdapter db, long id) {
+		return db.getCategory(id).getTitle();
+	}
+
 	public CategoryReportAll(Context context, Currency currency) {
 		super(ReportType.BY_CATEGORY, context, currency);
 	}

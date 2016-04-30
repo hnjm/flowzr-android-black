@@ -94,6 +94,11 @@ public class PeriodReport extends Report {
 	}
 
     @Override
+    protected String getTitleForId(DatabaseAdapter db, long id) {
+        return context.getString(periodTypes[(int) id].getTitleId());
+    }
+
+    @Override
     public boolean shouldDisplayTotal() {
         return false;
     }

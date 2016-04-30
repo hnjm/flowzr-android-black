@@ -38,6 +38,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -78,12 +79,9 @@ import com.flowzr.view.AttributeViewFactory;
 import com.flowzr.view.FloatingActionButton;
 import com.flowzr.view.MyFloatingActionMenu;
 import com.flowzr.view.NodeInflater;
-import com.flowzr.widget.AmountInput;
-import com.flowzr.widget.CalculatorInput;
 import com.flowzr.widget.RateLayoutView;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -199,6 +197,57 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 
 	public AbstractTransactionActivity() {}
 
+    boolean isOpened = false;
+    ViewTreeObserver.OnGlobalLayoutListener layoutListener;
+
+    public void unsetListenerToRootView(){
+        if (layoutListener!=null) {
+            final View activityRootView = activity.getWindow().getDecorView().findViewById(android.R.id.content);
+            if (isCompatible(16)) {
+                activityRootView.getViewTreeObserver().removeOnGlobalLayoutListener(layoutListener);
+                layoutListener = null;
+            }
+
+        }
+    }
+
+	private int minDiffHeight =1000000;
+
+    public void setListenerToRootView(){
+        if (!isCompatible(16)) {
+            return;
+        }
+        final View activityRootView = activity.getWindow().getDecorView().findViewById(android.R.id.content);
+
+
+        layoutListener=new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int heightDiff = activityRootView.getRootView().getHeight() - activity.findViewById(R.id.fragment_container).getHeight();
+				minDiffHeight =Math.min(minDiffHeight,heightDiff);
+                try {
+                    if (heightDiff-300> minDiffHeight) { // 99% of the time the height diff will be due to a keyboard.
+                        if (isOpened == false) {
+                            activity.findViewById(R.id.status_layout).setVisibility(View.GONE);
+                            activity.findViewById(R.id.total_layout).setVisibility(View.GONE);
+						}
+						isOpened = true;
+                    } else if (isOpened == true || true) {
+                        isOpened = false;
+                        activity.findViewById(R.id.status_layout).setVisibility(View.VISIBLE);
+                        activity.findViewById(R.id.total_layout).setVisibility(View.VISIBLE);
+                    }
+                } catch (java.lang.NullPointerException e) {
+                    // content view not available
+                }
+
+
+            }
+
+        };
+        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(layoutListener);
+    }
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		NodeInflater nodeInflater = new NodeInflater(inflater);
@@ -224,6 +273,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			bundle.putInt(MyFragmentAPI.RESULT_EXTRA,AppCompatActivity.RESULT_OK);
 			bundle.putLong(MyFragmentAPI.ENTITY_ID_EXTRA,transaction.id);
             activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
+            unsetListenerToRootView();
             return true;
         }
         return false;
@@ -234,12 +284,14 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
         Bundle bundle = new  Bundle();
         bundle.putInt(MyFragmentAPI.RESULT_EXTRA,result);
         activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
+        unsetListenerToRootView();
         return true;
     }
 
 
     public boolean finishAndClose(Bundle bundle) {
         activity.onFragmentMessage(MyFragmentAPI.REQUEST_MYENTITY_FINISH,bundle);
+        unsetListenerToRootView();
         return true;
     }
 
@@ -509,14 +561,14 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 			}
 			//rateView.openFromAmountCalculator(title);
 		}
-
+			//setListenerToRootView();
 			long t1 = System.currentTimeMillis();
 			Log.i("TransactionActivity","onCreate "+(t1-t0)+"ms");
 		}
 
 
     public void setupFab() {
-        if (isCompatible(14)) {
+        if (isCompatible(14) && getActivity()!=null) {
             final MyFloatingActionMenu menu1 = (MyFloatingActionMenu) getActivity().findViewById(R.id.menu1);
             FloatingActionButton fab1 = (FloatingActionButton) activity.findViewById(R.id.fab1);
             FloatingActionButton fab2 = (FloatingActionButton) activity.findViewById(R.id.fab2);
@@ -752,13 +804,15 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 	@Override
 	public void onDestroy() {
 		disconnectGPS();
+		unsetListenerToRootView();
 		super.onDestroy();
 	}
 
 	@Override
 	public void onPause() {
 		disconnectGPS();
-		super.onPause();
+        super.onPause();
+
 	}
 
     @Override
@@ -769,10 +823,13 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
     @Override
 	public void onResume() {
 		super.onResume();
+        if (layoutListener==null) {
+            setListenerToRootView();
+        }
 		if (lastFix != null) {
 			connectGps(false);
 		}
-		setupFab();
+        setupFab();
 	}
 
 	private class DefaultLocationListener implements LocationListener {

@@ -19,7 +19,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
@@ -30,7 +29,6 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -101,7 +99,7 @@ public class BudgetListFragment extends AbstractTotalListFragment {
             Bundle bundle = new Bundle();
             filter.toBundle(bundle);
             bundle.putInt(MyFragmentAPI.ENTITY_REQUEST_EXTRA,FILTER_BUDGET_REQUEST);
-            Fragment fragment = new DateFilterActivity();
+            Fragment fragment = new DateFilterFragment();
             fragment.setTargetFragment(this,FILTER_BUDGET_REQUEST);
             fragment.setArguments(bundle);
             activity.startFragmentForResult(fragment,this);
@@ -218,12 +216,12 @@ public class BudgetListFragment extends AbstractTotalListFragment {
 				filter.clear();				
 			} else if (resultCode == MainActivity.RESULT_OK) {
 
-				String periodType = data.getStringExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TYPE);
+				String periodType = data.getStringExtra(DateFilterFragment.EXTRA_FILTER_PERIOD_TYPE);
 				if (periodType!=null) {
 					PeriodType p = PeriodType.valueOf(periodType);
 					if (PeriodType.CUSTOM == p) {
-						long periodFrom = data.getLongExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_FROM, 0);
-						long periodTo = data.getLongExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TO, 0);
+						long periodFrom = data.getLongExtra(DateFilterFragment.EXTRA_FILTER_PERIOD_FROM, 0);
+						long periodTo = data.getLongExtra(DateFilterFragment.EXTRA_FILTER_PERIOD_TO, 0);
 						filter.put(new DateTimeCriteria(periodFrom, periodTo));
 					} else {
                         activity.setTitle(getResources().getString(R.string.budgets) + " " + p.getTitleId());

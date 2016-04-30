@@ -131,11 +131,11 @@ public abstract class AbstractExportActivity extends AppCompatActivity {
 			if (resultCode == RESULT_FIRST_USER) {
 				filter.clearDateTime();
 			} else if (resultCode == RESULT_OK) {
-				String periodType = data.getStringExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TYPE);
+				String periodType = data.getStringExtra(DateFilterFragment.EXTRA_FILTER_PERIOD_TYPE);
 				PeriodType p = PeriodType.valueOf(periodType);
 				if (PeriodType.CUSTOM == p) {
-					long periodFrom = data.getLongExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_FROM, 0);
-					long periodTo = data.getLongExtra(DateFilterActivity.EXTRA_FILTER_PERIOD_TO, 0);
+					long periodFrom = data.getLongExtra(DateFilterFragment.EXTRA_FILTER_PERIOD_FROM, 0);
+					long periodTo = data.getLongExtra(DateFilterFragment.EXTRA_FILTER_PERIOD_TO, 0);
 					filter.put(new DateTimeCriteria(periodFrom, periodTo));
 				} else {
 					filter.put(new DateTimeCriteria(p));

@@ -65,7 +65,7 @@ public class Category extends CategoryEntity<Category> {
 	
 	@Override
 	public String toString() {
-		//StringBuilder sb = new StringBuilder();
+
 		String sb=new String();
 
 		sb.concat("[");
