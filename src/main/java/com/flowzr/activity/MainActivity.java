@@ -377,7 +377,7 @@ public class MainActivity  extends AbstractActionBarActivity
                         break;
                     default:
                         super.onBackPressed();
-                        activePaneFragments.remove(f);
+                        //activePaneFragments.remove(f);
                         break;
                         //
                 }
@@ -466,21 +466,6 @@ public class MainActivity  extends AbstractActionBarActivity
         }
     }
 
-    // out of listener
-    public void loadTabFragment(int rId, Bundle bundle, final int tabId) {
-
-        bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, rId);
-        Intent data = new Intent(this, BlotterFragment.class);
-        data.putExtras(bundle);
-        viewPager.setCurrentItem(tabId);
-        try {
-            mAdapter.blotterFragment.onActivityResult(BlotterFragment.FILTER_REQUEST, MainActivity.RESULT_OK, data);
-        } catch (Exception e) {
-            // java.lang.IllegalStateException: Content view not yet created
-            e.printStackTrace();
-        }
-
-    }
 
     @Override
     public void onAccountSelected(String title, long id) {
@@ -488,8 +473,8 @@ public class MainActivity  extends AbstractActionBarActivity
         bundle.putBoolean(BlotterFilterActivity.IS_ACCOUNT_FILTER, true);
         Criteria.eq(BlotterFilter.FROM_ACCOUNT_ID, String.valueOf(id))
                 .toBundle(title, bundle);
-        bundle.putInt(AbstractTotalListFragment.EXTRA_LAYOUT, R.layout.blotter);
-        loadTabFragment(R.layout.blotter, bundle, 1);
+        viewPager.setCurrentItem(1);
+        mAdapter.blotterFragment.setFilter(bundle);
     }
 }
 

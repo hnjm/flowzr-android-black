@@ -500,6 +500,17 @@ public class BlotterFragment extends AbstractTotalListFragment {
         new BlotterOperations(this, db, id).editTransaction();
     }
 
+
+
+    public void setFilter(Bundle bundle) {
+        blotterFilter.clear();
+        blotterFilter = WhereFilter.fromBundle(bundle);
+        saveFilter = true;
+        saveFilter();
+        recreateCursor();
+        calculateTotals();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data.getExtras().containsKey(WhereFilter.FILTER_EXTRA)) {
@@ -508,7 +519,6 @@ public class BlotterFragment extends AbstractTotalListFragment {
             } else if (resultCode == MainActivity.RESULT_OK) {
                 blotterFilter.clear();
                 blotterFilter = WhereFilter.fromIntent(data);
-                Log.e("flowrz","got blotterfirlte" + blotterFilter);
             }
             saveFilter=true;
             saveFilter();
@@ -522,6 +532,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
 
         if (resultCode != MainActivity.RESULT_CANCELED) {
             try {
+                Log.e("flowzr","recreate cursor");
                 recreateCursor();
                 calculateTotals();
             } catch (java.lang.IllegalStateException e) {

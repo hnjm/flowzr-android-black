@@ -185,10 +185,12 @@ public class AbstractActionBarActivity  extends AppCompatActivity {
         PinProtection.unlock(this);
         if (mDrawerLayout!=null ) {
             mDrawerToggle.onConfigurationChanged(newConfig);
-            if (newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE) {
-                mDrawerLayout.findViewById(R.id.drawer_header).setVisibility(View.GONE);
-            } else {
-                mDrawerLayout.findViewById(R.id.drawer_header).setVisibility(View.VISIBLE);
+            if (mDrawerLayout.findViewById(R.id.drawer_header)!=null) {
+                if (newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE) {
+                    mDrawerLayout.findViewById(R.id.drawer_header).setVisibility(View.GONE);
+                } else {
+                    mDrawerLayout.findViewById(R.id.drawer_header).setVisibility(View.VISIBLE);
+                }
             }
         }
         int j=viewPager.getCurrentItem();
