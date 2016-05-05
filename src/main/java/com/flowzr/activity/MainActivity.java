@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.flowzr.R;
 import com.flowzr.activity.AccountListFragment.OnAccountSelectedListener;
@@ -307,6 +308,10 @@ public class MainActivity  extends AbstractActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Prevent the keyboard from being visible upon startup.
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         initUI();
 
         recreateViewPagerAdapter();
@@ -331,32 +336,20 @@ public class MainActivity  extends AbstractActionBarActivity
                     viewPager.setCurrentItem(startupScreen.ordinal());
             }
         }
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         Intent intent=getIntent();
         if (intent.getExtras()!=null && intent.getExtras().containsKey(Intent.EXTRA_SHORTCUT_INTENT)) {
             onFragmentMessage(EDIT_ENTITY_REQUEST,intent.getExtras());
         }
+
+
         if (intent.getIntExtra(ENTITY_REQUEST_EXTRA,-1)==AccountWidget.WIDGET_REQUEST) {
-
-            if (intent.getExtras().containsKey(REQUEST_BLOTTER)) {
-                Bundle bundle = new Bundle();
-                bundle.putString(MyFragmentAPI.ENTITY_CLASS_EXTRA,SelectTemplateFragment.class.getCanonicalName());
-                Fragment fragment= new SelectTemplateFragment();
-                fragment.setArguments(bundle);
-                fragment.setTargetFragment(mAdapter.blotterFragment,BlotterFragment.NEW_TRANSACTION_FROM_TEMPLATE_REQUEST);
-                startFragmentForResult(fragment,mAdapter.blotterFragment);
-
-            } else if (intent.getExtras().containsKey(EDIT_ENTITY_REQUEST)) {
-                onFragmentMessage(EDIT_ENTITY_REQUEST,intent.getExtras());
-
+            if (intent.getExtras().containsKey(MyFragmentAPI.REQUEST_BLOTTER)) {
+                viewPager.setCurrentItem(1);
+                onFragmentMessage(REQUEST_BLOTTER,intent.getExtras());
+            } else if (intent.getExtras().containsKey(MyFragmentAPI.EDIT_ENTITY_REQUEST)) {
+                onFragmentMessage(MyFragmentAPI.EDIT_ENTITY_REQUEST,intent.getExtras());
             }
         }
-
     }
 
     @Override
@@ -444,6 +437,8 @@ public class MainActivity  extends AbstractActionBarActivity
         } finally {
             db.close();
         }
+        MyFloatingActionMenu menu1 = (MyFloatingActionMenu) findViewById(R.id.menu1);
+        menu1.hideMenu(true);
         long t4 = System.currentTimeMillis();
         Log.d("Financisto", "Load time = " + (t4 - t0) + "ms = " + (t2 - t1) + "ms+" + (t3 - t2) + "ms+" + (t4 - t3) + "ms");
     }

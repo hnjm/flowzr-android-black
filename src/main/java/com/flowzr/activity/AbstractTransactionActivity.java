@@ -563,7 +563,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 		}
 			//setListenerToRootView();
 			long t1 = System.currentTimeMillis();
-			Log.i("TransactionActivity","onCreate "+(t1-t0)+"ms");
+			Log.i("AbsTransactionActivity","onCreate "+(t1-t0)+"ms");
 		}
 
 
@@ -1098,7 +1098,7 @@ public abstract class AbstractTransactionActivity extends AbstractEditorActivity
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-
+		Log.e("flowzr","onactivityresult");
         projectSelector.onActivityResult(requestCode, resultCode, data);
         categorySelector.onActivityResult(requestCode, resultCode, data);
 

@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -130,7 +129,6 @@ public class BlotterFragment extends AbstractTotalListFragment {
         if (args != null   ) {;
             blotterFilter = WhereFilter.fromBundle(args);
             saveFilter = args.getBoolean(SAVE_FILTER, false);
-            long budgetId = blotterFilter.getBudgetId();
         }
 
         super.onActivityCreated(savedInstanceState);
@@ -140,10 +138,6 @@ public class BlotterFragment extends AbstractTotalListFragment {
             intent.putExtras(args);
             createTransactionFromTemplate(intent);
         }
-
-        //if (saveFilter) {
-        //    blotterFilter = WhereFilter.fromSharedPreferences(getActivity().getPreferences(0));
-        //}
 
         totalText = (TextView)getView().findViewById(R.id.total); // set for calculation task
         if (totalText!=null) { //ex: ScheduledListFragment
@@ -156,17 +150,12 @@ public class BlotterFragment extends AbstractTotalListFragment {
             });
         }
 
-        //getActivity().setTitle(blotterFilter.getTitle());
-
         if (getView()!=null && getView().findViewById(R.id.fragment_land_container)!=null) {
             Fragment fragment=new BlotterTotalsDetailsActivity();
             fragment.setArguments(getArguments());
             getChildFragmentManager().beginTransaction().replace(R.id.fragment_land_container, fragment).addToBackStack(null).commit();
             getChildFragmentManager().executePendingTransactions();
         }
-
-        //recreateCursor();
-
     }
 
     public void setUpFab() {
@@ -228,8 +217,6 @@ public class BlotterFragment extends AbstractTotalListFragment {
                         @Override
                         public void onClick(View v) {
                             menu1.toggle(false);
-                            //fragment.
-                            //
                             addItem(NEW_TRANSFER_REQUEST, TransferActivity.class);
                         }
                     });
@@ -250,13 +237,6 @@ public class BlotterFragment extends AbstractTotalListFragment {
                                             @Override
                                             public void run() {
                                                 menu1.showMenu(true);
-                                                new Handler().postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        //menu1.hideMenu(true);
-                                                    }
-                                                }, 1500);
-
                                             }
                                         }, 1500);
                                         break;
@@ -264,10 +244,6 @@ public class BlotterFragment extends AbstractTotalListFragment {
                                 return false;
                             }
                         });
-
-
-
-
             }
         }
     }
@@ -475,6 +451,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
     @Override
     protected void deleteItem(int position, final long id) {
         deleteTransaction(id);
+        recreateCursor();
     }
 
     @Override
@@ -484,16 +461,15 @@ public class BlotterFragment extends AbstractTotalListFragment {
 
     private void deleteTransaction(long id) {
         new BlotterOperations(this, db, id).deleteTransaction();
+        recreateCursor();
+        recreateAdapter();
     }
 
     protected void afterDeletingTransaction(long id) {
-        try {
-            recreateCursor();
-            AccountWidget.updateWidgets(this.getActivity());
-            AbstractActionBarActivity.mAdapter.notifyDataSetChanged();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        recreateCursor();
+        recreateAdapter();
+        AccountWidget.updateWidgets(this.getActivity());
+        AbstractActionBarActivity.mAdapter.notifyDataSetChanged();
     }
 
     private void editTransaction(long id) {
@@ -508,7 +484,6 @@ public class BlotterFragment extends AbstractTotalListFragment {
         saveFilter = true;
         saveFilter();
         recreateCursor();
-        calculateTotals();
     }
 
     @Override
@@ -532,9 +507,7 @@ public class BlotterFragment extends AbstractTotalListFragment {
 
         if (resultCode != MainActivity.RESULT_CANCELED) {
             try {
-                Log.e("flowzr","recreate cursor");
                 recreateCursor();
-                calculateTotals();
             } catch (java.lang.IllegalStateException e) {
                 e.printStackTrace();
             }

@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -175,9 +176,10 @@ public class AccountWidget extends AppWidgetProvider {
         blotterFilter.toIntent(a.title, intent);
         intent.putExtra(MainActivity.REQUEST_BLOTTER, true);
         intent.putExtra(MyFragmentAPI.ENTITY_REQUEST_EXTRA, WIDGET_REQUEST);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, request++, intent, 0);
         updateViews.setOnClickPendingIntent(R.id.note, pendingIntent);
-        updateViews.setOnClickPendingIntent(R.id.line1, pendingIntent);
+        //updateViews.setOnClickPendingIntent(R.id.line1, pendingIntent);
     }
 
     private static int request = 0;
@@ -185,35 +187,31 @@ public class AccountWidget extends AppWidgetProvider {
     public static final int WIDGET_REQUEST = 10000;
 
     private static void addButtonsClick(Context context, RemoteViews updateViews,Account a) {
-
         //add transaction
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(MyFragmentAPI.ENTITY_REQUEST_EXTRA, WIDGET_REQUEST);
         intent.putExtra(TransactionActivity.ACCOUNT_ID_EXTRA, a.id);
         intent.putExtra(MyFragmentAPI.EDIT_ENTITY_REQUEST, true);
         intent.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, TransactionActivity.class.getCanonicalName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, request++, intent, 0);
         updateViews.setOnClickPendingIntent(R.id.add_transaction, pendingIntent);
-
         //add transfer
         intent = new Intent(context, MainActivity.class);
         intent.putExtra(MyFragmentAPI.ENTITY_REQUEST_EXTRA, WIDGET_REQUEST);
         intent.putExtra(TransactionActivity.ACCOUNT_ID_EXTRA, a.id);
         intent.putExtra(MyFragmentAPI.EDIT_ENTITY_REQUEST, true);
         intent.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, TransferActivity.class.getCanonicalName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         pendingIntent = PendingIntent.getActivity(context, request++, intent, 0);
         updateViews.setOnClickPendingIntent(R.id.add_transfer, pendingIntent);
-
-
         //add template
-        Intent intent2 = new Intent(context, MainActivity.class);
-        intent2.putExtra(MyFragmentAPI.ENTITY_REQUEST_EXTRA, WIDGET_REQUEST);
-        intent2.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, SelectTemplateFragment.class.getCanonicalName());
-        Criteria blotterFilter = Criteria.eq(BlotterFilter.FROM_ACCOUNT_ID, String.valueOf(a.id));
-        blotterFilter.toIntent(a.title, intent2);
-        intent2.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, BlotterFragment.class.getCanonicalName());
-        intent2.putExtra(MainActivity.REQUEST_BLOTTER, true);
-        PendingIntent pendingIntent2 = PendingIntent.getActivity(context, request++, intent2, 0);
+        intent = new Intent(context, MainActivity.class);
+        intent.putExtra(MyFragmentAPI.ENTITY_REQUEST_EXTRA, WIDGET_REQUEST);
+        intent.putExtra(MyFragmentAPI.EDIT_ENTITY_REQUEST, true);
+        intent.putExtra(MyFragmentAPI.ENTITY_CLASS_EXTRA, SelectTemplateFragment.class.getCanonicalName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent2 = PendingIntent.getActivity(context, request++, intent, 0);
         updateViews.setOnClickPendingIntent(R.id.action_list_template, pendingIntent2);
     }
 
